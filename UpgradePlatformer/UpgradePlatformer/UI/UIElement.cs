@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UpgradePlatformer
 {
-    class UIElement
+    abstract class UIElement
     {
         public Rectangle Bounds;
 
@@ -13,12 +13,12 @@ namespace UpgradePlatformer
         /// Do some random stuff before draw
         /// </summary>
         /// <param name="gameTime">a GameTime Object</param>
-        public void Update(GameTime gameTime) { throw new NotImplementedException(); }
+        public abstract void Update(GameTime gameTime);
 
         /// <summary>
         /// Runs when the UIElement is clicked
         /// </summary>
         /// <param name="at">where the button UIElement was clicked 0,0 being the top corner</param>
-        public void WhenClicked(Point at) { throw new NotImplementedException(); }
+        public abstract void WhenClicked(Point at);
     }
 }
