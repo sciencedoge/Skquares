@@ -108,7 +108,7 @@ namespace LevelEditor
 
             currentColor = Color.Red;
 
-            path = "../../../Default size/towerDefense_tile001.png";
+            path = "../../../Default size/1.png";
             texturePic.Load(path);
             texturePic.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -136,21 +136,21 @@ namespace LevelEditor
         private void LevelEditor_Load(object sender, EventArgs e)
         {           
             ResizeForm();
-            texture1.Load("../../../Default size/towerDefense_tile001.png");
+            texture1.Load("../../../Default size/1.png");
             texture1.SizeMode = PictureBoxSizeMode.Zoom;
-            texture2.Load("../../../Default size/towerDefense_tile002.png");
+            texture2.Load("../../../Default size/2.png");
             texture2.SizeMode = PictureBoxSizeMode.Zoom;
-            texture3.Load("../../../Default size/towerDefense_tile003.png");
+            texture3.Load("../../../Default size/3.png");
             texture3.SizeMode = PictureBoxSizeMode.Zoom;
-            texture4.Load("../../../Default size/towerDefense_tile004.png");
+            texture4.Load("../../../Default size/4.png");
             texture4.SizeMode = PictureBoxSizeMode.Zoom;
-            texture5.Load("../../../Default size/towerDefense_tile005.png");
+            texture5.Load("../../../Default size/5.png");
             texture5.SizeMode = PictureBoxSizeMode.Zoom;
-            texture6.Load("../../../Default size/towerDefense_tile006.png");
+            texture6.Load("../../../Default size/6.png");
             texture6.SizeMode = PictureBoxSizeMode.Zoom;
-            texture7.Load("../../../Default size/towerDefense_tile007.png");
+            texture7.Load("../../../Default size/7.png");
             texture7.SizeMode = PictureBoxSizeMode.Zoom;
-            texture8.Load("../../../Default size/towerDefense_tile008.png");
+            texture8.Load("../../../Default size/8.png");
             texture8.SizeMode = PictureBoxSizeMode.Zoom;
 
         }
@@ -576,8 +576,6 @@ namespace LevelEditor
             {
                 PictureBox p = (PictureBox)sender;
 
-
-
                 path = p.ImageLocation;
 
                 texturePic.Load(path);
@@ -712,37 +710,9 @@ namespace LevelEditor
 
 
                     //Default picture detected, Color the tile white.
-                    if (codeList[i, j] == "../../../default-min.png")
+                    if (codeList[i, j] == "../../../Default size/9.png")
                     {
                         box.BackColor = Color.White;
-                    }
-                    //Vector2 data detected, color the image a respective color.
-                    else if (codeList[i, j].Contains("../../../") == false)
-                    {
-                        if (codeList[i, j] == "Color [Red]")
-                        {
-                            box.BackColor = Color.Red;
-                        }
-                        else if (codeList[i, j] == "Color [Blue]")
-                        {
-                            box.BackColor = Color.Blue;
-                        }
-                        else if (codeList[i, j] == "Color [Violet]")
-                        {
-                            box.BackColor = Color.Violet;
-                        }
-                        else if(codeList[i, j] == "Color [Yellow]")
-                        {
-                            box.BackColor = Color.Yellow;
-                        }
-                        else if (codeList[i, j] == "<1, -1>")
-                        {
-                            box.BackColor = Color.HotPink;
-                        }
-                        else if (codeList[i, j] == "<-1, 1>")
-                        {
-                            box.BackColor = Color.Green;
-                        }
                     }
                     else
                     {
@@ -781,7 +751,7 @@ namespace LevelEditor
             {
                 for (int j = 0; j < codeList.GetLength(1); j++)
                 {
-                    string currentPicture = reader.ReadString();
+                    string currentPicture = "../../../Default size/" + reader.ReadString() + ".png";
                     codeList[i, j] = currentPicture;
 
                     int rotationValue = reader.ReadInt32();
@@ -832,42 +802,11 @@ namespace LevelEditor
                 //writes the location of the image
                 if (b.Image != null)
                 {
-                    writer.Write(b.ImageLocation);
+                    writer.Write(b.ImageLocation.Substring(b.ImageLocation.LastIndexOf('/') + 1, 1));
                 }
-
-                //Vector data detected, write the data in
-                //Vector notation!
                 else
                 {
-                    if (b.BackColor == Color.Red)
-                    {
-                        writer.Write("<1, 0>");
-                    }
-                    else if (b.BackColor == Color.Blue)
-                    {
-                        writer.Write("<0, 1>");
-                    }
-                    else if (b.BackColor == Color.Violet)
-                    {
-                        writer.Write("begin_tile");
-                    }
-                    else if (b.BackColor == Color.HotPink)
-                    {
-                        writer.Write("<1, -1>");
-                    }
-                    else if (b.BackColor == Color.Green)
-                    {
-                        writer.Write("<-1, 1>");
-                    }
-                    else if(b.BackColor == Color.Yellow)
-                    {
-                        writer.Write("track");
-                    }
-                    //Nothing detected
-                    else
-                    {
-                        writer.Write("../../../default-min.png");
-                    }
+                    writer.Write("9");
                 }
 
                 writer.Write(rotationValues[rotationSaveY, rotationSaveX]);
