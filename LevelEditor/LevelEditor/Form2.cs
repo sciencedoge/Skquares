@@ -649,6 +649,24 @@ namespace LevelEditor
             texturePic.Refresh();
             paintButton.Enabled = false;
 
+            texture1.Load("../../../Default size/1.png");
+            texture1.SizeMode = PictureBoxSizeMode.Zoom;
+            texture2.Load("../../../Default size/2.png");
+            texture2.SizeMode = PictureBoxSizeMode.Zoom;
+            texture3.Load("../../../Default size/3.png");
+            texture3.SizeMode = PictureBoxSizeMode.Zoom;
+            texture4.Load("../../../Default size/4.png");
+            texture4.SizeMode = PictureBoxSizeMode.Zoom;
+            texture5.Load("../../../Default size/5.png");
+            texture5.SizeMode = PictureBoxSizeMode.Zoom;
+
+            texture6.Image = null;
+            texture6.Enabled = false;
+            texture7.Image = null;
+            texture7.Enabled = false;
+            texture8.Image = null;
+            texture8.Enabled = false;
+
             //changes color of buttons to indicate that the user
             //is selecting the background later
             collisionsButton.BackColor = Color.Green;
