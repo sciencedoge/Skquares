@@ -227,7 +227,10 @@ namespace LevelEditor
                 {
                     //Reads AND writes from the file
                     stream = new FileStream(dialog.FileName, FileMode.Open);
-                    writeStream = new FileStream(dialog.FileName + "_Appended", FileMode.Create);
+                    string fileName =
+                        dialog.SafeFileName;
+
+                    writeStream = new FileStream("../../../FinishedLevels/" + fileName + "_Finished", FileMode.Create);
                     reader = new BinaryReader(stream);
                     writer = new BinaryWriter(writeStream);
 
@@ -244,29 +247,14 @@ namespace LevelEditor
                         for (int j = 0; j < height * 2; j++)
                         {
                             //gets the path
-                            string currentPicture = reader.ReadString();
+                            int tileType = int.Parse(reader.ReadString());
+
                             //gets the rotation value stored next to it
                             int rotationValue = reader.ReadInt32();
 
-                            //Colors obtained (Vector2 data)
-                            if (currentPicture.Contains("<"))
-                            {
-                                writer.Write(currentPicture);
-                                writer.Write(rotationValue);
-                                continue;
-                            }
-                            //Not a color, write the tile ID without the
-                            //path
-                            else if (currentPicture.Contains("../../../"))
-                            {
-                                currentPicture = currentPicture.Substring
-                                    (currentPicture.LastIndexOf('/') + 1,
-                                    currentPicture.LastIndexOf('.') - currentPicture.LastIndexOf('/') - 1);
-                            }
-
                             //writes the altered picture path and rotation value
                             //to a new file
-                            writer.Write(currentPicture);
+                            writer.Write(tileType);
                             writer.Write(rotationValue);
                             
                         }
@@ -284,7 +272,7 @@ namespace LevelEditor
                     //File was successfully appended!
                     if (stream != null)
                     {
-                        MessageBox.Show("Successfully appended the file!");
+                        MessageBox.Show("Successfully appended the file!", ":o");
                         reader.Close();
                     }
                 }
