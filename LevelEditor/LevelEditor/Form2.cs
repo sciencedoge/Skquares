@@ -106,7 +106,7 @@ namespace LevelEditor
 
             buttons = new List<Button>();
 
-            currentColor = Color.Red;
+            currentColor = Color.White;
 
             path = "../../../Default size/1.png";
             texturePic.Load(path);
@@ -608,6 +608,34 @@ namespace LevelEditor
         /// <param name="e"></param>
         private void backgroundButton_Click(object sender, EventArgs e)
         {
+            textures.Text = "Textures";
+
+            texture1.Load("../../../Default size/1.png");
+            texture1.SizeMode = PictureBoxSizeMode.Zoom;
+            texture2.Load("../../../Default size/2.png");
+            texture2.SizeMode = PictureBoxSizeMode.Zoom;
+            texture3.Load("../../../Default size/3.png");
+            texture3.SizeMode = PictureBoxSizeMode.Zoom;
+            texture4.Load("../../../Default size/4.png");
+            texture4.SizeMode = PictureBoxSizeMode.Zoom;
+            texture5.Load("../../../Default size/5.png");
+            texture5.SizeMode = PictureBoxSizeMode.Zoom;
+            texture6.Load("../../../Default size/6.png");
+            texture6.SizeMode = PictureBoxSizeMode.Zoom;
+            texture7.Load("../../../Default size/7.png");
+            texture7.SizeMode = PictureBoxSizeMode.Zoom;
+            texture8.Load("../../../Default size/8.png");
+
+            path = "../../../Default size/1.png";
+            texturePic.Load("../../../Default size/1.png");
+            texturePic.Refresh();
+            Rotate(texturePic);
+
+            texture6.Enabled = true;
+            texture7.Enabled = true;
+            texture8.Enabled = true;
+
+            texture8.SizeMode = PictureBoxSizeMode.Zoom;
             //clears the controls
             mapBox.Controls.Clear();
             rotation = 0;
@@ -642,6 +670,25 @@ namespace LevelEditor
         /// <param name="e">Handles events</param>
         private void collisionsButton_Click(object sender, EventArgs e)
         {
+            for(int i = 0; i < collisions.GetLength(0); i++)
+            {
+                for(int j = 0; j < collisions.GetLength(1); j++)
+                {
+                    if(collisions[i, j].Image != null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if(boxes[i,j].Image != null)
+                        {
+                            collisions[i, j].Load("../../../Default size/100.png");
+                        }
+                    }
+                }
+            }
+
+
             mapBox.Controls.Clear();
             rotation = 0;
             texturePic.Image.Dispose();
@@ -649,16 +696,23 @@ namespace LevelEditor
             texturePic.Refresh();
             paintButton.Enabled = false;
 
-            texture1.Load("../../../Default size/1.png");
+            textures.Text = "Collision Types";
+
+            texture1.Load("../../../Default size/100.png");
             texture1.SizeMode = PictureBoxSizeMode.Zoom;
-            texture2.Load("../../../Default size/2.png");
+            texture2.Load("../../../Default size/101.png");
             texture2.SizeMode = PictureBoxSizeMode.Zoom;
-            texture3.Load("../../../Default size/3.png");
+            texture3.Load("../../../Default size/102.png");
             texture3.SizeMode = PictureBoxSizeMode.Zoom;
-            texture4.Load("../../../Default size/4.png");
+            texture4.Load("../../../Default size/103.png");
             texture4.SizeMode = PictureBoxSizeMode.Zoom;
-            texture5.Load("../../../Default size/5.png");
+            texture5.Load("../../../Default size/104.png");
             texture5.SizeMode = PictureBoxSizeMode.Zoom;
+
+            path = "../../../Default size/100.png";
+            texturePic.Load("../../../Default size/100.png");
+            texturePic.Refresh();
+            Rotate(texturePic);
 
             texture6.Image = null;
             texture6.Enabled = false;
@@ -820,7 +874,10 @@ namespace LevelEditor
                 //writes the location of the image
                 if (b.Image != null)
                 {
-                    writer.Write(b.ImageLocation.Substring(b.ImageLocation.LastIndexOf('/') + 1, 1));
+                    writer.Write(
+                        b.ImageLocation.Substring(
+                            b.ImageLocation.LastIndexOf('/') + 1,
+                            b.ImageLocation.LastIndexOf('.') - b.ImageLocation.LastIndexOf('/') - 1));
                 }
                 else
                 {
