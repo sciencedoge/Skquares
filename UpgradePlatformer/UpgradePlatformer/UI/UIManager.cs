@@ -5,6 +5,7 @@ using System.Text;
 
 namespace UpgradePlatformer
 {
+    public delegate void UIAction();
     class UIManager
     {
         List<UIElement> UIElements;
@@ -37,6 +38,11 @@ namespace UpgradePlatformer
                 }
             }
             return false;
+        }
+
+        public void Add(UIElement element)
+        {
+            UIElements.Add(element);
         }
     }
 }

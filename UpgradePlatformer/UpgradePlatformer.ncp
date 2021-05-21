@@ -171,15 +171,17 @@
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>Button</Name>
+        <Name>UIButton</Name>
         <Access>Public</Access>
         <Location left="1642" top="891" />
-        <Size width="278" height="216" />
+        <Size width="278" height="230" />
         <Collapsed>False</Collapsed>
         <Member type="Field">Sprite NormalSprite</Member>
         <Member type="Field">Sprite ClickedSprite</Member>
         <Member type="Field">Sprite DisabledSprite</Member>
         <Member type="Field">public bool Disabled</Member>
+        <Member type="Field">int newField</Member>
+        <Member type="Constructor">public UIButton(Rectangle Bounds)</Member>
         <Member type="Method">public void Update(gameTime GameTime)</Member>
         <Member type="Method">public void Draw(SpriteBatch spriteBatch, Vector2 position, int rotation)</Member>
         <Member type="Method">public void WhenClicked(Point at)</Member>
@@ -195,6 +197,7 @@
         <Member type="Method">public void Update(gameTime GameTime)</Member>
         <Member type="Method">public void Draw(SpriteBatch spriteBatch, Vector2 position, int rotation)</Member>
         <Member type="Method">public bool ProcessClick(Point position)</Member>
+        <Member type="Method">public void Add(UIEllement element)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -203,7 +206,7 @@
         <Location left="1758" top="614" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Field">Rectangle Bounds</Member>
+        <Member type="Field">public Rectangle Bounds</Member>
         <Member type="Method">public void Update(gameTime GameTime)</Member>
         <Member type="Method">public void Draw(SpriteBatch spriteBatch, Vector2 position, int rotation)</Member>
         <Member type="Method">public void WhenClicked(Point at)</Member>
@@ -261,6 +264,14 @@
         <Member type="Field">TileTheme tileTheme</Member>
         <Member type="Field">Tile[,] TileMaps</Member>
         <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Delegate">
+        <Name>UIAction</Name>
+        <Access>Public</Access>
+        <Location left="1463" top="329" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <ReturnType>void</ReturnType>
       </Entity>
     </Entities>
     <Relationships>
