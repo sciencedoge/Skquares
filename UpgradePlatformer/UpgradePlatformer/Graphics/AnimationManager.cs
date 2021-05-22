@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UpgradePlatformer
+namespace UpgradePlatformer.Graphics
 {
     class AnimationManager
     {

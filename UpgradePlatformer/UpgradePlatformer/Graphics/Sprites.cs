@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace UpgradePlatformer
+namespace UpgradePlatformer.Graphics
 {
     public class Sprite
     {

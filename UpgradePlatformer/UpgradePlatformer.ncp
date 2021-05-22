@@ -298,7 +298,6 @@
         <Member type="Field">public InputEventKind Kind</Member>
         <Member type="Field">public uint Data</Member>
         <Member type="Field">public Point MousePosition</Member>
-        <Member type="Method">public void Push(InputEvent e)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Enum">
