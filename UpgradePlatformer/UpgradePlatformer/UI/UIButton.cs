@@ -20,7 +20,7 @@ namespace UpgradePlatformer.UI
         UISprite NormalSprite;
         UISprite ClickedSprite;
         UISprite DisabledSprite;
-        UIAction onClick = new UIAction(() => { });
+        public UIAction onClick = new UIAction(() => { });
         public bool Disabled;
 
         public int ClickTimeout = 5;

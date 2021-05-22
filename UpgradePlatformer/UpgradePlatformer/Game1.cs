@@ -21,6 +21,12 @@ namespace UpgradePlatformer
         private UIManager _uiManager;
         private InputManager _inputManager;
         private LevelManager _levelManager;
+        private SpriteFont _font;
+#if DEBUG
+        private UIText FpsMeter;
+        double frameRate = 0.0;
+        int frameCounter;
+#endif
 
         private Texture2D _spriteSheetTexture;
 
@@ -37,7 +43,13 @@ namespace UpgradePlatformer
             _uiManager = new UIManager();
             _inputManager = new InputManager();
             _levelManager = new LevelManager(_spriteSheetTexture);
-            _uiManager.Add(new UIButton(_spriteSheetTexture, new Rectangle(10, 10, 100, 100)));
+            UIButton b = new UIButton(_spriteSheetTexture, new Rectangle(250, 10, 40, 40));
+            b.onClick = new UIAction(() => _levelManager.Next());
+            _uiManager.Add(b);
+#if DEBUG
+            FpsMeter = new UIText(_font, new Rectangle(0, 0, 0, 0));
+            _uiManager.Add(FpsMeter);
+#endif
         }
 
         protected override void LoadContent()
@@ -46,6 +58,7 @@ namespace UpgradePlatformer
 
             // TODO: use this.Content to load your game content here
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
+            _font = Content.Load<SpriteFont>("Fonts/Poland");
         }
 
         protected override void Update(GameTime gameTime)
@@ -57,12 +70,22 @@ namespace UpgradePlatformer
 
             _inputManager.Update(gameTime);
             _uiManager.Update(gameTime, _inputManager);
-
+#if DEBUG
+        if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
+            {
+                frameRate = (double)frameCounter / gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            frameCounter = 0;
+            FpsMeter.Text = frameRate.ToString("F2");
+#endif
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
+#if DEBUG
+            frameCounter++;
+#endif
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here

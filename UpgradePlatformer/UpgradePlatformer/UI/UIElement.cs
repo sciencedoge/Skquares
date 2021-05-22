@@ -28,7 +28,7 @@ namespace UpgradePlatformer.UI
         /// <param name="at">where the button UIElement was clicked 0,0 being the top corner</param>
         public abstract void WhenClicked(Point at);
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             CurrentSprite().Draw(spriteBatch, Bounds, 0);
         }
