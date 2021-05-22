@@ -35,19 +35,22 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public void Intersects(LivingObject obj)
+        public void Intersects(List<LivingObject> obj)
         {
             if (isActive)
             {
-                if (this.hitbox.Intersects(obj.Hitbox))
+                foreach(LivingObject live in obj)
                 {
-                    this.CurrentHP -= obj.Damage;
-
-                    if(CurrentHP <= 0)
+                    if (this.hitbox.Intersects(live.Hitbox))
                     {
-                        isActive = false;
+                        this.CurrentHP -= live.Damage;
+
+                        if (CurrentHP <= 0)
+                        {
+                            isActive = false;
+                        }
                     }
-                }
+                }             
             }
         }
 

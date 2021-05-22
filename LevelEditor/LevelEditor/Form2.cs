@@ -264,7 +264,7 @@ namespace LevelEditor
         {
             SaveFileDialog saveMenu = new SaveFileDialog();
 
-            saveMenu.Filter = "Level Files|.level";
+            saveMenu.Filter = "Level Files|*.level";
             saveMenu.Title = "Save a level";
             DialogResult r = saveMenu.ShowDialog();
 
