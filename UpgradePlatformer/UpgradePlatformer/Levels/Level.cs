@@ -26,6 +26,8 @@ namespace UpgradePlatformer.Levels
             for (int x = 0; x < TileWidth; x++)
                 for (int y = 0; y < TileHeight; y++)
                     TileMap[x, y] = new Tile(texture, reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32());
+            reader.Close();
+            stream.Close();
         }
 
         public Level(Texture2D texture, String Name)
@@ -37,7 +39,7 @@ namespace UpgradePlatformer.Levels
         {
             for (int x = 0; x < TileWidth; x++)
                 for (int y = 0; y < TileHeight; y++)
-                    TileMap[x, y].Draw(spriteBatch, new Vector2(x * 4, y * 4));
+                    TileMap[x, y].Draw(spriteBatch, new Vector2(y * 16 + 8, x * 16 + 8));
         }
     }
 

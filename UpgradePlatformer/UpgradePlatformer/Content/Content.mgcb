@@ -13,8 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Fonts/Poland.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/Poland.spritefont
+
 #begin Levels/EGGMAN.level_Finished
 /copy:Levels/EGGMAN.level_Finished
+
+#begin Levels/EGGMEN.level_Finished
+/copy:Levels/EGGMEN.level_Finished
 
 #begin SpriteSheet.png
 /importer:TextureImporter

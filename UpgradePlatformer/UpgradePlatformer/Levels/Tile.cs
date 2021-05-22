@@ -9,9 +9,8 @@ namespace UpgradePlatformer.Levels
 {
     class Tile
     {
-        private static Rectangle TILE_SPRITE = new Rectangle(0, 13, 4, 4);
-        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.Orange, Color.Transparent,
-        Color.PapayaWhip, Color.Black, Color.Red, Color.LavenderBlush};
+        private static Rectangle TILE_SPRITE = new Rectangle(0, 13, 16, 16);
+        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.Orange,  Color.Orange,  Color.Orange, Color.Orange, Color.Transparent,};
         private Sprite Sprite;
         public int Kind;
         public float Rotation;
@@ -20,7 +19,7 @@ namespace UpgradePlatformer.Levels
         public Tile(Texture2D texture, int kind, int rotation, int collision)
         {
             Kind = kind;
-            Sprite = new Sprite(texture, TILE_SPRITE, new Vector2(0, 0), COLORS[kind]);
+            Sprite = new Sprite(texture, TILE_SPRITE, new Vector2(8f, 8f), COLORS[kind - 1]);
             Rotation = (MathF.PI * 0.5f) * rotation;
             CollisionKind = collision;
         }
