@@ -11,6 +11,11 @@ namespace UpgradePlatformer
     {
         List<UIElement> UIElements;
 
+        public UIManager()
+        {
+            UIElements = new List<UIElement>();
+        }
+
         /// <summary>
         /// Do some random stuff before draw
         /// </summary>
@@ -22,7 +27,19 @@ namespace UpgradePlatformer
                 e.Update(gameTime);
             }
         }
-        
+
+        /// <summary>
+        /// Draws ALL UIElements
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            foreach (UIElement e in UIElements)
+            {
+                e.Draw(gameTime, spriteBatch);
+            }
+        }
+
         /// <summary>
         /// processes a click anywhere on the screen
         /// </summary>
@@ -96,7 +113,7 @@ namespace UpgradePlatformer
         public Rectangle Center { get => _Center;
             set
             {
-                if (!Position.Contains(Center)) { throw new InvalidOperationException(); }
+                if (!Position.Contains(value)) { throw new InvalidOperationException(); }
                 _Center = value;
                 for (int i = 0; i < 3; i++)
                 {
@@ -131,6 +148,7 @@ namespace UpgradePlatformer
 
                 for (int y = renderRect.Y + renderSections[0, 0].Height; y < renderRect.Bottom - renderSections[0, 2].Height; y += renderSections[1, 1].Height)
                 {
+                    // section E
                     tmp = renderSections[1, 1];
                     tmp.Location = new Point(x, y);
                     spriteBatch.Draw(Texture, tmp, renderSections[1, 1], TintColor, rotation, Origin, SpriteEffects.None, 0f);
