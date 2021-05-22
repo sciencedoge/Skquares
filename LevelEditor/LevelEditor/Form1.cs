@@ -244,7 +244,7 @@ namespace LevelEditor
                     //values
                     for (int i = 0; i < width; i++)
                     {
-                        for (int j = 0; j < height * 2; j++)
+                        for (int j = 0; j < height; j++)
                         {
                             //gets the path
                             int tileType = int.Parse(reader.ReadString());
@@ -257,6 +257,24 @@ namespace LevelEditor
                             writer.Write(tileType);
                             writer.Write(rotationValue);
                             
+                        }
+                    }
+
+                    //Handles the collisions layer, discards the rotation values
+                    //as we do not need them.
+                    for (int i = 0; i < width; i++)
+                    {
+                        for (int j = 0; j < height; j++)
+                        {
+                            //gets the path
+                            int tileType = int.Parse(reader.ReadString());
+
+                            //gets the rotation value stored next to it
+                            int rotationValue = reader.ReadInt32();
+
+                            //writes the altered picture path and rotation value
+                            //to a new file
+                            writer.Write(tileType);
                         }
                     }
                 }

@@ -608,6 +608,8 @@ namespace LevelEditor
         /// <param name="e"></param>
         private void backgroundButton_Click(object sender, EventArgs e)
         {
+            rotateTexture.Enabled = true;
+
             textures.Text = "Textures";
 
             texture1.Load("../../../Default size/1.png");
@@ -670,6 +672,8 @@ namespace LevelEditor
         /// <param name="e">Handles events</param>
         private void collisionsButton_Click(object sender, EventArgs e)
         {
+            rotateTexture.Enabled = false;
+
             for(int i = 0; i < collisions.GetLength(0); i++)
             {
                 for(int j = 0; j < collisions.GetLength(1); j++)
