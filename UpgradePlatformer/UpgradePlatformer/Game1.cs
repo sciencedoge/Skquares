@@ -16,6 +16,7 @@ namespace UpgradePlatformer
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private UIManager _uiManager;
+        private InputManager _inputManager;
 
         private Texture2D _spriteSheetTexture;
 
@@ -30,6 +31,7 @@ namespace UpgradePlatformer
         {
             base.Initialize();
             _uiManager = new UIManager();
+            _inputManager = new InputManager();
             _uiManager.Add(new UIButton(_spriteSheetTexture, new Rectangle(10, 10, 100, 100)));
         }
 
@@ -48,7 +50,8 @@ namespace UpgradePlatformer
 
             // TODO: Add your update logic here
 
-            _uiManager.Update(gameTime);
+            _inputManager.Update(gameTime);
+            _uiManager.Update(gameTime, _inputManager);
 
             base.Update(gameTime);
         }

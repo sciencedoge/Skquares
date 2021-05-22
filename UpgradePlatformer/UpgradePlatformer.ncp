@@ -74,8 +74,10 @@
         <Member type="Field">public MouseState mouseState</Member>
         <Member type="Field">public KeyboardState kbState</Member>
         <Member type="Field">public KeyboardState prevKbState</Member>
-        <Member type="Method">public bool SingleKeyPress()</Member>
-        <Member type="Method">public void Update(gameTime GameTime)</Member>
+        <Member type="Field">public MouseState prevMouseState</Member>
+        <Member type="Method">public void Update()</Member>
+        <Member type="Method">public void Pop(InputEventKind Kind)</Member>
+        <Member type="Method">public void Push(InputEvent e)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -286,6 +288,43 @@
         <Member type="Constructor">public UISprite(Texture2D texture, Rectangle position, Rectangle center, Vector2 origin, Color tintColor)</Member>
         <Member type="Method">public void Draw(SpriteBatch spriteBatch, Rectangle renderRect, float rotation)</Member>
         <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>InputEvent</Name>
+        <Access>Public</Access>
+        <Location left="1959" top="614" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public InputEventKind Kind</Member>
+        <Member type="Field">public uint Data</Member>
+        <Member type="Field">public Point MousePosition</Member>
+        <Member type="Method">public void Push(InputEvent e)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Enum">
+        <Name>InputEventKind</Name>
+        <Access>Public</Access>
+        <Location left="2166" top="614" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Value>MOUSE_DOWN</Value>
+        <Value>MOUSE_UP</Value>
+        <Value>KEY_DOWN</Value>
+        <Value>KEY_UP</Value>
+      </Entity>
+      <Entity type="Comment">
+        <Text>Data for Input Event by Event Kind
+
+- MOUSE_DOWN
+  - Button Number
+- MOUSE_UP
+  - Button Number
+- KEY_DOWN
+  - Key Value in Some encoding
+- KEY_UP
+  - Key Value in Some encoding</Text>
+        <Location left="1959" top="891" />
+        <Size width="160" height="230" />
       </Entity>
     </Entities>
     <Relationships>

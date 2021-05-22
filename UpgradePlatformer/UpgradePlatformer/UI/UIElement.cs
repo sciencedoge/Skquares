@@ -9,7 +9,11 @@ namespace UpgradePlatformer
     abstract class UIElement
     {
         public Rectangle Bounds;
-
+        
+        /// <summary>
+        /// Gets the current Sprite
+        /// </summary>
+        /// <returns>the Current Sprite</returns>
         public abstract UISprite CurrentSprite();
         
         /// <summary>
