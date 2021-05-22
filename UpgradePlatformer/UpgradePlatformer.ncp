@@ -177,9 +177,9 @@
         <Location left="1642" top="891" />
         <Size width="278" height="230" />
         <Collapsed>False</Collapsed>
-        <Member type="Field">Sprite NormalSprite</Member>
-        <Member type="Field">Sprite ClickedSprite</Member>
-        <Member type="Field">Sprite DisabledSprite</Member>
+        <Member type="Field">UISprite NormalSprite</Member>
+        <Member type="Field">UISprite ClickedSprite</Member>
+        <Member type="Field">UISprite DisabledSprite</Member>
         <Member type="Field">public bool Disabled</Member>
         <Member type="Field">int newField</Member>
         <Member type="Constructor">public UIButton(Rectangle Bounds)</Member>
