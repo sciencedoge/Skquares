@@ -13,6 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin EGGMAN.level
+/copy:EGGMAN.level
+
 #begin SpriteSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor

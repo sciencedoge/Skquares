@@ -265,7 +265,10 @@
         <Member type="Field">readonly int tileWidth</Member>
         <Member type="Field">readonly int tileHeight</Member>
         <Member type="Field">TileTheme tileTheme</Member>
-        <Member type="Field">Tile[,] TileMaps</Member>
+        <Member type="Field">Tile[,] TileMap</Member>
+        <Member type="Method">public void LoadNew(String name)</Member>
+        <Member type="Method">public void Draw(SpriteBatch spriteBatch, GameTime gameTime)</Member>
+        <Member type="Constructor">public Level(String Name)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Delegate">
