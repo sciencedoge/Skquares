@@ -6,12 +6,12 @@ using System.Text;
 
 namespace UpgradePlatformer
 {
-    class Sprite
+    public class Sprite
     {
-        Texture2D Texture;
-        Rectangle Position;
-        Vector2 Origin;
-        Color TintColor;
+        public Texture2D Texture;
+        public Rectangle Position;
+        public Vector2 Origin;
+        public Color TintColor;
         
         /// <summary>
         /// creates a sprite object

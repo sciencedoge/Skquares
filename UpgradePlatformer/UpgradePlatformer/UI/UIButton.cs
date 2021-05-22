@@ -9,7 +9,7 @@ namespace UpgradePlatformer
     {
         UIAction onClick = new UIAction(() => { });
         public bool Disabled;
-        public void Update(GameTime gameTime) { throw new NotImplementedException(); }
+        public override void Update(GameTime gameTime) { throw new NotImplementedException(); }
 
         /// <summary>
         /// creates a UIButton
@@ -24,7 +24,7 @@ namespace UpgradePlatformer
         /// Calls the onclick function if Disabled is false
         /// </summary>
         /// <param name="at">where the button UIElement was clicked 0,0 being the top corner</param>
-        public void WhenClicked(Point at)
+        public override void WhenClicked(Point at)
         {
             if (Disabled) return;
 
