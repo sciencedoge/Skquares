@@ -11,5 +11,12 @@ namespace UpgradePlatformer.Entities
     //=================================================
     class EntityManager
     {
+        //Fields
+        private Input.InputManager inputManager;
+
+        public EntityManager()
+        {
+
+        }
     }
 }

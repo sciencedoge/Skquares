@@ -15,7 +15,7 @@ namespace UpgradePlatformer.Levels
 
         public void Load(Texture2D texture, String Name)
         {
-            FileStream stream = new FileStream("Content/Levels/" + Name + ".level", FileMode.Open);
+            FileStream stream = new FileStream("Content/Levels/" + Name + ".level_Finished", FileMode.Open);
             BinaryReader reader = new BinaryReader(stream);
 
             TileWidth = reader.ReadInt32();

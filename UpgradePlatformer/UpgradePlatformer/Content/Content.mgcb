@@ -13,8 +13,8 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Levels/EGGMAN.level
-/copy:Levels/EGGMAN.level
+#begin Levels/EGGMAN.level_Finished
+/copy:Levels/EGGMAN.level_Finished
 
 #begin SpriteSheet.png
 /importer:TextureImporter
