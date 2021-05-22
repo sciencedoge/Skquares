@@ -23,7 +23,6 @@ namespace UpgradePlatformer.Entities
         protected int damage;
 
         //sprite info
-        protected Texture2D texture;
         protected Sprite sprite;
 
         protected Rectangle hitbox;

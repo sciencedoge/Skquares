@@ -49,15 +49,32 @@ namespace LevelEditor
         private int numLayersSaved;
 
         //Properties
-        
+
         /// <summary>
         /// Returns a list of rotation values
         /// or alters the list of rotation values
         /// </summary>
-        public int[,] RotationValues 
+        public int[,] RotationValues
         {
             get { return rotationValues; }
             set { rotationValues = value; }
+        }
+
+        /// <summary>
+        /// sets the colors list for the editor
+        /// </summary>
+        public string[,] Colors
+        {
+            set { colors = value; }
+        }
+
+        /// <summary>
+        /// sets the collision colors of the
+        /// editor
+        /// </summary>
+        public string[,] CollisionColors
+        {
+            set { collisionColors = value; }
         }
 
         /// <summary>
@@ -278,8 +295,7 @@ namespace LevelEditor
                     //Saves the ARGB colors of the pictureboxes
                     rotationSaveX = 0;
                     rotationSaveY = 0;
-                    Save(boxes, writer, rotationValues);
-                    Save(collisions, writer, collisionRotations);
+                    Save(writer, rotationValues);
 
                     //prompts the user that the file was successfully saved.
                     MessageBox.Show("Successfully Saved the file!", ":)");
@@ -347,10 +363,7 @@ namespace LevelEditor
                     rotationValues = new int[height, width];
                     collisionRotations = new int[height, width];
 
-                    LoadColors(colors, reader, rotationValues, rotationsLoaded);
-
-                    //Collisions
-                    LoadColors(collisionColors, reader, collisionRotations, rotationsLoaded);
+                    LoadColors(reader, rotationValues, rotationsLoaded);
 
                     LoadBoxes(colors, collisionColors);
                 }
@@ -608,6 +621,8 @@ namespace LevelEditor
         /// <param name="e"></param>
         private void backgroundButton_Click(object sender, EventArgs e)
         {
+            rotateTexture.Enabled = true;
+
             textures.Text = "Textures";
 
             texture1.Load("../../../Default size/1.png");
@@ -670,6 +685,8 @@ namespace LevelEditor
         /// <param name="e">Handles events</param>
         private void collisionsButton_Click(object sender, EventArgs e)
         {
+            rotateTexture.Enabled = false;
+
             for(int i = 0; i < collisions.GetLength(0); i++)
             {
                 for(int j = 0; j < collisions.GetLength(1); j++)
@@ -814,20 +831,23 @@ namespace LevelEditor
         /// </summary>
         /// <param name="codeList">array of data</param>
         /// <param name="reader">reads in data</param>
-        public void LoadColors(string[,] codeList, BinaryReader reader,
+        public void LoadColors(BinaryReader reader,
             int[,] rotationValues, bool rotationsLoaded)
         {
             //Fills the array with the colors of the loaded data
             //(Vector2/Begin tile/track)
-            for (int i = 0; i < codeList.GetLength(0); i++)
+            for (int i = 0; i < colors.GetLength(0); i++)
             {
-                for (int j = 0; j < codeList.GetLength(1); j++)
+                for (int j = 0; j < colors.GetLength(1); j++)
                 {
                     string currentPicture = "../../../Default size/" + reader.ReadString() + ".png";
-                    codeList[i, j] = currentPicture;
+                    colors[i, j] = currentPicture;
 
                     int rotationValue = reader.ReadInt32();
                     rotationValues[i, j] = rotationValue;
+
+                    string currentCollision = "../../../Default size/" + reader.ReadString() + ".png";
+                    collisionColors[i, j] = currentCollision;
                 }
             }
         }
@@ -863,35 +883,52 @@ namespace LevelEditor
         /// </summary>
         /// <param name="boxes">current List of pictureBoxes</param>
         /// <param name="writer">BinaryWriter</param>
-        private void Save(PictureBox[,] boxes, BinaryWriter writer,
+        private void Save(BinaryWriter writer,
             int[,] rotationValues)
         {
             rotationSaveX = 0;
             rotationSaveY = 0;
 
-            foreach (PictureBox b in boxes)
+            for(int i = 0; i < boxes.GetLength(0); i++)
             {
-                //writes the location of the image
-                if (b.Image != null)
+                for(int j = 0; j < boxes.GetLength(1); j++)
                 {
-                    writer.Write(
-                        b.ImageLocation.Substring(
-                            b.ImageLocation.LastIndexOf('/') + 1,
-                            b.ImageLocation.LastIndexOf('.') - b.ImageLocation.LastIndexOf('/') - 1));
-                }
-                else
-                {
-                    writer.Write("9");
-                }
+                    //writes the location of the image
+                    if (boxes[i, j].Image != null)
+                    {
+                        writer.Write(
+                            boxes[i, j].ImageLocation.Substring(
+                                boxes[i, j].ImageLocation.LastIndexOf('/') + 1,
+                                boxes[i, j].ImageLocation.LastIndexOf('.') - 
+                                boxes[i, j].ImageLocation.LastIndexOf('/') - 1));
+                    }
+                    else
+                    {
+                        writer.Write("9");
+                    }
 
-                writer.Write(rotationValues[rotationSaveY, rotationSaveX]);
-                rotationSaveX++;
-                if(rotationSaveX == Width)
-                {
-                    rotationSaveY++;
-                    rotationSaveX = 0;
-                }
+                    writer.Write(rotationValues[rotationSaveY, rotationSaveX]);
+                    rotationSaveX++;
+                    if (rotationSaveX == Width)
+                    {
+                        rotationSaveY++;
+                        rotationSaveX = 0;
+                    }
 
+                    //writes the location of the image
+                    if (collisions[i, j].Image != null)
+                    {
+                        writer.Write(
+                            collisions[i, j].ImageLocation.Substring(
+                                collisions[i, j].ImageLocation.LastIndexOf('/') + 1,
+                                collisions[i, j].ImageLocation.LastIndexOf('.') - 
+                                collisions[i, j].ImageLocation.LastIndexOf('/') - 1));
+                    }
+                    else
+                    {
+                        writer.Write("9");
+                    }
+                }            
             }
         }
 
