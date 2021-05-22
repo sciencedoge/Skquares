@@ -8,6 +8,9 @@ namespace UpgradePlatformer
 {
     class InputManager
     {
+        // the maximum events before theyre overridden
+        public const byte MAX_EVENTS = 10;
+
         public MouseState mouseState;
         public MouseState prevMouseState;
         public KeyboardState kbState;
@@ -29,18 +32,33 @@ namespace UpgradePlatformer
         {
             prevMouseState = mouseState;
             mouseState = Mouse.GetState();
+            prevKbState = kbState;
+            kbState = Keyboard.GetState();
 
             if (prevMouseState.LeftButton != mouseState.LeftButton)
             {
-                Events.Add(new InputEvent(CheckChangeType(prevMouseState.LeftButton, InputEventKind.MOUSE_UP, InputEventKind.MOUSE_DOWN), 0, mouseState.Position));
+                Push(new InputEvent(CheckChangeType(prevMouseState.LeftButton, InputEventKind.MOUSE_UP, InputEventKind.MOUSE_DOWN), 0, mouseState.Position));
             }
             if (prevMouseState.RightButton != mouseState.RightButton)
             {
-                Events.Add(new InputEvent(CheckChangeType(prevMouseState.RightButton, InputEventKind.MOUSE_UP, InputEventKind.MOUSE_DOWN), 1, mouseState.Position));
+                Push(new InputEvent(CheckChangeType(prevMouseState.RightButton, InputEventKind.MOUSE_UP, InputEventKind.MOUSE_DOWN), 1, mouseState.Position));
             }
             if (prevMouseState.MiddleButton != mouseState.MiddleButton)
             {
-                Events.Add(new InputEvent(CheckChangeType(prevMouseState.MiddleButton, InputEventKind.MOUSE_UP, InputEventKind.MOUSE_DOWN), 2, mouseState.Position));
+                Push(new InputEvent(CheckChangeType(prevMouseState.MiddleButton, InputEventKind.MOUSE_UP, InputEventKind.MOUSE_DOWN), 2, mouseState.Position));
+            }
+            List<Keys> newKeys = new List<Keys>(kbState.GetPressedKeys());
+            foreach (Keys k in prevKbState.GetPressedKeys())
+            {
+                if (!newKeys.Contains(k))
+                {
+                    Push(new InputEvent(InputEventKind.KEY_UP, (uint)k, mouseState.Position));
+                }
+                else newKeys.Remove(k);
+            }
+            foreach (Keys k in newKeys)
+            {
+                Push(new InputEvent(InputEventKind.KEY_DOWN, (uint)k, mouseState.Position));
             }
         }
         
@@ -48,6 +66,7 @@ namespace UpgradePlatformer
         /// Helper function for Update decideds event kinds from changes
         /// </summary>
         /// <param name="up"></param>
+        /// <param name="down"></param>
         /// <param name="down"></param>
         /// <returns></returns>
         public InputEventKind CheckChangeType(ButtonState prev, InputEventKind up, InputEventKind down)
@@ -66,6 +85,7 @@ namespace UpgradePlatformer
         public void Push(InputEvent e)
         {
             Events.Insert(0, e);
+            if (Events.Count > MAX_EVENTS) Events.RemoveAt(Events.Count - 1);
         }
 
         /// <summary>
@@ -97,6 +117,19 @@ namespace UpgradePlatformer
         }
     }
 
+    /// <summary>
+    /// stores input data
+    /// Data for Input Event by Event Kind
+    ///
+    /// - MOUSE_DOWN
+    ///     - Button Number
+    /// - MOUSE_UP
+    ///     - Button Number
+    /// - KEY_DOWN
+    ///     - Key Value in Some encoding
+    /// - KEY_UP
+    ///    - Key Value in Some encoding
+    /// </summary>
     class InputEvent
     {
         public InputEventKind Kind;
@@ -111,6 +144,9 @@ namespace UpgradePlatformer
         }
     }
 
+    /// <summary>
+    /// ANY is to remove null values bc aparentally theyre bad
+    /// </summary>
     enum InputEventKind
     {
         ANY,
