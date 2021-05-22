@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Input;
+using UpgradePlatformer.Levels;
 using UpgradePlatformer.UI;
 
 namespace UpgradePlatformer
@@ -19,6 +20,7 @@ namespace UpgradePlatformer
         private SpriteBatch _spriteBatch;
         private UIManager _uiManager;
         private InputManager _inputManager;
+        private LevelManager _levelManager;
 
         private Texture2D _spriteSheetTexture;
 
@@ -34,6 +36,7 @@ namespace UpgradePlatformer
             base.Initialize();
             _uiManager = new UIManager();
             _inputManager = new InputManager();
+            _levelManager = new LevelManager(_spriteSheetTexture);
             _uiManager.Add(new UIButton(_spriteSheetTexture, new Rectangle(10, 10, 100, 100)));
         }
 
@@ -65,6 +68,8 @@ namespace UpgradePlatformer
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
+
+            _levelManager.Draw(_spriteBatch);
 
             _uiManager.Draw(gameTime, _spriteBatch);
 

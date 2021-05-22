@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,15 +10,22 @@ namespace UpgradePlatformer.Levels
         List<Level> Levels;
         int activeLevel;
         
-        public LevelManager()
+        public LevelManager(Texture2D texture)
         {
+            Levels = new List<Level>();
             activeLevel = 0;
-            Load("EGGMAN");
+            Load(texture, "EGGMAN");
         }
 
-        public void Load(String Name)
+        public void Load(Texture2D texture, String Name)
         {
-            Levels.Add(new Level(Name));
+            Levels.Add(new Level(texture, Name));
+        }
+
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            Levels[activeLevel].Draw(spriteBatch);
         }
     }
 }
