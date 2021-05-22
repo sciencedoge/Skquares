@@ -11,8 +11,12 @@ namespace UpgradePlatformer
     //===============================================================
     public class Game1 : Game
     {
+        private const string ASSET_NAME_SPRITESHEET = "SpriteSheet";
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        private Texture2D _spriteSheetTexture;
 
         public Game1()
         {
@@ -33,6 +37,7 @@ namespace UpgradePlatformer
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
         }
 
         protected override void Update(GameTime gameTime)
@@ -50,6 +55,10 @@ namespace UpgradePlatformer
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            _spriteBatch.Begin();
+
+            _spriteBatch.End();
 
             base.Draw(gameTime);
         }
