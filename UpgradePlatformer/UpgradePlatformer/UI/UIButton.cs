@@ -15,7 +15,8 @@ namespace UpgradePlatformer
         private static Rectangle BUTTON_NORMAL_CENTER = new Rectangle(4, 2, 8, 8);
         private static Rectangle BUTTON_CLICKED_CENTER = new Rectangle(19, 2, 8, 8);
         private static Rectangle BUTTON_DISABLED_CENTER = new Rectangle(34, 2, 8, 8);
-
+        
+        // Vars
         UISprite NormalSprite;
         UISprite ClickedSprite;
         UISprite DisabledSprite;
@@ -26,15 +27,18 @@ namespace UpgradePlatformer
 
         private int ClickTime;
 
+        /// <summary>
+        /// Updates the Button
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
-            ClickTime = 100;
             ClickTime = Math.Max(0, ClickTime - 1);
         }
 
         /// <summary>
         /// creates a UIButton
         /// </summary>
-        /// <param name="bounds"></param>
+        /// <param name="bounds">What the coords of the button are</param>
         public UIButton(Texture2D texture, Rectangle bounds)
         {
             Bounds = bounds;

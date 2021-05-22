@@ -20,8 +20,12 @@ namespace UpgradePlatformer
         /// Do some random stuff before draw
         /// </summary>
         /// <param name="gameTime">a gameTime Object</param>
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, InputManager inputManager)
         {
+            InputEvent ev = inputManager.Pop(InputEventKind.MOUSE_DOWN);
+
+            if (ev != null) ProcessClick(ev.MousePosition, ev.Data);
+
             foreach (UIElement e in UIElements)
             {
                 e.Update(gameTime);
@@ -45,8 +49,9 @@ namespace UpgradePlatformer
         /// </summary>
         /// <param name="position">the position the screen was clicked</param>
         /// <returns>true if the click is used</returns>
-        public bool ProcessClick(Point position)
+        public bool ProcessClick(Point position, uint button)
         {
+            if (button != 0) return false;
             foreach (UIElement e in UIElements)
             {
                 if (e.Bounds.Contains(position))
@@ -133,6 +138,13 @@ namespace UpgradePlatformer
             }
         }
 
+        /// <summary>
+        /// Draws the UISprite
+        /// </summary>
+        /// <param name="spriteBatch">the Sprite Batch Object</param>
+        /// <param name="renderRect">Where the sprite should be rendered</param>
+        /// <param name="rotation">should be zero for now</param>
+        /// TODO: Implement rotation?
         public void Draw(SpriteBatch spriteBatch, Rectangle renderRect, float rotation)
         {
             Rectangle tmp;
