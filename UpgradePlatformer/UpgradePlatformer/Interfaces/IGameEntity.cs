@@ -20,7 +20,7 @@ namespace UpgradePlatformer.Interfaces
         /// returns whether or not an entity
         /// is active
         /// </summary>
-        public bool IsActive { get; }
+        public bool IsActive { get; set; }
 
         /// <summary>
         /// gets or sets the current HP of the
@@ -33,6 +33,11 @@ namespace UpgradePlatformer.Interfaces
         /// entity
         /// </summary>
         public int MaxHP { get; set; }
+
+        /// <summary>
+        /// Returns the hitbox of an entity
+        /// </summary>
+        public Rectangle Hitbox { get; }
 
         //Methods
 
