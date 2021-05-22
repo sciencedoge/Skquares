@@ -15,6 +15,7 @@ namespace UpgradePlatformer
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private UIManager _uiManager;
 
         private Texture2D _spriteSheetTexture;
 
@@ -27,9 +28,9 @@ namespace UpgradePlatformer
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
+            _uiManager = new UIManager();
+            _uiManager.Add(new UIButton(_spriteSheetTexture, new Rectangle(10, 10, 100, 100)));
         }
 
         protected override void LoadContent()
@@ -47,6 +48,8 @@ namespace UpgradePlatformer
 
             // TODO: Add your update logic here
 
+            _uiManager.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -57,6 +60,8 @@ namespace UpgradePlatformer
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
+
+            _uiManager.Draw(gameTime, _spriteBatch);
 
             _spriteBatch.End();
 
