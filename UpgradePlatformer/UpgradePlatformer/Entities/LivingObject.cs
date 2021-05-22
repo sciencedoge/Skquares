@@ -20,6 +20,9 @@ namespace UpgradePlatformer.Entities
         protected int currentHp;
         protected int maxHp;
         protected int damage;
+
+        //sprite info
+        protected Texture2D texture;
         protected Sprite sprite;
 
         protected Rectangle hitbox;
@@ -82,15 +85,20 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="maxHp">max hp of the object</param>
         public LivingObject(int maxHp, int damage, Rectangle hitbox,
-            Sprite sprite)
+            Texture2D texture)
         {
             this.maxHp = maxHp;
             currentHp = maxHp;
             this.damage = damage;
             isActive = true;
 
-            this.sprite = sprite;
-            this.hitbox = sprite.Position;
+            this.hitbox = hitbox;
+
+            this.sprite = new Sprite(
+                texture, hitbox, 
+                new Vector2(hitbox.X - (hitbox.Width / 2),
+                hitbox.Y - (hitbox.Height / 2)),
+                Color.White);            
         }
 
         //methods
