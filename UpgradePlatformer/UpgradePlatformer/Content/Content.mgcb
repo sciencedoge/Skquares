@@ -20,6 +20,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Poland.spritefont
 
+#begin Levels/collision test.level_Finished
+/copy:Levels/collision test.level_Finished
+
 #begin Levels/EGGMAN.level_Finished
 /copy:Levels/EGGMAN.level_Finished
 

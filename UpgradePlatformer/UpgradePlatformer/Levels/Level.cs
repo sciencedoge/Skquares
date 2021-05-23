@@ -15,6 +15,11 @@ namespace UpgradePlatformer.Levels
         TileTheme tileTheme;
         Tile[,] TileMap;
 
+        public Tile[,] Tiles
+        {
+            get { return TileMap; }
+        }
+
         public void Load(Texture2D texture, String name)
         {
             Name = name;
@@ -54,7 +59,7 @@ namespace UpgradePlatformer.Levels
         {
             List<Tile> Tiles = new List<Tile>();
 
-            Point centerTile = r.Center / new Point(Tile.WINDOW_SIZE / 30);
+            Point centerTile = r.Center / new Point((int)Tile.WINDOW_SIZE / 30);
 
             for (int x = Math.Max(centerTile.X - RedundancySize, 0); x < Math.Min(centerTile.X + RedundancySize, TileWidth); x++)
                 for (int y = Math.Max(centerTile.Y - RedundancySize, 0); y < Math.Min(centerTile.Y + RedundancySize, TileHeight); y++)

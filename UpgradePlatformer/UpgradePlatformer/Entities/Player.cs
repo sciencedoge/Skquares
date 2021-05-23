@@ -117,9 +117,9 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public void ApplyGravity()
         {
-            velocity += gravity;
             position += velocity;
-            
+            velocity += gravity;
+                      
             velocity.X *= 0.70f;
 
             if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height / 2)

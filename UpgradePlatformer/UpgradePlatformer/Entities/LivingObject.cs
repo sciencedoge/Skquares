@@ -86,6 +86,36 @@ namespace UpgradePlatformer.Entities
             set { hitbox = value; }
         }
 
+        /// <summary>
+        /// gets or sets the x value of the 
+        /// hitbox
+        /// </summary>
+        public float X
+        {
+            get { return position.X; }
+            set { position.X = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Y value of the
+        /// hitbox
+        /// </summary>
+        public float Y
+        {
+            get { return position.Y; }
+            set { position.Y = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the velocity of the
+        /// objecf
+        /// </summary>
+        public Vector2 Velocity
+        {
+            get { return velocity; }
+            set { velocity = value; }      
+        }
+
         //const
 
         /// <summary>
@@ -108,7 +138,7 @@ namespace UpgradePlatformer.Entities
                 SpriteBounds.Y - (SpriteBounds.Height / 2)),
                 Color.White);
 
-            gravity = new Vector2(0, 2.5f);
+            gravity = new Vector2(0, 1.5f);
             velocity = new Vector2(0, 0);
             speedX = 2.5f;
 
@@ -143,5 +173,8 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="gt">gameTime</param>
         public abstract void Update(GameTime gt);
+
+
+
     }
 }
