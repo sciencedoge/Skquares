@@ -16,7 +16,7 @@ namespace UpgradePlatformer.Levels
             activeLevel = 0;
             Load(texture, "EGGMAN");
             Load(texture, "EGGMEN");
-            Load(texture, "RUN");
+            Load(texture, "EGGMEN");
         }
 
         public void Load(Texture2D texture, String Name)
@@ -35,5 +35,9 @@ namespace UpgradePlatformer.Levels
             activeLevel++;
             activeLevel = activeLevel % Levels.Count;
         }
+
+        public Level ActiveLevel() => Levels[activeLevel];
+        public String ActiveLevelName() => Levels[activeLevel].Name;
+        public int ActiveLevelNum() => activeLevel;
     }
 }

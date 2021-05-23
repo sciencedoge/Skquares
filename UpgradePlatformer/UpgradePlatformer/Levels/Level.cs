@@ -9,13 +9,16 @@ namespace UpgradePlatformer.Levels
 {
     class Level
     {
+        public String Name;
+
         int TileWidth, TileHeight;
         TileTheme tileTheme;
         Tile[,] TileMap;
 
-        public void Load(Texture2D texture, String Name)
+        public void Load(Texture2D texture, String name)
         {
-            FileStream stream = new FileStream("Content/Levels/" + Name + ".level_Finished", FileMode.Open);
+            Name = name;
+            FileStream stream = new FileStream("Content/Levels/" + name + ".level_Finished", FileMode.Open);
             BinaryReader reader = new BinaryReader(stream);
 
             TileWidth = reader.ReadInt32();
@@ -30,9 +33,9 @@ namespace UpgradePlatformer.Levels
             stream.Close();
         }
 
-        public Level(Texture2D texture, String Name)
+        public Level(Texture2D texture, String name)
         {
-            Load(texture, Name);
+            Load(texture, name);
         }
 
         public void Draw(SpriteBatch spriteBatch)
