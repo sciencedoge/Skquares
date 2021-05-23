@@ -34,7 +34,7 @@ namespace UpgradePlatformer.Entities
             Texture2D texture, GraphicsDeviceManager device)
             : base(maxHp, damage, hitbox, texture) 
         {
-            jumpVelocity = new Vector2(0, -0.33f);
+            jumpVelocity = new Vector2(0, -9.0f) ;
             jumpsLeft = 1;
 
             this._graphics = device;
@@ -90,16 +90,15 @@ namespace UpgradePlatformer.Entities
             if (keyUp)
             {
                 //check for ground collision
-                while (keyUp && jumpsLeft > 0
-                    && velocity.Y >= -30f)
+                if (jumpsLeft > 0 && velocity.Y >= -15f)
                 {
                     velocity.Y += jumpVelocity.Y;
-                    CheckForInput(inputManager);                    
+                } else if (!(velocity.Y >= -15f)) {
+                    keyUp = false;
+                    jumpsLeft -= 1;
                 }
-
-                keyUp = false;
-                jumpsLeft -= 1;
             }
+
             Update(gt);
             hitbox.Location = position.ToPoint();
         }
@@ -124,7 +123,10 @@ namespace UpgradePlatformer.Entities
             velocity.X *= 0.80f;
 
             if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height / 2)
+            {
                 position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height / 2;
+                velocity.Y = 0;
+            }
 
             if (position.X > _graphics.PreferredBackBufferWidth + hitbox.Width)
                 position.X = 0 - hitbox.Width;
@@ -141,6 +143,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public void CheckForInput(InputManager inputManager)
         {
+            inputManager.Update();
             InputEvent dev = inputManager.Pop(InputEventKind.KEY_DOWN);
             InputEvent uev = inputManager.Pop(InputEventKind.KEY_UP);
             if (dev != null)
@@ -154,10 +157,10 @@ namespace UpgradePlatformer.Entities
             if (uev != null)
             {
                 Keys up = (Keys)uev.Data;
-                if (up == Keys.W) keyUp = false;
-                if (up == Keys.A) keyLeft = false;
-                if (up == Keys.S) keyDown = false;
-                if (up == Keys.D) keyRight = false;
+                if (keyUp && up == Keys.W) { keyUp = false; jumpsLeft -= 1;}
+                else if (up == Keys.A) keyLeft = false;
+                else if (up == Keys.S) keyDown = false;
+                else if (up == Keys.D) keyRight = false;
             }
         }
     }
