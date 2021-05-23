@@ -119,8 +119,8 @@ namespace UpgradePlatformer.Entities
         {
             velocity += gravity;
             position += velocity;
-            //gradual slow down
-            velocity.X *= 0.80f;
+            
+            velocity.X *= 0.70f;
 
             if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height / 2)
             {

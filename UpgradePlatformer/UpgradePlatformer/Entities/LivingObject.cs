@@ -110,7 +110,7 @@ namespace UpgradePlatformer.Entities
 
             gravity = new Vector2(0, 2.5f);
             velocity = new Vector2(0, 0);
-            speedX = 1.5f;
+            speedX = 2.5f;
 
             position = new Vector2(hitbox.X, hitbox.Y);
         }
