@@ -47,9 +47,9 @@ namespace UpgradePlatformer.Entities
         /// <param name="inputManager"></param>
         public void Update(GameTime gameTime, InputManager inputManager)
         {
-            currentLevel = levelManager.ActiveLevel();
+            currentLevel = levelManager.ActiveLevel();           
+            player.Update(gameTime, inputManager);
             Intersects();
-            player.Update(gameTime, inputManager);           
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -62,10 +62,10 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public void Intersects()
         {
-            foreach(Tile t in currentLevel.Tiles)
-            {
-                Rectangle temp = GetTempHitbox();
+            Rectangle temp = GetTempHitbox();
 
+            foreach (Tile t in currentLevel.Tiles)
+            {              
                 if (t.Position.Intersects(temp)
                     && t.Kind != 9)
                 {
