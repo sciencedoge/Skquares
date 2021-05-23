@@ -39,7 +39,7 @@ namespace UpgradePlatformer.Levels
         {
             for (int x = 0; x < TileWidth; x++)
                 for (int y = 0; y < TileHeight; y++)
-                    TileMap[x, y].Draw(spriteBatch, new Vector2(y * TileWidth, x * TileHeight));
+                    TileMap[x, y].Draw(spriteBatch, new Vector2(y * Tile.WINDOW_SIZE / 30 + 8, x * Tile.WINDOW_SIZE / 30 + 8));
         }
     }
 

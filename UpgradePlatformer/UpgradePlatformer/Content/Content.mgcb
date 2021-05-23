@@ -26,6 +26,9 @@
 #begin Levels/EGGMEN.level_Finished
 /copy:Levels/EGGMEN.level_Finished
 
+#begin Levels/RUN.level_Finished
+/copy:Levels/RUN.level_Finished
+
 #begin SpriteSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor

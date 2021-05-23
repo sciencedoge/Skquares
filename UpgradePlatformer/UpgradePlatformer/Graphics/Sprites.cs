@@ -40,5 +40,13 @@ namespace UpgradePlatformer.Graphics
             renderRect.Location = renderPosition;
             spriteBatch.Draw(Texture, renderRect, Position, TintColor, rotation, Origin, SpriteEffects.None, 0f);
         }
+
+        public void Draw(SpriteBatch spriteBatch, Point renderPosition, float rotation, Point Size)
+        {
+            Rectangle renderRect = Position;
+            renderRect.Location = renderPosition;
+            renderRect.Size = Size;
+            spriteBatch.Draw(Texture, renderRect, Position, TintColor, rotation, Origin, SpriteEffects.None, 0f);
+        }
     }
 }

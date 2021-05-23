@@ -16,6 +16,7 @@ namespace UpgradePlatformer.Levels
             activeLevel = 0;
             Load(texture, "EGGMAN");
             Load(texture, "EGGMEN");
+            Load(texture, "RUN");
         }
 
         public void Load(Texture2D texture, String Name)
