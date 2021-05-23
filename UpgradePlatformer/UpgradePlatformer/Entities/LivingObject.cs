@@ -16,8 +16,7 @@ namespace UpgradePlatformer.Entities
     //======================================================
     abstract class LivingObject : Interfaces.IDamageable, Interfaces.IHostile
     {
-        private Rectangle SpriteBounds = new Rectangle(16, 13, 15, 15);
-        private Point SpriteSize = new Point(650 / 30, 650 / 30);
+        private Rectangle SpriteBounds = new Rectangle(17, 14, 14, 14);
 
         //fields
         protected bool isActive;
@@ -109,7 +108,7 @@ namespace UpgradePlatformer.Entities
                 SpriteBounds.Y - (SpriteBounds.Height / 2)),
                 Color.White);
 
-            gravity = new Vector2(0, 1);
+            gravity = new Vector2(0, 4);
             velocity = new Vector2(0, 0);
             speedX = 2f;
 
@@ -135,7 +134,7 @@ namespace UpgradePlatformer.Entities
         {
             if (isActive)
             {
-                sprite.Draw(sb, hitbox.Location, 0, SpriteSize);
+                sprite.Draw(sb, hitbox.Location, 0, Hitbox.Size.ToVector2());
             }
         }
 

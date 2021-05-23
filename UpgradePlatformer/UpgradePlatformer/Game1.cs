@@ -57,8 +57,8 @@ namespace UpgradePlatformer
             _uiManager.Add(Stats);
 #endif
 
-            _graphics.PreferredBackBufferHeight = 700;
-            _graphics.PreferredBackBufferWidth = 700;
+            _graphics.PreferredBackBufferHeight = 685;
+            _graphics.PreferredBackBufferWidth = 685;
 
             _graphics.ApplyChanges();
         }
@@ -85,8 +85,9 @@ namespace UpgradePlatformer
             _inputManager.Update(gameTime);
             _entityManager.Update(gameTime, _inputManager);
             _uiManager.Update(gameTime, _inputManager);
+            _levelManager.GetCollisions(new Rectangle(250, 10, 40, 40));
 #if DEBUG
-        if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
+            if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
             {
                 frameRate = (double)frameCounter / gameTime.ElapsedGameTime.TotalSeconds;
             }

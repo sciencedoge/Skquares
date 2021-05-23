@@ -21,6 +21,8 @@ namespace UpgradePlatformer.Entities
         private Vector2 jumpVelocity;
         public bool keyUp, keyDown, keyLeft, keyRight;
 
+        public int jumpsLeft;
+
 
         /// <summary>
         /// Creates a player object
@@ -29,6 +31,7 @@ namespace UpgradePlatformer.Entities
             : base(maxHp, damage, hitbox, texture) 
         {
             jumpVelocity = new Vector2(0, -1);
+            jumpsLeft = 1;
         }
 
         //Methods
@@ -71,9 +74,9 @@ namespace UpgradePlatformer.Entities
             {
                 Keys down = (Keys)dev.Data;
                 if (down == Keys.W) keyUp = true;
-                if (down == Keys.A) keyLeft = true;
-                if (down == Keys.S) keyDown = true;
-                if (down == Keys.D) keyRight = true;
+                else if (down == Keys.A) keyLeft = true;
+                else if (down == Keys.S) keyDown = true;
+                else if (down == Keys.D) keyRight = true;
             }
             if (uev != null)
             {
@@ -86,18 +89,23 @@ namespace UpgradePlatformer.Entities
 
             if (keyRight)
             {
-                this.speedX += speedX;
+                velocity.X += speedX;
             }
 
             if (keyLeft)
             {
-                this.speedX -= speedX;
+                velocity.X -= speedX;
             }
 
             if (keyUp)
             {
-                velocity.Y = -10f;
-                keyUp = false;
+                //check for ground collision
+                if (true && jumpsLeft > 0)
+                {
+                    velocity.Y = -50f;
+                    keyUp = false;
+                    jumpsLeft -= 1;
+                }
             }
             Update(gt);
             hitbox.Location = position.ToPoint();
@@ -119,6 +127,9 @@ namespace UpgradePlatformer.Entities
         {
             velocity += gravity;
             position += velocity;
+            velocity *= new Vector2(0.8f);
+            position.Y = Math.Min(700 - hitbox.Height / 2, position.Y);
+            if (position.Y == 700 - hitbox.Height / 2) jumpsLeft = 1;
         }
     }
 }
