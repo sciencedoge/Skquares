@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UpgradePlatformer.Input;
 
 namespace UpgradePlatformer.Entities
 {
@@ -12,11 +13,21 @@ namespace UpgradePlatformer.Entities
     class EntityManager
     {
         //Fields
-        private Input.InputManager inputManager;
+
+        //input
+        private InputManager inputManager;
+
+        //player and enemies
+        private Player player;
+        private List<Enemy> enemies;
+
+        //list of tiles
+
+
 
         public EntityManager()
         {
-
+            inputManager = new InputManager();
         }
     }
 }

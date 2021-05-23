@@ -14,7 +14,7 @@ namespace UpgradePlatformer.Entities
     //Purpose: Provides the basis for all living entities in
     //the game
     //======================================================
-    class LivingObject : Interfaces.IDamageable, Interfaces.IHostile
+    abstract class LivingObject : Interfaces.IDamageable, Interfaces.IHostile
     {
         //fields
         protected bool isActive;
@@ -140,24 +140,6 @@ namespace UpgradePlatformer.Entities
         /// Updates entities every frame
         /// </summary>
         /// <param name="gt">gameTime</param>
-        public virtual void Update(GameTime gt)
-        {
-
-        }
-
-        /// <summary>
-        /// Processes input
-        /// </summary>
-        /// <param name="gt"></param>
-        /// <param name="keys"></param>
-        public virtual void Update(GameTime gt, Keys keys)
-        {
-            
-        }
-
-        public void CollisionResolve()
-        {
-
-        }
+        public abstract void Update(GameTime gt);
     }
 }
