@@ -48,12 +48,12 @@ namespace UpgradePlatformer.Entities
         public void Update(GameTime gameTime, InputManager inputManager)
         {
             currentLevel = levelManager.ActiveLevel();
-            Intersects();
             player.Update(gameTime, inputManager);           
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            Intersects();
             player.Draw(spriteBatch, gameTime);
         }
 

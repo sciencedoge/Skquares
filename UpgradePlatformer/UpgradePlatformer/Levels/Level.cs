@@ -14,6 +14,7 @@ namespace UpgradePlatformer.Levels
         int TileWidth, TileHeight;
         TileTheme tileTheme;
         Tile[,] TileMap;
+        GraphicsDeviceManager Graphics;
 
         public Tile[,] Tiles
         {
@@ -29,17 +30,20 @@ namespace UpgradePlatformer.Levels
             TileWidth = reader.ReadInt32();
             TileHeight = reader.ReadInt32();
 
+            Point tileSize = new Point(Graphics.PreferredBackBufferWidth / TileWidth, Graphics.PreferredBackBufferHeight / TileHeight);
+
             TileMap = new Tile[TileWidth, TileHeight];
 
             for (int x = 0; x < TileWidth; x++)
                 for (int y = 0; y < TileHeight; y++)
-                    TileMap[x, y] = new Tile(texture, reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32());
+                    TileMap[x, y] = new Tile(texture, reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize);
             reader.Close();
             stream.Close();
         }
 
-        public Level(Texture2D texture, String name)
+        public Level(Texture2D texture, String name, GraphicsDeviceManager graphics)
         {
+            Graphics = graphics;
             Load(texture, name);
         }
 
@@ -47,7 +51,7 @@ namespace UpgradePlatformer.Levels
         {
             for (int x = 0; x < TileWidth; x++)
                 for (int y = 0; y < TileHeight; y++)
-                    TileMap[x, y].Draw(spriteBatch, new Vector2(y * (Tile.WINDOW_SIZE / 30) + 8, x * (Tile.WINDOW_SIZE / 30) + 8));
+                    TileMap[x, y].Draw(spriteBatch, new Vector2(y * (TileMap[x, y].TileSize.Y), x * (TileMap[x, y].TileSize.X)));
         }
 
         /// <summary>
@@ -59,7 +63,7 @@ namespace UpgradePlatformer.Levels
         {
             List<Tile> Tiles = new List<Tile>();
 
-            Point centerTile = r.Center / new Point((int)Tile.WINDOW_SIZE / 30);
+            Point centerTile = r.Center / TileMap[0, 0].TileSize;
 
             for (int x = Math.Max(centerTile.X - RedundancySize, 0); x < Math.Min(centerTile.X + RedundancySize, TileWidth); x++)
                 for (int y = Math.Max(centerTile.Y - RedundancySize, 0); y < Math.Min(centerTile.Y + RedundancySize, TileHeight); y++)
