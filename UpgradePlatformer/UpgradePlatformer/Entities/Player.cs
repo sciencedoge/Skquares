@@ -91,10 +91,9 @@ namespace UpgradePlatformer.Entities
             {
                 //check for ground collision
                 while (keyUp && jumpsLeft > 0
-                    && velocity.Y >= -30f)
+                    && velocity.Y >= -20f)
                 {
-                    velocity.Y += jumpVelocity.Y;
-                    CheckForInput(inputManager);                    
+                    velocity.Y += jumpVelocity.Y;                   
                 }
 
                 keyUp = false;
@@ -128,7 +127,7 @@ namespace UpgradePlatformer.Entities
 
             if (position.X > _graphics.PreferredBackBufferWidth + hitbox.Width)
                 position.X = 0 - hitbox.Width;
-
+            
             if (position.X < 0 - hitbox.Width)
                 position.X = _graphics.PreferredBackBufferWidth + hitbox.Width;
              

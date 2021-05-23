@@ -15,6 +15,11 @@ namespace UpgradePlatformer.Levels
         TileTheme tileTheme;
         Tile[,] TileMap;
 
+        public Tile[,] Tiles
+        {
+            get { return TileMap; }
+        }
+
         public void Load(Texture2D texture, String name)
         {
             Name = name;

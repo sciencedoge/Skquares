@@ -48,7 +48,7 @@ namespace UpgradePlatformer
             _uiManager = new UIManager();
             _inputManager = new InputManager();
             _levelManager = new LevelManager(_spriteSheetTexture);
-            _entityManager = new EntityManager(_spriteSheetTexture, _graphics);
+            _entityManager = new EntityManager(_spriteSheetTexture, _graphics, _levelManager);
 #if DEBUG
             UIButton b = new UIButton(_spriteSheetTexture, new Rectangle(250, 10, 40, 40));
             b.onClick = new UIAction(() => _levelManager.Next());
@@ -85,7 +85,7 @@ namespace UpgradePlatformer
             _inputManager.Update(gameTime);
             _entityManager.Update(gameTime, _inputManager);
             _uiManager.Update(gameTime, _inputManager);
-            _levelManager.GetCollisions(new Rectangle(250, 10, 40, 40));
+            //_levelManager.GetCollisions(new Rectangle(250, 10, 40, 40));
 #if DEBUG
             if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
             {
