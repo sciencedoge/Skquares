@@ -24,7 +24,7 @@ namespace UpgradePlatformer
         private LevelManager _levelManager;
         private SpriteFont _font;
 
-        private Player player;
+        private EntityManager enMan;
 #if DEBUG
         private UIText FpsMeter;
         double frameRate = 0.0;
@@ -69,8 +69,7 @@ namespace UpgradePlatformer
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
             _font = Content.Load<SpriteFont>("Fonts/Poland");
 
-            player = new Player(10, 2, 
-                new Rectangle(new Point(10, 10), new Point(50, 50)), _spriteSheetTexture);
+            enMan = new EntityManager();
         }
 
         protected override void Update(GameTime gameTime)
