@@ -83,8 +83,8 @@ namespace UpgradePlatformer
             // TODO: Add your update logic here
 
             _inputManager.Update(gameTime);
-            _uiManager.Update(gameTime, _inputManager);
             _entityManager.Update(gameTime, _inputManager);
+            _uiManager.Update(gameTime, _inputManager);
 #if DEBUG
         if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
             {
@@ -109,6 +109,8 @@ namespace UpgradePlatformer
             _spriteBatch.Begin();
 
             _levelManager.Draw(_spriteBatch);
+
+            _entityManager.Draw(gameTime, _spriteBatch);
 
             _uiManager.Draw(gameTime, _spriteBatch);
 
