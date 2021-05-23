@@ -60,7 +60,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="gt"></param>
         /// <param name="keys"></param>
-        public override void Update(GameTime gt, Keys keys)
+        public void Update(GameTime gt, Keys keys)
         {
             if (keys == Keys.D)
             {
@@ -77,7 +77,11 @@ namespace UpgradePlatformer.Entities
                 velocity.Y = -10f;
             }
         }
-
+        
+        /// <summary>
+        /// Updates the gravity of the player
+        /// </summary>
+        /// <param name="gt"></param>
         public override void Update(GameTime gt)
         {
             ApplyGravity();
@@ -90,14 +94,6 @@ namespace UpgradePlatformer.Entities
         {
             velocity += gravity;
             position += gravity;
-        }
-
-        /// <summary>
-        /// Checks tiles and resolves collisions accordingly
-        /// </summary>
-        /// <param name="tiles">list of tiles</param>
-        public void ResolveCollisions()
-        {
         }
     }
 }

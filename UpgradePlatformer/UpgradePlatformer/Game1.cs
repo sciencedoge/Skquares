@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.UI;
+using UpgradePlatformer.Entities;
 
 namespace UpgradePlatformer
 {
@@ -22,6 +23,8 @@ namespace UpgradePlatformer
         private InputManager _inputManager;
         private LevelManager _levelManager;
         private SpriteFont _font;
+
+        private Player player;
 #if DEBUG
         private UIText FpsMeter;
         double frameRate = 0.0;
@@ -35,8 +38,7 @@ namespace UpgradePlatformer
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
-            
+             
         }
 
         protected override void Initialize()
@@ -66,6 +68,9 @@ namespace UpgradePlatformer
             // TODO: use this.Content to load your game content here
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
             _font = Content.Load<SpriteFont>("Fonts/Poland");
+
+            player = new Player(10, 2, 
+                new Rectangle(new Point(10, 10), new Point(50, 50)), _spriteSheetTexture);
         }
 
         protected override void Update(GameTime gameTime)
@@ -85,6 +90,7 @@ namespace UpgradePlatformer
             frameCounter = 0;
             FpsMeter.Text = frameRate.ToString("F2");
 #endif
+
             base.Update(gameTime);
         }
 
@@ -93,7 +99,7 @@ namespace UpgradePlatformer
 #if DEBUG
             frameCounter++;
 #endif
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
 
