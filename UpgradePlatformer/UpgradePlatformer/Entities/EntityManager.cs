@@ -64,7 +64,6 @@ namespace UpgradePlatformer.Entities
         {
             foreach(Tile t in currentLevel.Tiles)
             {
-
                 Rectangle temp = GetTempHitbox();
 
                 if (t.Position.Intersects(temp)
