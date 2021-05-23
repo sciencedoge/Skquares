@@ -28,7 +28,7 @@ namespace UpgradePlatformer.Entities
         public EntityManager(Texture2D texture, GraphicsDeviceManager device)
         {
             player = new Player(10, 2, 
-                new Rectangle(new Point(10, 10), new Point(40, 40)), texture, device);
+                new Rectangle(new Point(50, 600), new Point(40, 40)), texture, device);
         }
 
         //methods

@@ -126,12 +126,12 @@ namespace UpgradePlatformer.Entities
             if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height / 2)
                 position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height / 2;
 
-            if (position.X > _graphics.PreferredBackBufferWidth + hitbox.Width / 2)
-                position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height / 2;
+            if (position.X > _graphics.PreferredBackBufferWidth + hitbox.Width)
+                position.X = 0 - hitbox.Width;
 
-            if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height / 2)
-                position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height / 2;
-
+            if (position.X < 0 - hitbox.Width)
+                position.X = _graphics.PreferredBackBufferWidth + hitbox.Width;
+             
 
             if (position.Y >= _graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 1;
         }
