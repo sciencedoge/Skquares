@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Graphics;
+using UpgradePlatformer.Input;
 
 namespace UpgradePlatformer.Entities
 {
@@ -18,6 +19,8 @@ namespace UpgradePlatformer.Entities
 
         //Fields
         private Vector2 jumpVelocity;
+        public bool keyUp, keyDown, keyLeft, keyRight;
+
 
         /// <summary>
         /// Creates a player object
@@ -60,22 +63,36 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="gt"></param>
         /// <param name="keys"></param>
-        public void Update(GameTime gt, Keys keys)
+        public void Update(GameTime gt, InputManager inputManager)
         {
-            if (keys == Keys.D)
+            InputEvent dev = inputManager.Pop(InputEventKind.KEY_DOWN);
+            InputEvent uev = inputManager.Pop(InputEventKind.KEY_UP);
+            Keys down = (Keys)dev.Data;
+            Keys up = (Keys)dev.Data;
+            if (down == Keys.W) keyUp = true;
+            if (down == Keys.A) keyLeft = true;
+            if (down == Keys.S) keyDown = true;
+            if (down == Keys.D) keyRight = true;
+            if (up == Keys.W) keyUp = false;
+            if (up == Keys.A) keyLeft = false;
+            if (up == Keys.S) keyDown = false;
+            if (up == Keys.D) keyRight = false;
+
+            if (keyRight)
             {
                 this.speedX += speedX;
             }
 
-            if (keys == Keys.A)
+            if (keyLeft)
             {
                 this.speedX -= speedX;
             }
 
-            if (keys == Keys.W)
+            if (keyUp)
             {
                 velocity.Y = -10f;
             }
+
         }
         
         /// <summary>

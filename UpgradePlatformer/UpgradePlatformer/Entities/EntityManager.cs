@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UpgradePlatformer.Input;
@@ -14,9 +16,6 @@ namespace UpgradePlatformer.Entities
     {
         //Fields
 
-        //input
-        private InputManager inputManager;
-
         //player and enemies
         private Player player;
         private List<Enemy> enemies;
@@ -25,9 +24,22 @@ namespace UpgradePlatformer.Entities
 
 
 
-        public EntityManager()
+        public EntityManager(Texture2D texture)
         {
-            inputManager = new InputManager();
+            player = new Player(10, 2, 
+                new Rectangle(new Point(10, 10), new Point(50, 50)), texture);
+        }
+
+        //methods
+
+        public void Update(GameTime gameTime, InputManager inputManager)
+        {
+            player.Update(gameTime, inputManager);
+        }
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            player.Draw(spriteBatch, gameTime);
         }
     }
 }
