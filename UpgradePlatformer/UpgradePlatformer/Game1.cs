@@ -48,7 +48,7 @@ namespace UpgradePlatformer
             _uiManager = new UIManager();
             _inputManager = new InputManager();
             _levelManager = new LevelManager(_spriteSheetTexture);
-            _entityManager = new EntityManager(_spriteSheetTexture);
+            _entityManager = new EntityManager(_spriteSheetTexture, _graphics);
 #if DEBUG
             UIButton b = new UIButton(_spriteSheetTexture, new Rectangle(250, 10, 40, 40));
             b.onClick = new UIAction(() => _levelManager.Next());

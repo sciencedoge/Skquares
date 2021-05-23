@@ -19,15 +19,16 @@ namespace UpgradePlatformer.Entities
         //player and enemies
         private Player player;
         private List<Enemy> enemies;
+        private GraphicsDeviceManager device;
 
         //list of tiles
 
 
 
-        public EntityManager(Texture2D texture)
+        public EntityManager(Texture2D texture, GraphicsDeviceManager device)
         {
             player = new Player(10, 2, 
-                new Rectangle(new Point(10, 10), new Point(40, 40)), texture);
+                new Rectangle(new Point(10, 10), new Point(40, 40)), texture, device);
         }
 
         //methods
