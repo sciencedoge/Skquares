@@ -67,16 +67,22 @@ namespace UpgradePlatformer.Entities
         {
             InputEvent dev = inputManager.Pop(InputEventKind.KEY_DOWN);
             InputEvent uev = inputManager.Pop(InputEventKind.KEY_UP);
-            Keys down = (Keys)dev.Data;
-            Keys up = (Keys)dev.Data;
-            if (down == Keys.W) keyUp = true;
-            if (down == Keys.A) keyLeft = true;
-            if (down == Keys.S) keyDown = true;
-            if (down == Keys.D) keyRight = true;
-            if (up == Keys.W) keyUp = false;
-            if (up == Keys.A) keyLeft = false;
-            if (up == Keys.S) keyDown = false;
-            if (up == Keys.D) keyRight = false;
+            if (dev != null)
+            {
+                Keys down = (Keys)dev.Data;
+                if (down == Keys.W) keyUp = true;
+                if (down == Keys.A) keyLeft = true;
+                if (down == Keys.S) keyDown = true;
+                if (down == Keys.D) keyRight = true;
+            }
+            if (uev != null)
+            {
+                Keys up = (Keys)uev.Data;
+                if (up == Keys.W) keyUp = false;
+                if (up == Keys.A) keyLeft = false;
+                if (up == Keys.S) keyDown = false;
+                if (up == Keys.D) keyRight = false;
+            }
 
             if (keyRight)
             {
@@ -91,8 +97,10 @@ namespace UpgradePlatformer.Entities
             if (keyUp)
             {
                 velocity.Y = -10f;
+                keyUp = false;
             }
-
+            Update(gt);
+            hitbox.Location = position.ToPoint();
         }
         
         /// <summary>
@@ -110,7 +118,7 @@ namespace UpgradePlatformer.Entities
         public void ApplyGravity()
         {
             velocity += gravity;
-            position += gravity;
+            position += velocity;
         }
     }
 }
