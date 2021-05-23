@@ -91,7 +91,7 @@ namespace UpgradePlatformer.Entities
             {
                 //check for ground collision
                 while (keyUp && jumpsLeft > 0
-                    && velocity.Y >= -50f)
+                    && velocity.Y >= -30f)
                 {
                     velocity.Y += jumpVelocity.Y;
                     CheckForInput(inputManager);                    
@@ -121,10 +121,18 @@ namespace UpgradePlatformer.Entities
             velocity += gravity;
             position += velocity;
             //gradual slow down
-            velocity *= new Vector2(0.8f);
+            velocity.X *= 0.80f;
 
             if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height / 2)
                 position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height / 2;
+
+            if (position.X > _graphics.PreferredBackBufferWidth + hitbox.Width / 2)
+                position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height / 2;
+
+            if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height / 2)
+                position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height / 2;
+
+
             if (position.Y >= _graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 1;
         }
 

@@ -108,9 +108,9 @@ namespace UpgradePlatformer.Entities
                 SpriteBounds.Y - (SpriteBounds.Height / 2)),
                 Color.White);
 
-            gravity = new Vector2(0, 3);
+            gravity = new Vector2(0, 2.5f);
             velocity = new Vector2(0, 0);
-            speedX = 2f;
+            speedX = 1.5f;
 
             position = new Vector2(hitbox.X, hitbox.Y);
         }
