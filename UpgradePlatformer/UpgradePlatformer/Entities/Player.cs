@@ -19,19 +19,25 @@ namespace UpgradePlatformer.Entities
 
         //Fields
         private Vector2 jumpVelocity;
-        public bool keyUp, keyDown, keyLeft, keyRight;
+        private bool keyUp, keyDown, keyLeft, keyRight;
 
-        public int jumpsLeft;
+        private int jumpsLeft;
+
+        //screen bounds stuff
+        private GraphicsDeviceManager _graphics;
 
 
         /// <summary>
         /// Creates a player object
         /// </summary>
-        public Player(int maxHp, int damage, Rectangle hitbox, Texture2D texture)
+        public Player(int maxHp, int damage, Rectangle hitbox,
+            Texture2D texture, GraphicsDeviceManager device)
             : base(maxHp, damage, hitbox, texture) 
         {
-            jumpVelocity = new Vector2(0, -1);
+            jumpVelocity = new Vector2(0, -0.33f);
             jumpsLeft = 1;
+
+            this._graphics = device;
         }
 
         //Methods
@@ -68,24 +74,8 @@ namespace UpgradePlatformer.Entities
         /// <param name="keys"></param>
         public void Update(GameTime gt, InputManager inputManager)
         {
-            InputEvent dev = inputManager.Pop(InputEventKind.KEY_DOWN);
-            InputEvent uev = inputManager.Pop(InputEventKind.KEY_UP);
-            if (dev != null)
-            {
-                Keys down = (Keys)dev.Data;
-                if (down == Keys.W) keyUp = true;
-                else if (down == Keys.A) keyLeft = true;
-                else if (down == Keys.S) keyDown = true;
-                else if (down == Keys.D) keyRight = true;
-            }
-            if (uev != null)
-            {
-                Keys up = (Keys)uev.Data;
-                if (up == Keys.W) keyUp = false;
-                if (up == Keys.A) keyLeft = false;
-                if (up == Keys.S) keyDown = false;
-                if (up == Keys.D) keyRight = false;
-            }
+
+            CheckForInput(inputManager);
 
             if (keyRight)
             {
@@ -100,12 +90,15 @@ namespace UpgradePlatformer.Entities
             if (keyUp)
             {
                 //check for ground collision
-                if (true && jumpsLeft > 0)
+                while (keyUp && jumpsLeft > 0
+                    && velocity.Y >= -50f)
                 {
-                    velocity.Y = -50f;
-                    keyUp = false;
-                    jumpsLeft -= 1;
+                    velocity.Y += jumpVelocity.Y;
+                    CheckForInput(inputManager);                    
                 }
+
+                keyUp = false;
+                jumpsLeft -= 1;
             }
             Update(gt);
             hitbox.Location = position.ToPoint();
@@ -127,9 +120,37 @@ namespace UpgradePlatformer.Entities
         {
             velocity += gravity;
             position += velocity;
+            //gradual slow down
             velocity *= new Vector2(0.8f);
-            position.Y = Math.Min(700 - hitbox.Height / 2, position.Y);
-            if (position.Y == 700 - hitbox.Height / 2) jumpsLeft = 1;
+
+            if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height / 2)
+                position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height / 2;
+            if (position.Y >= _graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 1;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void CheckForInput(InputManager inputManager)
+        {
+            InputEvent dev = inputManager.Pop(InputEventKind.KEY_DOWN);
+            InputEvent uev = inputManager.Pop(InputEventKind.KEY_UP);
+            if (dev != null)
+            {
+                Keys down = (Keys)dev.Data;
+                if (down == Keys.W) keyUp = true;
+                else if (down == Keys.A) keyLeft = true;
+                else if (down == Keys.S) keyDown = true;
+                else if (down == Keys.D) keyRight = true;
+            }
+            if (uev != null)
+            {
+                Keys up = (Keys)uev.Data;
+                if (up == Keys.W) keyUp = false;
+                if (up == Keys.A) keyLeft = false;
+                if (up == Keys.S) keyDown = false;
+                if (up == Keys.D) keyRight = false;
+            }
         }
     }
 }
