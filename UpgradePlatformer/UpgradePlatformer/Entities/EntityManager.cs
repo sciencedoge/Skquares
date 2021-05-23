@@ -49,7 +49,7 @@ namespace UpgradePlatformer.Entities
         {
             currentLevel = levelManager.ActiveLevel();
             Intersects();
-            player.Update(gameTime, inputManager);
+            player.Update(gameTime, inputManager);           
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -65,11 +65,13 @@ namespace UpgradePlatformer.Entities
             foreach(Tile t in currentLevel.Tiles)
             {
 
-                if (t.Position.Intersects(player.Hitbox)
+                Rectangle temp = GetTempHitbox();
+
+                if (t.Position.Intersects(temp)
                     && t.Kind != 9)
                 {
                     //Gets a rectangle that represents the intersection
-                    Rectangle intersection = Rectangle.Intersect(player.Hitbox, t.Position);
+                    Rectangle intersection = Rectangle.Intersect(temp, t.Position);
 
                     //checks conditions to move the player up or down
                     if (intersection.Width > intersection.Height)
@@ -78,13 +80,13 @@ namespace UpgradePlatformer.Entities
                         //moves player up
                         if (t.Position.Top - intersection.Top == 0)
                         {
-                            player.Y -= intersection.Height;
+                            temp.Y -= t.Position.Height;
                         }
 
                         //moves player down
                         else if (t.Position.Top - intersection.Top != 0)
                         {
-                            player.Y += intersection.Height;
+                            temp.Y += t.Position.Height;
                         }
 
                         player.Velocity = new Vector2(player.Velocity.X, 0);
@@ -96,16 +98,32 @@ namespace UpgradePlatformer.Entities
                         //moves the player right
                         if (t.Position.Right - intersection.Right == 0)
                         {
-                            player.X += intersection.Width;
+                            temp.X += intersection.Width;
                         }
                         //moves the player left
                         else
                         {
-                            player.X -= intersection.Width;
+                            temp.X -= intersection.Width;
                         }
                     }
+
+                    player.X = temp.X;
+                    player.Y = temp.Y;
                 }               
             }
+        }
+
+        /// <summary>
+        /// returns a temp hitbox
+        /// </summary>
+        /// <returns></returns>
+        public Rectangle GetTempHitbox()
+        {
+            return new Rectangle(
+                new Point(player.Hitbox.X,
+                player.Hitbox.Y),
+                new Point(player.Hitbox.Width,
+                player.Hitbox.Height));
         }
     }
 }

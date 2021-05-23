@@ -90,20 +90,20 @@ namespace UpgradePlatformer.Entities
         /// gets or sets the x value of the 
         /// hitbox
         /// </summary>
-        public int X
+        public float X
         {
-            get { return hitbox.X; }
-            set { hitbox.X = value; }
+            get { return position.X; }
+            set { position.X = value; }
         }
 
         /// <summary>
         /// Gets or sets the Y value of the
         /// hitbox
         /// </summary>
-        public int Y
+        public float Y
         {
-            get { return hitbox.Y; }
-            set { hitbox.Y = value; }
+            get { return position.Y; }
+            set { position.Y = value; }
         }
 
         /// <summary>
