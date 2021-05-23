@@ -43,7 +43,7 @@ namespace UpgradePlatformer.Entities
                 {
                     if (this.hitbox.Intersects(live.Hitbox))
                     {
-                        this.CurrentHP -= live.Damage;
+                        this.TakeDamage(live.Damage);
 
                         if (CurrentHP <= 0)
                         {
@@ -55,23 +55,49 @@ namespace UpgradePlatformer.Entities
         }
 
         /// <summary>
-        /// Updates the player
-        /// every frame
+        /// Updates the player's position based on the
+        /// key pressed
         /// </summary>
-        /// <param name="gt">game time</param>
+        /// <param name="gt"></param>
+        /// <param name="keys"></param>
+        public override void Update(GameTime gt, Keys keys)
+        {
+            if (keys == Keys.D)
+            {
+                this.speedX += speedX;
+            }
+
+            if (keys == Keys.A)
+            {
+                this.speedX -= speedX;
+            }
+
+            if (keys == Keys.W)
+            {
+                velocity.Y = -10f;
+            }
+        }
+
         public override void Update(GameTime gt)
         {
-
+            ApplyGravity();
         }
 
         /// <summary>
-        /// tracks player movement
+        /// Applies gravity to the player
         /// </summary>
-        /// <param name="gt"></param>
-        /// <param name="key"></param>
-        public void Update(Keys key)
+        public void ApplyGravity()
         {
+            velocity += gravity;
+            position += gravity;
+        }
 
+        /// <summary>
+        /// Checks tiles and resolves collisions accordingly
+        /// </summary>
+        /// <param name="tiles">list of tiles</param>
+        public void ResolveCollisions()
+        {
         }
     }
 }

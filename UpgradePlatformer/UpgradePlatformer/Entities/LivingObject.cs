@@ -14,7 +14,7 @@ namespace UpgradePlatformer.Entities
     //Purpose: Provides the basis for all living entities in
     //the game
     //======================================================
-    abstract class LivingObject : Interfaces.IDamageable, Interfaces.IHostile
+    class LivingObject : Interfaces.IDamageable, Interfaces.IHostile
     {
         //fields
         protected bool isActive;
@@ -26,6 +26,7 @@ namespace UpgradePlatformer.Entities
         protected Vector2 gravity;
         protected Vector2 velocity;
         protected float speedX;
+        protected Vector2 position;
 
         //sprite info
         protected Sprite sprite;
@@ -108,6 +109,8 @@ namespace UpgradePlatformer.Entities
             gravity = new Vector2(0, 1);
             velocity = new Vector2(0, 0);
             speedX = 2f;
+
+            position = new Vector2(hitbox.X, hitbox.Y);
         }
 
         //methods
@@ -137,6 +140,24 @@ namespace UpgradePlatformer.Entities
         /// Updates entities every frame
         /// </summary>
         /// <param name="gt">gameTime</param>
-        public abstract void Update(GameTime gt);
+        public virtual void Update(GameTime gt)
+        {
+
+        }
+
+        /// <summary>
+        /// Processes input
+        /// </summary>
+        /// <param name="gt"></param>
+        /// <param name="keys"></param>
+        public virtual void Update(GameTime gt, Keys keys)
+        {
+            
+        }
+
+        public void CollisionResolve()
+        {
+
+        }
     }
 }

@@ -35,6 +35,8 @@ namespace UpgradePlatformer
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            
         }
 
         protected override void Initialize()
@@ -50,6 +52,11 @@ namespace UpgradePlatformer
             FpsMeter = new UIText(_font, new Rectangle(0, 0, 0, 0));
             _uiManager.Add(FpsMeter);
 #endif
+
+            _graphics.PreferredBackBufferHeight = 700;
+            _graphics.PreferredBackBufferWidth = 700;
+
+            _graphics.ApplyChanges();
         }
 
         protected override void LoadContent()
