@@ -22,11 +22,12 @@ namespace UpgradePlatformer
         private UIManager _uiManager;
         private InputManager _inputManager;
         private LevelManager _levelManager;
+        private EntityManager _entityManager;
         private SpriteFont _font;
 
-        private EntityManager enMan;
+        private Player player;
 #if DEBUG
-        private UIText FpsMeter;
+        private UIText Stats;
         double frameRate = 0.0;
         int frameCounter;
 #endif
@@ -47,16 +48,17 @@ namespace UpgradePlatformer
             _uiManager = new UIManager();
             _inputManager = new InputManager();
             _levelManager = new LevelManager(_spriteSheetTexture);
+            _entityManager = new EntityManager(_spriteSheetTexture);
+#if DEBUG
             UIButton b = new UIButton(_spriteSheetTexture, new Rectangle(250, 10, 40, 40));
             b.onClick = new UIAction(() => _levelManager.Next());
             _uiManager.Add(b);
-#if DEBUG
-            FpsMeter = new UIText(_font, new Rectangle(0, 0, 0, 0));
-            _uiManager.Add(FpsMeter);
+            Stats = new UIText(_font, new Rectangle(0, 0, 0, 0), Color.White);
+            _uiManager.Add(Stats);
 #endif
 
-            _graphics.PreferredBackBufferHeight = 700;
-            _graphics.PreferredBackBufferWidth = 700;
+            _graphics.PreferredBackBufferHeight = 685;
+            _graphics.PreferredBackBufferWidth = 685;
 
             _graphics.ApplyChanges();
         }
@@ -69,7 +71,8 @@ namespace UpgradePlatformer
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
             _font = Content.Load<SpriteFont>("Fonts/Poland");
 
-            enMan = new EntityManager();
+            //player = new Player(10, 2, 
+            //    new Rectangle(new Point(10, 10), new Point(50, 50)), _spriteSheetTexture);
         }
 
         protected override void Update(GameTime gameTime)
@@ -80,14 +83,16 @@ namespace UpgradePlatformer
             // TODO: Add your update logic here
 
             _inputManager.Update(gameTime);
+            _entityManager.Update(gameTime, _inputManager);
             _uiManager.Update(gameTime, _inputManager);
+            _levelManager.GetCollisions(new Rectangle(250, 10, 40, 40));
 #if DEBUG
-        if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
+            if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
             {
                 frameRate = (double)frameCounter / gameTime.ElapsedGameTime.TotalSeconds;
             }
             frameCounter = 0;
-            FpsMeter.Text = frameRate.ToString("F2");
+            Stats.Text = frameRate.ToString("F2") + "\n" + _levelManager.ActiveLevelName() + ":" + _levelManager.ActiveLevelNum();
 #endif
 
             base.Update(gameTime);
@@ -105,6 +110,8 @@ namespace UpgradePlatformer
             _spriteBatch.Begin();
 
             _levelManager.Draw(_spriteBatch);
+
+            _entityManager.Draw(gameTime, _spriteBatch);
 
             _uiManager.Draw(gameTime, _spriteBatch);
 

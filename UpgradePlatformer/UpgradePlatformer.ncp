@@ -74,8 +74,10 @@
         <Member type="Field">public MouseState mouseState</Member>
         <Member type="Field">public KeyboardState kbState</Member>
         <Member type="Field">public KeyboardState prevKbState</Member>
-        <Member type="Method">public bool SingleKeyPress()</Member>
-        <Member type="Method">public void Update(gameTime GameTime)</Member>
+        <Member type="Field">public MouseState prevMouseState</Member>
+        <Member type="Method">public void Update()</Member>
+        <Member type="Method">public void Pop(InputEventKind Kind)</Member>
+        <Member type="Method">public void Push(InputEvent e)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -134,7 +136,7 @@
       <Entity type="Class">
         <Name>Enemy</Name>
         <Access>Public</Access>
-        <Location left="539" top="891" />
+        <Location left="654" top="891" />
         <Size width="284" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">void Draw(SpriteBatch spriteBatch, GameTime gameTime)</Member>
@@ -177,9 +179,9 @@
         <Location left="1642" top="891" />
         <Size width="278" height="230" />
         <Collapsed>False</Collapsed>
-        <Member type="Field">Sprite NormalSprite</Member>
-        <Member type="Field">Sprite ClickedSprite</Member>
-        <Member type="Field">Sprite DisabledSprite</Member>
+        <Member type="Field">UISprite NormalSprite</Member>
+        <Member type="Field">UISprite ClickedSprite</Member>
+        <Member type="Field">UISprite DisabledSprite</Member>
         <Member type="Field">public bool Disabled</Member>
         <Member type="Field">int newField</Member>
         <Member type="Constructor">public UIButton(Rectangle Bounds)</Member>
@@ -263,7 +265,10 @@
         <Member type="Field">readonly int tileWidth</Member>
         <Member type="Field">readonly int tileHeight</Member>
         <Member type="Field">TileTheme tileTheme</Member>
-        <Member type="Field">Tile[,] TileMaps</Member>
+        <Member type="Field">Tile[,] TileMap</Member>
+        <Member type="Method">public void LoadNew(String name)</Member>
+        <Member type="Method">public void Draw(SpriteBatch spriteBatch, GameTime gameTime)</Member>
+        <Member type="Constructor">public Level(String Name)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Delegate">
@@ -287,19 +292,61 @@
         <Member type="Method">public void Draw(SpriteBatch spriteBatch, Rectangle renderRect, float rotation)</Member>
         <Modifier>None</Modifier>
       </Entity>
+      <Entity type="Class">
+        <Name>InputEvent</Name>
+        <Access>Public</Access>
+        <Location left="1959" top="614" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">public InputEventKind Kind</Member>
+        <Member type="Field">public uint Data</Member>
+        <Member type="Field">public Point MousePosition</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Enum">
+        <Name>InputEventKind</Name>
+        <Access>Public</Access>
+        <Location left="2166" top="614" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Value>MOUSE_DOWN</Value>
+        <Value>MOUSE_UP</Value>
+        <Value>KEY_DOWN</Value>
+        <Value>KEY_UP</Value>
+      </Entity>
+      <Entity type="Comment">
+        <Text>Data for Input Event by Event Kind
+
+- MOUSE_DOWN
+  - Button Number
+- MOUSE_UP
+  - Button Number
+- KEY_DOWN
+  - Key Value in Some encoding
+- KEY_UP
+  - Key Value in Some encoding</Text>
+        <Location left="1959" top="891" />
+        <Size width="160" height="230" />
+      </Entity>
     </Entities>
     <Relationships>
       <Relationship type="Dependency" first="3" second="1">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="7" second="0">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Aggregation</AssociationType>
       </Relationship>
       <Relationship type="Association" first="6" second="0">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -334,28 +381,20 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="12" second="8">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="12" second="9">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="13" second="0">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Aggregation</AssociationType>
       </Relationship>
       <Relationship type="Dependency" first="11" second="13">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
@@ -364,36 +403,26 @@
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="1" second="2">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="17" second="0">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Aggregation</AssociationType>
       </Relationship>
       <Relationship type="Dependency" first="16" second="18">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="18" second="17">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>
         <AssociationType>Aggregation</AssociationType>
       </Relationship>
       <Relationship type="Dependency" first="19" second="23">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -402,24 +431,20 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="23" second="22">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="20" second="19">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="21" second="23">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
       <Relationship type="Association" first="25" second="16">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <Direction>Unidirectional</Direction>

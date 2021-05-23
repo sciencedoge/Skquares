@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +17,9 @@ namespace UpgradePlatformer.Levels
             activeLevel = 0;
             Load(texture, "EGGMAN");
             Load(texture, "EGGMEN");
+            Load(texture, "MARO");
         }
+
 
         public void Load(Texture2D texture, String Name)
         {
@@ -34,5 +37,11 @@ namespace UpgradePlatformer.Levels
             activeLevel++;
             activeLevel = activeLevel % Levels.Count;
         }
+
+        public List<Tile> GetCollisions(Rectangle r) => Levels[activeLevel].GetCollisions(r);
+
+        public Level ActiveLevel() => Levels[activeLevel];
+        public String ActiveLevelName() => Levels[activeLevel].Name;
+        public int ActiveLevelNum() => activeLevel;
     }
 }

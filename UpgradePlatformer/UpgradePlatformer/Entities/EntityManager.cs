@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UpgradePlatformer.Input;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using UpgradePlatformer.Graphics;
 
 namespace UpgradePlatformer.Entities
 {
@@ -18,38 +16,30 @@ namespace UpgradePlatformer.Entities
     {
         //Fields
 
-        //input
-        private InputManager inputManager;
-
         //player and enemies
         private Player player;
         private List<Enemy> enemies;
 
-        public EntityManager()
+        //list of tiles
+
+
+
+        public EntityManager(Texture2D texture)
         {
-            inputManager = new InputManager();
+            player = new Player(10, 2, 
+                new Rectangle(new Point(10, 10), new Point(40, 40)), texture);
         }
 
-        /// <summary>
-        /// Performs updates on the entities in the game
-        /// </summary>
-        /// <param name="gameTime">gameTime</param>
-        public void Update(GameTime gameTime)
+        //methods
+
+        public void Update(GameTime gameTime, InputManager inputManager)
         {
-            player.Update(gameTime);
-            
-            InputEvent e = inputManager.Pop(InputEventKind.KEY_DOWN);
-            player.Update(gameTime, (Keys)e.Data);
+            player.Update(gameTime, inputManager);
         }
 
-        /// <summary>
-        /// Draws entities to the screen
-        /// </summary>
-        /// <param name="sb">spriteBatch</param>
-        /// <param name="gt">gameTime</param>
-        public void Draw(SpriteBatch sb, GameTime gt)
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            player.Draw(sb, gt);
+            player.Draw(spriteBatch, gameTime);
         }
     }
 }

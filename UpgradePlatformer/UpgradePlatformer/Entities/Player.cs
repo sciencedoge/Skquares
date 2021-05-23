@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Graphics;
+using UpgradePlatformer.Input;
 
 namespace UpgradePlatformer.Entities
 {
@@ -18,6 +19,10 @@ namespace UpgradePlatformer.Entities
 
         //Fields
         private Vector2 jumpVelocity;
+        public bool keyUp, keyDown, keyLeft, keyRight;
+
+        public int jumpsLeft;
+
 
         /// <summary>
         /// Creates a player object
@@ -26,6 +31,7 @@ namespace UpgradePlatformer.Entities
             : base(maxHp, damage, hitbox, texture) 
         {
             jumpVelocity = new Vector2(0, -1);
+            jumpsLeft = 1;
         }
 
         //Methods
@@ -60,22 +66,49 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="gt"></param>
         /// <param name="keys"></param>
-        public void Update(GameTime gt, Keys keys)
+        public void Update(GameTime gt, InputManager inputManager)
         {
-            if (keys == Keys.D)
+            InputEvent dev = inputManager.Pop(InputEventKind.KEY_DOWN);
+            InputEvent uev = inputManager.Pop(InputEventKind.KEY_UP);
+            if (dev != null)
             {
-                this.speedX += speedX;
+                Keys down = (Keys)dev.Data;
+                if (down == Keys.W) keyUp = true;
+                else if (down == Keys.A) keyLeft = true;
+                else if (down == Keys.S) keyDown = true;
+                else if (down == Keys.D) keyRight = true;
+            }
+            if (uev != null)
+            {
+                Keys up = (Keys)uev.Data;
+                if (up == Keys.W) keyUp = false;
+                if (up == Keys.A) keyLeft = false;
+                if (up == Keys.S) keyDown = false;
+                if (up == Keys.D) keyRight = false;
             }
 
-            if (keys == Keys.A)
+            if (keyRight)
             {
-                this.speedX -= speedX;
+                velocity.X += speedX;
             }
 
-            if (keys == Keys.W)
+            if (keyLeft)
             {
-                velocity.Y = -10f;
+                velocity.X -= speedX;
             }
+
+            if (keyUp)
+            {
+                //check for ground collision
+                if (true && jumpsLeft > 0)
+                {
+                    velocity.Y = -50f;
+                    keyUp = false;
+                    jumpsLeft -= 1;
+                }
+            }
+            Update(gt);
+            hitbox.Location = position.ToPoint();
         }
         
         /// <summary>
@@ -93,7 +126,10 @@ namespace UpgradePlatformer.Entities
         public void ApplyGravity()
         {
             velocity += gravity;
-            position += gravity;
+            position += velocity;
+            velocity *= new Vector2(0.8f);
+            position.Y = Math.Min(700 - hitbox.Height / 2, position.Y);
+            if (position.Y == 700 - hitbox.Height / 2) jumpsLeft = 1;
         }
     }
 }

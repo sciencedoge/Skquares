@@ -9,12 +9,12 @@ namespace UpgradePlatformer.UI
     class UIButton : UIElement
     {
         // Setup constants for sprites
-        private static Rectangle BUTTON_NORMAL_SPRITE = new Rectangle(0, 0, 15, 13);
-        private static Rectangle BUTTON_CLICKED_SPRITE = new Rectangle(15, 0, 15, 13);
-        private static Rectangle BUTTON_DISABLED_SPRITE = new Rectangle(30, 0, 15, 13);
-        private static Rectangle BUTTON_NORMAL_CENTER = new Rectangle(4, 2, 8, 8);
-        private static Rectangle BUTTON_CLICKED_CENTER = new Rectangle(19, 2, 8, 8);
-        private static Rectangle BUTTON_DISABLED_CENTER = new Rectangle(34, 2, 8, 8);
+        private static Rectangle BUTTON_NORMAL_SPRITE = new Rectangle(0, 0, 5, 6);
+        private static Rectangle BUTTON_CLICKED_SPRITE = new Rectangle(5, 0, 5, 6);
+        private static Rectangle BUTTON_DISABLED_SPRITE = new Rectangle(10, 0, 5, 6);
+        private static Rectangle BUTTON_NORMAL_CENTER = new Rectangle(2, 2, 1, 1);
+        private static Rectangle BUTTON_CLICKED_CENTER = new Rectangle(7, 2, 1, 1);
+        private static Rectangle BUTTON_DISABLED_CENTER = new Rectangle(12, 2, 1, 1);
         
         // Vars
         UISprite NormalSprite;

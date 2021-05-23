@@ -15,6 +15,8 @@ namespace UpgradePlatformer.UI
 
         private int ClickTime;
 
+        public Color color;
+
         /// <summary>
         /// Updates the Button
         /// </summary>
@@ -27,11 +29,12 @@ namespace UpgradePlatformer.UI
         /// creates a UIButton
         /// </summary>
         /// <param name="bounds">What the coords of the button are</param>
-        public UIText(SpriteFont font, Rectangle bounds)
+        public UIText(SpriteFont font, Rectangle bounds, Color c)
         {
             Bounds = bounds;
             Font = font;
-            Text = "no";
+            Text = "";
+            color = c;
         }
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace UpgradePlatformer.UI
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(Font, Text, Bounds.Location.ToVector2(), Color.Black);
+            spriteBatch.DrawString(Font, Text, Bounds.Location.ToVector2(), color);
         }
 
         public override UISprite CurrentSprite() { return null; }
