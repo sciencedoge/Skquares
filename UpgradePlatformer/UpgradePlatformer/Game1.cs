@@ -82,7 +82,7 @@ namespace UpgradePlatformer
 
             // TODO: Add your update logic here
 
-            _inputManager.Update(gameTime);
+            _inputManager.Update();
             _entityManager.Update(gameTime, _inputManager);
             _uiManager.Update(gameTime, _inputManager);
             //_levelManager.GetCollisions(new Rectangle(250, 10, 40, 40));

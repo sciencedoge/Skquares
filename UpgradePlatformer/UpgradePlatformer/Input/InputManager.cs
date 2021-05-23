@@ -28,7 +28,7 @@ namespace UpgradePlatformer.Input
         /// Updates the InputEvent List
         /// </summary>
         /// <param name="gameTime"></param>
-        public void Update(GameTime gameTime)
+        public void Update()
         {
             prevMouseState = mouseState;
             mouseState = Mouse.GetState();
@@ -84,6 +84,7 @@ namespace UpgradePlatformer.Input
         /// <param name="e"></param>
         public void Push(InputEvent e)
         {
+            Update();
             Events.Insert(0, e);
             if (Events.Count > MAX_EVENTS) Events.RemoveAt(Events.Count - 1);
         }
@@ -95,6 +96,7 @@ namespace UpgradePlatformer.Input
         /// <returns>The InputEvent</returns>
         public InputEvent Pop(InputEventKind filter = InputEventKind.ANY)
         {
+            Update();
             if (Events.Count == 0) return null;
             // Get first Event
             InputEvent e = Events[0];
