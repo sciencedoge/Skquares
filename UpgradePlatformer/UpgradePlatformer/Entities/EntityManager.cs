@@ -71,7 +71,7 @@ namespace UpgradePlatformer.Entities
                     && t.Kind != 9)
                 {
                     //Gets a rectangle that represents the intersection
-                    Rectangle intersection = Rectangle.Intersect(temp, t.Position);
+                    Rectangle intersection = Rectangle.Intersect(t.Position, temp);
 
                     //checks conditions to move the player up or down
                     if (intersection.Width > intersection.Height)
@@ -80,13 +80,13 @@ namespace UpgradePlatformer.Entities
                         //moves player up
                         if (t.Position.Top - intersection.Top == 0)
                         {
-                            temp.Y -= t.Position.Height;
+                            temp.Y -= intersection.Height;
                         }
 
                         //moves player down
                         else if (t.Position.Top - intersection.Top != 0)
                         {
-                            temp.Y += t.Position.Height;
+                            temp.Y += intersection.Height;
                         }
 
                         player.Velocity = new Vector2(player.Velocity.X, 0);
