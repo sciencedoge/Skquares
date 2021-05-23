@@ -104,6 +104,8 @@ namespace UpgradePlatformer.Entities
                         {
                             temp.X -= intersection.Width;
                         }
+
+                        player.Velocity = new Vector2(0, player.Velocity.Y);
                     }
 
                     player.X = temp.X;
