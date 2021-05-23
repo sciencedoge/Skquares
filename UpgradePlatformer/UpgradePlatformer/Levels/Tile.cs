@@ -9,13 +9,14 @@ namespace UpgradePlatformer.Levels
 {
     class Tile
     {
-        public static readonly int WINDOW_SIZE = 700;
+        public static readonly int WINDOW_SIZE = 690;
         private static Rectangle TILE_SPRITE = new Rectangle(0, 14, 14, 14);
-        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.Orange,  Color.Orange,  Color.Orange, Color.Orange, Color.Transparent,};
+        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.Orange,  Color.Orange,  Color.White, Color.Orange, Color.Transparent,};
         private Sprite Sprite;
         public int Kind;
         public float Rotation;
         public int CollisionKind;
+        public Rectangle Position;
 
         public Tile(Texture2D texture, int kind, int rotation, int collision)
         {
@@ -25,9 +26,10 @@ namespace UpgradePlatformer.Levels
             CollisionKind = collision;
         }
         
-        public void Draw(SpriteBatch spriteBatch, Vector2 Position)
+        public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
-            Sprite.Draw(spriteBatch, new Point((int)Position.X, (int)Position.Y), Rotation, new Point(WINDOW_SIZE / 30));
+            Position = new Rectangle(position.ToPoint(), new Point(WINDOW_SIZE / 30));
+            Sprite.Draw(spriteBatch, new Point((int)position.X, (int)position.Y), Rotation, new Vector2(WINDOW_SIZE / 30.0f));
         }
     }
 }
