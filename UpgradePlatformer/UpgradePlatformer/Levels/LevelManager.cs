@@ -11,20 +11,20 @@ namespace UpgradePlatformer.Levels
         List<Level> Levels;
         int activeLevel;
         
-        public LevelManager(Texture2D texture)
+        public LevelManager(Texture2D texture, GraphicsDeviceManager graphics)
         {
             Levels = new List<Level>();
             activeLevel = 0;
-            Load(texture, "collision test");
-            Load(texture, "EGGMAN");
-            Load(texture, "EGGMEN");
-            Load(texture, "MARO");            
+            Load(texture, "collision test", graphics);
+            Load(texture, "EGGMAN", graphics);
+            Load(texture, "EGGMEN", graphics);
+            Load(texture, "MARO", graphics);            
         }
 
 
-        public void Load(Texture2D texture, String Name)
+        public void Load(Texture2D texture, String Name, GraphicsDeviceManager graphics)
         {
-            Levels.Add(new Level(texture, Name));
+            Levels.Add(new Level(texture, Name, graphics));
         }
 
 

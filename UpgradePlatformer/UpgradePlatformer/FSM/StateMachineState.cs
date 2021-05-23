@@ -12,10 +12,10 @@ namespace UpgradePlatformer.FSM
         public Flag cond;
     }
 
-    public class Flag
+    public struct Flag
     {
         private bool _value;
-        public bool Value { 
+        public bool Value {
             get {
                 bool old = _value;
                 _value = false;

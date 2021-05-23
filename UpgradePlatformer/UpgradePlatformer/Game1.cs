@@ -47,7 +47,11 @@ namespace UpgradePlatformer
             base.Initialize();
             _uiManager = new UIManager();
             _inputManager = new InputManager();
-            _levelManager = new LevelManager(_spriteSheetTexture);
+
+            _graphics.PreferredBackBufferHeight = 690;
+            _graphics.PreferredBackBufferWidth = 690;
+            _graphics.ApplyChanges();
+            _levelManager = new LevelManager(_spriteSheetTexture, _graphics);
             _entityManager = new EntityManager(_spriteSheetTexture, _graphics, _levelManager);
 #if DEBUG
             UIButton b = new UIButton(_spriteSheetTexture, new Rectangle(250, 10, 40, 40));
@@ -57,10 +61,6 @@ namespace UpgradePlatformer
             _uiManager.Add(Stats);
 #endif
 
-            _graphics.PreferredBackBufferHeight = 685;
-            _graphics.PreferredBackBufferWidth = 685;
-
-            _graphics.ApplyChanges();
         }
 
         protected override void LoadContent()
