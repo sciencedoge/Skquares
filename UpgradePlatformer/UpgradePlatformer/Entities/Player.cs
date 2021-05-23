@@ -75,8 +75,6 @@ namespace UpgradePlatformer.Entities
         public void Update(GameTime gt, InputManager inputManager)
         {
 
-            Update(gt);
-
             CheckForInput(inputManager);
 
             if (keyRight)
@@ -92,17 +90,17 @@ namespace UpgradePlatformer.Entities
             if (keyUp)
             {
                 //check for ground collision
-                if (jumpsLeft > 0 && velocity.Y >= -10f)
+                if (jumpsLeft > 0 && velocity.Y >= -15f)
                 {
                     velocity.Y += jumpVelocity.Y;
-                } else if (!(velocity.Y >= -10f)) {
-                } else if (!(velocity.Y >= -10f)) {
+                } else if (!(velocity.Y >= -15f)) {
                     keyUp = false;
                     jumpsLeft -= 1;
                 }
             }
 
-            hitbox.Location = position.ToPoint();           
+            Update(gt);
+            hitbox.Location = position.ToPoint();
         }
         
         /// <summary>
@@ -121,7 +119,7 @@ namespace UpgradePlatformer.Entities
         {
             position += velocity;
             velocity += gravity;
-                       
+                      
             velocity.X *= 0.70f;
 
             if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height / 2)
