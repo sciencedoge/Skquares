@@ -6,25 +6,36 @@ using System.Text;
 
 namespace UpgradePlatformer.Input
 {
+    public delegate bool EventAction(uint Data);
+
     class EventManager
     {
         // the maximum events before theyre overridden
         public const byte MAX_EVENTS = 10;
 
-        private List<InputEvent> Events;
+        private List<Event> Events;
+        private List<EventListener> Listeners;
 
         public EventManager()
         {
-            Events = new List<InputEvent>();
+            Events = new List<Event>();
+            Listeners = new List<EventListener>();
         }
 
-
+        public void AddListener(EventAction e, String eventKind) {
+            Listeners.Add(new EventListener(e, eventKind));
+        }
+        
         /// <summary>
         /// adds an event to the bottom of the stack
         /// </summary>
         /// <param name="e"></param>
-        public void Push(InputEvent e)
+        public void Push(Event e)
         {
+            foreach (EventListener el in Listeners)
+                if (el.LookingFor == e.Kind)
+                    if (el.Action(e.Data))
+                        return;
             Events.Insert(0, e);
             if (Events.Count > MAX_EVENTS) Events.RemoveAt(Events.Count - 1);
         }
@@ -34,11 +45,11 @@ namespace UpgradePlatformer.Input
         /// </summary>
         /// <param name="filter">filters for this kind of event</param>
         /// <returns>The InputEvent</returns>
-        public InputEvent Pop(String filter = "ANY")
+        public Event Pop(String filter = "ANY")
         {
             if (Events.Count == 0) return null;
             // Get first Event
-            InputEvent e = Events[0];
+            Event e = Events[0];
 
             // remove event from Stack
             Events.Remove(e);
@@ -49,7 +60,7 @@ namespace UpgradePlatformer.Input
             // I was board so I made it recursive
             if (e.Kind != filter)
             {
-                InputEvent old = e;
+                Event old = e;
                 e = Pop(filter);
                 Events.Add(old);
             }
@@ -57,7 +68,17 @@ namespace UpgradePlatformer.Input
             return e;
         }
     }
-
+    struct EventListener
+    {
+        public String LookingFor;
+        public EventAction Action;
+        
+        public EventListener(EventAction action, String eventKind) {
+            Action = action;
+            LookingFor = eventKind;
+        }
+    }
+    
     /// <summary>
     /// stores input data
     /// Data for Input Event by Event Kind
@@ -71,13 +92,13 @@ namespace UpgradePlatformer.Input
     /// - KEY_UP
     ///    - Key Value in Some encoding
     /// </summary>
-    class InputEvent
+    class Event
     {
         public String Kind;
         public uint Data;
         public Point MousePosition;
 
-        public InputEvent(String kind, uint data, Point mousePosition)
+        public Event(String kind, uint data, Point mousePosition)
         {
             Kind = kind;
             Data = data;

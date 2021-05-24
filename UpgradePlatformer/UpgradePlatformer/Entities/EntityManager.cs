@@ -69,7 +69,11 @@ namespace UpgradePlatformer.Entities
                 player.Intersects(enemies);
                 pathfind.UpdateCosts();
                 pathfind.MoveToPlayer();
-            }                                   
+            }          
+            if (player.CurrentHP == 0)
+            {
+                eventManager.Push(new Event("STATE_MACHINE", 2, new Point(0, 0)));
+            }                         
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -149,6 +153,10 @@ namespace UpgradePlatformer.Entities
                 obj.Hitbox.Y),
                 new Point(obj.Hitbox.Width,
                 obj.Hitbox.Height));
+        }
+
+        public void RespawnPlayer() {
+            player.Respawn();
         }
     }
 }
