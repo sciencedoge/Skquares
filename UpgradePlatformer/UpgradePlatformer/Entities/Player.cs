@@ -71,10 +71,10 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="gt"></param>
         /// <param name="keys"></param>
-        public void Update(GameTime gt, InputManager inputManager)
+        public void Update(GameTime gt, EventManager eventManager, InputManager inputManager)
         {
 
-            CheckForInput(inputManager);
+            CheckForInput(inputManager, eventManager);
 
             if (keyRight)
             {
@@ -144,11 +144,11 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// 
         /// </summary>
-        public void CheckForInput(InputManager inputManager)
+        public void CheckForInput(InputManager inputManager, EventManager eventManager)
         {
-            inputManager.Update();
-            InputEvent dev = inputManager.Pop(InputEventKind.KEY_DOWN);
-            InputEvent uev = inputManager.Pop(InputEventKind.KEY_UP);
+            inputManager.Update(eventManager);
+            InputEvent dev = eventManager.Pop("KEY_DOWN");
+            InputEvent uev = eventManager.Pop("KEY_UP");
             if (dev != null)
             {
                 Keys down = (Keys)dev.Data;

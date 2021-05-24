@@ -10,7 +10,6 @@ namespace UpgradePlatformer.Levels
     class Level
     {
         public String Name;
-
         int TileWidth, TileHeight;
         TileTheme tileTheme;
         Tile[,] TileMap;
@@ -59,7 +58,7 @@ namespace UpgradePlatformer.Levels
         /// </summary>
         /// <param name="r">the rectangle to check</param>
         /// <returns>a list of colliding rectangles</returns>
-        public List<Tile> GetCollisions(Rectangle r, int RedundancySize = 4)
+        public List<Tile> GetCollisions(Rectangle r, int RedundancySize = 1)
         {
             List<Tile> Tiles = new List<Tile>();
 
@@ -67,7 +66,7 @@ namespace UpgradePlatformer.Levels
 
             for (int x = Math.Max(centerTile.X - RedundancySize, 0); x < Math.Min(centerTile.X + RedundancySize, TileWidth); x++)
                 for (int y = Math.Max(centerTile.Y - RedundancySize, 0); y < Math.Min(centerTile.Y + RedundancySize, TileHeight); y++)
-                    if (TileMap[x, y].Position.Intersects(r)) Tiles.Add(TileMap[x, y]);
+                    if (TileMap[y, x].Position.Intersects(r)) Tiles.Add(TileMap[y, x]);
             return Tiles;
         }
     }

@@ -21,6 +21,7 @@ namespace UpgradePlatformer
         private SpriteBatch _spriteBatch;
         private UIManager _uiManager;
         private InputManager _inputManager;
+        private EventManager _eventManager;
         private LevelManager _levelManager;
         private EntityManager _entityManager;
         private SpriteFont _font;
@@ -47,6 +48,7 @@ namespace UpgradePlatformer
             base.Initialize();
             _uiManager = new UIManager();
             _inputManager = new InputManager();
+            _eventManager = new EventManager();
 
             _graphics.PreferredBackBufferHeight = 660;
             _graphics.PreferredBackBufferWidth = 660;
@@ -85,9 +87,9 @@ namespace UpgradePlatformer
 
             // TODO: Add your update logic here
 
-            _inputManager.Update();
-            _entityManager.Update(gameTime, _inputManager);
-            _uiManager.Update(gameTime, _inputManager);
+            _inputManager.Update(_eventManager);
+            _entityManager.Update(gameTime, _eventManager, _inputManager);
+            _uiManager.Update(gameTime, _eventManager);
             //_levelManager.GetCollisions(new Rectangle(250, 10, 40, 40));
 #if DEBUG
             if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)

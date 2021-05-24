@@ -20,8 +20,7 @@ namespace UpgradePlatformer.Levels
             Load(texture, "EGGMEN", graphics);
             Load(texture, "MARO", graphics);            
         }
-
-
+        
         public void Load(Texture2D texture, String Name, GraphicsDeviceManager graphics)
         {
             Levels.Add(new Level(texture, Name, graphics));
@@ -46,7 +45,6 @@ namespace UpgradePlatformer.Levels
         }
 
         public List<Tile> GetCollisions(Rectangle r) => Levels[activeLevel].GetCollisions(r);
-
         public Level ActiveLevel() => Levels[activeLevel];
         public String ActiveLevelName() => Levels[activeLevel].Name;
         public int ActiveLevelNum() => activeLevel;
