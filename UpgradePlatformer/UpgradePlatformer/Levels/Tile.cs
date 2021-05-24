@@ -31,8 +31,8 @@ namespace UpgradePlatformer.Levels
         
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
-            Position = new Rectangle(position.ToPoint() + TileSize.ToPoint(), TileSize.ToPoint());
-            Sprite.Draw(spriteBatch, Position.Location - TileCenter.ToPoint(), Rotation, Position.Size.ToVector2());
+            Position = new Rectangle(position.ToPoint() + TileSize.ToPoint() - TileCenter.ToPoint(), TileSize.ToPoint());
+            Sprite.Draw(spriteBatch, Position.Location, Rotation, Position.Size.ToVector2());
         }
     }
 }

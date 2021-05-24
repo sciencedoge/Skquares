@@ -37,5 +37,8 @@ namespace UpgradePlatformer.Entities
         {
 
         }
+        public override void OnFloorCollide()
+        {
+        }
     }
 }

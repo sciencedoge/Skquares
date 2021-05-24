@@ -33,7 +33,7 @@ namespace UpgradePlatformer.Entities
             LevelManager levelMan)
         {
             player = new Player(10, 2, 
-                new Rectangle(new Point(50, 600), new Point(40, 40)), texture, device);
+                new Rectangle(new Point(50, 600), new Point(25, 25)), texture, device);
 
             this.levelManager = levelMan;
         }
@@ -47,9 +47,12 @@ namespace UpgradePlatformer.Entities
         /// <param name="inputManager"></param>
         public void Update(GameTime gameTime, InputManager inputManager)
         {
-            currentLevel = levelManager.ActiveLevel();           
-            player.Update(gameTime, inputManager);
-            Intersects();
+            currentLevel = levelManager.ActiveLevel();
+            // IMPORTANT: Subframes are calculated here
+            for (int i = 0; i < 5; i ++) {
+                player.Update(gameTime, inputManager);
+                Intersects();
+            }
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -87,7 +90,7 @@ namespace UpgradePlatformer.Entities
                         {
                             temp.Y += intersection.Height;
                         }
-
+                        player.OnFloorCollide();
                         player.Velocity = new Vector2(player.Velocity.X, 0);
                     }
 

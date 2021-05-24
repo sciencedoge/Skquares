@@ -101,6 +101,7 @@ namespace UpgradePlatformer
             base.Update(gameTime);
         }
 
+
         protected override void Draw(GameTime gameTime)
         {
 #if DEBUG
