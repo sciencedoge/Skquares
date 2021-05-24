@@ -65,10 +65,10 @@ namespace UpgradePlatformer.Entities
                     e.Update(gameTime);
                     Intersects(e);
                 }
-               
                 player.Intersects(enemies);
                 pathfind.UpdateCosts();
-                pathfind.MoveToPlayer();
+                pathfind.MoveToPlayer();                           
+                
             }                                   
         }
 

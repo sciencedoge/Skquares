@@ -37,11 +37,15 @@ namespace UpgradePlatformer.Entities
         /// <param name="gt">gameTime</param>
         public override void Update(GameTime gt)
         {
-            hitbox.Location = position.ToPoint();
-            ApplyGravity();
+            if (isActive)
+            {
+                hitbox.Location = position.ToPoint();
+                ApplyGravity();
+            }           
         }
         public override void OnFloorCollide()
         {
+            this.jumpsLeft = 1;
         }
 
         public override void ApplyGravity()

@@ -66,13 +66,14 @@ namespace UpgradePlatformer.Entities
                     else
                     {
                         enemies[i].X += 0.5f;
-                    }                
-                }
+                    }
 
-                if(relationships[i, 0].Y > 10)
-                {
-                    AIJump(enemies[i]);
-                }
+                    if (relationships[i, 0].Y > 20
+                        && player.Y < enemies[i].Y)
+                    {
+                        AIJump(enemies[i]);
+                    }
+                }                
             }
         }
 

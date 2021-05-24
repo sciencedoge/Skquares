@@ -80,37 +80,41 @@ namespace UpgradePlatformer.Entities
         /// <param name="keys"></param>
         public void Update(GameTime gt, EventManager eventManager, InputManager inputManager)
         {
-            
-            CheckForInput(inputManager, eventManager);
-
-            //put for testing purposes so the player doesnt immediately die
-            if(gt.TotalGameTime.TotalSeconds % 1 <= 0.01)
+            if (isActive)
             {
-                invincible = false;
-            }
+                CheckForInput(inputManager, eventManager);
 
-            if (keyRight)
-            {
-                velocity.X += speedX;
-            }
-
-            if (keyLeft)
-            {
-                velocity.X -= speedX;
-            }
-
-            if (keyUp)
-            {
-                //check for ground collision
-                if (jumpsLeft > 0 && velocity.Y >= -4f)
+                //put for testing purposes so the player doesnt immediately die
+                if (gt.TotalGameTime.TotalSeconds % 1 <= 0.01)
                 {
-                    velocity.Y += jumpVelocity.Y;
-                } else if (!(velocity.Y >= -4f)) {
-                    keyUp = false;
-                    jumpsLeft -= 1;
+                    invincible = false;
                 }
-            }
-            Update(gt);
+
+                if (keyRight)
+                {
+                    velocity.X += speedX;
+                }
+
+                if (keyLeft)
+                {
+                    velocity.X -= speedX;
+                }
+
+                if (keyUp)
+                {
+                    //check for ground collision
+                    if (jumpsLeft > 0 && velocity.Y >= -4f)
+                    {
+                        velocity.Y += jumpVelocity.Y;
+                    }
+                    else if (!(velocity.Y >= -4f))
+                    {
+                        keyUp = false;
+                        jumpsLeft -= 1;
+                    }
+                }
+                Update(gt);
+            }           
         }
         
         /// <summary>
