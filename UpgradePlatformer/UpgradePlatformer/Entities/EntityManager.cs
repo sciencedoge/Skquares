@@ -155,6 +155,10 @@ namespace UpgradePlatformer.Entities
                 obj.Hitbox.Height));
         }
 
+        public int GetPlayerHp() {
+            return player.CurrentHP;
+        }
+
         public void RespawnPlayer() {
             player.Respawn();
         }

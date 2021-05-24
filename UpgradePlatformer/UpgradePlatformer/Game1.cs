@@ -73,14 +73,15 @@ namespace UpgradePlatformer
 
             _stateMachine = new FiniteStateMachine(new List<StateMachineState>{Menu, Game, Escape, Respawn});
             int ButtonWidth = 200;
-            playButton = new UIButton(_spriteSheetTexture, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 200, ButtonWidth, 40));
+            playButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 200, ButtonWidth, 40));
             playButton.onClick = new UIAction(() => {
                 _eventManager.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
                 _entityManager.RespawnPlayer();
             });
+            playButton.Text.Text = "Play";
             _uiManager.Add(playButton);
-            Title = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 1, Color.White);
-            Title.Text = "platformergamethingthatllhaveupgrades";
+            Title = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.White);
+            Title.Text = "platformergamething";
             Title.Centered = true;
             _uiManager.Add(Title);
 
@@ -104,8 +105,10 @@ namespace UpgradePlatformer
             _eventManager.AddListener(a2, "KEY_DOWN");
 
 #if DEBUG
-            UIButton b = new UIButton(_spriteSheetTexture, new Rectangle(250, 10, 40, 40));
-            UIButton c = new UIButton(_spriteSheetTexture, new Rectangle(300, 10, 40, 40));
+            UIButton b = new UIButton(_spriteSheetTexture, _font, new Rectangle(250, 10, 40, 40));
+            b.Text.Text = "<";
+            UIButton c = new UIButton(_spriteSheetTexture, _font, new Rectangle(300, 10, 40, 40));
+            c.Text.Text = ">";
             b.onClick = new UIAction(() => _levelManager.Prev());
             c.onClick = new UIAction(() => _levelManager.Next());
             _uiManager.Add(b);
@@ -130,7 +133,7 @@ namespace UpgradePlatformer
                 _entityManager.Update(gameTime, _eventManager, _inputManager);
             _uiManager.Update(gameTime, _eventManager);
             playButton.IsActive = (_stateMachine.currentState == 0) || (_stateMachine.currentState == 3);
-            Title.IsActive = (_stateMachine.currentState == 0) || (_stateMachine.currentState == 3);
+            Title.IsActive = (_stateMachine.currentState == 0);
 
 #if DEBUG
             if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
@@ -138,7 +141,7 @@ namespace UpgradePlatformer
                 frameRate = (double)frameCounter / gameTime.ElapsedGameTime.TotalSeconds;
             }
             frameCounter = 0;
-            Stats.Text = frameRate.ToString("F2") + "\n" + _levelManager.ActiveLevelName() + ":" + _levelManager.ActiveLevelNum() + "\n" + _stateMachine.currentState;
+            Stats.Text = frameRate.ToString("F2") + "\n" + _levelManager.ActiveLevelName() + ":" + _levelManager.ActiveLevelNum() + "\nHP:" + _entityManager.GetPlayerHp();
 #endif
 
             base.Update(gameTime);
@@ -155,9 +158,9 @@ namespace UpgradePlatformer
             // TODO: Add your drawing code here
 
             _spriteBatch.Begin();
+            _levelManager.Draw(_spriteBatch);
 
             if (_stateMachine.currentState != 0) {
-                _levelManager.Draw(_spriteBatch);
                 _entityManager.Draw(gameTime, _spriteBatch);
             }
 
