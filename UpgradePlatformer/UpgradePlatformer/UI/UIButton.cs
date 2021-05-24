@@ -20,6 +20,7 @@ namespace UpgradePlatformer.UI
         UISprite NormalSprite;
         UISprite ClickedSprite;
         UISprite DisabledSprite;
+        public UIText Text;
         public UIAction onClick = new UIAction(() => { });
         public bool Disabled;
 
@@ -33,15 +34,18 @@ namespace UpgradePlatformer.UI
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
             ClickTime = Math.Max(0, ClickTime - 1);
+            Text.IsActive = IsActive;
         }
 
         /// <summary>
         /// creates a UIButton
         /// </summary>
         /// <param name="bounds">What the coords of the button are</param>
-        public UIButton(Texture2D texture, Rectangle bounds)
+        public UIButton(Texture2D texture, SpriteFont font, Rectangle bounds)
         {
             Bounds = bounds;
+            Text = new UIText(font, Bounds, 1, Color.Black);
+            Text.Centered = true;
             NormalSprite = new UISprite(texture, BUTTON_NORMAL_SPRITE, BUTTON_NORMAL_CENTER, new Vector2(0, 0), Color.White);
             ClickedSprite = new UISprite(texture, BUTTON_CLICKED_SPRITE, BUTTON_CLICKED_CENTER, new Vector2(0, 0), Color.White);
             DisabledSprite = new UISprite(texture, BUTTON_DISABLED_SPRITE, BUTTON_DISABLED_CENTER, new Vector2(0, 0), Color.White);
@@ -64,6 +68,12 @@ namespace UpgradePlatformer.UI
             if (Disabled) return DisabledSprite;
             if (ClickTime != 0) return ClickedSprite;
             return NormalSprite;
+        }
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            if (IsActive)
+                CurrentSprite().Draw(spriteBatch, Bounds, 0);
+            Text.Draw(gameTime, spriteBatch);
         }
     }
 }
