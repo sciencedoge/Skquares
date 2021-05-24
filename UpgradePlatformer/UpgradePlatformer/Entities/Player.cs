@@ -18,7 +18,6 @@ namespace UpgradePlatformer.Entities
     {
 
         //Fields
-        private Vector2 jumpVelocity;
         private bool keyUp, keyDown, keyLeft, keyRight;
         private int jumpsLeft;
 
@@ -33,7 +32,6 @@ namespace UpgradePlatformer.Entities
             Texture2D texture, GraphicsDeviceManager device)
             : base(maxHp, damage, hitbox, texture) 
         {
-            jumpVelocity = new Vector2(0, -1.8f) ;
             jumpsLeft = 2;
 
             this._graphics = device;
@@ -46,15 +44,15 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public void Intersects(List<LivingObject> obj)
+        public void Intersects(List<Enemy> obj)
         {
             if (isActive)
             {
-                foreach(LivingObject live in obj)
+                foreach(Enemy enemy in obj)
                 {
-                    if (this.hitbox.Intersects(live.Hitbox))
+                    if (this.hitbox.Intersects(enemy.Hitbox))
                     {
-                        this.TakeDamage(live.Damage);
+                        this.TakeDamage(enemy.Damage);
 
                         if (CurrentHP <= 0)
                         {
@@ -97,9 +95,7 @@ namespace UpgradePlatformer.Entities
                     jumpsLeft -= 1;
                 }
             }
-
-            ApplyGravity();
-            hitbox.Location = position.ToPoint();
+            Update(gt);
         }
         
         /// <summary>
@@ -108,6 +104,8 @@ namespace UpgradePlatformer.Entities
         /// <param name="gt"></param>
         public override void Update(GameTime gt)
         {
+            ApplyGravity();
+            hitbox.Location = position.ToPoint();
         }
 
         /// <summary>

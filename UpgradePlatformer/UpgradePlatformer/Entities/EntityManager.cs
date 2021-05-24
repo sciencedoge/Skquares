@@ -24,6 +24,7 @@ namespace UpgradePlatformer.Entities
         private LevelManager levelManager;
 
         private Level currentLevel;
+        private PathfindingAI pathfind;
 
         //list of tiles
 
@@ -32,10 +33,17 @@ namespace UpgradePlatformer.Entities
         public EntityManager(Texture2D texture, GraphicsDeviceManager device,
             LevelManager levelMan)
         {
+            enemies = new List<Enemy>();
+
             player = new Player(10, 2, 
                 new Rectangle(new Point(50, 600), new Point(25, 25)), texture, device);
 
+            enemies.Add(new Enemy(
+                10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture));
+
             this.levelManager = levelMan;
+
+            pathfind = new PathfindingAI(enemies, player);
         }
 
         //methods
@@ -52,12 +60,24 @@ namespace UpgradePlatformer.Entities
             for (int i = 0; i < 5; i ++) {
                 player.Update(gameTime, inputManager);
                 Intersects();
+            } 
+            
+            foreach(Enemy e in enemies)
+            {
+                e.Update(gameTime);
             }
+            player.Intersects(enemies);
+            pathfind.UpdateCosts();
+            pathfind.MoveToPlayer();
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             player.Draw(spriteBatch, gameTime);
+            foreach(Enemy e in enemies)
+            {
+                e.Draw(spriteBatch, gameTime);
+            }
         }
 
         /// <summary>

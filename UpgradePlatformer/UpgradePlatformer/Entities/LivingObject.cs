@@ -29,6 +29,7 @@ namespace UpgradePlatformer.Entities
         protected Vector2 velocity;
         protected float speedX;
         protected Vector2 position;
+        protected Vector2 jumpVelocity;
 
         //sprite info
         protected Sprite sprite;
@@ -116,6 +117,14 @@ namespace UpgradePlatformer.Entities
             set { velocity = value; }      
         }
 
+        /// <summary>
+        /// returns the position of a living object
+        /// </summary>
+        public Vector2 Position
+        {
+            get { return position; }
+        }
+
         //const
 
         /// <summary>
@@ -141,6 +150,7 @@ namespace UpgradePlatformer.Entities
             gravity = new Vector2(0, 0.1f);
             velocity = new Vector2(0, 0);
             speedX = 0.5f;
+            jumpVelocity = new Vector2(0, -1.8f);
 
             position = new Vector2(hitbox.X, hitbox.Y);
         }

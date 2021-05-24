@@ -15,7 +15,6 @@ namespace UpgradePlatformer.Entities
     //===========================================
     class Enemy : LivingObject
     {
-
         /// <summary>
         /// Creates an enemy object
         /// </summary>
@@ -35,7 +34,7 @@ namespace UpgradePlatformer.Entities
         /// <param name="gt">gameTime</param>
         public override void Update(GameTime gt)
         {
-
+            hitbox.Location = position.ToPoint();
         }
         public override void OnFloorCollide()
         {
