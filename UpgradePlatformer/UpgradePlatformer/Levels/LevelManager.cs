@@ -38,6 +38,12 @@ namespace UpgradePlatformer.Levels
             activeLevel++;
             activeLevel = activeLevel % Levels.Count;
         }
+        public void Prev()
+        {
+            activeLevel--;
+            if (activeLevel < 0)
+                activeLevel = Levels.Count - 1;
+        }
 
         public List<Tile> GetCollisions(Rectangle r) => Levels[activeLevel].GetCollisions(r);
 

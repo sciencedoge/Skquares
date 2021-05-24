@@ -34,7 +34,7 @@ namespace UpgradePlatformer.Entities
             Texture2D texture, GraphicsDeviceManager device)
             : base(maxHp, damage, hitbox, texture) 
         {
-            jumpVelocity = new Vector2(0, -9.0f) ;
+            jumpVelocity = new Vector2(0, -1.8f) ;
             jumpsLeft = 1;
 
             this._graphics = device;
@@ -90,16 +90,16 @@ namespace UpgradePlatformer.Entities
             if (keyUp)
             {
                 //check for ground collision
-                if (jumpsLeft > 0 && velocity.Y >= -15f)
+                if (jumpsLeft > 0 && velocity.Y >= -4f)
                 {
                     velocity.Y += jumpVelocity.Y;
-                } else if (!(velocity.Y >= -15f)) {
+                } else if (!(velocity.Y >= -4f)) {
                     keyUp = false;
                     jumpsLeft -= 1;
                 }
             }
 
-            Update(gt);
+            ApplyGravity();
             hitbox.Location = position.ToPoint();
         }
         
@@ -109,7 +109,6 @@ namespace UpgradePlatformer.Entities
         /// <param name="gt"></param>
         public override void Update(GameTime gt)
         {
-            ApplyGravity();
         }
 
         /// <summary>
@@ -136,6 +135,11 @@ namespace UpgradePlatformer.Entities
              
 
             if (position.Y >= _graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 1;
+        }
+        
+        public override void OnFloorCollide()
+        {
+            jumpsLeft = 1;
         }
 
         /// <summary>

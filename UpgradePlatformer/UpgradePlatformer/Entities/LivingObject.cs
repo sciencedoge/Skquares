@@ -138,9 +138,9 @@ namespace UpgradePlatformer.Entities
                 SpriteBounds.Y - (SpriteBounds.Height / 2)),
                 Color.White);
 
-            gravity = new Vector2(0, 1.5f);
+            gravity = new Vector2(0, 0.1f);
             velocity = new Vector2(0, 0);
-            speedX = 2.5f;
+            speedX = 0.5f;
 
             position = new Vector2(hitbox.X, hitbox.Y);
         }
@@ -173,6 +173,8 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="gt">gameTime</param>
         public abstract void Update(GameTime gt);
+
+        public abstract void OnFloorCollide();
 
 
 
