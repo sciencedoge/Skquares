@@ -177,5 +177,14 @@ namespace UpgradePlatformer.Entities
                 else if (up == Keys.D) keyRight = false;
             }
         }
+        
+        /// <summary>
+        /// Respawns the player
+        /// </summary>
+        public void Respawn()
+        {
+            this.currentHp = maxHp;
+            this.isActive = true;
+        }
     }
 }
