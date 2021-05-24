@@ -16,6 +16,7 @@ namespace UpgradePlatformer.Entities
     class Enemy : LivingObject
     {
         private GraphicsDeviceManager _graphics;
+
         /// <summary>
         /// Creates an enemy object
         /// </summary>
@@ -23,9 +24,10 @@ namespace UpgradePlatformer.Entities
         /// <param name="damage">the damage that the enemy deals</param>
         /// <param name="hitbox">the hitbox of the enemy</param>
         /// <param name="texture">the texture of the enemy</param>
-        public Enemy(int maxHp, int damage, Rectangle hitbox, Texture2D texture, GraphicsDeviceManager _graphics)
-            :base(maxHp, damage, hitbox, texture)
+        public Enemy(int maxHp, int damage, Rectangle hitbox, Texture2D texture, GraphicsDeviceManager _graphics, int jumpsLeft)
+            :base(maxHp, damage, hitbox, texture, jumpsLeft)
         {
+            this.jumpsLeft = jumpsLeft;
             this._graphics = _graphics;
         }
 
@@ -49,6 +51,8 @@ namespace UpgradePlatformer.Entities
             {
                 position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height + 9;
                 velocity.Y = 0;
+
+                jumpsLeft = 1;
             }
 
             if (position.X > _graphics.PreferredBackBufferWidth + hitbox.Width)

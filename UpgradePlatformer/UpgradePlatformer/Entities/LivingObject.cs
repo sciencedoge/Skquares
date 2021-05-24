@@ -24,6 +24,8 @@ namespace UpgradePlatformer.Entities
         protected int maxHp;
         protected int damage;
 
+        protected int jumpsLeft;
+
         //Gravity and movement
         protected Vector2 gravity;
         protected Vector2 velocity;
@@ -125,6 +127,25 @@ namespace UpgradePlatformer.Entities
             get { return position; }
         }
 
+        /// <summary>
+        /// Returns the jump velocity of
+        /// the object
+        /// </summary>
+        public Vector2 JumpVelocity
+        {
+            get { return jumpVelocity; }
+        }
+
+        /// <summary>
+        /// returns the number of jumps left
+        /// for the entity
+        /// </summary>
+        public int JumpsLeft
+        {
+            get { return jumpsLeft; }
+            set { jumpsLeft = value; }
+        }
+
         //const
 
         /// <summary>
@@ -132,7 +153,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="maxHp">max hp of the object</param>
         public LivingObject(int maxHp, int damage, Rectangle hitbox,
-            Texture2D texture)
+            Texture2D texture, int jumpsLeft)
         {
             this.maxHp = maxHp;
             currentHp = maxHp;
@@ -140,6 +161,7 @@ namespace UpgradePlatformer.Entities
             isActive = true;
 
             this.hitbox = hitbox;
+            this.jumpsLeft = jumpsLeft;
 
             this.sprite = new Sprite(
                 texture, SpriteBounds, 

@@ -36,10 +36,10 @@ namespace UpgradePlatformer.Entities
             enemies = new List<Enemy>();
 
             player = new Player(10, 2, 
-                new Rectangle(new Point(50, 600), new Point(25, 25)), texture, device);
+                new Rectangle(new Point(50, 600), new Point(25, 25)), texture, device, 2);
 
             enemies.Add(new Enemy(
-                10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device));
+                10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device, 1));
 
             this.levelManager = levelMan;
 
