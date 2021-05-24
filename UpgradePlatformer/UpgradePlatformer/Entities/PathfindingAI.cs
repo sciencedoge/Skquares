@@ -19,6 +19,9 @@ namespace UpgradePlatformer.Entities
         private List<Enemy> enemies;
         private Player player;
 
+        private float prevX;
+        private float goombaAINum;
+
         private Vector2[,] relationships;
 
 
@@ -32,6 +35,8 @@ namespace UpgradePlatformer.Entities
             this.enemies = enemies;
             this.player = player;
 
+            prevX = 0f;
+            goombaAINum = 0.5f;
             relationships = new Vector2[enemies.Count, 1];
         }
 
@@ -73,7 +78,18 @@ namespace UpgradePlatformer.Entities
                     {
                         AIJump(enemies[i]);
                     }
-                }                
+                }
+
+                else
+                {
+                    if(enemies[i].Colliding)
+                    {
+                        goombaAINum *= -1;
+                        enemies[i].Colliding = false;
+                    }
+
+                    enemies[i].X += goombaAINum;
+                }
             }
         }
 
