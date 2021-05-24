@@ -17,6 +17,14 @@ namespace UpgradePlatformer.Entities
     {
         private GraphicsDeviceManager _graphics;
 
+        private Point spawnPoint;
+
+        public Point SpawnPoint
+        {
+            get { return spawnPoint; }
+            set { spawnPoint = value; }
+        }
+
         /// <summary>
         /// Creates an enemy object
         /// </summary>
@@ -29,6 +37,8 @@ namespace UpgradePlatformer.Entities
         {
             this.jumpsLeft = jumpsLeft;
             this._graphics = _graphics;
+
+            spawnPoint = new Point(hitbox.X, hitbox.Y);
         }
 
         /// <summary>
