@@ -32,6 +32,9 @@
 #begin Levels/MARO.level_Finished
 /copy:Levels/MARO.level_Finished
 
+#begin Levels/menu.level_Finished
+/copy:Levels/menu.level_Finished
+
 #begin SpriteSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor

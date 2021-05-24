@@ -17,6 +17,14 @@ namespace UpgradePlatformer.Entities
     {
         private GraphicsDeviceManager _graphics;
 
+        private Point spawnPoint;
+
+        public Point SpawnPoint
+        {
+            get { return spawnPoint; }
+            set { spawnPoint = value; }
+        }
+
         /// <summary>
         /// Creates an enemy object
         /// </summary>
@@ -29,6 +37,8 @@ namespace UpgradePlatformer.Entities
         {
             this.jumpsLeft = jumpsLeft;
             this._graphics = _graphics;
+
+            spawnPoint = new Point(hitbox.X, hitbox.Y);
         }
 
         /// <summary>
@@ -37,11 +47,15 @@ namespace UpgradePlatformer.Entities
         /// <param name="gt">gameTime</param>
         public override void Update(GameTime gt)
         {
-            hitbox.Location = position.ToPoint();
-            ApplyGravity();
+            if (isActive)
+            {
+                hitbox.Location = position.ToPoint();
+                ApplyGravity();
+            }           
         }
         public override void OnFloorCollide()
         {
+            this.jumpsLeft = 1;
         }
 
         public override void ApplyGravity()
