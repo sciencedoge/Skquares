@@ -61,11 +61,11 @@ namespace UpgradePlatformer.Entities
                 {
                     if(enemies[i].X > player.X)
                     {
-                        enemies[i].X--;
+                        enemies[i].X -= 0.5f;
                     }
                     else
                     {
-                        enemies[i].X++;
+                        enemies[i].X += 0.5f;
                     }
                 }
             }
