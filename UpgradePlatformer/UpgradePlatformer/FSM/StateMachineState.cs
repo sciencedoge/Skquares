@@ -4,25 +4,44 @@ using System.Text;
 
 namespace UpgradePlatformer.FSM
 {
-    public class StateMachineState
+    public unsafe class StateMachineState
     {
-        public int id;
-        public int nextState;
+        public List<Flag> Conds;
+        public StateMachineState(List<Flag> flags) {
+            Conds = flags;
+        }
 
-        public Flag cond;
+        public bool CheckConds()
+        {
+            for (int j = 0; j < Conds.Count; j++)
+                if (Conds[j].Value)
+                {
+                    return true;
+                }
+            return false;
+        }
+        public int CheckCondsNext()
+        {
+            for (int j = 0; j < Conds.Count; j++)
+                if (Conds[j].Value)
+                {
+                    Conds[j].Value = false;
+                    return Conds[j].NextState;
+                }
+            return -1;
+        }
     }
 
-    public unsafe struct Flag
+    public class Flag
     {
-        public int id;
-        public bool _value;
-        public bool Value {
-            get {
-                bool old = _value;
-                _value = false;
-                return old;
-            }
-            set => _value = value;
+        public Flag(int id, int nextState)
+        {
+            Id = id;
+            NextState = nextState;
+            Value = false;
         }
+        public int Id;
+        public int NextState;
+        public bool Value;
     }
 }

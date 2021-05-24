@@ -24,7 +24,7 @@ namespace UpgradePlatformer.UI
         /// <param name="gameTime">a gameTime Object</param>
         public void Update(GameTime gameTime, EventManager eventManager)
         {
-            InputEvent ev = eventManager.Pop("MOUSE_DOWN");
+            Event ev = eventManager.Pop("MOUSE_DOWN");
 
             if (ev != null) ProcessClick(ev.MousePosition, ev.Data);
 

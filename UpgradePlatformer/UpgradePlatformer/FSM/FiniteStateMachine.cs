@@ -8,17 +8,24 @@ namespace UpgradePlatformer.FSM
     {
         public List<StateMachineState> States;
         public StateMachineState State => States[currentState];
-        private Flag*[] flags;
-        private int currentState;
-        public void SetFlag (int id)
+        public int currentState;
+
+        public FiniteStateMachine(List<StateMachineState> states) {
+            currentState = 0;
+            States = states;
+        }
+        public void SetFlag(int id)
         {
-            foreach (Flag *f in flags)
+            for (int i = 0; i < States.Count; i++)
             {
-                if ((*f).id == id) {
-                    (*f).Value = true;
-                }
+                for (int j = 0; j < States[i].Conds.Count; j++) 
+                    if ((States[i].Conds[j]).Id == id)
+                        (States[i].Conds[j]).Value = true;
             }
-            while (States[currentState].cond.Value) currentState = States[currentState].nextState;
+            if (States[currentState].CheckConds()) currentState = States[currentState].CheckCondsNext();
+            for (int i = 0; i < States.Count; i++)
+                for (int j = 0; j < States[i].Conds.Count; j++)
+                        (States[i].Conds[j]).Value = false;
         }
     }
 }

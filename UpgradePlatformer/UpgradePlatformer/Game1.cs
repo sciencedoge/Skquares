@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.UI;
 using UpgradePlatformer.Entities;
+using UpgradePlatformer.FSM;
 
 namespace UpgradePlatformer
 {
@@ -25,7 +27,7 @@ namespace UpgradePlatformer
         private LevelManager _levelManager;
         private EntityManager _entityManager;
         private SpriteFont _font;
-
+        private FiniteStateMachine _stateMachine;
         private Player player;
 #if DEBUG
         private UIText Stats;
@@ -55,6 +57,38 @@ namespace UpgradePlatformer
             _graphics.ApplyChanges();
             _levelManager = new LevelManager(_spriteSheetTexture, _graphics);
             _entityManager = new EntityManager(_spriteSheetTexture, _graphics, _levelManager);
+
+            Flag playButtonPressMenu = new Flag(0, 1);
+            Flag escapeKeyPressGame = new Flag(1, 2);
+            Flag escapeKeyPressEscape = new Flag(1, 1);
+            Flag PlayerDeathGame = new Flag(2, 3);
+            Flag playButtonPressRespawn = new Flag(0, 1);
+
+            StateMachineState Menu = new StateMachineState(new List<Flag> {playButtonPressMenu});                  // 0
+            StateMachineState Game = new StateMachineState(new List<Flag> {escapeKeyPressGame, PlayerDeathGame});  // 1
+            StateMachineState Escape = new StateMachineState(new List<Flag> { escapeKeyPressEscape });             // 2
+            StateMachineState Respawn = new StateMachineState(new List<Flag> { playButtonPressRespawn });          // 3
+
+            _stateMachine = new FiniteStateMachine(new List<StateMachineState>{Menu, Game, Escape, Respawn});
+            UIButton playButton = new UIButton(_spriteSheetTexture, new Rectangle(400, 10, 40, 40));
+            playButton.onClick = new UIAction(() => {
+                _eventManager.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
+                _entityManager.RespawnPlayer();
+            });
+            UIButton menuButton = new UIButton(_spriteSheetTexture, new Rectangle(450, 10, 40, 40));
+            menuButton.onClick = new UIAction(() => _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0))));
+
+            _uiManager.Add(playButton);
+            _uiManager.Add(menuButton);
+
+            EventAction a = new EventAction((uint e) =>
+            {
+                _stateMachine.SetFlag((int)e);
+                return true;
+            });
+
+            _eventManager.AddListener(a, "STATE_MACHINE");
+
 #if DEBUG
             UIButton b = new UIButton(_spriteSheetTexture, new Rectangle(250, 10, 40, 40));
             UIButton c = new UIButton(_spriteSheetTexture, new Rectangle(300, 10, 40, 40));
@@ -65,7 +99,6 @@ namespace UpgradePlatformer
             Stats = new UIText(_font, new Rectangle(0, 0, 0, 0), Color.White);
             _uiManager.Add(Stats);
 #endif
-
         }
 
         protected override void LoadContent()
@@ -90,14 +123,13 @@ namespace UpgradePlatformer
             _inputManager.Update(_eventManager);
             _entityManager.Update(gameTime, _eventManager, _inputManager);
             _uiManager.Update(gameTime, _eventManager);
-            //_levelManager.GetCollisions(new Rectangle(250, 10, 40, 40));
 #if DEBUG
             if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
             {
                 frameRate = (double)frameCounter / gameTime.ElapsedGameTime.TotalSeconds;
             }
             frameCounter = 0;
-            Stats.Text = frameRate.ToString("F2") + "\n" + _levelManager.ActiveLevelName() + ":" + _levelManager.ActiveLevelNum();
+            Stats.Text = frameRate.ToString("F2") + "\n" + _levelManager.ActiveLevelName() + ":" + _levelManager.ActiveLevelNum() + "\n" + _stateMachine.currentState;
 #endif
 
             base.Update(gameTime);

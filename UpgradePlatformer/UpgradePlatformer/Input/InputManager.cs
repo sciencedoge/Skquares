@@ -31,28 +31,28 @@ namespace UpgradePlatformer.Input
 
             if (prevMouseState.LeftButton != mouseState.LeftButton)
             {
-                _eventManager.Push(new InputEvent(CheckChangeType(prevMouseState.LeftButton, "MOUSE_UP", "MOUSE_DOWN"), 0, mouseState.Position));
+                _eventManager.Push(new Event(CheckChangeType(prevMouseState.LeftButton, "MOUSE_UP", "MOUSE_DOWN"), 0, mouseState.Position));
             }
             if (prevMouseState.RightButton != mouseState.RightButton)
             {
-                _eventManager.Push(new InputEvent(CheckChangeType(prevMouseState.RightButton, "MOUSE_UP", "MOUSE_DOWN"), 1, mouseState.Position));
+                _eventManager.Push(new Event(CheckChangeType(prevMouseState.RightButton, "MOUSE_UP", "MOUSE_DOWN"), 1, mouseState.Position));
             }
             if (prevMouseState.MiddleButton != mouseState.MiddleButton)
             {
-                _eventManager.Push(new InputEvent(CheckChangeType(prevMouseState.MiddleButton, "MOUSE_UP", "MOUSE_DOWN"), 2, mouseState.Position));
+                _eventManager.Push(new Event(CheckChangeType(prevMouseState.MiddleButton, "MOUSE_UP", "MOUSE_DOWN"), 2, mouseState.Position));
             }
             List<Keys> newKeys = new List<Keys>(kbState.GetPressedKeys());
             foreach (Keys k in prevKbState.GetPressedKeys())
             {
                 if (!newKeys.Contains(k))
                 {
-                    _eventManager.Push(new InputEvent("KEY_UP", (uint)k, mouseState.Position));
+                    _eventManager.Push(new Event("KEY_UP", (uint)k, mouseState.Position));
                 }
                 else newKeys.Remove(k);
             }
             foreach (Keys k in newKeys)
             {
-                _eventManager.Push(new InputEvent("KEY_DOWN", (uint)k, mouseState.Position));
+                _eventManager.Push(new Event("KEY_DOWN", (uint)k, mouseState.Position));
             }
         }
 
