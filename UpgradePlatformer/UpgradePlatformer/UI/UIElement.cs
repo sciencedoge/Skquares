@@ -8,6 +8,7 @@ namespace UpgradePlatformer.UI
 {
     abstract class UIElement
     {
+        public bool IsActive = true;
         public Rectangle Bounds;
         
         /// <summary>
@@ -30,7 +31,8 @@ namespace UpgradePlatformer.UI
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            CurrentSprite().Draw(spriteBatch, Bounds, 0);
+            if (IsActive)
+                CurrentSprite().Draw(spriteBatch, Bounds, 0);
         }
     }
 }
