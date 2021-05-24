@@ -40,6 +40,7 @@ namespace UpgradePlatformer.Entities
             get { return currentlyColliding; }
             set { currentlyColliding = value; }
         }
+        public bool Flip;
 
         /// <summary>
         /// Creates an enemy object
@@ -56,6 +57,7 @@ namespace UpgradePlatformer.Entities
 
             spawnPoint = new Point(hitbox.X, hitbox.Y);
             currentlyColliding = false;
+            this.sprite.Position = new Rectangle(0, 29, 15, 15);
         }
 
         /// <summary>
@@ -68,6 +70,9 @@ namespace UpgradePlatformer.Entities
             {
                 hitbox.Location = position.ToPoint();
                 ApplyGravity();
+                sprite.effects = SpriteEffects.None;
+                if (Flip)
+                    sprite.effects = SpriteEffects.FlipHorizontally;
             }           
         }
         public override void OnFloorCollide()
