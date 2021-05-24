@@ -52,13 +52,13 @@ namespace UpgradePlatformer.Entities
         /// Updates the entities in the game
         /// </summary>
         /// <param name="gameTime"></param>
-        /// <param name="inputManager"></param>
-        public void Update(GameTime gameTime, InputManager inputManager)
+        /// <param name="eventManager"></param>
+        public void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager)
         {
             currentLevel = levelManager.ActiveLevel();
             // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++) {
-                player.Update(gameTime, inputManager);
+                player.Update(gameTime, eventManager, inputManager);
                 Intersects();
             } 
             

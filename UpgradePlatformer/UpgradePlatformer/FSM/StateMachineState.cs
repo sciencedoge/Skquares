@@ -12,9 +12,10 @@ namespace UpgradePlatformer.FSM
         public Flag cond;
     }
 
-    public struct Flag
+    public unsafe struct Flag
     {
-        private bool _value;
+        public int id;
+        public bool _value;
         public bool Value {
             get {
                 bool old = _value;

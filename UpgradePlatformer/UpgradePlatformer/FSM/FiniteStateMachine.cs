@@ -7,14 +7,18 @@ namespace UpgradePlatformer.FSM
     unsafe class FiniteStateMachine
     {
         public List<StateMachineState> States;
-        public Flag*[] flags;
-
-        public void SetFlag (String Name)
+        public StateMachineState State => States[currentState];
+        private Flag*[] flags;
+        private int currentState;
+        public void SetFlag (int id)
         {
-            foreach (Flag* f in flags)
+            foreach (Flag *f in flags)
             {
-
+                if ((*f).id == id) {
+                    (*f).Value = true;
+                }
             }
+            while (States[currentState].cond.Value) currentState = States[currentState].nextState;
         }
     }
 }

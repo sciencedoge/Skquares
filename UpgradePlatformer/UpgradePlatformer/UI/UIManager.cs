@@ -22,9 +22,9 @@ namespace UpgradePlatformer.UI
         /// Do some random stuff before draw
         /// </summary>
         /// <param name="gameTime">a gameTime Object</param>
-        public void Update(GameTime gameTime, InputManager inputManager)
+        public void Update(GameTime gameTime, EventManager eventManager)
         {
-            InputEvent ev = inputManager.Pop(InputEventKind.MOUSE_DOWN);
+            InputEvent ev = eventManager.Pop("MOUSE_DOWN");
 
             if (ev != null) ProcessClick(ev.MousePosition, ev.Data);
 
