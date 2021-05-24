@@ -36,15 +36,13 @@ namespace UpgradePlatformer.Graphics
         /// <param name="rotation">the rotation of the sprite in RADIANS</param>
         public void Draw(SpriteBatch spriteBatch, Point renderPosition, float rotation)
         {
-            Rectangle renderRect = Position;
-            renderRect.Location = renderPosition;
-            spriteBatch.Draw(Texture, renderRect, Position, TintColor, rotation, Origin, SpriteEffects.None, 0f);
+            Draw(spriteBatch, renderPosition, rotation, Position.Size.ToVector2());
         }
 
         public void Draw(SpriteBatch spriteBatch, Point renderPosition, float rotation, Vector2 Size)
         {
             Rectangle renderRect = Position;
-            renderRect.Location = renderPosition;
+            renderRect.Location = renderPosition + (Origin / 2).ToPoint();
             renderRect.Size = Size.ToPoint();
             spriteBatch.Draw(Texture, renderRect, Position, TintColor, rotation, Origin, SpriteEffects.None, 0f);
         }

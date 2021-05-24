@@ -30,7 +30,7 @@ namespace UpgradePlatformer.Levels
             TileWidth = reader.ReadInt32();
             TileHeight = reader.ReadInt32();
 
-            Point tileSize = new Point(Graphics.PreferredBackBufferWidth / TileWidth, Graphics.PreferredBackBufferHeight / TileHeight);
+            Vector2 tileSize = new Vector2(Graphics.PreferredBackBufferWidth / TileWidth, Graphics.PreferredBackBufferHeight / TileHeight);
 
             TileMap = new Tile[TileWidth, TileHeight];
 
@@ -49,9 +49,9 @@ namespace UpgradePlatformer.Levels
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            for (int x = 0; x < TileWidth; x++)
-                for (int y = 0; y < TileHeight; y++)
-                    TileMap[x, y].Draw(spriteBatch, new Vector2(y * (TileMap[x, y].TileSize.Y), x * (TileMap[x, y].TileSize.X)));
+            for (int x = 0; x < TileHeight; x++)
+                for (int y = 0; y < TileWidth; y++)
+                    TileMap[y, x].Draw(spriteBatch, new Vector2((x) * TileMap[0, 0].TileSize.X, (y) * TileMap[0, 0].TileSize.Y) + new Vector2());
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace UpgradePlatformer.Levels
         {
             List<Tile> Tiles = new List<Tile>();
 
-            Point centerTile = r.Center / TileMap[0, 0].TileSize;
+            Point centerTile = r.Center / TileMap[0, 0].TileSize.ToPoint();
 
             for (int x = Math.Max(centerTile.X - RedundancySize, 0); x < Math.Min(centerTile.X + RedundancySize, TileWidth); x++)
                 for (int y = Math.Max(centerTile.Y - RedundancySize, 0); y < Math.Min(centerTile.Y + RedundancySize, TileHeight); y++)

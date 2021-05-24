@@ -48,8 +48,8 @@ namespace UpgradePlatformer
             _uiManager = new UIManager();
             _inputManager = new InputManager();
 
-            _graphics.PreferredBackBufferHeight = 690;
-            _graphics.PreferredBackBufferWidth = 690;
+            _graphics.PreferredBackBufferHeight = 660;
+            _graphics.PreferredBackBufferWidth = 660;
             _graphics.ApplyChanges();
             _levelManager = new LevelManager(_spriteSheetTexture, _graphics);
             _entityManager = new EntityManager(_spriteSheetTexture, _graphics, _levelManager);
