@@ -19,7 +19,6 @@ namespace UpgradePlatformer.Entities
 
         //Fields
         private bool keyUp, keyDown, keyLeft, keyRight;
-        private int jumpsLeft;
 
         private bool invincible;
 
@@ -31,10 +30,10 @@ namespace UpgradePlatformer.Entities
         /// Creates a player object
         /// </summary>
         public Player(int maxHp, int damage, Rectangle hitbox,
-            Texture2D texture, GraphicsDeviceManager device)
-            : base(maxHp, damage, hitbox, texture) 
+            Texture2D texture, GraphicsDeviceManager device, int jumpsLeft)
+            : base(maxHp, damage, hitbox, texture, jumpsLeft) 
         {
-            jumpsLeft = 2;
+            this.jumpsLeft = jumpsLeft;
 
             this._graphics = device;
 

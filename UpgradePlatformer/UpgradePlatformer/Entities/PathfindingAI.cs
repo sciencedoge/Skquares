@@ -66,7 +66,12 @@ namespace UpgradePlatformer.Entities
                     else
                     {
                         enemies[i].X += 0.5f;
-                    }
+                    }                
+                }
+
+                if(relationships[i, 0].Y > 10)
+                {
+                    AIJump(enemies[i]);
                 }
             }
         }
@@ -75,9 +80,17 @@ namespace UpgradePlatformer.Entities
         /// Performs a jump on the enemy
         /// (will add after confirming basic pathfinding)
         /// </summary>
-        public void AIJump()
+        public void AIJump(Enemy e)
         {
-
+            //check for ground collision
+            if (e.JumpsLeft > 0 && e.Velocity.Y >= -4f)
+            {
+                e.Velocity = new Vector2(e.Velocity.X, e.Velocity.Y + e.JumpVelocity.Y);
+            }
+            else if (!(e.Velocity.Y >= -4f))
+            {
+                e.JumpsLeft -= 1;
+            }
         }
 
 
