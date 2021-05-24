@@ -39,7 +39,7 @@ namespace UpgradePlatformer.Entities
                 new Rectangle(new Point(50, 600), new Point(25, 25)), texture, device);
 
             enemies.Add(new Enemy(
-                10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture));
+                10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device));
 
             this.levelManager = levelMan;
 
@@ -59,16 +59,17 @@ namespace UpgradePlatformer.Entities
             // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++) {
                 player.Update(gameTime, eventManager, inputManager);
-                Intersects();
-            } 
-            
-            foreach(Enemy e in enemies)
-            {
-                e.Update(gameTime);
-            }
-            player.Intersects(enemies);
-            pathfind.UpdateCosts();
-            pathfind.MoveToPlayer();
+                Intersects(player);
+                foreach (Enemy e in enemies)
+                {
+                    e.Update(gameTime);
+                    Intersects(e);
+                }
+               
+                player.Intersects(enemies);
+                pathfind.UpdateCosts();
+                pathfind.MoveToPlayer();
+            }                                   
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -83,9 +84,9 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Checks if an entity intersects with anything
         /// </summary>
-        public void Intersects()
+        public void Intersects(LivingObject obj)
         {
-            Rectangle temp = GetTempHitbox();
+            Rectangle temp = GetTempHitbox(obj);
 
             foreach (Tile t in currentLevel.Tiles)
             {              
@@ -110,14 +111,14 @@ namespace UpgradePlatformer.Entities
                         {
                             temp.Y += intersection.Height;
                         }
-                        player.OnFloorCollide();
-                        player.Velocity = new Vector2(player.Velocity.X, 0);
+                        obj.OnFloorCollide();
+                        obj.Velocity = new Vector2(obj.Velocity.X, 0);
                     }
 
                     //long skinny rectangle (left or right)
                     else if (intersection.Width < intersection.Height)
                     {
-                        player.Velocity = new Vector2(0, player.Velocity.Y);
+                        obj.Velocity = new Vector2(0, obj.Velocity.Y);
 
                         //moves the player right
                         if (t.Position.Right - intersection.Right == 0)
@@ -131,8 +132,8 @@ namespace UpgradePlatformer.Entities
                         }                     
                     }
 
-                    player.X = temp.X;
-                    player.Y = temp.Y;
+                    obj.X = temp.X;
+                    obj.Y = temp.Y;
                 }               
             }
         }
@@ -141,13 +142,13 @@ namespace UpgradePlatformer.Entities
         /// returns a temp hitbox
         /// </summary>
         /// <returns></returns>
-        public Rectangle GetTempHitbox()
+        public Rectangle GetTempHitbox(LivingObject obj)
         {
             return new Rectangle(
-                new Point(player.Hitbox.X,
-                player.Hitbox.Y),
-                new Point(player.Hitbox.Width,
-                player.Hitbox.Height));
+                new Point(obj.Hitbox.X,
+                obj.Hitbox.Y),
+                new Point(obj.Hitbox.Width,
+                obj.Hitbox.Height));
         }
     }
 }

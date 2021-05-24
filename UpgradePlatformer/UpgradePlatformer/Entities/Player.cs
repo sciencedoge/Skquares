@@ -21,6 +21,8 @@ namespace UpgradePlatformer.Entities
         private bool keyUp, keyDown, keyLeft, keyRight;
         private int jumpsLeft;
 
+        private bool invincible;
+
         //screen bounds stuff
         private GraphicsDeviceManager _graphics;
 
@@ -35,6 +37,8 @@ namespace UpgradePlatformer.Entities
             jumpsLeft = 2;
 
             this._graphics = device;
+
+            invincible = false;
         }
 
         //Methods
@@ -46,12 +50,18 @@ namespace UpgradePlatformer.Entities
         /// <returns></returns>
         public void Intersects(List<Enemy> obj)
         {
+            if (invincible)
+            {
+                return;
+            }
+
             if (isActive)
             {
                 foreach(Enemy enemy in obj)
                 {
                     if (this.hitbox.Intersects(enemy.Hitbox))
                     {
+                        invincible = true;
                         this.TakeDamage(enemy.Damage);
 
                         if (CurrentHP <= 0)
@@ -71,8 +81,14 @@ namespace UpgradePlatformer.Entities
         /// <param name="keys"></param>
         public void Update(GameTime gt, EventManager eventManager, InputManager inputManager)
         {
-
+            
             CheckForInput(inputManager, eventManager);
+
+            //put for testing purposes so the player doesnt immediately die
+            if(gt.TotalGameTime.TotalSeconds % 1 <= 0.01)
+            {
+                invincible = false;
+            }
 
             if (keyRight)
             {
@@ -111,12 +127,9 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Applies gravity to the player
         /// </summary>
-        public void ApplyGravity()
+        public override void ApplyGravity()
         {
-            position += velocity;
-            velocity += gravity;
-                      
-            velocity.X *= 0.70f;
+            base.ApplyGravity();
 
             if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height + 9)
             {
@@ -163,6 +176,15 @@ namespace UpgradePlatformer.Entities
                 else if (up == Keys.S) keyDown = false;
                 else if (up == Keys.D) keyRight = false;
             }
+        }
+        
+        /// <summary>
+        /// Respawns the player
+        /// </summary>
+        public void Respawn()
+        {
+            this.currentHp = maxHp;
+            this.isActive = true;
         }
     }
 }
