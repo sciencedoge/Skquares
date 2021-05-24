@@ -55,8 +55,11 @@ namespace UpgradePlatformer
             _entityManager = new EntityManager(_spriteSheetTexture, _graphics, _levelManager);
 #if DEBUG
             UIButton b = new UIButton(_spriteSheetTexture, new Rectangle(250, 10, 40, 40));
-            b.onClick = new UIAction(() => _levelManager.Next());
+            UIButton c = new UIButton(_spriteSheetTexture, new Rectangle(300, 10, 40, 40));
+            b.onClick = new UIAction(() => _levelManager.Prev());
+            c.onClick = new UIAction(() => _levelManager.Next());
             _uiManager.Add(b);
+            _uiManager.Add(c);
             Stats = new UIText(_font, new Rectangle(0, 0, 0, 0), Color.White);
             _uiManager.Add(Stats);
 #endif
