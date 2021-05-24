@@ -110,6 +110,17 @@ namespace UpgradePlatformer.Entities
             }
         }
 
+        public void EnemyIntersection()
+        {
+            foreach(Enemy e in enemies)
+            {
+                foreach(Enemy e2 in enemies)
+                {
+                    
+                }
+            }
+        }
+
 
     }
 }

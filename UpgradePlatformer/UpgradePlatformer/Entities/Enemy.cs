@@ -19,6 +19,7 @@ namespace UpgradePlatformer.Entities
 
         private Point spawnPoint;
         private bool currentlyColliding;
+        private float goombaMultiplier;
 
         /// <summary>
         /// returns or sets the

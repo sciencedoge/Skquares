@@ -40,6 +40,9 @@ namespace UpgradePlatformer.Entities
 
             enemies.Add(new Enemy(
                 10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device, 1));
+            
+            enemies.Add(new Enemy(
+                10, 1, new Rectangle(new Point(500, 600), new Point(25, 25)), texture, device, 1));
 
             this.levelManager = levelMan;
 
@@ -69,6 +72,7 @@ namespace UpgradePlatformer.Entities
                 player.Intersects(enemies);
                 pathfind.UpdateCosts();
                 pathfind.MoveToPlayer();
+                pathfind.EnemyIntersection();
             }          
             if (player.CurrentHP == 0)
             {
