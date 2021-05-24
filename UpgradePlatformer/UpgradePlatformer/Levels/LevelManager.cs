@@ -15,6 +15,7 @@ namespace UpgradePlatformer.Levels
         {
             Levels = new List<Level>();
             activeLevel = 0;
+            Load(texture, "menu", graphics);
             Load(texture, "collision test", graphics);
             Load(texture, "EGGMAN", graphics);
             Load(texture, "EGGMEN", graphics);
