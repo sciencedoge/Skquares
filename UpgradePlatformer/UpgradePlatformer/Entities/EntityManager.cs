@@ -97,6 +97,8 @@ namespace UpgradePlatformer.Entities
                     //long skinny rectangle (left or right)
                     else if (intersection.Width < intersection.Height)
                     {
+                        player.Velocity = new Vector2(0, player.Velocity.Y);
+
                         //moves the player right
                         if (t.Position.Right - intersection.Right == 0)
                         {
@@ -106,9 +108,7 @@ namespace UpgradePlatformer.Entities
                         else
                         {
                             temp.X -= intersection.Width;
-                        }
-
-                        player.Velocity = new Vector2(0, player.Velocity.Y);
+                        }                     
                     }
 
                     player.X = temp.X;
