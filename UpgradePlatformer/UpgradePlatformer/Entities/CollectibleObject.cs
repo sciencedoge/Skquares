@@ -71,7 +71,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="sb">_spriteBatch</param>
         /// <param name="gt">gameTime</param>
-        public void Draw(SpriteBatch sb, GameTime gt)
+        public void Draw(SpriteBatch sb)
         {
             //if the sprite is active, draws it to the screen
             if (isActive)

@@ -108,6 +108,7 @@ namespace UpgradePlatformer.Entities
                         if (t.Position.Top - intersection.Top == 0)
                         {
                             temp.Y -= intersection.Height;
+                            obj.OnFloorCollide();
                         }
 
                         //moves player down
@@ -115,7 +116,7 @@ namespace UpgradePlatformer.Entities
                         {
                             temp.Y += intersection.Height;
                         }
-                        obj.OnFloorCollide();
+                        
                         obj.Velocity = new Vector2(obj.Velocity.X, 0);
                     }
 
