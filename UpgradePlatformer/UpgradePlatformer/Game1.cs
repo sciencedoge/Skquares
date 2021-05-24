@@ -81,13 +81,24 @@ namespace UpgradePlatformer
             _uiManager.Add(playButton);
             _uiManager.Add(menuButton);
 
-            EventAction a = new EventAction((uint e) =>
+            EventAction a1 = new EventAction((uint e) =>
             {
                 _stateMachine.SetFlag((int)e);
                 return true;
             });
 
-            _eventManager.AddListener(a, "STATE_MACHINE");
+            _eventManager.AddListener(a1, "STATE_MACHINE");
+
+            EventAction a2 = new EventAction((uint e) =>
+            {
+                if (e == (uint)Keys.Escape) {
+                    _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
+                    return true;
+                }
+                return false;
+            });
+
+            _eventManager.AddListener(a2, "KEY_DOWN");
 
 #if DEBUG
             UIButton b = new UIButton(_spriteSheetTexture, new Rectangle(250, 10, 40, 40));
@@ -115,13 +126,14 @@ namespace UpgradePlatformer
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            // if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //     Exit();
 
             // TODO: Add your update logic here
 
             _inputManager.Update(_eventManager);
-            _entityManager.Update(gameTime, _eventManager, _inputManager);
+            if (_stateMachine.currentState == 1)
+                _entityManager.Update(gameTime, _eventManager, _inputManager);
             _uiManager.Update(gameTime, _eventManager);
 #if DEBUG
             if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
