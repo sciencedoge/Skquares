@@ -18,11 +18,26 @@ namespace UpgradePlatformer.Entities
         private GraphicsDeviceManager _graphics;
 
         private Point spawnPoint;
+        private bool currentlyColliding;
 
+        /// <summary>
+        /// returns or sets the
+        /// spawn point of the enemy
+        /// </summary>
         public Point SpawnPoint
         {
             get { return spawnPoint; }
             set { spawnPoint = value; }
+        }
+
+        /// <summary>
+        /// returns or sets whether or not the
+        /// enemy is currently colliding with something
+        /// </summary>
+        public bool Colliding
+        {
+            get { return currentlyColliding; }
+            set { currentlyColliding = value; }
         }
 
         /// <summary>
@@ -39,6 +54,7 @@ namespace UpgradePlatformer.Entities
             this._graphics = _graphics;
 
             spawnPoint = new Point(hitbox.X, hitbox.Y);
+            currentlyColliding = false;
         }
 
         /// <summary>

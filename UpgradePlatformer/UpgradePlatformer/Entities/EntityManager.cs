@@ -118,6 +118,12 @@ namespace UpgradePlatformer.Entities
                         }
                         
                         obj.Velocity = new Vector2(obj.Velocity.X, 0);
+
+                        if(obj is Enemy)
+                        {
+                            Enemy e = (Enemy)obj;
+                            e.Colliding = true;
+                        }
                     }
 
                     //long skinny rectangle (left or right)
@@ -134,11 +140,17 @@ namespace UpgradePlatformer.Entities
                         else
                         {
                             temp.X -= intersection.Width;
-                        }                     
+                        }
+
+                        if (obj is Enemy)
+                        {
+                            Enemy e = (Enemy)obj;
+                            e.Colliding = true;
+                        }
                     }
 
                     obj.X = temp.X;
-                    obj.Y = temp.Y;
+                    obj.Y = temp.Y;                  
                 }               
             }
         }
