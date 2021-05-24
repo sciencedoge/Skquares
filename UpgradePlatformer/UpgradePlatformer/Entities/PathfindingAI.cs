@@ -57,7 +57,7 @@ namespace UpgradePlatformer.Entities
         {
             for(int i = 0; i < enemies.Count; i++)
             {
-                if(relationships[i, 0].X < 100)
+                if(relationships[i, 0].X < 150)
                 {
                     if(enemies[i].X > player.X)
                     {
