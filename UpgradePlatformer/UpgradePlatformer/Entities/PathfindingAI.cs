@@ -67,10 +67,12 @@ namespace UpgradePlatformer.Entities
                     if(enemies[i].X > player.X)
                     {
                         enemies[i].X -= 0.5f;
+                        enemies[i].Flip = false;
                     }
                     else
                     {
                         enemies[i].X += 0.5f;
+                        enemies[i].Flip = true;
                     }
 
                     if (relationships[i, 0].Y > 20
@@ -82,6 +84,7 @@ namespace UpgradePlatformer.Entities
 
                 else
                 {
+                    enemies[i].Flip = goombaAINum > 0;
                     if(enemies[i].Colliding)
                     {
                         goombaAINum *= -1;
