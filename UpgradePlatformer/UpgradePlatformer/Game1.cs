@@ -62,7 +62,7 @@ namespace UpgradePlatformer
             Flag escapeKeyPressGame = new Flag(1, 2);
             Flag escapeKeyPressEscape = new Flag(1, 1);
             Flag PlayerDeathGame = new Flag(2, 3);
-            Flag playButtonPressRespawn = new Flag(1, 0);
+            Flag playButtonPressRespawn = new Flag(0, 1);
 
             StateMachineState Menu = new StateMachineState(new List<Flag> {playButtonPressMenu});                  // 0
             StateMachineState Game = new StateMachineState(new List<Flag> {escapeKeyPressGame, PlayerDeathGame});  // 1
