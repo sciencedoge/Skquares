@@ -56,7 +56,7 @@ namespace UpgradePlatformer.UI
             if (button != 0) return false;
             foreach (UIElement e in UIElements)
             {
-                if (e.Bounds.Contains(position))
+                if (e.Bounds.Contains(position) && e.IsActive)
                 {
                     e.WhenClicked(position - e.Bounds.Location);
                     return true;

@@ -12,8 +12,9 @@ namespace UpgradePlatformer.UI
 
         public SpriteFont Font;
         public int ClickTimeout = 5;
-
         private int ClickTime;
+        private int Scale;
+        public bool Centered = false;
 
         public Color color;
 
@@ -29,12 +30,13 @@ namespace UpgradePlatformer.UI
         /// creates a UIButton
         /// </summary>
         /// <param name="bounds">What the coords of the button are</param>
-        public UIText(SpriteFont font, Rectangle bounds, Color c)
+        public UIText(SpriteFont font, Rectangle bounds, int scale, Color c)
         {
             Bounds = bounds;
             Font = font;
             Text = "";
             color = c;
+            Scale = scale;
         }
 
         /// <summary>
@@ -45,7 +47,15 @@ namespace UpgradePlatformer.UI
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(Font, Text, Bounds.Location.ToVector2(), color);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
+            float size = Font.MeasureString(Text).X * Scale / 2;
+            if (Centered)
+                spriteBatch.DrawString(Font, Text, new Vector2((Bounds.Left + Bounds.Right) / 2f - size, Bounds.Y), color, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 0f);
+            else
+                spriteBatch.DrawString(Font, Text, Bounds.Location.ToVector2(), color, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 0f);
+            spriteBatch.End();
+            spriteBatch.Begin();
         }
 
         public override UISprite CurrentSprite() { return null; }
