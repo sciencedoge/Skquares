@@ -9,7 +9,7 @@ namespace UpgradePlatformer.Levels
 {
     class Tile
     {
-        private static Rectangle TILE_SPRITE = new Rectangle(0, 14, 14, 14);
+        private static Rectangle TILE_SPRITE = new Rectangle(0, 13, 15, 15);
         private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.Orange,  Color.Orange,  Color.White, Color.Orange, Color.Transparent,};
         private Sprite Sprite;
         public Vector2 TileSize;
