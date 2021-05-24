@@ -9,6 +9,7 @@ namespace UpgradePlatformer.Graphics
     public class Sprite
     {
         public Texture2D Texture;
+        public SpriteEffects effects = SpriteEffects.None;
         public Rectangle Position;
         public Vector2 Origin;
         public Color TintColor;
@@ -44,7 +45,7 @@ namespace UpgradePlatformer.Graphics
             Rectangle renderRect = Position;
             renderRect.Location = renderPosition + (Origin / 2).ToPoint();
             renderRect.Size = Size.ToPoint();
-            spriteBatch.Draw(Texture, renderRect, Position, TintColor, rotation, Origin, SpriteEffects.None, 0f);
+            spriteBatch.Draw(Texture, renderRect, Position, TintColor, rotation, Origin, effects, 0f);
         }
     }
 }

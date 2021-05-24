@@ -20,7 +20,6 @@ namespace UpgradePlatformer.Entities
         //Fields
         private Vector2 jumpVelocity;
         private bool keyUp, keyDown, keyLeft, keyRight;
-
         private int jumpsLeft;
 
         //screen bounds stuff
@@ -35,7 +34,7 @@ namespace UpgradePlatformer.Entities
             : base(maxHp, damage, hitbox, texture) 
         {
             jumpVelocity = new Vector2(0, -1.8f) ;
-            jumpsLeft = 1;
+            jumpsLeft = 2;
 
             this._graphics = device;
         }
@@ -134,12 +133,12 @@ namespace UpgradePlatformer.Entities
                 position.X = _graphics.PreferredBackBufferWidth + hitbox.Width;
              
 
-            if (position.Y >= _graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 1;
+            if (position.Y >= _graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 2;
         }
         
         public override void OnFloorCollide()
         {
-            jumpsLeft = 1;
+            jumpsLeft = 2;
         }
 
         /// <summary>
@@ -154,15 +153,15 @@ namespace UpgradePlatformer.Entities
             {
                 Keys down = (Keys)dev.Data;
                 if (down == Keys.W) keyUp = true;
-                else if (down == Keys.A) keyLeft = true;
+                else if (down == Keys.A) { keyLeft = true; sprite.effects = SpriteEffects.None; }
                 else if (down == Keys.S) keyDown = true;
-                else if (down == Keys.D) keyRight = true;
+                else if (down == Keys.D) { keyRight = true; sprite.effects = SpriteEffects.FlipHorizontally; }
             }
             if (uev != null)
             {
                 Keys up = (Keys)uev.Data;
-                if (keyUp && up == Keys.W) { keyUp = false; jumpsLeft -= 1;}
-                else if (up == Keys.A) keyLeft = false;
+                if (keyUp && up == Keys.W) { keyUp = false; jumpsLeft -= 1; }
+                else if (up == Keys.A) keyLeft = false; 
                 else if (up == Keys.S) keyDown = false;
                 else if (up == Keys.D) keyRight = false;
             }
