@@ -121,9 +121,9 @@ namespace UpgradePlatformer.Entities
                       
             velocity.X *= 0.70f;
 
-            if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height / 2)
+            if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height + 9)
             {
-                position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height / 2;
+                position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height + 9;
                 velocity.Y = 0;
             }
 
