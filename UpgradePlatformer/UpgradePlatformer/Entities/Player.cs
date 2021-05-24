@@ -18,9 +18,12 @@ namespace UpgradePlatformer.Entities
     {
 
         //Fields
+        private const int NORMAL_HITBOX_WIDTH = 25, NORMAL_HITBOX_HEIGHT = 25, DUCK_HITBOX_HEIGHT = 15, DUCK_HITBOX_WIDTH = 27;
         private bool keyUp, keyDown, keyLeft, keyRight;
 
         private bool invincible;
+
+        private bool ducking;
 
         //screen bounds stuff
         private GraphicsDeviceManager _graphics;
@@ -89,28 +92,35 @@ namespace UpgradePlatformer.Entities
                 {
                     invincible = false;
                 }
-
-                if (keyRight)
+                if (keyDown)
                 {
-                    velocity.X += speedX;
+                    ducking = true;
                 }
-
-                if (keyLeft)
+                else
                 {
-                    velocity.X -= speedX;
-                }
-
-                if (keyUp)
-                {
-                    //check for ground collision
-                    if (jumpsLeft > 0 && velocity.Y >= -4f)
+                    ducking = false;
+                    if (keyRight)
                     {
-                        velocity.Y += jumpVelocity.Y;
+                        velocity.X += speedX;
                     }
-                    else if (!(velocity.Y >= -4f))
+
+                    if (keyLeft)
                     {
-                        keyUp = false;
-                        jumpsLeft -= 1;
+                        velocity.X -= speedX;
+                    }
+
+                    if (keyUp)
+                    {
+                        //check for ground collision
+                        if (jumpsLeft > 0 && velocity.Y >= -4f)
+                        {
+                            velocity.Y += jumpVelocity.Y;
+                        }
+                        else if (!(velocity.Y >= -4f))
+                        {
+                            keyUp = false;
+                            jumpsLeft -= 1;
+                        }
                     }
                 }
                 Update(gt);
@@ -125,6 +135,12 @@ namespace UpgradePlatformer.Entities
         {
             ApplyGravity();
             hitbox.Location = position.ToPoint();
+            if (ducking)
+            {
+                hitbox.Size = new Point(DUCK_HITBOX_WIDTH, DUCK_HITBOX_HEIGHT);
+                //hitbox.Y += NORMAL_HITBOX_HEIGHT - DUCK_HITBOX_HEIGHT;
+            }
+            else hitbox.Size = new Point(NORMAL_HITBOX_WIDTH, NORMAL_HITBOX_HEIGHT);
         }
 
         /// <summary>
