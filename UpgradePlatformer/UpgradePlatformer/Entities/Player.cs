@@ -145,8 +145,8 @@ namespace UpgradePlatformer.Entities
         public void CheckForInput(InputManager inputManager, EventManager eventManager)
         {
             inputManager.Update(eventManager);
-            InputEvent dev = eventManager.Pop("KEY_DOWN");
-            InputEvent uev = eventManager.Pop("KEY_UP");
+            Event dev = eventManager.Pop("KEY_DOWN");
+            Event uev = eventManager.Pop("KEY_UP");
             if (dev != null)
             {
                 Keys down = (Keys)dev.Data;
