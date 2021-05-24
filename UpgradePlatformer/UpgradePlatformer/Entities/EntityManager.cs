@@ -39,7 +39,7 @@ namespace UpgradePlatformer.Entities
                 new Rectangle(new Point(50, 600), new Point(25, 25)), texture, device);
 
             enemies.Add(new Enemy(
-                10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture));
+                10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device));
 
             this.levelManager = levelMan;
 

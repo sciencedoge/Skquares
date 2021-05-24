@@ -186,7 +186,12 @@ namespace UpgradePlatformer.Entities
 
         public abstract void OnFloorCollide();
 
+        public virtual void ApplyGravity()
+        {
+            position += velocity;
+            velocity += gravity;
 
-
+            velocity.X *= 0.70f;
+        }
     }
 }
