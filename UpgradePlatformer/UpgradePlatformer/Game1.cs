@@ -170,9 +170,9 @@ namespace UpgradePlatformer
         {
             // update managers
             _inputManager.Update(_eventManager);
-            if (_stateMachine.currentState == 1)
-                _entityManager.Update(gameTime, _eventManager, _inputManager);
+            if (_stateMachine.currentState == 1) _entityManager.Update(gameTime, _eventManager, _inputManager);
             _uiManager.Update(gameTime, _eventManager);
+            _levelManager.Update();
 
             // StateMachine related Updates
             playButton.IsActive = (_stateMachine.currentState == 0) || (_stateMachine.currentState == 3);
@@ -180,7 +180,6 @@ namespace UpgradePlatformer
             Sprite.Dim = (_stateMachine.currentState == 2) || (_stateMachine.currentState == 3);
             continueButton.IsActive = (_stateMachine.currentState == 2);
             PauseText.IsActive = (_stateMachine.currentState == 2);
-            _levelManager.Update();
 #if DEBUG
             if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
             {
