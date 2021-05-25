@@ -134,6 +134,13 @@ namespace UpgradePlatformer
                 return true;
             });
             _eventManager.AddListener(Action_Level_Show, "LEVEL_SHOW");
+
+            EventAction Action_Level_Next = new EventAction((uint e) =>
+            {
+                _levelManager.Next();
+                return true;
+            });
+            _eventManager.AddListener(Action_Level_Next, "LEVEL_NEXT");
 #if DEBUG
             UIButton b = new UIButton(_spriteSheetTexture, _font, new Rectangle(250, 10, 40, 40));
             b.Text.Text = "<";
@@ -189,7 +196,7 @@ namespace UpgradePlatformer
             frameCounter++;
 #endif
             GraphicsDevice.Clear(Color.Black);
-            
+
             _spriteBatch.Begin();
             _levelManager.Draw(_spriteBatch);
 
