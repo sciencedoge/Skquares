@@ -38,11 +38,11 @@ namespace UpgradePlatformer.Entities
             player = new Player(10, 2, 
                 new Rectangle(new Point(50, 600), new Point(25, 25)), texture, device, 2);
 
-            enemies.Add(new Enemy(
-                10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device, 1));
+            // enemies.Add(new Enemy(
+            //     10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device, 1));
 
-            enemies.Add(new Enemy(
-                10, 1, new Rectangle(new Point(500, 600), new Point(25, 25)), texture, device, 1));
+            // enemies.Add(new Enemy(
+            //     10, 1, new Rectangle(new Point(500, 600), new Point(25, 25)), texture, device, 1));
 
             this.levelManager = levelMan;
 
@@ -96,62 +96,69 @@ namespace UpgradePlatformer.Entities
         {
             Rectangle temp = GetTempHitbox(obj);
 
-            foreach (Tile t in currentLevel.Tiles)
-            {              
-                if (t.Position.Intersects(temp)
-                    && t.Kind != 9)
-                {
-                    //Gets a rectangle that represents the intersection
-                    Rectangle intersection = Rectangle.Intersect(t.Position, temp);
-
-                    //checks conditions to move the player up or down
-                    if (intersection.Width > intersection.Height)
-                    {
-                        //short wide rectangle
-                        //moves player up
-                        if (t.Position.Top - intersection.Top == 0)
+            foreach (Tile t in currentLevel.GetCollisions(temp, 4))
+            {
+                //Gets a rectangle that represents the intersection
+                Rectangle intersection = Rectangle.Intersect(t.Position, temp);
+                
+                switch (t.CollisionKind) {
+                    case 100:
+                        obj.TakeDamage(1);
+                        break;
+                    case 101:
+                        if (intersection.Height > 0.5 * t.TileSize.Y)
+                            obj.TakeDamage(1);
+                        break;
+                    case 102:
+                        //checks conditions to move the player up or down
+                        if (intersection.Width > intersection.Height)
                         {
-                            temp.Y -= intersection.Height;
-                            obj.OnFloorCollide();
+                            //short wide rectangle
+                            //moves player up
+                            if (t.Position.Top - intersection.Top == 0)
+                            {
+                                temp.Y -= intersection.Height;
+                                obj.OnFloorCollide();
+                            }
+
+                            //moves player down
+                            else if (t.Position.Top - intersection.Top != 0)
+                            {
+                                temp.Y += intersection.Height;
+                            }
+                            obj.Velocity = new Vector2(obj.Velocity.X, 0);
                         }
 
-                        //moves player down
-                        else if (t.Position.Top - intersection.Top != 0)
+                        //long skinny rectangle (left or right)
+                        else if (intersection.Width < intersection.Height)
                         {
-                            temp.Y += intersection.Height;
+                            obj.Velocity = new Vector2(0, obj.Velocity.Y);
+
+                            //moves the player right
+                            if (t.Position.Right - intersection.Right == 0)
+                            {
+                                temp.X += intersection.Width;
+                            }
+                            //moves the player left
+                            else
+                            {
+                                temp.X -= intersection.Width;
+                            }       
+                            
+                            //marks true because the enemy is colliding
+                            //with a wall
+                            if(obj is Enemy)
+                            {
+                                Enemy e = (Enemy)obj;
+
+                                e.Colliding = true;
+                            }
                         }
-                        obj.Velocity = new Vector2(obj.Velocity.X, 0);
-                    }
 
-                    //long skinny rectangle (left or right)
-                    else if (intersection.Width < intersection.Height)
-                    {
-                        obj.Velocity = new Vector2(0, obj.Velocity.Y);
-
-                        //moves the player right
-                        if (t.Position.Right - intersection.Right == 0)
-                        {
-                            temp.X += intersection.Width;
-                        }
-                        //moves the player left
-                        else
-                        {
-                            temp.X -= intersection.Width;
-                        }       
-                        
-                        //marks true because the enemy is colliding
-                        //with a wall
-                        if(obj is Enemy)
-                        {
-                            Enemy e = (Enemy)obj;
-
-                            e.Colliding = true;
-                        }
-                    }
-
-                    obj.X = temp.X;
-                    obj.Y = temp.Y;
-                }               
+                        obj.X = temp.X;
+                        obj.Y = temp.Y;
+                        break;
+                }
             }
         }
 
