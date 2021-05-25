@@ -138,9 +138,9 @@ namespace UpgradePlatformer.Entities
             if (ducking)
             {
                 hitbox.Size = new Point(DUCK_HITBOX_WIDTH, DUCK_HITBOX_HEIGHT);
-                //hitbox.Y += NORMAL_HITBOX_HEIGHT - DUCK_HITBOX_HEIGHT;
             }
-            else hitbox.Size = new Point(NORMAL_HITBOX_WIDTH, NORMAL_HITBOX_HEIGHT);
+            else hitbox.Size = (new Point(NORMAL_HITBOX_WIDTH, NORMAL_HITBOX_HEIGHT));
+            spriteSize = (hitbox.Size.ToVector2() * GetVelocitySize()).ToPoint(); 
         }
 
         /// <summary>
@@ -166,6 +166,16 @@ namespace UpgradePlatformer.Entities
             if (position.Y >= _graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 2;
         }
         
+        public Vector2 GetVelocitySize()
+        {
+            Vector2 result = new Vector2(1, 1);
+            if (velocity.Y != 0) result.Y = 1 / (((Math.Abs(velocity.X)) + 1) / 4);
+            if (result.Y > 1) result.Y = 1;
+            if (velocity.X != 0) result.X = 1 / (((Math.Abs(velocity.Y)) + 1) / 4);
+            if (result.X > 1) result.X = 1;
+            return result;
+        }
+
         public override void OnFloorCollide()
         {
             jumpsLeft = 2;

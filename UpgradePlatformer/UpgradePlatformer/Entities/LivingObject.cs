@@ -33,6 +33,8 @@ namespace UpgradePlatformer.Entities
         protected Vector2 position;
         protected Vector2 jumpVelocity;
 
+        protected Point spriteSize;
+
         //sprite info
         protected Sprite sprite;
 
@@ -196,7 +198,7 @@ namespace UpgradePlatformer.Entities
         {
             if (isActive)
             {
-                sprite.Draw(sb, hitbox.Location, 0, Hitbox.Size.ToVector2());
+                sprite.Draw(sb, hitbox.Location, 0, spriteSize.ToVector2());
             }
         }
 

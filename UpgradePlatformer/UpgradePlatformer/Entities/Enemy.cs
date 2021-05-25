@@ -69,6 +69,7 @@ namespace UpgradePlatformer.Entities
             if (isActive)
             {
                 hitbox.Location = position.ToPoint();
+                spriteSize = hitbox.Size;
                 ApplyGravity();
                 sprite.effects = SpriteEffects.None;
                 if (Flip)
