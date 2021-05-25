@@ -54,9 +54,8 @@ namespace UpgradePlatformer.Entities
                     if (this.hitbox.Intersects(enemy.Hitbox))
                     {
                         this.TakeDamage(enemy.Damage);
-
                     }
-                }             
+                }
             }
         }
 
@@ -71,7 +70,7 @@ namespace UpgradePlatformer.Entities
             if (isActive)
             {
                 CheckForInput(inputManager, eventManager);
-                
+
                 if (keyDown)
                 {
                     ducking = true;

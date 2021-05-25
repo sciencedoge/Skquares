@@ -10,7 +10,8 @@ namespace UpgradePlatformer.Levels
     class Tile
     {
         private static Rectangle TILE_SPRITE = new Rectangle(0, 13, 15, 15);
-        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.Orange,  Color.Orange,  Color.White, Color.Orange, Color.Transparent};
+        private static Rectangle TILE_SPRITE_GOAL = new Rectangle(16, 29, 15, 15);
+        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.Orange,  Color.White,  Color.White, Color.Orange, Color.Transparent};
         private Sprite Sprite;
         public Vector2 TileSize;
         public int Kind;
@@ -24,7 +25,10 @@ namespace UpgradePlatformer.Levels
             Kind = kind;
             TileSize = tileSize;
             TileCenter = new Vector2(TileSize.X / 2, TileSize.Y / 2);
-            Sprite = new Sprite(texture, TILE_SPRITE, TileCenter, COLORS[kind - 1]);
+            if (Kind == 6)
+                Sprite = new Sprite(texture, TILE_SPRITE_GOAL, TileCenter, COLORS[kind - 1]);
+            else
+                Sprite = new Sprite(texture, TILE_SPRITE, TileCenter, COLORS[kind - 1]);
             Rotation = (MathF.PI * 0.5f) * rotation;
             CollisionKind = collision;
         }

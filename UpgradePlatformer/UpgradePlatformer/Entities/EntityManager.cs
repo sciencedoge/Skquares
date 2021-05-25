@@ -62,11 +62,11 @@ namespace UpgradePlatformer.Entities
             // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++) {
                 player.Update(gameTime, eventManager, inputManager);
-                Intersects(player);
+                Intersects(player, eventManager);
                 foreach (Enemy e in enemies)
                 {
                     e.Update(gameTime);
-                    Intersects(e);
+                    Intersects(e, eventManager);
                 }
                
                 player.Intersects(enemies);
@@ -92,7 +92,7 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Checks if an entity intersects with anything
         /// </summary>
-        public void Intersects(LivingObject obj)
+        public void Intersects(LivingObject obj, EventManager em)
         {
             if (!obj.IsActive)
                 return;
@@ -159,6 +159,9 @@ namespace UpgradePlatformer.Entities
 
                         obj.X = temp.X;
                         obj.Y = temp.Y;
+                        break;
+                    case 104:
+                        em.Push(new Event("LEVEL_NEXT", 1, new Point(0)));
                         break;
                 }
             }
