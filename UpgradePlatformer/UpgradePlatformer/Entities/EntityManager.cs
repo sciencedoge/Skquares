@@ -44,20 +44,20 @@ namespace UpgradePlatformer.Entities
             coins = new List<Coin>();
 
             player = new Player(9999999, 2, 
-                new Rectangle(new Point(50, 600), new Point(25, 25)), texture, device, 2);
+                new Rectangle(new Point(50, 550), new Point(25, 25)), texture, device, 2);
 
              //enemies.Add(new Enemy(
                  //10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device, 1));
 
             enemies.Add(new Enemy(
-                10, 1, new Rectangle(new Point(500, 600), new Point(25, 25)), texture, device, 1));
+                10, 1, new Rectangle(new Point(500, 550), new Point(25, 25)), texture, device, 1));
 
             coins.Add(new Coin(
-                1, texture, new Rectangle(new Point(250, 550), new Point(25, 25))));
+                1, texture, new Rectangle(new Point(250, 450), new Point(20, 20))));
             coins.Add(new Coin(
-                1, texture, new Rectangle(new Point(300, 550), new Point(25, 25))));
+                1, texture, new Rectangle(new Point(300, 450), new Point(20, 20))));
             coins.Add(new Coin(
-                1, texture, new Rectangle(new Point(350, 550), new Point(25, 25))));
+                1, texture, new Rectangle(new Point(350, 450), new Point(20, 20))));
 
             this.levelManager = levelMan;
 
