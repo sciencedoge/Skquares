@@ -20,11 +20,11 @@ namespace UpgradePlatformer.Levels
         {
             Levels = new List<Level>();
             _activeLevel = 0;
-            Load(texture, "menu", graphics);
-            Load(texture, "MARO", graphics);
-            Load(texture, "collision test", graphics);
-            Load(texture, "EGGMAN", graphics);
-            Load(texture, "EGGMEN", graphics);       
+            // Load(texture, "menu", graphics);
+            // Load(texture, "MARO", graphics);
+            // Load(texture, "collision test", graphics);
+            // Load(texture, "EGGMAN", graphics);
+            // Load(texture, "EGGMEN", graphics);       
         }
         
         public void Load(Texture2D texture, String Name, GraphicsDeviceManager graphics)

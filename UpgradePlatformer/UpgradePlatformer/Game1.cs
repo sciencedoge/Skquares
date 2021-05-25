@@ -30,7 +30,7 @@ namespace UpgradePlatformer
         private SpriteFont _font;
         private FiniteStateMachine _stateMachine;
         private Player player;
-        private UIButton playButton, continueButton;
+        private UIButton playButton, continueButton, closeButton;
         private UIText TitleText, PauseText;
 #if DEBUG
         private UIText Stats;
@@ -89,8 +89,17 @@ namespace UpgradePlatformer
             });
             playButton.Text.Text = "Play";
             _uiManager.Add(playButton);
+
+            closeButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40));
+            closeButton.onClick = new UIAction(() =>
+            {
+                _eventManager.Push(new Event("QUIT", 0, new Point(0, 0)));
+                _entityManager.RespawnPlayer();
+            });
+            closeButton.Text.Text = "Quit";
+            _uiManager.Add(closeButton);
             
-            continueButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40));
+            continueButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
             continueButton.onClick = new UIAction(() =>
             {
                 _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
@@ -111,8 +120,8 @@ namespace UpgradePlatformer
             // create event listeners
             EventAction Action_Button_Press = new EventAction((uint e) =>
             {
-                _stateMachine.SetFlag((int)e);
                 _eventManager.Push(new Event("LEVEL_SHOW", 1, new Point(0, 0)));
+                _stateMachine.SetFlag((int)e);
                 return true;
             });
             _eventManager.AddListener(Action_Button_Press, "STATE_MACHINE");
@@ -120,7 +129,7 @@ namespace UpgradePlatformer
             EventAction Action_State_Machine = new EventAction((uint e) =>
             {
                 if (e == (uint)Keys.Escape) _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
-                else if (e == (uint)Keys.Enter) _eventManager.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
+                else if (e == (uint)Keys.Enter && (_stateMachine.currentState != 1)) _eventManager.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
 #if DEBUG
                 else if (_stateMachine.currentState == 0) return false;
                 else if (e == (uint)Keys.Q) _levelManager.Prev();
@@ -138,12 +147,13 @@ namespace UpgradePlatformer
             });
             _eventManager.AddListener(Action_Level_Show, "LEVEL_SHOW");
 
-            // EventAction Action_Level_Next = new EventAction((uint e) =>
-            // {
-            //     _levelManager.Next();
-            //     return true;
-            // });
-            // _eventManager.AddListener(Action_Level_Next, "LEVEL_NEXT");
+            EventAction Action_Quit_Game = new EventAction((uint e) =>
+            {
+                Exit();
+                return true;
+            });
+            _eventManager.AddListener(Action_Quit_Game, "QUIT");
+
 #if DEBUG
             // UIButton b = new UIButton(_spriteSheetTexture, _font, new Rectangle(250, 10, 40, 40));
             // b.Text.Text = "<";
@@ -177,6 +187,7 @@ namespace UpgradePlatformer
             // StateMachine related Updates
             playButton.IsActive = (_stateMachine.currentState == 0) || (_stateMachine.currentState == 3);
             TitleText.IsActive = (_stateMachine.currentState == 0);
+            closeButton.IsActive = (_stateMachine.currentState == 0) || (_stateMachine.currentState == 3) || (_stateMachine.currentState == 2);
             Sprite.Dim = (_stateMachine.currentState == 2) || (_stateMachine.currentState == 3);
             continueButton.IsActive = (_stateMachine.currentState == 2);
             PauseText.IsActive = (_stateMachine.currentState == 2);
@@ -201,7 +212,7 @@ namespace UpgradePlatformer
 #endif
             GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
             _levelManager.Draw(_spriteBatch);
 
             if (_stateMachine.currentState != 0) {
