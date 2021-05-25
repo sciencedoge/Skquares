@@ -17,7 +17,7 @@ namespace UpgradePlatformer.Entities
     {
         //Fields
 
-        private Rectangle SpriteBounds = new Rectangle(17, 14, 14, 14);
+        private Rectangle SpriteBounds = new Rectangle(0, 7, 5, 5);
 
         protected int value;
         protected Graphics.Sprite sprite;
