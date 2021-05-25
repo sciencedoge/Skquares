@@ -120,6 +120,7 @@ namespace UpgradePlatformer
             EventAction Action_State_Machine = new EventAction((uint e) =>
             {
                 if (e == (uint)Keys.Escape) _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
+                else if (e == (uint)Keys.Enter) _eventManager.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
 #if DEBUG
                 else if (_stateMachine.currentState == 0) return false;
                 else if (e == (uint)Keys.Q) _levelManager.Prev();

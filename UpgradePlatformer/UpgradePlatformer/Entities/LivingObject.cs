@@ -34,8 +34,8 @@ namespace UpgradePlatformer.Entities
         protected float speedX;
         protected Vector2 position;
         protected Vector2 jumpVelocity;
-
         protected Point spriteSize;
+        protected Point spawn;
 
         //sprite info
         protected Sprite sprite;
@@ -172,6 +172,7 @@ namespace UpgradePlatformer.Entities
                 new Vector2(SpriteBounds.X - (SpriteBounds.Width / 2),
                 SpriteBounds.Y - (SpriteBounds.Height / 2)),
                 Color.White);
+            this.spawn = hitbox.Location;
 
             gravity = new Vector2(0, 0.1f);
             velocity = new Vector2(0, 0);
@@ -228,6 +229,10 @@ namespace UpgradePlatformer.Entities
 
             cooldown --;
             cooldown = Math.Max(cooldown, 0);
+        }
+        
+        public void resetPosition(){
+            position = spawn.ToVector2();
         }
     }
 }
