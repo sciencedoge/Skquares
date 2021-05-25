@@ -23,20 +23,8 @@
 #begin Levels/cave.level_Finished
 /copy:Levels/cave.level_Finished
 
-#begin Levels/collision test.level_Finished
-/copy:Levels/collision test.level_Finished
-
-#begin Levels/EGGMAN.level_Finished
-/copy:Levels/EGGMAN.level_Finished
-
-#begin Levels/EGGMEN.level_Finished
-/copy:Levels/EGGMEN.level_Finished
-
-#begin Levels/MARO.level_Finished
-/copy:Levels/MARO.level_Finished
-
-#begin Levels/menu.level_Finished
-/copy:Levels/menu.level_Finished
+#begin Levels/DEATH_MENU.level_Finished
+/copy:Levels/DEATH_MENU.level_Finished
 
 #begin SpriteSheet.png
 /importer:TextureImporter

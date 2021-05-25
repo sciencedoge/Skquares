@@ -20,6 +20,7 @@ namespace UpgradePlatformer.Levels
         {
             Levels = new List<Level>();
             _activeLevel = 0;
+            Load(texture, "DEATH_MENU", graphics);
             Load(texture, "cave", graphics);
             // Load(texture, "menu", graphics);
             // Load(texture, "MARO", graphics);
