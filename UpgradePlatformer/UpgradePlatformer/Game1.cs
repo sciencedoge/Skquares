@@ -201,7 +201,7 @@ namespace UpgradePlatformer
 #endif
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
             _levelManager.Draw(_spriteBatch);
 
             if (_stateMachine.currentState != 0) {
