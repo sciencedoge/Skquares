@@ -24,10 +24,12 @@ namespace LevelEditor
         private string[,] colors;
         private string[,] overlayColors;
         private string[,] collisionColors;
+        private string[,] objectColors;
         private bool rotationsLoaded;
         private int[,] rotationValues;
         private int[,] overlayRotation;
         private int[,] collisionRotation;
+        private int[,] objectRotation;
 
 
         //Constructor
@@ -85,16 +87,20 @@ namespace LevelEditor
 
                     colors = new string[width, height];
                     collisionColors = new string[width, height];
+                    objectColors = new string[width, height];
 
                     editor.Colors = colors;
                     editor.CollisionColors = collisionColors;
+                    editor.ObjectColors = objectColors;
 
                     rotationValues = new int[width, height];
                     collisionRotation = new int[width, height];
+                    objectRotation = new int[width, height];
 
 
                     editor.RotationValues = rotationValues;
                     editor.CollisionValues = collisionRotation;
+                    editor.ObjectValues = objectRotation;
 
 
 
@@ -103,7 +109,7 @@ namespace LevelEditor
 
                     
                     //loads the picture boxes and matches the colors
-                    editor.LoadBoxes(colors, collisionColors);
+                    editor.LoadBoxes(colors, collisionColors, objectColors);
 
                     //Properly sizes the form
                     editor.ResizeForm();
@@ -257,11 +263,14 @@ namespace LevelEditor
 
                             int tileCollision = int.Parse(reader.ReadString());
 
+                            int objectType = int.Parse(reader.ReadString());
+
                             //writes the altered picture path and rotation value
                             //to a new file
                             writer.Write(tileType);
                             writer.Write(rotationValue);
-                            writer.Write(tileCollision);                            
+                            writer.Write(tileCollision);
+                            writer.Write(objectType);
                         }
                     }
                 }

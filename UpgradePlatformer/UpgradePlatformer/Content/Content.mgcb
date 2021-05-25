@@ -20,6 +20,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Poland.spritefont
 
+#begin Levels/cave.level_Finished
+/copy:Levels/cave.level_Finished
+
 #begin Levels/collision test.level_Finished
 /copy:Levels/collision test.level_Finished
 

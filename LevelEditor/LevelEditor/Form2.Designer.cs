@@ -47,7 +47,7 @@
             this.texture5 = new System.Windows.Forms.PictureBox();
             this.textures = new System.Windows.Forms.GroupBox();
             this.paintButton = new System.Windows.Forms.Button();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.objButton = new System.Windows.Forms.Button();
             this.textureBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.texturePic)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.texture1)).BeginInit();
@@ -226,7 +226,7 @@
             this.textures.Controls.Add(this.texture7);
             this.textures.Controls.Add(this.texture8);
             this.textures.Controls.Add(this.texture2);
-            this.textures.Location = new System.Drawing.Point(17, 29);
+            this.textures.Location = new System.Drawing.Point(27, 29);
             this.textures.Name = "textures";
             this.textures.Size = new System.Drawing.Size(367, 183);
             this.textures.TabIndex = 28;
@@ -236,7 +236,7 @@
             // paintButton
             // 
             this.paintButton.BackColor = System.Drawing.Color.LavenderBlush;
-            this.paintButton.Location = new System.Drawing.Point(39, 208);
+            this.paintButton.Location = new System.Drawing.Point(55, 218);
             this.paintButton.Name = "paintButton";
             this.paintButton.Size = new System.Drawing.Size(314, 50);
             this.paintButton.TabIndex = 29;
@@ -244,14 +244,16 @@
             this.paintButton.UseVisualStyleBackColor = false;
             this.paintButton.Click += new System.EventHandler(this.PaintBox);
             // 
-            // listView1
+            // objButton
             // 
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(17, 29);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(367, 238);
-            this.listView1.TabIndex = 30;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.objButton.BackColor = System.Drawing.Color.LavenderBlush;
+            this.objButton.Location = new System.Drawing.Point(320, 437);
+            this.objButton.Name = "objButton";
+            this.objButton.Size = new System.Drawing.Size(107, 75);
+            this.objButton.TabIndex = 30;
+            this.objButton.Text = "Objects";
+            this.objButton.UseVisualStyleBackColor = false;
+            this.objButton.Click += new System.EventHandler(this.objButton_Click);
             // 
             // levelEditor
             // 
@@ -259,11 +261,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Cornsilk;
             this.ClientSize = new System.Drawing.Size(1252, 854);
+            this.Controls.Add(this.objButton);
             this.Controls.Add(this.paintButton);
             this.Controls.Add(this.textures);
             this.Controls.Add(this.rotateTexture);
             this.Controls.Add(this.collisionsButton);
-            this.Controls.Add(this.listView1);
             this.Controls.Add(this.backgroundButton);
             this.Controls.Add(this.textureBox);
             this.Controls.Add(this.mapBox);
@@ -308,6 +310,6 @@
         private System.Windows.Forms.PictureBox texture5;
         private System.Windows.Forms.GroupBox textures;
         private System.Windows.Forms.Button paintButton;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.Button objButton;
     }
 }

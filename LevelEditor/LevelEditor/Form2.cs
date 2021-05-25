@@ -27,10 +27,12 @@ namespace LevelEditor
         private int boxWidth;
         private PictureBox[,] boxes;
         private PictureBox[,] collisions;
+        private PictureBox[,] objects;
         private List<Button> buttons;
         private FileStream stream;
         private string[,] colors;
         private string[,] collisionColors;
+        private string[,] objectColors;
         private bool isSaved;
         private int rotationSaveX;
         private int rotationSaveY;
@@ -42,6 +44,7 @@ namespace LevelEditor
         private string path;
         private int[,] rotationValues;
         private int[,] collisionRotations;
+        private int[,] objectRotations;
 
         //ROTATION
         private float rotation;
@@ -88,6 +91,24 @@ namespace LevelEditor
         }
 
         /// <summary>
+        /// sets the object colors
+        /// </summary>
+        public string[,] ObjectColors
+        {
+            set { objectColors = value; }
+        }
+
+        /// <summary>
+        /// gets or sets the rotation values of the object layer
+        /// </summary>
+        public int[,] ObjectValues
+        {
+            get { return objectRotations; }
+            set { objectRotations = value; }
+        }
+
+
+        /// <summary>
         /// Returns whether or not 
         /// the rotations are loaded, or
         /// changes the variable to delcare
@@ -115,8 +136,10 @@ namespace LevelEditor
 
             boxes = new PictureBox[height, width];
             collisions = new PictureBox[height, width];
+            objects = new PictureBox[height, width];
             rotationValues = new int[height, width];
             collisionRotations = new int[height, width];
+            objectRotations = new int[height, width];  
             isSaved = true;
             rotationsLoaded = false;
             numLayersSaved = 0;
@@ -357,6 +380,7 @@ namespace LevelEditor
                     //creates a new array that is able to store colors
                     colors = new string[height, width];
                     collisionColors = new string[height, width];
+                    objectColors = new string[height, width];
 
                     //Background
 
@@ -365,7 +389,7 @@ namespace LevelEditor
 
                     LoadColors(reader, rotationValues, rotationsLoaded);
 
-                    LoadBoxes(colors, collisionColors);
+                    LoadBoxes(colors, collisionColors, objectColors);
                 }
 
                 //User cancels decision
@@ -424,6 +448,7 @@ namespace LevelEditor
                     //Creates width # of Picture boxes height # of times
                     PictureBox box = new PictureBox();
                     PictureBox collisionBox = new PictureBox();
+                    PictureBox objectBox = new PictureBox();
                    
                     //Sizes the boxes to the map width/height
                     //Horizontal is bigger, base off of the width
@@ -431,6 +456,7 @@ namespace LevelEditor
                     {
                         box.Size = new Size((mapBox.Width) / width, (mapBox.Width) / width);
                         collisionBox.Size = new Size((mapBox.Width) / width, (mapBox.Width) / width);
+                        objectBox.Size = new Size((mapBox.Width) / width, (mapBox.Width) / width);
                     }
                    
                     //Vertical is bigger, base off of the height
@@ -438,7 +464,7 @@ namespace LevelEditor
                     {
                         box.Size = new Size((mapBox.Height - 17) / height, (mapBox.Height - 17) / height);
                         collisionBox.Size = new Size((mapBox.Height - 17) / height, (mapBox.Height - 17) / height);
-
+                        objectBox.Size = new Size((mapBox.Height - 17) / height, (mapBox.Height - 17) / height);
                     }
                     
                     //Sets the location of the box
@@ -448,10 +474,14 @@ namespace LevelEditor
 
                     collisionBox.Location = new Point
                         (10 + box.Width * j, 15 + box.Height * i);
+                    
+                    objectBox.Location = new Point
+                        (10 + box.Width * j, 15 + box.Height * i);
 
                     //Boxes are visible
                     box.Visible = true;
                     collisionBox.Visible = true;
+                    objectBox.Visible = true;
                     //Adds the box to the list of controls (for the group box)
                     mapBox.Controls.Add(box);
                     //Subscribes box's MouseDown to the button_Click method, so
@@ -460,17 +490,23 @@ namespace LevelEditor
                     //Allows for drag clicking
                     box.MouseDown += button_Click;
                     box.MouseEnter += button_Click;
-
+                    
                     collisionBox.MouseDown += button_Click;
                     collisionBox.MouseEnter += button_Click;
+
+                    objectBox.MouseDown += button_Click;
+                    objectBox.MouseEnter += button_Click;
 
 
                     box.BackColor = Color.White;
                     collisionBox.BackColor = Color.White;
+
+                    objectBox.BackColor = Color.White;
                     //saves in an array in case the data
                     //is saved to an external file
                     boxes[i, j] = box;
                     collisions[i, j] = collisionBox;
+                    objects[i, j] = objectBox;
                 }
             }
 
@@ -483,7 +519,7 @@ namespace LevelEditor
         /// data and loads the boxes based on that
         /// </summary>
         /// <param name="colors">The array of loaded colors</param>
-        public void LoadBoxes(string[,] colors, string[,] collisionColors)
+        public void LoadBoxes(string[,] colors, string[,] collisionColors, string[,] objectColors)
         {
             //Clears the controls (so we dont 
             //get overlap)
@@ -503,7 +539,7 @@ namespace LevelEditor
             LoadPictureBoxLists(boxes, Width, Height, colors, rotationValues);
             rotationsLoaded = false;
             LoadPictureBoxLists(collisions, Width, Height, collisionColors, collisionRotations);
-            
+            LoadPictureBoxLists(objects, Width, Height, objectColors, objectRotations);
         }
 
         /// <summary>
@@ -598,19 +634,80 @@ namespace LevelEditor
         }
 
         /// <summary>
-        /// Allows the user to choose between a set 
-        /// number of colors
+        /// enables the object layer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ColorPicker(object sender, EventArgs e)
+        private void objButton_Click(object sender, EventArgs e)
         {
-            if(sender is Button)
+            for (int i = 0; i < objects.GetLength(0); i++)
             {
-                Button b = (Button)(sender);
+                for (int j = 0; j < objects.GetLength(1); j++)
+                {
+                    if (objects[i, j].Image != null)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if (boxes[i, j].Image != null)
+                        {
+                            objects[i, j].BackColor = Color.Pink;
+                        }
+                    }
+                }
+            }
+            rotateTexture.Enabled = false;
 
-                //changes the current color selected
-                currentColor = b.BackColor;           
+
+            mapBox.Controls.Clear();
+            rotation = 0;
+            texturePic.Image.Dispose();
+            texturePic.Load(path);
+            texturePic.Refresh();
+            paintButton.Enabled = false;
+
+            textures.Text = "Objects";
+
+            texture1.Load("../../../Default size/1000.png");
+            texture1.SizeMode = PictureBoxSizeMode.Zoom;
+            texture2.Load("../../../Default size/1001.png");
+            texture2.SizeMode = PictureBoxSizeMode.Zoom;
+            texture3.Load("../../../Default size/1002.png");
+            texture3.SizeMode = PictureBoxSizeMode.Zoom;                   
+
+            path = "../../../Default size/1000.png";
+            texturePic.Load("../../../Default size/1000.png");
+            texturePic.Refresh();
+            Rotate(texturePic);
+
+            texture4.Image = null;
+            texture4.Enabled = false;
+            texture5.Image = null;
+            texture5.Enabled = false;
+            texture6.Image = null;
+            texture6.Enabled = false;
+            texture7.Image = null;
+            texture7.Enabled = false;
+            texture8.Image = null;
+            texture8.Enabled = false;
+
+            //changes color of buttons to indicate that the user
+            //is selecting the background later
+            collisionsButton.BackColor = Color.LavenderBlush;
+            backgroundButton.BackColor = Color.LavenderBlush;
+            objButton.BackColor = Color.Green;
+
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    boxes[i, j].Enabled = false;
+                    collisions[i, j].Enabled = false;
+                    objects[i, j].Enabled = true;
+
+                    mapBox.Controls.Add(objects[i, j]);
+                }
             }
         }
 
@@ -646,6 +743,8 @@ namespace LevelEditor
             texturePic.Refresh();
             Rotate(texturePic);
 
+            texture4.Enabled = true;
+            texture5.Enabled = true;
             texture6.Enabled = true;
             texture7.Enabled = true;
             texture8.Enabled = true;
@@ -663,6 +762,7 @@ namespace LevelEditor
             //is selecting the background later
             collisionsButton.BackColor = Color.LavenderBlush;
             backgroundButton.BackColor = Color.Green;
+            objButton.BackColor = Color.LavenderBlush;
 
             //replaces pictureBox data with the background data
             for (int i = 0; i < height; i++)
@@ -687,19 +787,19 @@ namespace LevelEditor
         {
             rotateTexture.Enabled = false;
 
-            for(int i = 0; i < collisions.GetLength(0); i++)
+            for (int i = 0; i < collisions.GetLength(0); i++)
             {
-                for(int j = 0; j < collisions.GetLength(1); j++)
+                for (int j = 0; j < collisions.GetLength(1); j++)
                 {
-                    if(collisions[i, j].Image != null)
+                    if (collisions[i, j].Image != null)
                     {
                         continue;
                     }
                     else
                     {
-                        if(boxes[i,j].Image != null)
+                        if (boxes[i, j].Image != null)
                         {
-                            collisions[i, j].Load("../../../Default size/100.png");
+                            collisions[i, j].BackColor = Color.Red;
                         }
                     }
                 }
@@ -731,6 +831,9 @@ namespace LevelEditor
             texturePic.Refresh();
             Rotate(texturePic);
 
+            texture4.Enabled = true;
+            texture5.Enabled = true;
+
             texture6.Image = null;
             texture6.Enabled = false;
             texture7.Image = null;
@@ -742,6 +845,7 @@ namespace LevelEditor
             //is selecting the background later
             collisionsButton.BackColor = Color.Green;
             backgroundButton.BackColor = Color.LavenderBlush;
+            objButton.BackColor = Color.LavenderBlush;
 
             for (int i = 0; i < height; i++)
             {
@@ -848,6 +952,9 @@ namespace LevelEditor
 
                     string currentCollision = "../../../Default size/" + reader.ReadString() + ".png";
                     collisionColors[i, j] = currentCollision;
+
+                    string currentObject = "../../../Default size/" + reader.ReadString() + ".png";
+                    objectColors[i, j] = currentObject;
                 }
             }
         }
@@ -923,6 +1030,20 @@ namespace LevelEditor
                                 collisions[i, j].ImageLocation.LastIndexOf('/') + 1,
                                 collisions[i, j].ImageLocation.LastIndexOf('.') - 
                                 collisions[i, j].ImageLocation.LastIndexOf('/') - 1));
+                    }
+                    else
+                    {
+                        writer.Write("9");
+                    }
+
+                    //writes the location of the image
+                    if (objects[i, j].Image != null)
+                    {
+                        writer.Write(
+                            objects[i, j].ImageLocation.Substring(
+                                objects[i, j].ImageLocation.LastIndexOf('/') + 1,
+                                objects[i, j].ImageLocation.LastIndexOf('.') -
+                                objects[i, j].ImageLocation.LastIndexOf('/') - 1));
                     }
                     else
                     {
