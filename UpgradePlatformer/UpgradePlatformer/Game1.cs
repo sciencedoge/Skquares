@@ -111,8 +111,8 @@ namespace UpgradePlatformer
             // create event listeners
             EventAction Action_Button_Press = new EventAction((uint e) =>
             {
-                _stateMachine.SetFlag((int)e);
                 _eventManager.Push(new Event("LEVEL_SHOW", 1, new Point(0, 0)));
+                _stateMachine.SetFlag((int)e);
                 return true;
             });
             _eventManager.AddListener(Action_Button_Press, "STATE_MACHINE");
@@ -120,7 +120,7 @@ namespace UpgradePlatformer
             EventAction Action_State_Machine = new EventAction((uint e) =>
             {
                 if (e == (uint)Keys.Escape) _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
-                else if (e == (uint)Keys.Enter) _eventManager.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
+                else if (e == (uint)Keys.Enter && (_stateMachine.currentState != 1)) _eventManager.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
 #if DEBUG
                 else if (_stateMachine.currentState == 0) return false;
                 else if (e == (uint)Keys.Q) _levelManager.Prev();
@@ -201,7 +201,7 @@ namespace UpgradePlatformer
 #endif
             GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
             _levelManager.Draw(_spriteBatch);
 
             if (_stateMachine.currentState != 0) {

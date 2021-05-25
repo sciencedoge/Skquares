@@ -196,8 +196,9 @@ namespace UpgradePlatformer.Entities
                         obj.X = temp.X;
                         obj.Y = temp.Y;
                         break;
-                    case 104:
-                        em.Push(new Event("LEVEL_NEXT", 1, new Point(0)));
+                    case 103:
+                        if (obj == (LivingObject)player)
+                            em.Push(new Event("LEVEL_SHOW", (uint)levelManager.ActiveLevelNum() + 1, new Point(0)));
                         break;
                 }
             }
