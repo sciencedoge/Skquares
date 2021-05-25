@@ -33,11 +33,16 @@ namespace UpgradePlatformer.Levels
             Levels[activeLevel].Draw(spriteBatch);
         }
 
+        public void SetLevel(int id) {
+            activeLevel = id % Levels.Count;
+        }
+
         public void Next()
         {
             activeLevel++;
             activeLevel = activeLevel % Levels.Count;
         }
+        
         public void Prev()
         {
             activeLevel--;
