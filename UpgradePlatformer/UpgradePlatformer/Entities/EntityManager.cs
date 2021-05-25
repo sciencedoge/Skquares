@@ -94,6 +94,8 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public void Intersects(LivingObject obj)
         {
+            if (!obj.IsActive)
+                return;
             Rectangle temp = GetTempHitbox(obj);
 
             foreach (Tile t in currentLevel.GetCollisions(temp, 4))

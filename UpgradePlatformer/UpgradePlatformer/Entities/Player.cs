@@ -20,9 +20,6 @@ namespace UpgradePlatformer.Entities
         //Fields
         private const int NORMAL_HITBOX_WIDTH = 25, NORMAL_HITBOX_HEIGHT = 25, DUCK_HITBOX_HEIGHT = 15, DUCK_HITBOX_WIDTH = 27;
         private bool keyUp, keyDown, keyLeft, keyRight;
-
-        private bool invincible;
-
         private bool ducking;
 
         //screen bounds stuff
@@ -39,8 +36,6 @@ namespace UpgradePlatformer.Entities
             this.jumpsLeft = jumpsLeft;
 
             this._graphics = device;
-
-            invincible = false;
         }
 
         //Methods
@@ -52,24 +47,14 @@ namespace UpgradePlatformer.Entities
         /// <returns></returns>
         public void Intersects(List<Enemy> obj)
         {
-            if (invincible)
-            {
-                return;
-            }
-
             if (isActive)
             {
                 foreach(Enemy enemy in obj)
                 {
                     if (this.hitbox.Intersects(enemy.Hitbox))
                     {
-                        invincible = true;
                         this.TakeDamage(enemy.Damage);
 
-                        if (CurrentHP <= 0)
-                        {
-                            isActive = false;
-                        }
                     }
                 }             
             }
@@ -86,12 +71,7 @@ namespace UpgradePlatformer.Entities
             if (isActive)
             {
                 CheckForInput(inputManager, eventManager);
-
-                //put for testing purposes so the player doesnt immediately die
-                if (gt.TotalGameTime.TotalSeconds % 1 <= 0.01)
-                {
-                    invincible = false;
-                }
+                
                 if (keyDown)
                 {
                     ducking = true;

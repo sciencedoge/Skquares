@@ -16,6 +16,7 @@ namespace UpgradePlatformer.Entities
     //======================================================
     abstract class LivingObject : Interfaces.IDamageable, Interfaces.IHostile
     {
+        private const int cooldownTime = 120;
         private Rectangle SpriteBounds = new Rectangle(17, 14, 14, 14);
 
         //fields
@@ -25,6 +26,7 @@ namespace UpgradePlatformer.Entities
         protected int damage;
 
         protected int jumpsLeft;
+        protected int cooldown;
 
         //Gravity and movement
         protected Vector2 gravity;
@@ -186,7 +188,14 @@ namespace UpgradePlatformer.Entities
         /// <param name="amount">amount of damage dealt</param>
         public void TakeDamage(int amount)
         {
+            if (cooldown != 0)
+                return;
+            cooldown = cooldownTime;
             this.currentHp -= amount;
+            if (CurrentHP <= 0)
+            {
+                isActive = false;
+            }
         }
 
         /// <summary>
@@ -216,6 +225,9 @@ namespace UpgradePlatformer.Entities
             velocity += gravity;
 
             velocity.X *= 0.70f;
+
+            cooldown --;
+            cooldown = Math.Max(cooldown, 0);
         }
     }
 }
