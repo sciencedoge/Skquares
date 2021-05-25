@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using UpgradePlatformer.Entities;
 
 namespace UpgradePlatformer.Levels
 {
@@ -53,6 +54,15 @@ namespace UpgradePlatformer.Levels
                     TileMap[y, x].Draw(spriteBatch, new Vector2((x) * TileMap[0, 0].TileSize.X, (y) * TileMap[0, 0].TileSize.Y) + new Vector2());
         }
 
+        public List<Tile> GetSpawners()
+        {
+            List<Tile> result = new List<Tile>();
+            for (int x = 0; x < TileHeight; x++)
+                for (int y = 0; y < TileWidth; y++)
+                    if (TileMap[x, y].Spawner) result.Add(TileMap[x, y]);
+            return result;
+        }
+
         /// <summary>
         /// colliding rectangles for the map
         /// </summary>
@@ -68,6 +78,18 @@ namespace UpgradePlatformer.Levels
                 for (int y = Math.Max(centerTile.Y - RedundancySize, 0); y < Math.Min(centerTile.Y + RedundancySize, TileHeight); y++)
                     if (TileMap[y, x].Position.Intersects(r)) Tiles.Add(TileMap[y, x]);
             return Tiles;
+        }
+        
+        public void LoadEntities(EntityManager em, Texture2D texture, GraphicsDeviceManager device) {
+            foreach (Tile t in TileMap) {
+                if (!t.Spawner)
+                    continue;
+                EntityObject o = null;
+                if (t.Kind == 0)
+                    o = (EntityObject)new Player(10, 2, new Rectangle(t.Position.Location, new Point(25, 25)), texture, device, 2);    
+                if (o != null)
+                    em.Spawn(o , t.Kind);
+            }
         }
     }
 

@@ -182,7 +182,7 @@ namespace UpgradePlatformer
             _inputManager.Update(_eventManager);
             if (_stateMachine.currentState == 1) _entityManager.Update(gameTime, _eventManager, _inputManager);
             _uiManager.Update(gameTime, _eventManager);
-            _levelManager.Update();
+            _levelManager.Update(_entityManager, _spriteSheetTexture, _graphics);
 
             // StateMachine related Updates
             playButton.IsActive = (_stateMachine.currentState == 0) || (_stateMachine.currentState == 3);

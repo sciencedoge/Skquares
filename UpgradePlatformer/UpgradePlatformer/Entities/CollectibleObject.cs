@@ -13,7 +13,7 @@ namespace UpgradePlatformer.Entities
     //Date: 5/22/2021
     //Purpose: Creates functionality for collectibles
     //================================================
-    class CollectibleObject
+    class CollectibleObject : EntityObject
     {
         //Fields
 

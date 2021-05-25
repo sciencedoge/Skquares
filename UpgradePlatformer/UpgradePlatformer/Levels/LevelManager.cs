@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UpgradePlatformer.Entities;
 
 namespace UpgradePlatformer.Levels
 {
@@ -12,8 +13,11 @@ namespace UpgradePlatformer.Levels
         int activeLevel;
         int _activeLevel;
         
-        public void Update() {
-            activeLevel = _activeLevel;
+        public void Update(EntityManager em, Texture2D texture, GraphicsDeviceManager device) {
+            if (activeLevel != _activeLevel) {
+                activeLevel = _activeLevel;
+                Levels[activeLevel].LoadEntities(em, texture, device);
+            }
         }
 
         public LevelManager(Texture2D texture, GraphicsDeviceManager graphics)
@@ -21,12 +25,7 @@ namespace UpgradePlatformer.Levels
             Levels = new List<Level>();
             _activeLevel = 0;
             Load(texture, "DEATH_MENU", graphics);
-            Load(texture, "cave", graphics);
-            // Load(texture, "menu", graphics);
-            // Load(texture, "MARO", graphics);
-            // Load(texture, "collision test", graphics);
-            // Load(texture, "EGGMAN", graphics);
-            // Load(texture, "EGGMEN", graphics);       
+            Load(texture, "cave", graphics);  
         }
         
         public void Load(Texture2D texture, String Name, GraphicsDeviceManager graphics)
@@ -57,6 +56,8 @@ namespace UpgradePlatformer.Levels
         {
             SetLevel(activeLevel - 1);
         }
+
+        public List<Tile> spawners() => Levels[activeLevel].GetSpawners();
 
         public List<Tile> GetCollisions(Rectangle r) => Levels[activeLevel].GetCollisions(r);
         public Level ActiveLevel() => Levels[activeLevel];

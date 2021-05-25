@@ -43,21 +43,21 @@ namespace UpgradePlatformer.Entities
             enemies = new List<Enemy>();
             coins = new List<Coin>();
 
-            player = new Player(9999999, 2, 
-                new Rectangle(new Point(50, 550), new Point(25, 25)), texture, device, 2);
+            // player = new Player(9999999, 2, 
+            //     new Rectangle(new Point(50, 550), new Point(25, 25)), texture, device, 2);
 
              //enemies.Add(new Enemy(
                  //10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device, 1));
 
-            enemies.Add(new Enemy(
-                10, 1, new Rectangle(new Point(500, 550), new Point(25, 25)), texture, device, 1));
+            // enemies.Add(new Enemy(
+            //     10, 1, new Rectangle(new Point(500, 550), new Point(25, 25)), texture, device, 1));
 
-            coins.Add(new Coin(
-                1, texture, new Rectangle(new Point(250, 450), new Point(20, 20))));
-            coins.Add(new Coin(
-                1, texture, new Rectangle(new Point(300, 450), new Point(20, 20))));
-            coins.Add(new Coin(
-                1, texture, new Rectangle(new Point(350, 450), new Point(20, 20))));
+            // coins.Add(new Coin(
+            //     1, texture, new Rectangle(new Point(250, 450), new Point(20, 20))));
+            // coins.Add(new Coin(
+            //     1, texture, new Rectangle(new Point(300, 450), new Point(20, 20))));
+            // coins.Add(new Coin(
+            //     1, texture, new Rectangle(new Point(350, 450), new Point(20, 20))));
 
             this.levelManager = levelMan;
 
@@ -78,8 +78,10 @@ namespace UpgradePlatformer.Entities
             currentLevel = levelManager.ActiveLevel();
             // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++) {
-                player.Update(gameTime, eventManager, inputManager);
-                Intersects(player, eventManager);
+                if (player != null) {
+                    player.Update(gameTime, eventManager, inputManager);
+                    Intersects(player, eventManager);
+                }
 
                 foreach (Enemy e in enemies)
                 {
@@ -92,19 +94,20 @@ namespace UpgradePlatformer.Entities
                     c.Update();
                     playerMoney += c.Intersects(player);
                 }
-               
-                player.Intersects(enemies);
+                if (player != null)
+                    player.Intersects(enemies);
                 pathfind.UpdateCosts();
                 pathfind.MoveToPlayer();
                 pathfind.EnemyIntersection();
-
             }
                 
 
             
-            if (player.CurrentHP == 0)
-            {
-                eventManager.Push(new Event("STATE_MACHINE", 2, new Point(0, 0)));
+            if (player != null) {
+                if (player.CurrentHP == 0)
+                {
+                    eventManager.Push(new Event("STATE_MACHINE", 2, new Point(0, 0)));
+                }
             }                         
         }
 
@@ -115,7 +118,8 @@ namespace UpgradePlatformer.Entities
         /// <param name="spriteBatch">spriteBatch</param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            player.Draw(spriteBatch, gameTime);
+            if (player != null)
+                player.Draw(spriteBatch, gameTime);
             foreach(Enemy e in enemies)
             {
                 e.Draw(spriteBatch, gameTime);
@@ -124,6 +128,18 @@ namespace UpgradePlatformer.Entities
             {
                 c.Draw(spriteBatch, gameTime);
             }
+        }
+        
+        public void Spawn(EntityObject obj, int kind) {
+            if (kind == 0) player = (Player)obj;
+            else if (kind == 1) enemies.Add((Enemy)obj);
+            else if (kind == 2) coins.Add((Coin)obj);
+        }
+
+        public void Clean() {
+            player = null;
+            enemies = new List<Enemy>();
+            coins = new List<Coin>();
         }
 
         /// <summary>
@@ -218,11 +234,15 @@ namespace UpgradePlatformer.Entities
         }
 
         public int GetPlayerHp() {
-            return player.CurrentHP;
+            if (player != null)
+                return player.CurrentHP;
+            return -1;
         }
 
         public void RespawnPlayer() {
-            player.Respawn();
+            if (player != null)
+                player.Respawn();
         }
     }
+    class EntityObject { }
 }

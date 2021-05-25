@@ -19,7 +19,6 @@ namespace UpgradePlatformer.Entities
         public Coin(int value, Texture2D texture, Rectangle hitbox)
             : base(value, texture, hitbox) { }
 
-
         public void Update()
         {
             spriteSize = hitbox.Size;

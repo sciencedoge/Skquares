@@ -14,7 +14,7 @@ namespace UpgradePlatformer.Entities
     //Purpose: Provides the basis for all living entities in
     //the game
     //======================================================
-    abstract class LivingObject : Interfaces.IDamageable, Interfaces.IHostile
+    abstract class LivingObject : EntityObject, Interfaces.IDamageable, Interfaces.IHostile
     {
         private const int cooldownTime = 120;
         private Rectangle SpriteBounds = new Rectangle(17, 14, 14, 14);

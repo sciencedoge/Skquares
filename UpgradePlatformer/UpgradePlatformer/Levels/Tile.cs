@@ -13,16 +13,22 @@ namespace UpgradePlatformer.Levels
         private static Rectangle TILE_SPRITE_GOAL = new Rectangle(16, 29, 15, 15);
         private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.Orange,  Color.White,  Color.White, Color.Orange, Color.Transparent};
         private Sprite Sprite;
+        private Vector2 TileCenter;
         public Vector2 TileSize;
         public int Kind;
         public float Rotation;
         public int CollisionKind;
         public Rectangle Position;
-        private Vector2 TileCenter;
+        public bool Spawner;
 
         public Tile(Texture2D texture, int kind, int rotation, int collision, int spawner, Vector2 tileSize)
         {
             Kind = kind;
+            if (spawner != 9) {
+                Spawner = true;
+                kind = spawner - 1000;
+                return;
+            }
             TileSize = tileSize;
             TileCenter = new Vector2(TileSize.X / 2, TileSize.Y / 2);
             if (Kind == 6)
@@ -35,7 +41,7 @@ namespace UpgradePlatformer.Levels
         
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
-            if (Kind == 9)
+            if (Kind == 9 || Spawner)
                 return;
             Position = new Rectangle(position.ToPoint() + TileSize.ToPoint() - TileCenter.ToPoint(), TileSize.ToPoint());
             Sprite.Draw(spriteBatch, Position.Location, Rotation, Position.Size.ToVector2());
