@@ -193,6 +193,7 @@ namespace UpgradePlatformer.Entities
         {
             this.currentHp = maxHp;
             this.isActive = true;
+            resetPosition();
         }
     }
 }

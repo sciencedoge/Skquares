@@ -119,12 +119,15 @@ namespace UpgradePlatformer
 
             EventAction Action_State_Machine = new EventAction((uint e) =>
             {
-                if (e == (uint)Keys.Escape)
-                {
-                    _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
-                    return true;
-                }
-                return false;
+                if (e == (uint)Keys.Escape) _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
+                else if (e == (uint)Keys.Enter) _eventManager.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
+#if DEBUG
+                else if (_stateMachine.currentState == 0) return false;
+                else if (e == (uint)Keys.Q) _levelManager.Prev();
+                else if (e == (uint)Keys.E) _levelManager.Next();
+#endif
+                else return false;
+                return true;
             });
             _eventManager.AddListener(Action_State_Machine, "KEY_DOWN");
 
@@ -134,15 +137,22 @@ namespace UpgradePlatformer
                 return true;
             });
             _eventManager.AddListener(Action_Level_Show, "LEVEL_SHOW");
+
+            // EventAction Action_Level_Next = new EventAction((uint e) =>
+            // {
+            //     _levelManager.Next();
+            //     return true;
+            // });
+            // _eventManager.AddListener(Action_Level_Next, "LEVEL_NEXT");
 #if DEBUG
-            UIButton b = new UIButton(_spriteSheetTexture, _font, new Rectangle(250, 10, 40, 40));
-            b.Text.Text = "<";
-            UIButton c = new UIButton(_spriteSheetTexture, _font, new Rectangle(300, 10, 40, 40));
-            c.Text.Text = ">";
-            b.onClick = new UIAction(() => _levelManager.Prev());
-            c.onClick = new UIAction(() => _levelManager.Next());
-            _uiManager.Add(b);
-            _uiManager.Add(c);
+            // UIButton b = new UIButton(_spriteSheetTexture, _font, new Rectangle(250, 10, 40, 40));
+            // b.Text.Text = "<";
+            // UIButton c = new UIButton(_spriteSheetTexture, _font, new Rectangle(300, 10, 40, 40));
+            // c.Text.Text = ">";
+            // b.onClick = new UIAction(() => _levelManager.Prev());
+            // c.onClick = new UIAction(() => _levelManager.Next());
+            // _uiManager.Add(b);
+            // _uiManager.Add(c);
             Stats = new UIText(_font, new Rectangle(0, 0, 0, 0), 1, Color.White);
             _uiManager.Add(Stats);
 #endif
@@ -160,9 +170,9 @@ namespace UpgradePlatformer
         {
             // update managers
             _inputManager.Update(_eventManager);
-            if (_stateMachine.currentState == 1)
-                _entityManager.Update(gameTime, _eventManager, _inputManager);
+            if (_stateMachine.currentState == 1) _entityManager.Update(gameTime, _eventManager, _inputManager);
             _uiManager.Update(gameTime, _eventManager);
+            _levelManager.Update();
 
             // StateMachine related Updates
             playButton.IsActive = (_stateMachine.currentState == 0) || (_stateMachine.currentState == 3);
@@ -190,7 +200,7 @@ namespace UpgradePlatformer
             frameCounter++;
 #endif
             GraphicsDevice.Clear(Color.Black);
-            
+
             _spriteBatch.Begin();
             _levelManager.Draw(_spriteBatch);
 
