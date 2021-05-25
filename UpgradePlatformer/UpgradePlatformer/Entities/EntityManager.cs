@@ -43,14 +43,14 @@ namespace UpgradePlatformer.Entities
             enemies = new List<Enemy>();
             coins = new List<Coin>();
 
-            player = new Player(10, 2, 
+            player = new Player(9999999, 2, 
                 new Rectangle(new Point(50, 600), new Point(25, 25)), texture, device, 2);
 
              //enemies.Add(new Enemy(
                  //10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device, 1));
 
-             //enemies.Add(new Enemy(
-                 //10, 1, new Rectangle(new Point(500, 600), new Point(25, 25)), texture, device, 1));
+            enemies.Add(new Enemy(
+                10, 1, new Rectangle(new Point(500, 600), new Point(25, 25)), texture, device, 1));
 
             coins.Add(new Coin(
                 1, texture, new Rectangle(new Point(250, 550), new Point(25, 25))));
@@ -80,12 +80,14 @@ namespace UpgradePlatformer.Entities
             for (int i = 0; i < 5; i ++) {
                 player.Update(gameTime, eventManager, inputManager);
                 Intersects(player, eventManager);
+
                 foreach (Enemy e in enemies)
                 {
                     e.Update(gameTime);
                     Intersects(e, eventManager);
                 }
-                foreach(Coin c in coins)
+
+                foreach (Coin c in coins)
                 {
                     c.Update();
                     playerMoney += c.Intersects(player);
@@ -96,7 +98,10 @@ namespace UpgradePlatformer.Entities
                 pathfind.MoveToPlayer();
                 pathfind.EnemyIntersection();
 
-            }          
+            }
+                
+
+            
             if (player.CurrentHP == 0)
             {
                 eventManager.Push(new Event("STATE_MACHINE", 2, new Point(0, 0)));
@@ -177,16 +182,16 @@ namespace UpgradePlatformer.Entities
                             else
                             {
                                 temp.X -= intersection.Width;
-                            }       
-                            
+                            }
+
                             //marks true because the enemy is colliding
                             //with a wall
-                            if(obj is Enemy)
+                            if (obj is Enemy)
                             {
                                 Enemy e = (Enemy)obj;
                                 e.Colliding = true;
                             }
-                        }
+                        }                   
 
                         obj.X = temp.X;
                         obj.Y = temp.Y;

@@ -36,7 +36,7 @@ namespace UpgradePlatformer.Entities
             this.player = player;
 
             prevX = 0f;
-            goombaAINum = 0.5f;
+            goombaAINum = 1f;
             relationships = new Vector2[enemies.Count, 1];
         }
 
@@ -64,15 +64,21 @@ namespace UpgradePlatformer.Entities
             {
                 if(relationships[i, 0].X < 150)
                 {
-                    if(enemies[i].X > player.X)
+                    if(enemies[i].X > player.X
+                        && !enemies[i].Colliding)
                     {
-                        enemies[i].X -= 0.5f;
+                        enemies[i].X -= 1f;
                         enemies[i].Flip = false;
+                    }
+                    else if(enemies[i].X < player.X
+                        && !enemies[i].Colliding)
+                    {
+                        enemies[i].X += 1f;
+                        enemies[i].Flip = true;
                     }
                     else
                     {
-                        enemies[i].X += 0.5f;
-                        enemies[i].Flip = true;
+                        enemies[i].Colliding = false;
                     }
 
                     if (relationships[i, 0].Y > 20

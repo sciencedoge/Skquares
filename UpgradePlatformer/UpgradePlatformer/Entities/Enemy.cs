@@ -90,6 +90,7 @@ namespace UpgradePlatformer.Entities
                 velocity.Y = 0;
 
                 jumpsLeft = 1;
+                this.Colliding = false;
             }
 
             if (position.X > _graphics.PreferredBackBufferWidth + hitbox.Width)
