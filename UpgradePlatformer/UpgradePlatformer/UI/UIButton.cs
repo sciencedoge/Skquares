@@ -9,12 +9,12 @@ namespace UpgradePlatformer.UI
     class UIButton : UIElement
     {
         // Setup constants for sprites
-        private static Rectangle BUTTON_NORMAL_SPRITE = new Rectangle(0, 0, 5, 6);
-        private static Rectangle BUTTON_CLICKED_SPRITE = new Rectangle(5, 0, 5, 6);
-        private static Rectangle BUTTON_DISABLED_SPRITE = new Rectangle(10, 0, 5, 6);
-        private static Rectangle BUTTON_NORMAL_CENTER = new Rectangle(2, 2, 1, 1);
-        private static Rectangle BUTTON_CLICKED_CENTER = new Rectangle(7, 2, 1, 1);
-        private static Rectangle BUTTON_DISABLED_CENTER = new Rectangle(12, 2, 1, 1);
+        private static Rectangle BUTTON_NORMAL_SPRITE = new Rectangle(0, 0, 7, 7);
+        private static Rectangle BUTTON_CLICKED_SPRITE = new Rectangle(7, 0, 7, 7);
+        private static Rectangle BUTTON_DISABLED_SPRITE = new Rectangle(14, 0, 7, 7);
+        private static Rectangle BUTTON_NORMAL_CENTER = new Rectangle(3, 3, 1, 1);
+        private static Rectangle BUTTON_CLICKED_CENTER = new Rectangle(9, 3, 1, 1);
+        private static Rectangle BUTTON_DISABLED_CENTER = new Rectangle(15, 3, 1, 1);
         
         // Vars
         UISprite NormalSprite;
@@ -23,6 +23,8 @@ namespace UpgradePlatformer.UI
         public UIText Text;
         public UIAction onClick = new UIAction(() => { });
         public bool Disabled;
+
+        private Color NormalTextColor, InvertedTextColor;
 
         public int ClickTimeout = 5;
 
@@ -34,7 +36,9 @@ namespace UpgradePlatformer.UI
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
             ClickTime = Math.Max(0, ClickTime - 1);
-            Text.IsActive = IsActive;
+            Text.color = InvertedTextColor;
+            if (Disabled || ClickTime != 0) return;
+            Text.color = NormalTextColor;
         }
 
         /// <summary>
@@ -46,6 +50,8 @@ namespace UpgradePlatformer.UI
             Bounds = bounds;
             Text = new UIText(font, Bounds, 1, Color.Black);
             Text.Centered = true;
+            NormalTextColor = Color.White;
+            InvertedTextColor = Color.Black;
             NormalSprite = new UISprite(texture, BUTTON_NORMAL_SPRITE, BUTTON_NORMAL_CENTER, new Vector2(0, 0), Color.White);
             ClickedSprite = new UISprite(texture, BUTTON_CLICKED_SPRITE, BUTTON_CLICKED_CENTER, new Vector2(0, 0), Color.White);
             DisabledSprite = new UISprite(texture, BUTTON_DISABLED_SPRITE, BUTTON_DISABLED_CENTER, new Vector2(0, 0), Color.White);
@@ -71,9 +77,10 @@ namespace UpgradePlatformer.UI
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (IsActive)
+            if (IsActive) {
                 CurrentSprite().Draw(spriteBatch, Bounds, 0);
-            Text.Draw(gameTime, spriteBatch);
+                Text.Draw(gameTime, spriteBatch);
+            }
         }
     }
 }
