@@ -119,12 +119,14 @@ namespace UpgradePlatformer
 
             EventAction Action_State_Machine = new EventAction((uint e) =>
             {
-                if (e == (uint)Keys.Escape)
-                {
-                    _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
-                    return true;
-                }
-                return false;
+                if (e == (uint)Keys.Escape) _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
+#if DEBUG
+                else if (_stateMachine.currentState == 0) return false;
+                else if (e == (uint)Keys.Q) _levelManager.Prev();
+                else if (e == (uint)Keys.E) _levelManager.Next();
+#endif
+                else return false;
+                return true;
             });
             _eventManager.AddListener(Action_State_Machine, "KEY_DOWN");
 
@@ -135,21 +137,21 @@ namespace UpgradePlatformer
             });
             _eventManager.AddListener(Action_Level_Show, "LEVEL_SHOW");
 
-            EventAction Action_Level_Next = new EventAction((uint e) =>
-            {
-                _levelManager.Next();
-                return true;
-            });
-            _eventManager.AddListener(Action_Level_Next, "LEVEL_NEXT");
+            // EventAction Action_Level_Next = new EventAction((uint e) =>
+            // {
+            //     _levelManager.Next();
+            //     return true;
+            // });
+            // _eventManager.AddListener(Action_Level_Next, "LEVEL_NEXT");
 #if DEBUG
-            UIButton b = new UIButton(_spriteSheetTexture, _font, new Rectangle(250, 10, 40, 40));
-            b.Text.Text = "<";
-            UIButton c = new UIButton(_spriteSheetTexture, _font, new Rectangle(300, 10, 40, 40));
-            c.Text.Text = ">";
-            b.onClick = new UIAction(() => _levelManager.Prev());
-            c.onClick = new UIAction(() => _levelManager.Next());
-            _uiManager.Add(b);
-            _uiManager.Add(c);
+            // UIButton b = new UIButton(_spriteSheetTexture, _font, new Rectangle(250, 10, 40, 40));
+            // b.Text.Text = "<";
+            // UIButton c = new UIButton(_spriteSheetTexture, _font, new Rectangle(300, 10, 40, 40));
+            // c.Text.Text = ">";
+            // b.onClick = new UIAction(() => _levelManager.Prev());
+            // c.onClick = new UIAction(() => _levelManager.Next());
+            // _uiManager.Add(b);
+            // _uiManager.Add(c);
             Stats = new UIText(_font, new Rectangle(0, 0, 0, 0), 1, Color.White);
             _uiManager.Add(Stats);
 #endif
@@ -177,6 +179,7 @@ namespace UpgradePlatformer
             Sprite.Dim = (_stateMachine.currentState == 2) || (_stateMachine.currentState == 3);
             continueButton.IsActive = (_stateMachine.currentState == 2);
             PauseText.IsActive = (_stateMachine.currentState == 2);
+            _levelManager.Update();
 #if DEBUG
             if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
             {

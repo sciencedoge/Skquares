@@ -22,8 +22,6 @@ namespace UpgradePlatformer.Entities
         private List<Enemy> enemies;
         private GraphicsDeviceManager device;
         private LevelManager levelManager;
-
-        private Level currentLevel;
         private PathfindingAI pathfind;
 
         //list of tiles
@@ -36,13 +34,13 @@ namespace UpgradePlatformer.Entities
             enemies = new List<Enemy>();
 
             player = new Player(10, 2, 
-                new Rectangle(new Point(50, 600), new Point(25, 25)), texture, device, 2);
+                new Rectangle(new Point(50, 550), new Point(25, 25)), texture, device, 2);
 
-            // enemies.Add(new Enemy(
-            //     10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device, 1));
+            enemies.Add(new Enemy(
+                10, 1, new Rectangle(new Point(100, 550), new Point(25, 25)), texture, device, 1));
 
-            // enemies.Add(new Enemy(
-            //     10, 1, new Rectangle(new Point(500, 600), new Point(25, 25)), texture, device, 1));
+            enemies.Add(new Enemy(
+                10, 1, new Rectangle(new Point(500, 550), new Point(25, 25)), texture, device, 1));
 
             this.levelManager = levelMan;
 
@@ -58,15 +56,14 @@ namespace UpgradePlatformer.Entities
         /// <param name="eventManager"></param>
         public void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager)
         {
-            currentLevel = levelManager.ActiveLevel();
             // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++) {
                 player.Update(gameTime, eventManager, inputManager);
-                Intersects(player, eventManager);
+                Intersects(player, eventManager, levelManager);
                 foreach (Enemy e in enemies)
                 {
                     e.Update(gameTime);
-                    Intersects(e, eventManager);
+                    Intersects(e, eventManager, levelManager);
                 }
                
                 player.Intersects(enemies);
@@ -92,13 +89,13 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Checks if an entity intersects with anything
         /// </summary>
-        public void Intersects(LivingObject obj, EventManager em)
+        public void Intersects(LivingObject obj, EventManager em, LevelManager lm)
         {
             if (!obj.IsActive)
                 return;
             Rectangle temp = GetTempHitbox(obj);
 
-            foreach (Tile t in currentLevel.GetCollisions(temp, 4))
+            foreach (Tile t in lm.GetCollisions(temp))
             {
                 //Gets a rectangle that represents the intersection
                 Rectangle intersection = Rectangle.Intersect(t.Position, temp);
@@ -161,7 +158,8 @@ namespace UpgradePlatformer.Entities
                         obj.Y = temp.Y;
                         break;
                     case 103:
-                        em.Push(new Event("LEVEL_NEXT", 1, new Point(0)));
+                        if (obj == player)
+                            em.Push(new Event("LEVEL_SHOW", (uint)lm.ActiveLevelNum() + 1, new Point(0)));
                         break;
                 }
             }

@@ -10,16 +10,21 @@ namespace UpgradePlatformer.Levels
     {
         List<Level> Levels;
         int activeLevel;
+        int _activeLevel;
         
+        public void Update() {
+            activeLevel = _activeLevel;
+        }
+
         public LevelManager(Texture2D texture, GraphicsDeviceManager graphics)
         {
             Levels = new List<Level>();
-            activeLevel = 0;
+            _activeLevel = 0;
             Load(texture, "menu", graphics);
+            Load(texture, "MARO", graphics);
             Load(texture, "collision test", graphics);
             Load(texture, "EGGMAN", graphics);
-            Load(texture, "EGGMEN", graphics);
-            Load(texture, "MARO", graphics);            
+            Load(texture, "EGGMEN", graphics);       
         }
         
         public void Load(Texture2D texture, String Name, GraphicsDeviceManager graphics)
@@ -34,20 +39,21 @@ namespace UpgradePlatformer.Levels
         }
 
         public void SetLevel(int id) {
-            activeLevel = id % Levels.Count;
+            if (id < 0) {
+                _activeLevel = Levels.Count - 1;
+            }
+            else
+            _activeLevel = id % (Levels.Count);
         }
 
         public void Next()
         {
-            activeLevel++;
-            activeLevel = activeLevel % Levels.Count;
+            SetLevel(activeLevel + 1);
         }
-        
+
         public void Prev()
         {
-            activeLevel--;
-            if (activeLevel < 0)
-                activeLevel = Levels.Count - 1;
+            SetLevel(activeLevel - 1);
         }
 
         public List<Tile> GetCollisions(Rectangle r) => Levels[activeLevel].GetCollisions(r);
