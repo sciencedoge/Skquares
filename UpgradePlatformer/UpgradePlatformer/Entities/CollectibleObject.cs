@@ -77,12 +77,13 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="sb">_spriteBatch</param>
         /// <param name="gt">gameTime</param>
-        public void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb, GameTime gt)
         {
             //if the sprite is active, draws it to the screen
             if (isActive)
             {
-                sprite.Draw(sb, hitbox.Location, 0, spriteSize.ToVector2());
+                Vector2 Bob = new Vector2(0, 3 * (float)Math.Cos(gt.TotalGameTime.TotalMilliseconds / 100));
+                sprite.Draw(sb, hitbox.Location + Bob.ToPoint(), 0, spriteSize.ToVector2());
             }
         }
 

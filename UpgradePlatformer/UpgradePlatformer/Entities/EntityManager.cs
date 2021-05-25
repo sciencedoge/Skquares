@@ -122,7 +122,7 @@ namespace UpgradePlatformer.Entities
             }
             foreach(Coin c in coins)
             {
-                c.Draw(spriteBatch);
+                c.Draw(spriteBatch, gameTime);
             }
         }
 
