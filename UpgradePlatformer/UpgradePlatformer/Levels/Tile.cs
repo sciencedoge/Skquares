@@ -20,7 +20,7 @@ namespace UpgradePlatformer.Levels
         public Rectangle Position;
         private Vector2 TileCenter;
 
-        public Tile(Texture2D texture, int kind, int rotation, int collision, Vector2 tileSize)
+        public Tile(Texture2D texture, int kind, int rotation, int collision, int spawner, Vector2 tileSize)
         {
             Kind = kind;
             TileSize = tileSize;
