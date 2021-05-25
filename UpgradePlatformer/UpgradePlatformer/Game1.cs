@@ -176,7 +176,8 @@ namespace UpgradePlatformer
                 frameRate = (double)frameCounter / gameTime.ElapsedGameTime.TotalSeconds;
             }
             frameCounter = 0;
-            Stats.Text = frameRate.ToString("F2") + "\nLVL:" + _levelManager.ActiveLevelNum() + "\nHP:" + _entityManager.GetPlayerHp();
+            Stats.Text = frameRate.ToString("F2") + "\nLVL:" + _levelManager.ActiveLevelNum() + "\nHP:" + _entityManager.GetPlayerHp()
+            + "\nMoney:" + _entityManager.PlayerMoney;
 #endif
 
             base.Update(gameTime);

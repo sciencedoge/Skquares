@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace UpgradePlatformer.Entities
 {
@@ -10,7 +13,16 @@ namespace UpgradePlatformer.Entities
     //Purpose: Creates functionality for coins - 
     //a basic collectible
     //=============================================
-    class Coin
+    class Coin : CollectibleObject
     {
+        //Constructor
+        public Coin(int value, Texture2D texture, Rectangle hitbox)
+            : base(value, texture, hitbox) { }
+
+
+        public void Update()
+        {
+            spriteSize = hitbox.Size;
+        }
     }
 }

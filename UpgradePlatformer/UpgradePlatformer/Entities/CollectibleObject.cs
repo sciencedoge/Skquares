@@ -16,10 +16,15 @@ namespace UpgradePlatformer.Entities
     class CollectibleObject
     {
         //Fields
+
+        private Rectangle SpriteBounds = new Rectangle(17, 14, 14, 14);
+
         protected int value;
         protected Graphics.Sprite sprite;
         protected Rectangle hitbox;
         protected bool isActive;
+
+        protected Point spriteSize;
 
         //properties
         /// <summary>
@@ -58,11 +63,12 @@ namespace UpgradePlatformer.Entities
         {
             this.value = value;
             this.hitbox = hitbox;
+            this.isActive = true;
 
             this.sprite = new Graphics.Sprite(
-                sprite, hitbox,
-                new Vector2(hitbox.X - (hitbox.Width / 2),
-                hitbox.Y - (hitbox.Height / 2)),
+                sprite, SpriteBounds,
+                new Vector2(SpriteBounds.X - (SpriteBounds.Width / 2),
+                SpriteBounds.Y - (SpriteBounds.Height / 2)),
                 Color.White);
         }
 
@@ -76,7 +82,7 @@ namespace UpgradePlatformer.Entities
             //if the sprite is active, draws it to the screen
             if (isActive)
             {
-                sprite.Draw(sb, hitbox.Location, 0);
+                sprite.Draw(sb, hitbox.Location, 0, spriteSize.ToVector2());
             }
         }
 
@@ -88,16 +94,20 @@ namespace UpgradePlatformer.Entities
         /// <returns></returns>
         public int Intersects(LivingObject obj)
         {
-            if (this.hitbox.Intersects(obj.Hitbox))
+            if (IsActive)
             {
-                //the coin is no longer active
-                isActive = false;
-                return value;               
+                if (this.hitbox.Intersects(obj.Hitbox))
+                {
+                    //the coin is no longer active
+                    isActive = false;
+                    return value;
+                }
+                else
+                {
+                    return 0;
+                }
             }
-            else
-            {
-                return 0;
-            }
+            return 0;
         }
     }
 }

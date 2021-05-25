@@ -20,31 +20,48 @@ namespace UpgradePlatformer.Entities
         //player and enemies
         private Player player;
         private List<Enemy> enemies;
+        private List<Coin> coins;
         private GraphicsDeviceManager device;
         private LevelManager levelManager;
+        private int playerMoney;
 
         private Level currentLevel;
         private PathfindingAI pathfind;
 
-        //list of tiles
-
+        /// <summary>
+        /// returns player's current money
+        /// </summary>
+        public int PlayerMoney
+        {
+            get { return playerMoney; }
+        }
 
 
         public EntityManager(Texture2D texture, GraphicsDeviceManager device,
             LevelManager levelMan)
         {
             enemies = new List<Enemy>();
+            coins = new List<Coin>();
 
             player = new Player(10, 2, 
                 new Rectangle(new Point(50, 600), new Point(25, 25)), texture, device, 2);
 
-            // enemies.Add(new Enemy(
-            //     10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device, 1));
+             //enemies.Add(new Enemy(
+                 //10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device, 1));
 
-            // enemies.Add(new Enemy(
-            //     10, 1, new Rectangle(new Point(500, 600), new Point(25, 25)), texture, device, 1));
+             //enemies.Add(new Enemy(
+                 //10, 1, new Rectangle(new Point(500, 600), new Point(25, 25)), texture, device, 1));
+
+            coins.Add(new Coin(
+                1, texture, new Rectangle(new Point(250, 550), new Point(25, 25))));
+            coins.Add(new Coin(
+                1, texture, new Rectangle(new Point(300, 550), new Point(25, 25))));
+            coins.Add(new Coin(
+                1, texture, new Rectangle(new Point(350, 550), new Point(25, 25))));
 
             this.levelManager = levelMan;
+
+            this.playerMoney = 0;
 
             pathfind = new PathfindingAI(enemies, player);
         }
@@ -68,11 +85,17 @@ namespace UpgradePlatformer.Entities
                     e.Update(gameTime);
                     Intersects(e, eventManager);
                 }
+                foreach(Coin c in coins)
+                {
+                    c.Update();
+                    playerMoney += c.Intersects(player);
+                }
                
                 player.Intersects(enemies);
                 pathfind.UpdateCosts();
                 pathfind.MoveToPlayer();
                 pathfind.EnemyIntersection();
+
             }          
             if (player.CurrentHP == 0)
             {
@@ -80,12 +103,21 @@ namespace UpgradePlatformer.Entities
             }                         
         }
 
+        /// <summary>
+        /// Draws all entities to the screen
+        /// </summary>
+        /// <param name="gameTime">gameTime</param>
+        /// <param name="spriteBatch">spriteBatch</param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             player.Draw(spriteBatch, gameTime);
             foreach(Enemy e in enemies)
             {
                 e.Draw(spriteBatch, gameTime);
+            }
+            foreach(Coin c in coins)
+            {
+                c.Draw(spriteBatch);
             }
         }
 
@@ -152,7 +184,6 @@ namespace UpgradePlatformer.Entities
                             if(obj is Enemy)
                             {
                                 Enemy e = (Enemy)obj;
-
                                 e.Colliding = true;
                             }
                         }
