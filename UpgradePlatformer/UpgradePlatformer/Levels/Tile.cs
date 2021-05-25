@@ -10,7 +10,7 @@ namespace UpgradePlatformer.Levels
     class Tile
     {
         private static Rectangle TILE_SPRITE = new Rectangle(0, 13, 15, 15);
-        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.Orange,  Color.Orange,  Color.White, Color.Orange, Color.Transparent,};
+        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.Orange,  Color.Orange,  Color.White, Color.Orange, Color.Transparent};
         private Sprite Sprite;
         public Vector2 TileSize;
         public int Kind;
@@ -31,6 +31,8 @@ namespace UpgradePlatformer.Levels
         
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
+            if (Kind == 9)
+                return;
             Position = new Rectangle(position.ToPoint() + TileSize.ToPoint() - TileCenter.ToPoint(), TileSize.ToPoint());
             Sprite.Draw(spriteBatch, Position.Location, Rotation, Position.Size.ToVector2());
         }
