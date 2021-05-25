@@ -78,7 +78,7 @@ namespace UpgradePlatformer.Entities
                     if (relationships[i, 0].Y > 20
                         && player.Y < enemies[i].Y)
                     {
-                        AIJump(enemies[i]);
+                        AIJump(enemies[i]);                       
                     }
                 }
 
@@ -88,10 +88,14 @@ namespace UpgradePlatformer.Entities
                     if(enemies[i].Colliding)
                     {
                         goombaAINum *= -1;
+                        enemies[i].X += goombaAINum;
                         enemies[i].Colliding = false;
                     }
 
-                    enemies[i].X += goombaAINum;
+                    if (!enemies[i].Colliding)
+                    {
+                        enemies[i].X += goombaAINum;
+                    }                
                 }
             }
         }
