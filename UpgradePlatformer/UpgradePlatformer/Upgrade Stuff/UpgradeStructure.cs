@@ -13,7 +13,8 @@ namespace UpgradePlatformer.Upgrade_Stuff
     {
         public UpgradeStructure(UpgradeManager manager)
         {
-            
+            manager.Add(1, UPGRADE_TYPE.XtraJump, 10);
+            manager.Add(1, UPGRADE_TYPE.);
         }
     }
 }

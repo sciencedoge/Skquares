@@ -265,6 +265,15 @@ namespace UpgradePlatformer.Entities
             //     player.Position = new Vector2(graphicsDevice.PreferredBackBufferWidth - (player.Position.X + player.Hitbox.Width), player.Position.Y);
             // player.Velocity = new Vector2(0);
         }
+
+        /// <summary>
+        /// returns the max hp of the player
+        /// </summary>
+        /// <returns></returns>
+        public int MaxPlayerHP()
+        {
+            return player.MaxHP;
+        }
     }
     class EntityObject { }
 }
