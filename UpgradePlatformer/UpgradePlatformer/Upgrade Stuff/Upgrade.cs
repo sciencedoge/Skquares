@@ -23,6 +23,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         //Fields
         private int upgradeValue;
         private bool isLearned;
+        private int cost;
 
         private UPGRADE_TYPE type;
 
@@ -67,18 +68,27 @@ namespace UpgradePlatformer.Upgrade_Stuff
             get { return upgradeValue; }
         }
 
+        /// <summary>
+        /// Returns the cost of the upgrade
+        /// </summary>
+        public int Cost
+        {
+            get { return cost; }
+        }
+
 
         //Ctor
         /// <summary>
         /// Creates a new Upgrade object
         /// </summary>
         /// <param name="value">value of the upgrade</param>
-        public Upgrade(int value, UPGRADE_TYPE type)
+        public Upgrade(int value, UPGRADE_TYPE type, int cost)
         {
             this.upgradeValue = value;
             this.isLearned = false;
 
             this.type = type;
+            this.cost = cost;
         }
     }
 }

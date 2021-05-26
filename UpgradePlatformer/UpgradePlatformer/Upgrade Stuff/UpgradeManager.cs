@@ -13,6 +13,8 @@ namespace UpgradePlatformer.Upgrade_Stuff
     {
         private Upgrade root;
 
+        private List<Upgrade> possibleUpgrades;
+
         /// <summary>
         /// returns the root upgrade
         /// </summary>
@@ -25,22 +27,25 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// <summary>
         /// Creates a new UpgradeManager class
         /// </summary>
-        public UpgradeManager() { }
+        public UpgradeManager() 
+        {
+            possibleUpgrades = new List<Upgrade>();
+        }
 
         /// <summary>
         /// Adds a node to the tree
         /// </summary>
         /// <param name="value">value of the upgrade</param>
         /// <param name="type">type of the upgrade</param>
-        public void Add(int value, UPGRADE_TYPE type)
+        public void Add(int value, UPGRADE_TYPE type, int cost)
         {
             if(root == null)
             {
-                this.root = new Upgrade(value, type);
+                this.root = new Upgrade(value, type, cost);
             }
             else
             {
-                Add(root, value, type);
+                Add(root, value, type, cost);
             }
 
         }
@@ -51,18 +56,18 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// <param name="node">parent node</param>
         /// <param name="value">value of the new node</param>
         /// <param name="type">new node type</param>
-        private void Add(Upgrade upgrade, int value, UPGRADE_TYPE type)
+        private void Add(Upgrade upgrade, int value, UPGRADE_TYPE type, int cost)
         {
             //Health node, all stored to the LEFT of the tree
             if(type == UPGRADE_TYPE.Health)
             {
                 if (upgrade.Left != null)
                 {
-                    upgrade.Left = new Upgrade(value, type);
+                    upgrade.Left = new Upgrade(value, type, cost);
                 }
                 else
                 {
-                    Add(upgrade.Left, value, type);
+                    Add(upgrade.Left, value, type, cost);
                 }
             }
 
@@ -71,20 +76,28 @@ namespace UpgradePlatformer.Upgrade_Stuff
             {
                 if(upgrade.Right != null)
                 {
-                    upgrade.Right = new Upgrade(value, type);
+                    upgrade.Right = new Upgrade(value, type, cost);
                 }
                 else
                 {
-                    Add(upgrade.Right, value, type);
+                    Add(upgrade.Right, value, type, cost);
                 }
             }
+        }
+
+        /// <summary>
+        /// resets the possible upgrades list
+        /// </summary>
+        public void EstablishPossibleList()
+        {
+            possibleUpgrades = new List<Upgrade>();
         }
 
         /// <summary>
         /// Lists all of the upgrades
         /// purchased by the player
         /// </summary>
-        public void ListPurchasedUgprades(Upgrade upgrade)
+        public List<Upgrade> CanBeLearned(Upgrade upgrade)
         {
             //LCR Data pattern
 
@@ -92,15 +105,19 @@ namespace UpgradePlatformer.Upgrade_Stuff
             {
                 if(upgrade.Left != null)
                 {
-                    ListPurchasedUgprades(upgrade.Left);
+                    CanBeLearned(upgrade.Left);
+                }
+                
+                if(upgrade.Right != null)
+                {
+                    CanBeLearned(upgrade.Right);
                 }
 
-
-
-
-
+                possibleUpgrades.Add(upgrade);
 
             }
+
+            return new List<Upgrade>();
         }
 
 
