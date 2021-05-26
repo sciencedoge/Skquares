@@ -22,7 +22,7 @@ namespace UpgradePlatformer.UI
         UISprite DisabledSprite;
         public UIText Text;
         public UIAction onClick = new UIAction(() => { });
-        public bool Disabled;
+        public bool Disabled = false;
 
         private Color NormalTextColor, InvertedTextColor;
 

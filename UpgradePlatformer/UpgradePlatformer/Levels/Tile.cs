@@ -14,7 +14,8 @@ namespace UpgradePlatformer.Levels
         private static Rectangle TILE_SPRITE_CLOUD = new Rectangle(32, 29, 16, 16);
         private static Rectangle TILE_SPRITE_CLOUD_MID = new Rectangle(32, 45, 16, 16);
         private static Rectangle TILE_SPRITE_CLOUD_BOT = new Rectangle(16, 45, 16, 16);
-        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.Orange,  Color.White,  Color.White, Color.Orange, Color.Transparent};
+        private static Rectangle TILE_SPRITE_SPIKE = new Rectangle(32, 13, 16, 16);
+        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.White,  Color.White,  Color.White, Color.Orange, Color.Transparent};
         private Sprite Sprite;
         private Vector2 TileCenter;
         public Vector2 TileSize;
@@ -40,13 +41,13 @@ namespace UpgradePlatformer.Levels
                     Sprite = new Sprite(texture, TILE_SPRITE_CLOUD_BOT, TileCenter, COLORS[6]);
                     Kind = 10;
                 }
-                //else Sprite = new Sprite(texture, TILE_SPRITE, TileCenter, COLORS[kind - 1]);
             }
             else if (Kind == 7)
             {
-                if (above.Kind == 7) Sprite = new Sprite(texture, TILE_SPRITE_CLOUD_MID, TileCenter, COLORS[kind - 1]);
+                if (above.Kind != 9 && !above.Spawner) Sprite = new Sprite(texture, TILE_SPRITE_CLOUD_MID, TileCenter, COLORS[kind - 1]);
                 else Sprite = new Sprite(texture, TILE_SPRITE_CLOUD, TileCenter, COLORS[kind - 1]);
             }
+            else if (Kind == 5) Sprite = new Sprite(texture, TILE_SPRITE_SPIKE, TileCenter, COLORS[kind - 1]);
             else if (Kind == 6)
                 Sprite = new Sprite(texture, TILE_SPRITE_GOAL, TileCenter, COLORS[kind - 1]);
             else

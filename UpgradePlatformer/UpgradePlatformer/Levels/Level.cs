@@ -12,7 +12,6 @@ namespace UpgradePlatformer.Levels
     {
         public String Name;
         int TileWidth, TileHeight;
-        TileTheme tileTheme;
         Tile[,] TileMap;
         GraphicsDeviceManager Graphics;
 

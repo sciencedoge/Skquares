@@ -6,7 +6,6 @@ namespace UpgradePlatformer.Graphics
 {
     class AnimationManager
     {
-        public List<Sprite> Sheet;
 
         public AnimationManager()
         {

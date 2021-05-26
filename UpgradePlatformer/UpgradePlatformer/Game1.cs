@@ -29,7 +29,6 @@ namespace UpgradePlatformer
         private EntityManager _entityManager;
         private SpriteFont _font;
         private FiniteStateMachine _stateMachine;
-        private Player player;
         private UIButton playButton, continueButton, closeButton;
         private UIText TitleText, PauseText;
 #if DEBUG
