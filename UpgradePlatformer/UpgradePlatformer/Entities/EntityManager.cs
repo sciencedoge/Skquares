@@ -21,7 +21,6 @@ namespace UpgradePlatformer.Entities
         private Player player;
         private List<Enemy> enemies;
         private List<Coin> coins;
-        private GraphicsDeviceManager device;
         private LevelManager levelManager;
         private int playerMoney;
 
@@ -42,22 +41,6 @@ namespace UpgradePlatformer.Entities
         {
             enemies = new List<Enemy>();
             coins = new List<Coin>();
-
-            // player = new Player(9999999, 2, 
-            //     new Rectangle(new Point(50, 550), new Point(25, 25)), texture, device, 2);
-
-             //enemies.Add(new Enemy(
-                 //10, 1, new Rectangle(new Point(100, 600), new Point(25, 25)), texture, device, 1));
-
-            // enemies.Add(new Enemy(
-            //     10, 1, new Rectangle(new Point(500, 550), new Point(25, 25)), texture, device, 1));
-
-            // coins.Add(new Coin(
-            //     1, texture, new Rectangle(new Point(250, 450), new Point(20, 20))));
-            // coins.Add(new Coin(
-            //     1, texture, new Rectangle(new Point(300, 450), new Point(20, 20))));
-            // coins.Add(new Coin(
-            //     1, texture, new Rectangle(new Point(350, 450), new Point(20, 20))));
 
             this.levelManager = levelMan;
 
@@ -167,10 +150,12 @@ namespace UpgradePlatformer.Entities
                 switch (t.CollisionKind) {
                     case 100:
                         obj.TakeDamage(1);
+                        if (obj == (LivingObject)player)
+                            player.Velocity = new Vector2(0, -4);
                         break;
                     case 101:
                         if (intersection.Height > 0.5 * t.TileSize.Y)
-                            obj.TakeDamage(1);
+                            obj.TakeDamage(obj.MaxHP);
                         break;
                     case 102:
                         //checks conditions to move the player up or down
@@ -223,6 +208,22 @@ namespace UpgradePlatformer.Entities
                     case 103:
                         if (obj == (LivingObject)player)
                             em.Push(new Event("LEVEL_SHOW", (uint)levelManager.ActiveLevelNum() + 1, new Point(0)));
+                        break;
+                    case 104:
+
+                        //checks conditions to move the player up or down
+                        if (intersection.Width > intersection.Height)
+                        {
+                            //short wide rectangle
+                            //moves player up
+                            if (t.Position.Top - intersection.Top == 0)
+                            {
+                                temp.Y -= intersection.Height;
+                                obj.OnFloorCollide();
+                            }
+                            obj.Velocity = new Vector2(obj.Velocity.X, 0);
+                        }
+                        obj.Y = temp.Y;
                         break;
                 }
             }

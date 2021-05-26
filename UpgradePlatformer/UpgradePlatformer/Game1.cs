@@ -29,7 +29,6 @@ namespace UpgradePlatformer
         private EntityManager _entityManager;
         private SpriteFont _font;
         private FiniteStateMachine _stateMachine;
-        private Player player;
         private UIButton playButton, continueButton, closeButton;
         private UIText TitleText, PauseText;
 #if DEBUG
@@ -76,7 +75,7 @@ namespace UpgradePlatformer
             StateMachineState Escape = new StateMachineState(new List<Flag> { escapeKeyPressEscape });              // 2
             StateMachineState Respawn = new StateMachineState(new List<Flag> { playButtonPressRespawn });           // 3
 
-            // create state machine
+            // create state machinez
             _stateMachine = new FiniteStateMachine(new List<StateMachineState>{Menu, Game, Escape, Respawn});
             
             // create ui elements
@@ -120,7 +119,8 @@ namespace UpgradePlatformer
             // create event listeners
             EventAction Action_Button_Press = new EventAction((uint e) =>
             {
-                _eventManager.Push(new Event("LEVEL_SHOW", 1, new Point(0, 0)));
+                if (e == 0)
+                    _eventManager.Push(new Event("LEVEL_SHOW", 1, new Point(0, 0)));
                 _stateMachine.SetFlag((int)e);
                 return true;
             });

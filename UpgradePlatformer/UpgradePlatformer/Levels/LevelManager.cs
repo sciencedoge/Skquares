@@ -26,7 +26,8 @@ namespace UpgradePlatformer.Levels
             Levels = new List<Level>();
             _activeLevel = 0;
             Load(texture, "DEATH_MENU", graphics);
-            Load(texture, "cave", graphics);  
+            Load(texture, "cave", graphics);
+            Load(texture, "clouds", graphics);
         }
         
         public void Load(Texture2D texture, String Name, GraphicsDeviceManager graphics)
@@ -59,7 +60,6 @@ namespace UpgradePlatformer.Levels
         }
 
         public List<Tile> spawners() => Levels[activeLevel].GetSpawners();
-
         public List<Tile> GetCollisions(Rectangle r) => Levels[activeLevel].GetCollisions(r);
         public Level ActiveLevel() => Levels[activeLevel];
         public String ActiveLevelName() => Levels[activeLevel].Name;

@@ -19,8 +19,6 @@ namespace UpgradePlatformer.Entities
         public Player player;
         public List<Enemy> _enemies;
         public List<Enemy> enemies { get => _enemies; set { _enemies = value; relationships = new Vector2[enemies.Count, 1];} }
-
-        private float prevX;
         private float goombaAINum;
 
         private Vector2[,] relationships;
@@ -36,7 +34,6 @@ namespace UpgradePlatformer.Entities
             this.enemies = enemies;
             this.player = player;
 
-            prevX = 0f;
             goombaAINum = 1f;
             relationships = new Vector2[enemies.Count, 1];
         }

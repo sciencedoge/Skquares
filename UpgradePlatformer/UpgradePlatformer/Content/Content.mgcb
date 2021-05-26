@@ -26,6 +26,9 @@
 #begin Levels/DEATH_MENU.level_Finished
 /copy:Levels/DEATH_MENU.level_Finished
 
+#begin Levels/clouds.level_Finished
+/copy:Levels/clouds.level_Finished
+
 #begin SpriteSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
