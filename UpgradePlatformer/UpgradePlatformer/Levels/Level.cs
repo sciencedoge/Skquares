@@ -29,7 +29,7 @@ namespace UpgradePlatformer.Levels
             TileWidth = reader.ReadInt32();
             TileHeight = reader.ReadInt32();
 
-            Vector2 tileSize = new Vector2(Graphics.PreferredBackBufferWidth / TileWidth, Graphics.PreferredBackBufferHeight / TileHeight);
+            Vector2 tileSize = new Vector2(Graphics.PreferredBackBufferWidth / TileWidth, (Graphics.PreferredBackBufferHeight - 40) / TileHeight);
 
             TileMap = new Tile[TileWidth, TileHeight];
 

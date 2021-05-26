@@ -27,7 +27,7 @@ namespace UpgradePlatformer.Levels
             Worlds = new List<World>();
             _activeWorld = 0;
             Load(texture, new List<string>{"DEATH_MENU"}, graphics, 0);
-            Load(texture, new List<string>{"clouds2", "clouds1"}, graphics, 0);
+            Load(texture, new List<string>{"clouds2", "clouds1", "clouds3"}, graphics, 0);
             Load(texture, new List<string>{"cave", "coinHeaven"}, graphics, 1);
         }
         

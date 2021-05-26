@@ -51,7 +51,7 @@ namespace UpgradePlatformer.Graphics
                 c.B /= 2;
             }
             Rectangle renderRect = Position;
-            renderRect.Location = renderPosition + (Origin / 2).ToPoint();
+            renderRect.Location = renderPosition + new Point(0, 40) + (Origin / 2).ToPoint();
             renderRect.Size = Size.ToPoint();
             spriteBatch.Draw(Texture, renderRect, Position, c, rotation, Origin, effects, 0f);
         }

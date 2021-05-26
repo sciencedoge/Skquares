@@ -32,6 +32,9 @@
 #begin Levels/coinHeaven.level_Finished
 /copy:Levels/coinHeaven.level_Finished
 
+#begin Levels/clouds3.level_Finished
+/copy:Levels/clouds3.level_Finished
+
 #begin Levels/DEATH_MENU.level_Finished
 /copy:Levels/DEATH_MENU.level_Finished
 
