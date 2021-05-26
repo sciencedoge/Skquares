@@ -29,7 +29,7 @@ namespace UpgradePlatformer.Levels
             _activeWorld = 0;
             Load(texture, new List<string>{"DEATH_MENU"}, graphics, 0);
             Load(texture, new List<string>{"cave"}, graphics, 0);
-            Load(texture, new List<string>{"clouds2", "clouds1"}, graphics, 0);
+            Load(texture, new List<string>{"clouds2", "clouds1", "clouds3"}, graphics, 0);
         }
         
         public void Load(Texture2D texture, List<String> Names, GraphicsDeviceManager graphics, int level)
