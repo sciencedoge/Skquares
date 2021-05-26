@@ -123,7 +123,7 @@ namespace UpgradePlatformer
             HpText.update = new UITextUpdate(() => {
                 string result = "";
 
-                for (int i = 0; i < 10; i ++) {
+                for (int i = 0; i < _entityManager.MaxPlayerHP(); i += _entityManager.MaxPlayerHP() / 10) {
                     if (i < _entityManager.GetPlayerHp()) result += "=";
                     else result += " ";
                 }
