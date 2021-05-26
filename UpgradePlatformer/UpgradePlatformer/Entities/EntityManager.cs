@@ -208,7 +208,7 @@ namespace UpgradePlatformer.Entities
                         break;
                     case 103:
                         if (obj == (LivingObject)player)
-                            em.Push(new Event("WORLD_SHOW", (uint)levelManager.ActiveLevelNum() + 1, new Point(0)));
+                            em.Push(new Event("WORLD_SHOW", (uint)levelManager.ActiveWorldNum() + 1, new Point(0)));
                         break;
                     case 104:
 

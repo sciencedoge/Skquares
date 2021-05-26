@@ -96,7 +96,7 @@ namespace UpgradePlatformer.Levels
                     EntityObject o = null;
                     if (t.Kind == 2 && player) o = (EntityObject)new Player(int.MaxValue, 2, new Rectangle(t.Position.Location, new Point(25, 25)), texture, device, 2);
                     else if (t.Kind == 1) o = (EntityObject)new Enemy(10, 2, new Rectangle(t.Position.Location, new Point(25, 25)), texture, device, 1);
-                    else if (t.Kind == 0) o = (EntityObject)new Coin(1, texture, new Rectangle(t.Position.Location, new Point(25, 25)));
+                    else if (t.Kind == 0) o = (EntityObject)new Coin(1, texture, new Rectangle(t.Position.Location, new Point(15, 15)));
                     if (o != null)
                         em.Spawn(o, t.Kind);
                 }

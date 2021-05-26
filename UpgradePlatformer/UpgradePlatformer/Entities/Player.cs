@@ -22,6 +22,8 @@ namespace UpgradePlatformer.Entities
         private bool keyUp, keyDown, keyLeft, keyRight;
         private bool ducking;
 
+        private static int maxJumps = 1;
+
         //screen bounds stuff
         private GraphicsDeviceManager _graphics;
 
@@ -160,7 +162,7 @@ namespace UpgradePlatformer.Entities
 
         public override void OnFloorCollide()
         {
-            jumpsLeft = 2;
+            jumpsLeft = maxJumps;
         }
 
         /// <summary>
