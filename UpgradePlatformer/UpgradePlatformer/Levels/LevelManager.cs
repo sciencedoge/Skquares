@@ -16,7 +16,6 @@ namespace UpgradePlatformer.Levels
         public void Update(EntityManager em, Texture2D texture, GraphicsDeviceManager device) {
             if (activeWorld != _activeWorld) {
                 activeWorld = _activeWorld;
-                Worlds[activeWorld].Update(em, texture, device);
                 em.Clean(true);
                 Worlds[activeWorld].LoadEntities(em, texture, device, true);
             }
@@ -28,7 +27,7 @@ namespace UpgradePlatformer.Levels
             Worlds = new List<World>();
             _activeWorld = 0;
             Load(texture, new List<string>{"DEATH_MENU"}, graphics, 0);
-            Load(texture, new List<string>{"cave"}, graphics, 0);
+            // Load(texture, new List<string>{"cave"}, graphics, 0);
             Load(texture, new List<string>{"clouds2", "clouds1"}, graphics, 0);
         }
         
