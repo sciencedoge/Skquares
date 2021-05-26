@@ -16,8 +16,9 @@ namespace UpgradePlatformer.Entities
     class PathfindingAI
     {
         //fields
-        private List<Enemy> enemies;
-        private Player player;
+        public Player player;
+        public List<Enemy> _enemies;
+        public List<Enemy> enemies { get => _enemies; set { _enemies = value; relationships = new Vector2[enemies.Count, 1];} }
 
         private float prevX;
         private float goombaAINum;
@@ -47,6 +48,8 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public void UpdateCosts()
         {
+            if (player == null)
+                return;
             for (int i = 0; i < enemies.Count; i++)
             {
                 float distX = Math.Abs(enemies[i].Position.X - player.Position.X);
@@ -60,6 +63,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public void MoveToPlayer()
         {
+            if (player == null) return;
             for(int i = 0; i < enemies.Count; i++)
             {
                 if(relationships[i, 0].X < 150)

@@ -79,16 +79,23 @@ namespace UpgradePlatformer.Levels
                     if (TileMap[y, x].Position.Intersects(r)) Tiles.Add(TileMap[y, x]);
             return Tiles;
         }
-        
-        public void LoadEntities(EntityManager em, Texture2D texture, GraphicsDeviceManager device) {
-            foreach (Tile t in TileMap) {
-                if (!t.Spawner)
-                    continue;
-                EntityObject o = null;
-                if (t.Kind == 0)
-                    o = (EntityObject)new Player(10, 2, new Rectangle(t.Position.Location, new Point(25, 25)), texture, device, 2);    
-                if (o != null)
-                    em.Spawn(o , t.Kind);
+
+        public void LoadEntities(EntityManager em, Texture2D texture, GraphicsDeviceManager device)
+        {
+            for (int x = 0; x < TileHeight; x++) {
+                for (int y = 0; y < TileWidth; y++)
+                {
+                    Tiles[x, y].UpdatePos(new Vector2((y) * TileMap[0, 0].TileSize.X, (x) * TileMap[0, 0].TileSize.Y));
+                    Tile t = Tiles[x, y];
+                    if (!t.Spawner)
+                        continue;
+                    EntityObject o = null;
+                    if (t.Kind == 2) o = (EntityObject)new Player(int.MaxValue, 2, new Rectangle(t.Position.Location, new Point(25, 25)), texture, device, 2);
+                    else if (t.Kind == 1) o = (EntityObject)new Enemy(10, 2, new Rectangle(t.Position.Location, new Point(25, 25)), texture, device, 1);
+                    else if (t.Kind == 0) o = (EntityObject)new Coin(1, texture, new Rectangle(t.Position.Location, new Point(25, 25)));
+                    if (o != null)
+                        em.Spawn(o, t.Kind);
+                }
             }
         }
     }

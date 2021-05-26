@@ -26,7 +26,7 @@ namespace UpgradePlatformer.Levels
             Kind = kind;
             if (spawner != 9) {
                 Spawner = true;
-                kind = spawner - 1000;
+                Kind = spawner - 1000;
                 return;
             }
             TileSize = tileSize;
@@ -43,8 +43,12 @@ namespace UpgradePlatformer.Levels
         {
             if (Kind == 9 || Spawner)
                 return;
-            Position = new Rectangle(position.ToPoint() + TileSize.ToPoint() - TileCenter.ToPoint(), TileSize.ToPoint());
+            UpdatePos(position);
             Sprite.Draw(spriteBatch, Position.Location, Rotation, Position.Size.ToVector2());
+        }
+        public void UpdatePos(Vector2 position)
+        {
+            Position = new Rectangle(position.ToPoint() + TileSize.ToPoint() - TileCenter.ToPoint(), TileSize.ToPoint());
         }
     }
 }

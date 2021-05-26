@@ -95,7 +95,7 @@ namespace UpgradePlatformer.Entities
         /// <returns></returns>
         public int Intersects(LivingObject obj)
         {
-            if (IsActive)
+            if (IsActive && obj != null)
             {
                 if (this.hitbox.Intersects(obj.Hitbox))
                 {

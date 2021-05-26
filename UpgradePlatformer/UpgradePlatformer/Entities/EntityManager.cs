@@ -104,7 +104,7 @@ namespace UpgradePlatformer.Entities
 
             
             if (player != null) {
-                if (player.CurrentHP == 0)
+                if (player.CurrentHP <= 0)
                 {
                     eventManager.Push(new Event("STATE_MACHINE", 2, new Point(0, 0)));
                 }
@@ -131,9 +131,17 @@ namespace UpgradePlatformer.Entities
         }
         
         public void Spawn(EntityObject obj, int kind) {
-            if (kind == 0) player = (Player)obj;
-            else if (kind == 1) enemies.Add((Enemy)obj);
-            else if (kind == 2) coins.Add((Coin)obj);
+            if (kind == 2)
+            {
+                player = (Player)obj;
+                pathfind.player = player;
+            }
+            else if (kind == 1)
+            {
+                enemies.Add((Enemy)obj);
+                pathfind.enemies = enemies;
+            }
+            else if (kind == 0) coins.Add((Coin)obj);
         }
 
         public void Clean() {
