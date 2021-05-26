@@ -122,7 +122,7 @@ namespace UpgradePlatformer
                     else result += " ";
                 }
 
-                return "[" + result + "]";
+                return $"[{result}]X1 ${_entityManager.PlayerMoney}";
             });
 
             // initialize uiGroups
