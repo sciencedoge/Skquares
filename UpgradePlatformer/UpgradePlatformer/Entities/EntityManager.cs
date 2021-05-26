@@ -127,8 +127,9 @@ namespace UpgradePlatformer.Entities
             else if (kind == 0) coins.Add((Coin)obj);
         }
 
-        public void Clean() {
-            player = null;
+        public void Clean(bool player) {
+            if (player)
+                this.player = null;
             enemies = new List<Enemy>();
             coins = new List<Coin>();
         }
@@ -255,6 +256,11 @@ namespace UpgradePlatformer.Entities
         public void RespawnPlayer() {
             if (player != null)
                 player.Respawn();
+        }
+        public void FlipPlayerSide(GraphicsDeviceManager graphicsDevice) {
+            // if (player != null)
+            //     player.Position = new Vector2(graphicsDevice.PreferredBackBufferWidth - (player.Position.X + player.Hitbox.Width), player.Position.Y);
+            // player.Velocity = new Vector2(0);
         }
     }
     class EntityObject { }

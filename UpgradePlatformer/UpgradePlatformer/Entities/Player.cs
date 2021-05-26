@@ -135,15 +135,15 @@ namespace UpgradePlatformer.Entities
                 velocity.Y = 0;
             }
 
-            if (position.X > _graphics.PreferredBackBufferWidth)
+            if (position.X > _graphics.PreferredBackBufferWidth) {
                 em.Push(new Event("LEVEL_SHOW", (uint)lm.ActiveLevelNum() + 1, new Point()));
-            //position.X = 0 - hitbox.Width;
+                position.X = 0 + hitbox.Width;
+            }
 
-            if (position.X < 0)
+            if (position.X < 0) {
                 em.Push(new Event("LEVEL_SHOW", (uint)lm.ActiveLevelNum() - 1, new Point()));
-                
-            //position.X = _graphics.PreferredBackBufferWidth + hitbox.Width;
-             
+                position.X = _graphics.PreferredBackBufferWidth - hitbox.Width;
+            }
 
             if (position.Y >= _graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 2;
         }

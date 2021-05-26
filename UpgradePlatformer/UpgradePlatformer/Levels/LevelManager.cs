@@ -17,8 +17,8 @@ namespace UpgradePlatformer.Levels
             if (activeWorld != _activeWorld) {
                 activeWorld = _activeWorld;
                 Worlds[activeWorld].Update(em, texture, device);
-                em.Clean();
-                Worlds[activeWorld].LoadEntities(em, texture, device);
+                em.Clean(true);
+                Worlds[activeWorld].LoadEntities(em, texture, device, true);
             }
             ActiveWorld().Update(em, texture, device);
         }
@@ -67,6 +67,7 @@ namespace UpgradePlatformer.Levels
         public Level ActiveLevel() => ActiveWorld().ActiveLevel();
         public World ActiveWorld() => Worlds[activeWorld];
         public String ActiveLevelName() => ActiveWorld().ActiveLevelName();
-        public int ActiveLevelNum() => activeWorld;
+        public int ActiveLevelNum() => ActiveWorld().ActiveLevelNum();
+        public int ActiveWorldNum() => activeWorld;
     }
 }

@@ -16,13 +16,14 @@ namespace UpgradePlatformer.Levels
         public void Update(EntityManager em, Texture2D texture, GraphicsDeviceManager device) {
             if (activeLevel != _activeLevel) {
                 activeLevel = _activeLevel;
-                em.Clean();
-                Levels[activeLevel].LoadEntities(em, texture, device);
+                em.FlipPlayerSide(device);
+                em.Clean(false);
+                Levels[activeLevel].LoadEntities(em, texture, device, false);
             }
         }
 
-        public void LoadEntities(EntityManager em, Texture2D texture, GraphicsDeviceManager device) =>
-            Levels[activeLevel].LoadEntities(em, texture, device);
+        public void LoadEntities(EntityManager em, Texture2D texture, GraphicsDeviceManager device, bool player) =>
+            Levels[activeLevel].LoadEntities(em, texture, device, player);
         public World(Texture2D texture, List<String> levels, GraphicsDeviceManager graphics, int defaultLevel)
         {
             Levels = new List<Level>();
