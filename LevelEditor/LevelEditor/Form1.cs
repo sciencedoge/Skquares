@@ -288,6 +288,7 @@ namespace LevelEditor
                     {
                         MessageBox.Show("Successfully appended the file!", ":o");
                         reader.Close();
+                        writer.Close();     
                     }
                 }
             }

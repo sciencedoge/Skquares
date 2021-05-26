@@ -319,7 +319,8 @@ namespace LevelEditor
                     rotationSaveX = 0;
                     rotationSaveY = 0;
                     Save(writer, rotationValues);
-
+                    writer.Close();
+                    
                     //prompts the user that the file was successfully saved.
                     MessageBox.Show("Successfully Saved the file!", ":)");
                     this.Text = $"Level Editor - {saveMenu.FileName.Remove(0, saveMenu.FileName.LastIndexOf('\\') + 1)}";
