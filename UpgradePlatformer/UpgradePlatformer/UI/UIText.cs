@@ -37,6 +37,7 @@ namespace UpgradePlatformer.UI
             Text = "";
             color = c;
             Scale = scale;
+            IsActive = true;
         }
 
         /// <summary>

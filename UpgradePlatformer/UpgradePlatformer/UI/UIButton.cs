@@ -48,7 +48,7 @@ namespace UpgradePlatformer.UI
         public UIButton(Texture2D texture, SpriteFont font, Rectangle bounds)
         {
             Bounds = bounds;
-            Text = new UIText(font, Bounds, 1, Color.Black);
+            Text = new UIText(font, Bounds, 1, Color.White);
             Text.Centered = true;
             NormalTextColor = Color.White;
             InvertedTextColor = Color.Black;

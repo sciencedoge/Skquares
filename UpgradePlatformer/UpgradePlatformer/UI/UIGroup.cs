@@ -28,6 +28,8 @@ namespace UpgradePlatformer.UI
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            if (!IsActive)
+                return;
             foreach (UIElement e in UIElements)
             {
                 e.Draw(gameTime, spriteBatch);
