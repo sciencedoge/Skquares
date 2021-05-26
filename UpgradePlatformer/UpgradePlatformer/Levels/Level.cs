@@ -34,9 +34,14 @@ namespace UpgradePlatformer.Levels
 
             TileMap = new Tile[TileWidth, TileHeight];
 
-            for (int x = 0; x < TileWidth; x++)
+            Tile empty = new Tile(texture, 9, 0, 0, 9, new Vector2(1), null);
+
+            for (int y = 0; y < TileHeight; y++)
+                TileMap[0, y] = new Tile(texture, reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize, empty);
+            
+            for (int x = 1; x < TileWidth; x++)
                 for (int y = 0; y < TileHeight; y++)
-                    TileMap[x, y] = new Tile(texture, reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize);
+                    TileMap[x, y] = new Tile(texture, reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize, TileMap[x - 1, y]);
             reader.Close();
             stream.Close();
         }
