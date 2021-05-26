@@ -4,6 +4,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using UpgradePlatformer.Input;
+using UpgradePlatformer.Levels;
 
 namespace UpgradePlatformer.Interfaces
 {
@@ -52,7 +54,7 @@ namespace UpgradePlatformer.Interfaces
         /// Updates elements of 
         /// </summary>
         /// <param name="gt"></param>
-        public void Update(GameTime gt);
+        public void Update(GameTime gt, LevelManager lm, EventManager em);
 
     }
 }

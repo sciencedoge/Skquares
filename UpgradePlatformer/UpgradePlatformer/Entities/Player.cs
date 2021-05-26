@@ -4,8 +4,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Input;
+using UpgradePlatformer.Levels;
 
 namespace UpgradePlatformer.Entities
 {
@@ -65,7 +65,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="gt"></param>
         /// <param name="keys"></param>
-        public void Update(GameTime gt, EventManager eventManager, InputManager inputManager)
+        public void Update(GameTime gt, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
         {
             if (isActive)
             {
@@ -102,7 +102,7 @@ namespace UpgradePlatformer.Entities
                         }
                     }
                 }
-                Update(gt);
+                Update(gt, levelManager, eventManager);
             }           
         }
         
@@ -110,9 +110,9 @@ namespace UpgradePlatformer.Entities
         /// Updates the gravity of the player
         /// </summary>
         /// <param name="gt"></param>
-        public override void Update(GameTime gt)
+        public override void Update(GameTime gt, LevelManager lm, EventManager em)
         {
-            ApplyGravity();
+            ApplyGravity(lm, em);
             hitbox.Location = position.ToPoint();
             if (ducking)
             {
@@ -125,9 +125,9 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Applies gravity to the player
         /// </summary>
-        public override void ApplyGravity()
+        public override void ApplyGravity(LevelManager lm, EventManager em)
         {
-            base.ApplyGravity();
+            base.ApplyGravity(lm, em);
 
             if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height + 9)
             {
@@ -135,11 +135,14 @@ namespace UpgradePlatformer.Entities
                 velocity.Y = 0;
             }
 
-            if (position.X > _graphics.PreferredBackBufferWidth + hitbox.Width)
-                position.X = 0 - hitbox.Width;
+            if (position.X > _graphics.PreferredBackBufferWidth)
+                em.Push(new Event("LEVEL_SHOW", (uint)lm.ActiveLevelNum() + 1, new Point()));
+            //position.X = 0 - hitbox.Width;
 
-            if (position.X < 0 - hitbox.Width)
-                position.X = _graphics.PreferredBackBufferWidth + hitbox.Width;
+            if (position.X < 0)
+                em.Push(new Event("LEVEL_SHOW", (uint)lm.ActiveLevelNum() - 1, new Point()));
+                
+            //position.X = _graphics.PreferredBackBufferWidth + hitbox.Width;
              
 
             if (position.Y >= _graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 2;

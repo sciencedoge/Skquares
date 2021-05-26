@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Graphics;
+using UpgradePlatformer.Levels;
+using UpgradePlatformer.Input;
 
 namespace UpgradePlatformer.Entities
 {
@@ -216,11 +218,11 @@ namespace UpgradePlatformer.Entities
         /// Updates entities every frame
         /// </summary>
         /// <param name="gt">gameTime</param>
-        public abstract void Update(GameTime gt);
+        public abstract void Update(GameTime gt, LevelManager lm, EventManager em);
 
         public abstract void OnFloorCollide();
 
-        public virtual void ApplyGravity()
+        public virtual void ApplyGravity(LevelManager lm, EventManager em)
         {
             position += velocity;
             velocity += gravity;

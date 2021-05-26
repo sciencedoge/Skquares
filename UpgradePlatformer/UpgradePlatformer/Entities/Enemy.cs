@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Graphics;
+using UpgradePlatformer.Levels;
+using UpgradePlatformer.Input;
 
 namespace UpgradePlatformer.Entities
 {
@@ -63,13 +65,13 @@ namespace UpgradePlatformer.Entities
         /// Updates the enemy every frame
         /// </summary>
         /// <param name="gt">gameTime</param>
-        public override void Update(GameTime gt)
+        public override void Update(GameTime gt, LevelManager lm, EventManager em)
         {
             if (isActive)
             {
                 hitbox.Location = position.ToPoint();
                 spriteSize = hitbox.Size;
-                ApplyGravity();
+                ApplyGravity(lm, em);
                 sprite.effects = SpriteEffects.None;
                 if (Flip)
                     sprite.effects = SpriteEffects.FlipHorizontally;
@@ -80,9 +82,9 @@ namespace UpgradePlatformer.Entities
             this.jumpsLeft = 1;
         }
 
-        public override void ApplyGravity()
+        public override void ApplyGravity(LevelManager lm, EventManager em)
         {
-            base.ApplyGravity();
+            base.ApplyGravity(lm, em);
             if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height + 9)
             {
                 position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height + 9;

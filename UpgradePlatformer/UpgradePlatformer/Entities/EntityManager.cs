@@ -56,19 +56,19 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="eventManager"></param>
-        public void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager)
+        public void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
         {
             currentLevel = levelManager.ActiveLevel();
             // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++) {
                 if (player != null) {
-                    player.Update(gameTime, eventManager, inputManager);
+                    player.Update(gameTime, eventManager, inputManager, levelManager);
                     Intersects(player, eventManager);
                 }
 
                 foreach (Enemy e in enemies)
                 {
-                    e.Update(gameTime);
+                    e.Update(gameTime, levelManager, eventManager);
                     Intersects(e, eventManager);
                 }
 
@@ -207,7 +207,7 @@ namespace UpgradePlatformer.Entities
                         break;
                     case 103:
                         if (obj == (LivingObject)player)
-                            em.Push(new Event("LEVEL_SHOW", (uint)levelManager.ActiveLevelNum() + 1, new Point(0)));
+                            em.Push(new Event("WORLD_SHOW", (uint)levelManager.ActiveLevelNum() + 1, new Point(0)));
                         break;
                     case 104:
 

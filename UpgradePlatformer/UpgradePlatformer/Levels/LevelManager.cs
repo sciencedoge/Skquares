@@ -9,60 +9,64 @@ namespace UpgradePlatformer.Levels
 {
     class LevelManager
     {
-        List<Level> Levels;
-        int activeLevel;
-        int _activeLevel;
+        List<World> Worlds;
+        int activeWorld;
+        int _activeWorld;
         
         public void Update(EntityManager em, Texture2D texture, GraphicsDeviceManager device) {
-            if (activeLevel != _activeLevel) {
-                activeLevel = _activeLevel;
+            if (activeWorld != _activeWorld) {
+                activeWorld = _activeWorld;
+                Worlds[activeWorld].Update(em, texture, device);
                 em.Clean();
-                Levels[activeLevel].LoadEntities(em, texture, device);
+                Worlds[activeWorld].LoadEntities(em, texture, device);
             }
+            ActiveWorld().Update(em, texture, device);
         }
 
         public LevelManager(Texture2D texture, GraphicsDeviceManager graphics)
         {
-            Levels = new List<Level>();
-            _activeLevel = 0;
-            Load(texture, "DEATH_MENU", graphics);
-            Load(texture, "cave", graphics);
-            Load(texture, "clouds", graphics);
+            Worlds = new List<World>();
+            _activeWorld = 0;
+            Load(texture, new List<string>{"DEATH_MENU"}, graphics, 0);
+            Load(texture, new List<string>{"cave"}, graphics, 0);
+            Load(texture, new List<string>{"clouds1", "clouds1"}, graphics, 0);
         }
         
-        public void Load(Texture2D texture, String Name, GraphicsDeviceManager graphics)
+        public void Load(Texture2D texture, List<String> Names, GraphicsDeviceManager graphics, int level)
         {
-            Levels.Add(new Level(texture, Name, graphics));
+            Worlds.Add(new World(texture, Names, graphics, level));
         }
 
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            Levels[activeLevel].Draw(spriteBatch);
+            Worlds[activeWorld].Draw(spriteBatch);
         }
 
-        public void SetLevel(int id) {
+        public void SetWorld(int id) {
             if (id < 0) {
-                _activeLevel = Levels.Count - 1;
+                _activeWorld = Worlds.Count - 1;
             }
             else
-            _activeLevel = id % (Levels.Count);
+            _activeWorld = id % (Worlds.Count);
         }
 
         public void Next()
         {
-            SetLevel(activeLevel + 1);
+            SetWorld(activeWorld + 1);
         }
 
         public void Prev()
         {
-            SetLevel(activeLevel - 1);
+            SetWorld(activeWorld - 1);
         }
 
-        public List<Tile> spawners() => Levels[activeLevel].GetSpawners();
-        public List<Tile> GetCollisions(Rectangle r) => Levels[activeLevel].GetCollisions(r);
-        public Level ActiveLevel() => Levels[activeLevel];
-        public String ActiveLevelName() => Levels[activeLevel].Name;
-        public int ActiveLevelNum() => activeLevel;
+        public void SetLevel(int id) => ActiveWorld().SetLevel(id);
+        public List<Tile> spawners() => Worlds[activeWorld].GetSpawners();
+        public List<Tile> GetCollisions(Rectangle r) => Worlds[activeWorld].GetCollisions(r);
+        public Level ActiveLevel() => ActiveWorld().ActiveLevel();
+        public World ActiveWorld() => Worlds[activeWorld];
+        public String ActiveLevelName() => ActiveWorld().ActiveLevelName();
+        public int ActiveLevelNum() => activeWorld;
     }
 }

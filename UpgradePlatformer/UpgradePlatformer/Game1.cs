@@ -120,7 +120,7 @@ namespace UpgradePlatformer
             EventAction Action_Button_Press = new EventAction((uint e) =>
             {
                 if (e == 0)
-                    _eventManager.Push(new Event("LEVEL_SHOW", 1, new Point(0, 0)));
+                    _eventManager.Push(new Event("WORLD_SHOW", 1, new Point(0, 0)));
                 _stateMachine.SetFlag((int)e);
                 return true;
             });
@@ -139,6 +139,13 @@ namespace UpgradePlatformer
                 return true;
             });
             _eventManager.AddListener(Action_State_Machine, "KEY_DOWN");
+
+            EventAction Action_World_Show = new EventAction((uint e) =>
+            {
+                _levelManager.SetWorld((int)e);
+                return true;
+            });
+            _eventManager.AddListener(Action_World_Show, "WORLD_SHOW");
 
             EventAction Action_Level_Show = new EventAction((uint e) =>
             {
@@ -180,7 +187,7 @@ namespace UpgradePlatformer
         {
             // update managers
             _inputManager.Update(_eventManager);
-            if (_stateMachine.currentState == 1) _entityManager.Update(gameTime, _eventManager, _inputManager);
+            if (_stateMachine.currentState == 1) _entityManager.Update(gameTime, _eventManager, _inputManager, _levelManager);
             _uiManager.Update(gameTime, _eventManager);
             _levelManager.Update(_entityManager, _spriteSheetTexture, _graphics);
 
