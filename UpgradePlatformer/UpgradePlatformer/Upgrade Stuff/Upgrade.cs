@@ -80,7 +80,5 @@ namespace UpgradePlatformer.Upgrade_Stuff
 
             this.type = type;
         }
-
-        //Methods
     }
 }
