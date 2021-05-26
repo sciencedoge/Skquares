@@ -29,8 +29,8 @@ namespace UpgradePlatformer
         private EntityManager _entityManager;
         private SpriteFont _font;
         private FiniteStateMachine _stateMachine;
-        private UIButton playButton, continueButton, closeButton;
-        private UIText TitleText, PauseText;
+        private UIGroup mainMenu, pauseMenu, deathMenu, topHud;
+
 #if DEBUG
         private UIText Stats;
         double frameRate = 0.0;
@@ -51,7 +51,7 @@ namespace UpgradePlatformer
         {
             base.Initialize();
             // setup resolution
-            _graphics.PreferredBackBufferHeight = 660;
+            _graphics.PreferredBackBufferHeight = 700;
             _graphics.PreferredBackBufferWidth = 660;
             _graphics.ApplyChanges();
 
@@ -80,41 +80,64 @@ namespace UpgradePlatformer
             
             // create ui elements
             int ButtonWidth = 200;
-            playButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
+            UIButton playButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
             playButton.onClick = new UIAction(() =>
             {
                 _eventManager.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
                 _entityManager.RespawnPlayer();
             });
             playButton.Text.Text = "Play";
-            _uiManager.Add(playButton);
 
-            closeButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40));
+            UIButton closeButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40));
             closeButton.onClick = new UIAction(() =>
             {
                 _eventManager.Push(new Event("QUIT", 0, new Point(0, 0)));
                 _entityManager.RespawnPlayer();
             });
             closeButton.Text.Text = "Quit";
-            _uiManager.Add(closeButton);
             
-            continueButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
+            UIButton continueButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
             continueButton.onClick = new UIAction(() =>
             {
                 _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
             });
             continueButton.Text.Text = "Continue";
-            _uiManager.Add(continueButton);
 
-            TitleText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.White);
+            UIText TitleText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.White);
             TitleText.Text = "platformergamething";
             TitleText.Centered = true;
-            _uiManager.Add(TitleText);
 
-            PauseText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.White);
+            UIText PauseText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.White);
             PauseText.Text = "paused";
             PauseText.Centered = true;
-            _uiManager.Add(PauseText);
+
+            UIText HpText = new UIText(_font, new Rectangle(0, 0, 0, 0), 2, Color.White);
+            HpText.Text = "[          ]";
+            HpText.Centered = false;
+            HpText.update = new UITextUpdate(() => {
+                string result = "";
+
+                for (int i = 0; i < 10; i ++) {
+                    if (i < _entityManager.GetPlayerHp()) result += "=";
+                    else result += " ";
+                }
+
+                return "[" + result + "]";
+            });
+
+            // initialize uiGroups
+            Rectangle bounds = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+
+            mainMenu = new UIGroup(new List<UIElement>{ TitleText, playButton, closeButton}, bounds);
+            pauseMenu = new UIGroup(new List<UIElement> { PauseText, playButton, closeButton }, bounds);
+            deathMenu = new UIGroup(new List<UIElement> { playButton, closeButton }, bounds);
+            topHud = new UIGroup(new List<UIElement> { HpText }, bounds);
+
+            // add uiGroups to uiManager
+            _uiManager.Add(mainMenu);
+            _uiManager.Add(pauseMenu);
+            _uiManager.Add(deathMenu);
+            _uiManager.Add(topHud);
 
             // create event listeners
             EventAction Action_Button_Press = new EventAction((uint e) =>
@@ -159,22 +182,14 @@ namespace UpgradePlatformer
                 Exit();
                 return true;
             });
+
             _eventManager.AddListener(Action_Quit_Game, "QUIT");
 
 #if DEBUG
-            // UIButton b = new UIButton(_spriteSheetTexture, _font, new Rectangle(250, 10, 40, 40));
-            // b.Text.Text = "<";
-            // UIButton c = new UIButton(_spriteSheetTexture, _font, new Rectangle(300, 10, 40, 40));
-            // c.Text.Text = ">";
-            // b.onClick = new UIAction(() => _levelManager.Prev());
-            // c.onClick = new UIAction(() => _levelManager.Next());
-            // _uiManager.Add(b);
-            // _uiManager.Add(c);
-            Stats = new UIText(_font, new Rectangle(0, 0, 0, 0), 1, Color.White);
+            Stats = new UIText(_font, new Rectangle(0, 40, 0, 0), 1, Color.White);
             _uiManager.Add(Stats);
 #endif
         }
-
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -187,17 +202,17 @@ namespace UpgradePlatformer
         {
             // update managers
             _inputManager.Update(_eventManager);
-            if (_stateMachine.currentState == 1) _entityManager.Update(gameTime, _eventManager, _inputManager, _levelManager);
+            if (_stateMachine.currentState == 1) 
+                _entityManager.Update(gameTime, _eventManager, _inputManager, _levelManager);
             _uiManager.Update(gameTime, _eventManager);
             _levelManager.Update(_entityManager, _spriteSheetTexture, _graphics);
 
             // StateMachine related Updates
-            playButton.IsActive = (_stateMachine.currentState == 0) || (_stateMachine.currentState == 3);
-            TitleText.IsActive = (_stateMachine.currentState == 0);
-            closeButton.IsActive = (_stateMachine.currentState == 0) || (_stateMachine.currentState == 3) || (_stateMachine.currentState == 2);
-            Sprite.Dim = (_stateMachine.currentState == 2) || (_stateMachine.currentState == 3);
-            continueButton.IsActive = (_stateMachine.currentState == 2);
-            PauseText.IsActive = (_stateMachine.currentState == 2);
+            mainMenu.IsActive  = _stateMachine.currentState == 0;
+            topHud.IsActive    = _stateMachine.currentState == 1;
+            pauseMenu.IsActive = _stateMachine.currentState == 2;
+            deathMenu.IsActive = _stateMachine.currentState == 3;
+
 #if DEBUG
             if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
             {
