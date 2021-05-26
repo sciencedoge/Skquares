@@ -9,12 +9,18 @@ namespace UpgradePlatformer.UI
     class UIGroup : UIElement
     {
         public List<UIElement> UIElements;
-        public UIGroup(List<UIElement> elements) {
+        public UIGroup(List<UIElement> elements, Rectangle bounds) {
             UIElements = elements;
+            Bounds = bounds;
         }
         public override UISprite CurrentSprite() { return null; }
 
-        public override void Update(GameTime gameTime) { }
+        public override void Update(GameTime gameTime) {
+            foreach (UIElement e in UIElements)
+            {
+                e.Update(gameTime);
+            }
+        }
 
         public override void WhenClicked(Point position)
         {

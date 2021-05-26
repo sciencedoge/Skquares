@@ -6,16 +6,15 @@ using System.Text;
 
 namespace UpgradePlatformer.UI
 {
+    public delegate string UITextUpdate();
     class UIText : UIElement
     {
         public String Text;
-
         public SpriteFont Font;
         public int ClickTimeout = 5;
-        private int ClickTime;
-        private int Scale;
+        public UITextUpdate update = new UITextUpdate(() => "");
+        public int Scale;
         public bool Centered = false;
-
         public Color color;
 
         /// <summary>
@@ -23,7 +22,9 @@ namespace UpgradePlatformer.UI
         /// </summary>
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
-            ClickTime = Math.Max(0, ClickTime - 1);
+            string s = update();
+            if (s != "")
+                Text = s;
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace UpgradePlatformer.UI
         /// Calls the onclick function if Disabled is false
         /// </summary>
         /// <param name="at">where the button UIElement was clicked 0,0 being the top corner</param>
-        public override void WhenClicked(Point at) { }
+        public override void WhenClicked(Point at) {}
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
