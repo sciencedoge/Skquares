@@ -84,7 +84,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         {
             //LCR Data pattern
 
-            if (root.IsLeanred)
+            if (root.IsLearned)
             {
 
             }
