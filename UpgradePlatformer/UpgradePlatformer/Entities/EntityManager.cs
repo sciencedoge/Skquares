@@ -211,19 +211,23 @@ namespace UpgradePlatformer.Entities
                         break;
                     case 104:
 
-                        //checks conditions to move the player up or down
-                        if (intersection.Width > intersection.Height)
+                        if(player.Y < t.Position.Y)
                         {
-                            //short wide rectangle
-                            //moves player up
-                            if (t.Position.Top - intersection.Top == 0)
+                            //checks conditions to move the player up or down
+                            if (intersection.Width > intersection.Height - 20)
                             {
-                                temp.Y -= intersection.Height;
-                                obj.OnFloorCollide();
+                                //short wide rectangle
+                                //moves player up
+                                if (t.Position.Top - intersection.Top == 0)
+                                {
+                                    temp.Y -= intersection.Height;
+                                    obj.OnFloorCollide();
+                                }
+
+                                obj.Velocity = new Vector2(obj.Velocity.X, 0);
                             }
-                            obj.Velocity = new Vector2(obj.Velocity.X, 0);
-                        }
-                        obj.Y = temp.Y;
+                            obj.Y = temp.Y;
+                        }                       
                         break;
                 }
             }
