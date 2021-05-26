@@ -76,6 +76,20 @@ namespace UpgradePlatformer.Upgrade_Stuff
             }
         }
 
+        /// <summary>
+        /// Lists all of the upgrades
+        /// purchased by the player
+        /// </summary>
+        public void ListPurchasedUgprades()
+        {
+            //LCR Data pattern
+
+            if (root.IsLearned)
+            {
+
+            }
+        }
+
 
     }
 }

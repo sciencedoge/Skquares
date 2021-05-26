@@ -53,7 +53,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// Returns or sets whether or not
         /// this upgrade is learned
         /// </summary>
-        public bool IsLeanred
+        public bool IsLearned
         {
             get { return isLearned; }
             set { isLearned = value; }
