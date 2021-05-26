@@ -23,6 +23,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         //Fields
         private int upgradeValue;
         private bool isLearned;
+        private bool canBeLearned;
         private int cost;
 
         private UPGRADE_TYPE type;
@@ -58,6 +59,15 @@ namespace UpgradePlatformer.Upgrade_Stuff
         {
             get { return isLearned; }
             set { isLearned = value; }
+        }
+
+        /// <summary>
+        /// returns or sets whether or not this upgrade can be learned
+        /// </summary>
+        public bool CanLearn
+        {
+            get { return canBeLearned; }
+            set { canBeLearned = value; }
         }
 
         /// <summary>
