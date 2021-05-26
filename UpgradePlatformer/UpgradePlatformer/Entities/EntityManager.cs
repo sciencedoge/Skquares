@@ -272,7 +272,9 @@ namespace UpgradePlatformer.Entities
         /// <returns></returns>
         public int MaxPlayerHP()
         {
-            return player.MaxHP;
+            if (player != null)
+                return player.MaxHP;
+            return 0;
         }
     }
     class EntityObject { }
