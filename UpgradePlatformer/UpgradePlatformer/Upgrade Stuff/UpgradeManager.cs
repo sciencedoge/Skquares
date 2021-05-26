@@ -29,6 +29,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// </summary>
         public UpgradeManager() 
         {
+            root = null;
             possibleUpgrades = new List<Upgrade>();
         }
 
@@ -42,6 +43,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
             if(root == null)
             {
                 this.root = new Upgrade(value, type, cost);
+                root.CanLearn = true;
             }
             else
             {
@@ -99,7 +101,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// </summary>
         public List<Upgrade> CanBeLearned(Upgrade upgrade)
         {
-            //LCR Data pattern
+            //LRC Data pattern
 
             if (upgrade.IsLearned)
             {
@@ -119,7 +121,5 @@ namespace UpgradePlatformer.Upgrade_Stuff
 
             return new List<Upgrade>();
         }
-
-
     }
 }

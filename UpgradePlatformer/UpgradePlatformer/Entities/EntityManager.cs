@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
+using UpgradePlatformer.Upgrade_Stuff;
 
 namespace UpgradePlatformer.Entities
 {
@@ -22,6 +23,7 @@ namespace UpgradePlatformer.Entities
         private List<Enemy> enemies;
         private List<Coin> coins;
         private LevelManager levelManager;
+        private UpgradeManager upgradeManager;
         private int playerMoney;
 
         private Level currentLevel;
@@ -37,12 +39,13 @@ namespace UpgradePlatformer.Entities
 
 
         public EntityManager(Texture2D texture, GraphicsDeviceManager device,
-            LevelManager levelMan)
+            LevelManager levelMan, UpgradeManager upgradeManager)
         {
             enemies = new List<Enemy>();
             coins = new List<Coin>();
 
             this.levelManager = levelMan;
+            this.upgradeManager = upgradeManager;
 
             this.playerMoney = 0;
 

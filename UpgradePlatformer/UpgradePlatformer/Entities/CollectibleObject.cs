@@ -93,7 +93,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public int Intersects(LivingObject obj)
+        public virtual int Intersects(LivingObject obj)
         {
             if (IsActive && obj != null)
             {
