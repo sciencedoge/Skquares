@@ -76,7 +76,7 @@ namespace UpgradePlatformer.Entities
 
             else
             {
-                upgrade.IsLearned = true;
+                upgrade.IsLearned = true; 
                 return true;
             }
         }

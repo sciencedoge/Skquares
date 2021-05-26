@@ -8,6 +8,7 @@ using UpgradePlatformer.UI;
 using UpgradePlatformer.Entities;
 using UpgradePlatformer.FSM;
 using UpgradePlatformer.Graphics;
+using UpgradePlatformer.Upgrade_Stuff;
 
 namespace UpgradePlatformer
 {
@@ -30,6 +31,7 @@ namespace UpgradePlatformer
         private SpriteFont _font;
         private FiniteStateMachine _stateMachine;
         private UIGroup mainMenu, pauseMenu, deathMenu, topHud;
+        private UpgradeManager upgradeManager;
 
 #if DEBUG
         private UIText Stats;
@@ -55,12 +57,13 @@ namespace UpgradePlatformer
             _graphics.PreferredBackBufferWidth = 660;
             _graphics.ApplyChanges();
 
+            upgradeManager = new UpgradeManager();
             // setup manager scripts 
             _uiManager = new UIManager();
             _inputManager = new InputManager();
             _eventManager = new EventManager();
             _levelManager = new LevelManager(_spriteSheetTexture, _graphics);
-            _entityManager = new EntityManager(_spriteSheetTexture, _graphics, _levelManager);
+            _entityManager = new EntityManager(_spriteSheetTexture, _graphics, _levelManager, upgradeManager);
 
             // create connections in state machine
             Flag playButtonPressMenu = new Flag(0, 1);
