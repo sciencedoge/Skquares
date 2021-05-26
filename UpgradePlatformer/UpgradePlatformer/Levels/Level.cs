@@ -84,7 +84,7 @@ namespace UpgradePlatformer.Levels
             return Tiles;
         }
 
-        public void LoadEntities(EntityManager em, Texture2D texture, GraphicsDeviceManager device)
+        public void LoadEntities(EntityManager em, Texture2D texture, GraphicsDeviceManager device, bool player)
         {
             for (int x = 0; x < TileHeight; x++) {
                 for (int y = 0; y < TileWidth; y++)
@@ -94,9 +94,9 @@ namespace UpgradePlatformer.Levels
                     if (!t.Spawner)
                         continue;
                     EntityObject o = null;
-                    if (t.Kind == 2) o = (EntityObject)new Player(int.MaxValue, 2, new Rectangle(t.Position.Location, new Point(25, 25)), texture, device, 2);
+                    if (t.Kind == 2 && player) o = (EntityObject)new Player(int.MaxValue, 2, new Rectangle(t.Position.Location, new Point(25, 25)), texture, device, 2);
                     else if (t.Kind == 1) o = (EntityObject)new Enemy(10, 2, new Rectangle(t.Position.Location, new Point(25, 25)), texture, device, 1);
-                    else if (t.Kind == 0) o = (EntityObject)new Coin(1, texture, new Rectangle(t.Position.Location, new Point(25, 25)));
+                    else if (t.Kind == 0) o = (EntityObject)new Coin(1, texture, new Rectangle(t.Position.Location, new Point(15, 15)));
                     if (o != null)
                         em.Spawn(o, t.Kind);
                 }

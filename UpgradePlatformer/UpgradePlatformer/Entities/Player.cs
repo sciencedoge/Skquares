@@ -22,6 +22,8 @@ namespace UpgradePlatformer.Entities
         private bool keyUp, keyDown, keyLeft, keyRight;
         private bool ducking;
 
+        private static int maxJumps = 1;
+
         //screen bounds stuff
         private GraphicsDeviceManager _graphics;
 
@@ -135,15 +137,15 @@ namespace UpgradePlatformer.Entities
                 velocity.Y = 0;
             }
 
-            if (position.X > _graphics.PreferredBackBufferWidth)
+            if (position.X > _graphics.PreferredBackBufferWidth) {
                 em.Push(new Event("LEVEL_SHOW", (uint)lm.ActiveLevelNum() + 1, new Point()));
-            //position.X = 0 - hitbox.Width;
+                position.X = 0 + hitbox.Width;
+            }
 
-            if (position.X < 0)
+            if (position.X < 0) {
                 em.Push(new Event("LEVEL_SHOW", (uint)lm.ActiveLevelNum() - 1, new Point()));
-                
-            //position.X = _graphics.PreferredBackBufferWidth + hitbox.Width;
-             
+                position.X = _graphics.PreferredBackBufferWidth - hitbox.Width;
+            }
 
             if (position.Y >= _graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 2;
         }
@@ -160,7 +162,7 @@ namespace UpgradePlatformer.Entities
 
         public override void OnFloorCollide()
         {
-            jumpsLeft = 2;
+            jumpsLeft = maxJumps;
         }
 
         /// <summary>

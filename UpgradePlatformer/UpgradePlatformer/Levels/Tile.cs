@@ -28,12 +28,12 @@ namespace UpgradePlatformer.Levels
         public Tile(Texture2D texture, int kind, int rotation, int collision, int spawner, Vector2 tileSize, Tile above)
         {
             Kind = kind;
+            TileSize = tileSize;
             if (spawner != 9) {
                 Spawner = true;
                 Kind = spawner - 1000;
                 return;
             }
-            TileSize = tileSize;
             TileCenter = new Vector2(TileSize.X / 2, TileSize.Y / 2);
             if (Kind == 9 && above != null)
             {
