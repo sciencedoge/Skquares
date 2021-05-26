@@ -51,7 +51,7 @@ namespace UpgradePlatformer
         {
             base.Initialize();
             // setup resolution
-            _graphics.PreferredBackBufferHeight = 660;
+            _graphics.PreferredBackBufferHeight = 700;
             _graphics.PreferredBackBufferWidth = 660;
             _graphics.ApplyChanges();
 
