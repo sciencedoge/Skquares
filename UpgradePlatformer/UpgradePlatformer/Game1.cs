@@ -123,9 +123,11 @@ namespace UpgradePlatformer
             HpText.update = new UITextUpdate(() => {
                 string result = "";
 
+                int cap = 0;
                 for (int i = 0; i < _entityManager.MaxPlayerHP(); i += _entityManager.MaxPlayerHP() / 10) {
                     if (i < _entityManager.GetPlayerHp()) result += "=";
                     else result += " ";
+                    if (cap++ > 10) break;
                 }
 
                 return $"[{result}]X1 ${_entityManager.PlayerMoney}";
