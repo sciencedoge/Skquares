@@ -27,7 +27,11 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// </summary>
         public UpgradeManager() { }
 
-
+        /// <summary>
+        /// Adds a node to the tree
+        /// </summary>
+        /// <param name="value">value of the upgrade</param>
+        /// <param name="type">type of the upgrade</param>
         public void Add(int value, UPGRADE_TYPE type)
         {
             if(root == null)
@@ -80,12 +84,21 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// Lists all of the upgrades
         /// purchased by the player
         /// </summary>
-        public void ListPurchasedUgprades()
+        public void ListPurchasedUgprades(Upgrade upgrade)
         {
             //LCR Data pattern
 
-            if (root.IsLearned)
+            if (upgrade.IsLearned)
             {
+                if(upgrade.Left != null)
+                {
+                    ListPurchasedUgprades(upgrade.Left);
+                }
+
+
+
+
+
 
             }
         }
