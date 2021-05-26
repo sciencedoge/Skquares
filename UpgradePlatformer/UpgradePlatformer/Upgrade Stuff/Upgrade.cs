@@ -16,7 +16,8 @@ namespace UpgradePlatformer.Upgrade_Stuff
     public enum UPGRADE_TYPE
     {
         XtraJump,
-        Health
+        Health,
+        Weapon
     }
     class Upgrade
     {
@@ -84,6 +85,14 @@ namespace UpgradePlatformer.Upgrade_Stuff
         public int Cost
         {
             get { return cost; }
+        }
+
+        /// <summary>
+        /// returns the type of the upgrade
+        /// </summary>
+        public UPGRADE_TYPE Type
+        {
+            get { return type; }
         }
 
 

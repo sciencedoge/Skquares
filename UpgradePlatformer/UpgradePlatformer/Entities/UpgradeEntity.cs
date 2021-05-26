@@ -33,6 +33,12 @@ namespace UpgradePlatformer.Entities
             this.upgradeManager = upgradeManager; 
         }
 
+
+        public void Update()
+        {
+            spriteSize = hitbox.Size;
+        }
+
         /// <summary>
         /// Checks if the player can obtain this upgrade
         /// </summary>
@@ -63,7 +69,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="totalMoney">the total money of the player</param>
         /// <returns></returns>
-        public bool ValidIntersection(int totalMoney)
+        private bool ValidIntersection(int totalMoney)
         {
             upgradeManager.EstablishPossibleList();
             List<Upgrade> upgrades = upgradeManager.CanBeLearned(upgradeManager.Root);
@@ -76,6 +82,7 @@ namespace UpgradePlatformer.Entities
 
             else
             {
+                isActive = false;
                 upgrade.IsLearned = true; 
                 return true;
             }

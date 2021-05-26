@@ -27,6 +27,15 @@ namespace UpgradePlatformer.Entities
         //screen bounds stuff
         private GraphicsDeviceManager _graphics;
 
+        /// <summary>
+        /// gets or sets the max jumps of the player
+        /// </summary>
+        public int MaxJumps
+        {
+            get { return maxJumps; }
+            set { maxJumps = value; }
+        }
+
 
         /// <summary>
         /// Creates a player object

@@ -22,6 +22,7 @@ namespace UpgradePlatformer.Entities
         private Player player;
         private List<Enemy> enemies;
         private List<Coin> coins;
+        private List<UpgradeEntity> upgradeEntities;
         private LevelManager levelManager;
         private UpgradeManager upgradeManager;
         private int playerMoney;
@@ -43,11 +44,17 @@ namespace UpgradePlatformer.Entities
         {
             enemies = new List<Enemy>();
             coins = new List<Coin>();
+            upgradeEntities = new List<UpgradeEntity>();
+            this.upgradeManager = upgradeManager;
 
             this.levelManager = levelMan;
             this.upgradeManager = upgradeManager;
 
+            upgradeEntities.Add(new UpgradeEntity(10, texture, new Rectangle(100, 300, 25, 25), upgradeManager.Root, upgradeManager));
+
             this.playerMoney = 0;
+
+
 
             pathfind = new PathfindingAI(enemies, player);
         }
@@ -79,6 +86,29 @@ namespace UpgradePlatformer.Entities
                 {
                     c.Update();
                     playerMoney += c.Intersects(player);
+                }
+
+                foreach(UpgradeEntity e in upgradeEntities)
+                {
+                    e.Update();
+                    Upgrade newUpgrade = e.Intersects(player, playerMoney);
+
+                    if(newUpgrade != null)
+                    {
+                        switch (newUpgrade.Type) 
+                        {
+                            case UPGRADE_TYPE.XtraJump:
+                                player.MaxJumps++;
+                                break;
+                            case UPGRADE_TYPE.Health:
+                                player.MaxHP++;
+                                break;
+                            case UPGRADE_TYPE.Weapon:
+                                player.Damage++;
+                                break;
+                        
+                        }
+                    }
                 }
                 if (player != null)
                     player.Intersects(enemies);
@@ -113,6 +143,11 @@ namespace UpgradePlatformer.Entities
             foreach(Coin c in coins)
             {
                 c.Draw(spriteBatch, gameTime);
+            }
+
+            foreach(UpgradeEntity e in upgradeEntities)
+            {
+                e.Draw(spriteBatch, gameTime);
             }
         }
         

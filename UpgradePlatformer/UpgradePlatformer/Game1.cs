@@ -32,6 +32,7 @@ namespace UpgradePlatformer
         private FiniteStateMachine _stateMachine;
         private UIGroup mainMenu, pauseMenu, deathMenu, topHud;
         private UpgradeManager upgradeManager;
+        private UpgradeStructure structure;
 
 #if DEBUG
         private UIText Stats;
@@ -58,6 +59,8 @@ namespace UpgradePlatformer
             _graphics.ApplyChanges();
 
             upgradeManager = new UpgradeManager();
+            structure = new UpgradeStructure(upgradeManager);
+
             // setup manager scripts 
             _uiManager = new UIManager();
             _inputManager = new InputManager();
