@@ -32,6 +32,7 @@ namespace UpgradePlatformer
         private FiniteStateMachine _stateMachine;
         private UIGroup mainMenu, pauseMenu, deathMenu, topHud;
         private UpgradeManager upgradeManager;
+        private UpgradeStructure structure;
 
 #if DEBUG
         private UIText Stats;
@@ -58,6 +59,8 @@ namespace UpgradePlatformer
             _graphics.ApplyChanges();
 
             upgradeManager = new UpgradeManager();
+            structure = new UpgradeStructure(upgradeManager);
+
             // setup manager scripts 
             _uiManager = new UIManager();
             _inputManager = new InputManager();
@@ -120,9 +123,11 @@ namespace UpgradePlatformer
             HpText.update = new UITextUpdate(() => {
                 string result = "";
 
+                int cap = 0;
                 for (int i = 0; i < _entityManager.MaxPlayerHP(); i += _entityManager.MaxPlayerHP() / 10) {
                     if (i < _entityManager.GetPlayerHp()) result += "=";
                     else result += " ";
+                    if (cap++ > 10) break;
                 }
 
                 return $"[{result}]X1 ${_entityManager.PlayerMoney}";

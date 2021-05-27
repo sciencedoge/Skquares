@@ -63,7 +63,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
             //Health node, all stored to the LEFT of the tree
             if(type == UPGRADE_TYPE.Health)
             {
-                if (upgrade.Left != null)
+                if (upgrade.Left == null)
                 {
                     upgrade.Left = new Upgrade(value, type, cost);
                 }
@@ -76,7 +76,20 @@ namespace UpgradePlatformer.Upgrade_Stuff
             //Speed node, stored to the RIGHT of the tree
             else if(type == UPGRADE_TYPE.XtraJump)
             {
-                if(upgrade.Right != null)
+                if(upgrade.Right == null)
+                {
+                    upgrade.Right = new Upgrade(value, type, cost);
+                }
+                else
+                {
+                    Add(upgrade.Right, value, type, cost);
+                }
+            }
+
+            //Speed node, stored to the RIGHT of the tree
+            else if (type == UPGRADE_TYPE.Weapon)
+            {
+                if (upgrade.Right == null)
                 {
                     upgrade.Right = new Upgrade(value, type, cost);
                 }

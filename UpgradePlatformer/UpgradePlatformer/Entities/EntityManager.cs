@@ -76,9 +76,10 @@ namespace UpgradePlatformer.Entities
             LevelManager levelMan, UpgradeManager upgradeManager)
         {
             this.objects = new List<EntityObject>();
-
             this.levelManager = levelMan;
             this.upgradeManager = upgradeManager;
+
+            objects.Add((EntityObject)new UpgradeEntity(10, texture, new Rectangle(100, 300, 25, 25), upgradeManager.Root, upgradeManager));
 
             this.playerMoney = 0;
 
@@ -105,7 +106,7 @@ namespace UpgradePlatformer.Entities
                 //     player().Update(gameTime, eventManager, inputManager, levelManager);
                 //     Intersects(player(), eventManager);
                 // }
-
+                
                 // foreach (Enemy e in enemies)
                 // {
                 //     e.Update(gameTime, levelManager, eventManager);
@@ -119,6 +120,31 @@ namespace UpgradePlatformer.Entities
                 // }
                 // if (player() != null)
                 //     player().Intersects(enemies());
+
+                // foreach(UpgradeEntity e in upgradeEntities)
+                // {
+                //     e.Update();
+                //     Upgrade newUpgrade = e.Intersects(player, playerMoney);
+
+                //     if(newUpgrade != null)
+                //     {
+                //         switch (newUpgrade.Type) 
+                //         {
+                //             case UPGRADE_TYPE.XtraJump:
+                //                 player.MaxJumps++;
+                //                 break;
+                //             case UPGRADE_TYPE.Health:
+                //                 player.MaxHP++;
+                //                 break;
+                //             case UPGRADE_TYPE.Weapon:
+                //                 player.Damage++;
+                //                 break;
+                //         }
+                //     }
+                // }
+
+                // if (player() != null)
+                //     player().Intersects(enemies);
                 pathfind.UpdateCosts();
                 pathfind.MoveToPlayer();
                 pathfind.EnemyIntersection();
