@@ -56,18 +56,22 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public void Intersects(List<Enemy> obj)
+        public override int Intersects(List<EntityObject> obj)
         {
-            if (isActive)
+            if (IsActive)
             {
-                foreach(Enemy enemy in obj)
+                foreach(EntityObject o in obj)
                 {
-                    if (this.hitbox.Intersects(enemy.Hitbox))
+                    if (o == null) continue;
+                    if (o.Kind != EntityKind.ENEMY)
+                        continue;
+                    if (this.hitbox.Intersects(((Enemy)o).Hitbox))
                     {
-                        this.TakeDamage(enemy.Damage);
+                        this.TakeDamage(((Enemy)o).Damage);
                     }
                 }
             }
+            return 0;
         }
 
         /// <summary>
@@ -78,7 +82,7 @@ namespace UpgradePlatformer.Entities
         /// <param name="keys"></param>
         public override void Update(GameTime gt, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
         {
-            if (isActive)
+            if (IsActive)
             {
                 CheckForInput(inputManager, eventManager);
 
@@ -204,8 +208,8 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public void Respawn()
         {
-            this.currentHp = maxHp;
-            this.isActive = true;
+            currentHp = maxHp;
+            IsActive = true;
             resetPosition();
         }
     }

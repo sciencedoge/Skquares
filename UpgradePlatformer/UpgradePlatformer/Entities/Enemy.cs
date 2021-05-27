@@ -86,7 +86,7 @@ namespace UpgradePlatformer.Entities
 
         public override void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
         {
-            if (isActive)
+            if (IsActive)
             {
                 hitbox.Location = position.ToPoint();
                 spriteSize = hitbox.Size;
@@ -96,7 +96,6 @@ namespace UpgradePlatformer.Entities
                     sprite.effects = SpriteEffects.FlipHorizontally;
             }
         }
-
-        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime){ }
+        public override int Intersects(List<EntityObject> objects) {return 0; }
     }
 }

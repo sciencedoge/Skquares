@@ -20,7 +20,6 @@ namespace UpgradePlatformer.Entities
         public List<Enemy> _enemies;
         public List<Enemy> enemies { get => _enemies; set { _enemies = value; relationships = new Vector2[enemies.Count, 1];} }
         private float goombaAINum;
-
         private Vector2[,] relationships;
 
 
@@ -135,6 +134,9 @@ namespace UpgradePlatformer.Entities
             }
         }
 
-
+        public void Update(EntityManager em) {
+            enemies = em.enemies();
+            player = em.player();
+        }
     }
 }

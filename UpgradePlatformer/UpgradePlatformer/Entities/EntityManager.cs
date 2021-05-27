@@ -21,34 +21,37 @@ namespace UpgradePlatformer.Entities
         //player and enemies
         private List<EntityObject> objects;
 
-        private List<Enemy> enemies()
+        public List<Enemy> enemies()
         {
             List<Enemy> result = new List<Enemy>();
 
             foreach (EntityObject obj in objects)
             {
+                if (obj == null) continue;
                 if (obj.Kind == EntityKind.ENEMY)
                     result.Add((Enemy)obj);
             }
 
             return result;
         }
-        private List<Coin> coins()
+        public List<Coin> coins()
         {
             List<Coin> result = new List<Coin>();
 
             foreach (EntityObject obj in objects)
             {
+                if (obj == null) continue;
                 if (obj.Kind == EntityKind.COIN)
                     result.Add((Coin)obj);
             }
 
             return result;
         }
-        private Player player()
+        public Player player()
         {
             foreach (EntityObject obj in objects)
             {
+                if (obj == null) continue;
                 if (obj.Kind == EntityKind.PLAYER)
                     return (Player)obj;
             }
@@ -100,7 +103,10 @@ namespace UpgradePlatformer.Entities
             for (int i = 0; i < 5; i ++) {
                 foreach (EntityObject obj in objects)
                 {
+                    if (obj == null) continue;
                     obj.Update(gameTime, eventManager, inputManager, levelManager);
+                    Intersects(obj, eventManager);
+                    playerMoney += obj.Intersects(objects);
                 }
                 // if (player() != null) {
                 //     player().Update(gameTime, eventManager, inputManager, levelManager);
@@ -145,6 +151,7 @@ namespace UpgradePlatformer.Entities
 
                 // if (player() != null)
                 //     player().Intersects(enemies);
+                pathfind.Update(this);
                 pathfind.UpdateCosts();
                 pathfind.MoveToPlayer();
                 pathfind.EnemyIntersection();
@@ -169,6 +176,7 @@ namespace UpgradePlatformer.Entities
         {
             foreach (EntityObject obj in objects)
             {
+                if (obj == null) continue;
                 obj.Draw(spriteBatch, gameTime);
             }
             // if (player != null)
@@ -184,7 +192,8 @@ namespace UpgradePlatformer.Entities
         }
         
         public void Spawn(EntityObject obj) {
-            objects.Add(obj);
+            if (obj != null)
+                objects.Add(obj);
             // if (kind == 2)
             // {
             //     player = (Player)obj;
@@ -199,18 +208,20 @@ namespace UpgradePlatformer.Entities
         }
 
         public void Clean(bool player) {
+            EntityObject plyr = (EntityObject)this.player();
             objects = new List<EntityObject>();
-            // if (player)
-            //     this.player = null;
-            // enemies = new List<Enemy>();
-            // coins = new List<Coin>();
+            if (!player)
+                objects.Add(plyr);
         }
 
         /// <summary>
         /// Checks if an entity intersects with anything
         /// </summary>
-        public void Intersects(LivingObject obj, EventManager em)
+        public void Intersects(EntityObject o, EventManager em)
         {
+            if (!new List<EntityKind> { EntityKind.PLAYER, EntityKind.ENEMY}.Contains(o.Kind))
+                return;
+            LivingObject obj = (LivingObject)o;
             if (!obj.IsActive)
                 return;
             Rectangle temp = GetTempHitbox(obj);

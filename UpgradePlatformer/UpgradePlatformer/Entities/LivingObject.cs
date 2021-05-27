@@ -22,7 +22,6 @@ namespace UpgradePlatformer.Entities
         private Rectangle SpriteBounds = new Rectangle(17, 14, 14, 14);
 
         //fields
-        protected bool isActive;
         protected int currentHp;
         protected int maxHp;
         protected int damage;
@@ -45,16 +44,6 @@ namespace UpgradePlatformer.Entities
         protected Rectangle hitbox;
 
         //properties
-
-        /// <summary>
-        /// gets or sets whether a
-        /// living object is active
-        /// </summary>
-        public bool IsActive
-        {
-            get { return isActive; }
-            set { isActive = value; }
-        }
 
         /// <summary>
         /// gets or sets the current
@@ -165,7 +154,7 @@ namespace UpgradePlatformer.Entities
             this.maxHp = maxHp;
             currentHp = maxHp;
             this.damage = damage;
-            isActive = true;
+            IsActive = true;
 
             this.hitbox = hitbox;
             this.jumpsLeft = jumpsLeft;
@@ -198,7 +187,7 @@ namespace UpgradePlatformer.Entities
             this.currentHp -= amount;
             if (CurrentHP <= 0)
             {
-                isActive = false;
+                IsActive = false;
             }
         }
 
@@ -209,7 +198,7 @@ namespace UpgradePlatformer.Entities
         /// <param name="gt">gameTime</param>
         public override void Draw(SpriteBatch sb, GameTime gt)
         {
-            if (isActive)
+            if (IsActive)
             {
                 sprite.Draw(sb, hitbox.Location, 0, spriteSize.ToVector2());
             }

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
+using UpgradePlatformer.Graphics;
 
 namespace UpgradePlatformer.Entities
 {
@@ -17,14 +18,10 @@ namespace UpgradePlatformer.Entities
     class CollectibleObject : EntityObject
     {
         //Fields
-
         private Rectangle SpriteBounds = new Rectangle(0, 7, 5, 5);
-
         protected int value;
         protected Graphics.Sprite sprite;
         protected Rectangle hitbox;
-        protected bool isActive;
-
         protected Point spriteSize;
 
         //properties
@@ -45,17 +42,6 @@ namespace UpgradePlatformer.Entities
             get { return hitbox; }
         }
 
-        /// <summary>
-        /// returns whether or not the 
-        /// collectible is active 
-        /// </summary>
-        public bool IsActive
-        {
-            get { return isActive; }
-            set { isActive = value; }
-        }
-
-
         //Const
         /// <summary>
         /// Creates a CollectibleObject object
@@ -64,9 +50,9 @@ namespace UpgradePlatformer.Entities
         {
             this.value = value;
             this.hitbox = hitbox;
-            this.isActive = true;
-
-            this.sprite = new Graphics.Sprite(
+            this.IsActive = true;
+            this.spriteSize = hitbox.Size;
+            this.sprite = new Sprite(
                 sprite, SpriteBounds,
                 new Vector2(SpriteBounds.X - (SpriteBounds.Width / 2),
                 SpriteBounds.Y - (SpriteBounds.Height / 2)),
@@ -81,7 +67,7 @@ namespace UpgradePlatformer.Entities
         public override void Draw(SpriteBatch sb, GameTime gt)
         {
             //if the sprite is active, draws it to the screen
-            if (isActive)
+            if (IsActive)
             {
                 Vector2 Bob = new Vector2(0, 3 * (float)Math.Cos(gt.TotalGameTime.TotalMilliseconds / 100));
                 sprite.Draw(sb, hitbox.Location + Bob.ToPoint() - new Point(hitbox.Width, hitbox.Height / 2), 0, spriteSize.ToVector2());
@@ -94,14 +80,16 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public virtual int Intersects(LivingObject obj)
+        public virtual int Intersects(EntityObject o)
         {
+            if (o.Kind != EntityKind.PLAYER) return 0;
+            LivingObject obj = (LivingObject)o;
             if (IsActive && obj != null)
             {
                 if (this.hitbox.Intersects(obj.Hitbox))
                 {
                     //the coin is no longer active
-                    isActive = false;
+                    IsActive = false;
                     return value;
                 }
                 else
@@ -115,6 +103,11 @@ namespace UpgradePlatformer.Entities
         public override void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
         {
             
+        }
+        public override int Intersects(List<EntityObject> objects) {
+            int result = 0;
+            foreach (EntityObject o in objects) result += Intersects(o);
+            return result;
         }
     }
 }

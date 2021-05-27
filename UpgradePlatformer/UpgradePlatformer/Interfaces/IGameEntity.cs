@@ -22,7 +22,7 @@ namespace UpgradePlatformer.Interfaces
         /// returns whether or not an entity
         /// is active
         /// </summary>
-        public bool IsActive { get; set; }
+        // public bool IsActive { get; set; }
 
         /// <summary>
         /// gets or sets the current HP of the

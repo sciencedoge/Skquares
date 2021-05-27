@@ -82,7 +82,7 @@ namespace UpgradePlatformer.Entities
 
             else
             {
-                isActive = false;
+                IsActive = false;
                 upgrade.IsLearned = true; 
                 return true;
             }
