@@ -33,7 +33,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public Player(int maxHp, int damage, Rectangle hitbox,
             Texture2D texture, GraphicsDeviceManager device, int jumpsLeft)
-            : base(maxHp, damage, hitbox, texture, jumpsLeft) 
+            : base(maxHp, damage, hitbox, texture, jumpsLeft, EntityKind.PLAYER)
         {
             this.jumpsLeft = jumpsLeft;
 
@@ -67,7 +67,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="gt"></param>
         /// <param name="keys"></param>
-        public void Update(GameTime gt, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
+        public override void Update(GameTime gt, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
         {
             if (isActive)
             {
@@ -104,7 +104,14 @@ namespace UpgradePlatformer.Entities
                         }
                     }
                 }
-                Update(gt, levelManager, eventManager);
+                ApplyGravity(levelManager, eventManager);
+                hitbox.Location = position.ToPoint();
+                if (ducking)
+                {
+                    hitbox.Size = new Point(DUCK_HITBOX_WIDTH, DUCK_HITBOX_HEIGHT);
+                }
+                else hitbox.Size = (new Point(NORMAL_HITBOX_WIDTH, NORMAL_HITBOX_HEIGHT));
+                spriteSize = (hitbox.Size.ToVector2() * GetVelocitySize()).ToPoint();
             }           
         }
         
@@ -112,17 +119,9 @@ namespace UpgradePlatformer.Entities
         /// Updates the gravity of the player
         /// </summary>
         /// <param name="gt"></param>
-        public override void Update(GameTime gt, LevelManager lm, EventManager em)
-        {
-            ApplyGravity(lm, em);
-            hitbox.Location = position.ToPoint();
-            if (ducking)
-            {
-                hitbox.Size = new Point(DUCK_HITBOX_WIDTH, DUCK_HITBOX_HEIGHT);
-            }
-            else hitbox.Size = (new Point(NORMAL_HITBOX_WIDTH, NORMAL_HITBOX_HEIGHT));
-            spriteSize = (hitbox.Size.ToVector2() * GetVelocitySize()).ToPoint(); 
-        }
+        // public override void Update(GameTime gt, LevelManager lm, EventManager em)
+        // {
+        // }
 
         /// <summary>
         /// Applies gravity to the player

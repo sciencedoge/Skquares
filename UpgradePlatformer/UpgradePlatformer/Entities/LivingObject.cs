@@ -160,7 +160,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="maxHp">max hp of the object</param>
         public LivingObject(int maxHp, int damage, Rectangle hitbox,
-            Texture2D texture, int jumpsLeft)
+            Texture2D texture, int jumpsLeft, EntityKind kind) : base(kind)
         {
             this.maxHp = maxHp;
             currentHp = maxHp;
@@ -207,7 +207,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="sb">_spriteBatch</param>
         /// <param name="gt">gameTime</param>
-        public void Draw(SpriteBatch sb, GameTime gt)
+        public override void Draw(SpriteBatch sb, GameTime gt)
         {
             if (isActive)
             {
@@ -219,7 +219,7 @@ namespace UpgradePlatformer.Entities
         /// Updates entities every frame
         /// </summary>
         /// <param name="gt">gameTime</param>
-        public abstract void Update(GameTime gt, LevelManager lm, EventManager em);
+        //public abstract void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager);
 
         public abstract void OnFloorCollide();
 

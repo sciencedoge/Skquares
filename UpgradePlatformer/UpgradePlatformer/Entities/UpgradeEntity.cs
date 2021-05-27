@@ -27,7 +27,7 @@ namespace UpgradePlatformer.Entities
         /// <param name="upgrade">the actual upgrade</param>
         public UpgradeEntity(int cost, Texture2D texture, Rectangle hitbox, Upgrade upgrade,
             UpgradeManager upgradeManager)
-            :base(cost, texture, hitbox)
+            :base(cost, texture, hitbox, EntityKind.UPGRADE)
         {
             this.upgrade = upgrade;
             this.upgradeManager = upgradeManager; 

@@ -51,7 +51,7 @@ namespace UpgradePlatformer.Entities
         /// <param name="hitbox">the hitbox of the enemy</param>
         /// <param name="texture">the texture of the enemy</param>
         public Enemy(int maxHp, int damage, Rectangle hitbox, Texture2D texture, GraphicsDeviceManager _graphics, int jumpsLeft)
-            :base(maxHp, damage, hitbox, texture, jumpsLeft)
+            :base(maxHp, damage, hitbox, texture, jumpsLeft, EntityKind.ENEMY)
         {
             this.jumpsLeft = jumpsLeft;
             this._graphics = _graphics;
@@ -59,23 +59,6 @@ namespace UpgradePlatformer.Entities
             spawnPoint = new Point(hitbox.X, hitbox.Y);
             currentlyColliding = false;
             this.sprite.Position = new Rectangle(0, 29, 15, 15);
-        }
-
-        /// <summary>
-        /// Updates the enemy every frame
-        /// </summary>
-        /// <param name="gt">gameTime</param>
-        public override void Update(GameTime gt, LevelManager lm, EventManager em)
-        {
-            if (isActive)
-            {
-                hitbox.Location = position.ToPoint();
-                spriteSize = hitbox.Size;
-                ApplyGravity(lm, em);
-                sprite.effects = SpriteEffects.None;
-                if (Flip)
-                    sprite.effects = SpriteEffects.FlipHorizontally;
-            }           
         }
         public override void OnFloorCollide()
         {
@@ -100,5 +83,20 @@ namespace UpgradePlatformer.Entities
             if (position.X < 0 - hitbox.Width)
                 position.X = _graphics.PreferredBackBufferWidth + hitbox.Width;
         }
+
+        public override void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
+        {
+            if (isActive)
+            {
+                hitbox.Location = position.ToPoint();
+                spriteSize = hitbox.Size;
+                ApplyGravity(levelManager, eventManager);
+                sprite.effects = SpriteEffects.None;
+                if (Flip)
+                    sprite.effects = SpriteEffects.FlipHorizontally;
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch, GameTime gameTime){ }
     }
 }

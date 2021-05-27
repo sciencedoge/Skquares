@@ -17,7 +17,7 @@ namespace UpgradePlatformer.Entities
     {
         //Constructor
         public Coin(int value, Texture2D texture, Rectangle hitbox)
-            : base(value, texture, hitbox) { }
+            : base(value, texture, hitbox, EntityKind.COIN) { }
 
         public void Update()
         {

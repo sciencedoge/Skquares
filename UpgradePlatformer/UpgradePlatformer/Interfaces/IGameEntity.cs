@@ -48,13 +48,13 @@ namespace UpgradePlatformer.Interfaces
         /// </summary>
         /// <param name="sb">_spriteBatch</param>
         /// <param name="gt">gameTime</param>
-        public void Draw(SpriteBatch sb, GameTime gt);
+        // public void Draw(SpriteBatch sb, GameTime gt);
 
         /// <summary>
         /// Updates elements of 
         /// </summary>
         /// <param name="gt"></param>
-        public void Update(GameTime gt, LevelManager lm, EventManager em);
+        // public void Update(GameTime gt, LevelManager lm, EventManager em);
 
     }
 }

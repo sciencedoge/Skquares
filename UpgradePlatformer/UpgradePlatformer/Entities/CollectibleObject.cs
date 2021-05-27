@@ -4,7 +4,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using UpgradePlatformer.Input;
+using UpgradePlatformer.Levels;
 
 namespace UpgradePlatformer.Entities
 {
@@ -59,7 +60,7 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Creates a CollectibleObject object
         /// </summary>
-        public CollectibleObject(int value, Texture2D sprite, Rectangle hitbox)
+        public CollectibleObject(int value, Texture2D sprite, Rectangle hitbox, EntityKind kind) : base(kind)
         {
             this.value = value;
             this.hitbox = hitbox;
@@ -77,7 +78,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="sb">_spriteBatch</param>
         /// <param name="gt">gameTime</param>
-        public void Draw(SpriteBatch sb, GameTime gt)
+        public override void Draw(SpriteBatch sb, GameTime gt)
         {
             //if the sprite is active, draws it to the screen
             if (isActive)
@@ -109,6 +110,11 @@ namespace UpgradePlatformer.Entities
                 }
             }
             return 0;
+        }
+
+        public override void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
+        {
+            
         }
     }
 }

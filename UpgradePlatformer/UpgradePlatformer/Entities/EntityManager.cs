@@ -19,13 +19,47 @@ namespace UpgradePlatformer.Entities
         //Fields
 
         //player and enemies
-        private Player player;
-        private List<Enemy> enemies;
-        private List<Coin> coins;
+        private List<EntityObject> objects;
+
+        private List<Enemy> enemies()
+        {
+            List<Enemy> result = new List<Enemy>();
+
+            foreach (EntityObject obj in objects)
+            {
+                if (obj.Kind == EntityKind.ENEMY)
+                    result.Add((Enemy)obj);
+            }
+
+            return result;
+        }
+        private List<Coin> coins()
+        {
+            List<Coin> result = new List<Coin>();
+
+            foreach (EntityObject obj in objects)
+            {
+                if (obj.Kind == EntityKind.COIN)
+                    result.Add((Coin)obj);
+            }
+
+            return result;
+        }
+        private Player player()
+        {
+            foreach (EntityObject obj in objects)
+            {
+                if (obj.Kind == EntityKind.PLAYER)
+                    return (Player)obj;
+            }
+            return null;
+        }
+        // private Player player;
+        // private List<Enemy> enemies;
+        // private List<Coin> coins;
         private LevelManager levelManager;
         private UpgradeManager upgradeManager;
         private int playerMoney;
-
         private Level currentLevel;
         private PathfindingAI pathfind;
 
@@ -41,15 +75,14 @@ namespace UpgradePlatformer.Entities
         public EntityManager(Texture2D texture, GraphicsDeviceManager device,
             LevelManager levelMan, UpgradeManager upgradeManager)
         {
-            enemies = new List<Enemy>();
-            coins = new List<Coin>();
+            this.objects = new List<EntityObject>();
 
             this.levelManager = levelMan;
             this.upgradeManager = upgradeManager;
 
             this.playerMoney = 0;
 
-            pathfind = new PathfindingAI(enemies, player);
+            pathfind = new PathfindingAI(enemies(), player());
         }
 
         //methods
@@ -64,24 +97,28 @@ namespace UpgradePlatformer.Entities
             currentLevel = levelManager.ActiveLevel();
             // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++) {
-                if (player != null) {
-                    player.Update(gameTime, eventManager, inputManager, levelManager);
-                    Intersects(player, eventManager);
-                }
-
-                foreach (Enemy e in enemies)
+                foreach (EntityObject obj in objects)
                 {
-                    e.Update(gameTime, levelManager, eventManager);
-                    Intersects(e, eventManager);
+                    obj.Update(gameTime, eventManager, inputManager, levelManager);
                 }
+                // if (player() != null) {
+                //     player().Update(gameTime, eventManager, inputManager, levelManager);
+                //     Intersects(player(), eventManager);
+                // }
 
-                foreach (Coin c in coins)
-                {
-                    c.Update();
-                    playerMoney += c.Intersects(player);
-                }
-                if (player != null)
-                    player.Intersects(enemies);
+                // foreach (Enemy e in enemies)
+                // {
+                //     e.Update(gameTime, levelManager, eventManager);
+                //     Intersects(e, eventManager);
+                // }
+
+                // foreach (Coin c in coins)
+                // {
+                //     c.Update();
+                //     playerMoney += c.Intersects(player);
+                // }
+                // if (player() != null)
+                //     player().Intersects(enemies());
                 pathfind.UpdateCosts();
                 pathfind.MoveToPlayer();
                 pathfind.EnemyIntersection();
@@ -89,12 +126,12 @@ namespace UpgradePlatformer.Entities
                 
 
             
-            if (player != null) {
-                if (player.CurrentHP <= 0)
-                {
-                    eventManager.Push(new Event("STATE_MACHINE", 2, new Point(0, 0)));
-                }
-            }                         
+            // if (player != null) {
+            //     if (player.CurrentHP <= 0)
+            //     {
+            //         eventManager.Push(new Event("STATE_MACHINE", 2, new Point(0, 0)));
+            //     }
+            // }                         
         }
 
         /// <summary>
@@ -104,37 +141,43 @@ namespace UpgradePlatformer.Entities
         /// <param name="spriteBatch">spriteBatch</param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (player != null)
-                player.Draw(spriteBatch, gameTime);
-            foreach(Enemy e in enemies)
+            foreach (EntityObject obj in objects)
             {
-                e.Draw(spriteBatch, gameTime);
+                obj.Draw(spriteBatch, gameTime);
             }
-            foreach(Coin c in coins)
-            {
-                c.Draw(spriteBatch, gameTime);
-            }
+            // if (player != null)
+            //     player.Draw(spriteBatch, gameTime);
+            // foreach(Enemy e in enemies)
+            // {
+            //     e.Draw(spriteBatch, gameTime);
+            // }
+            // foreach(Coin c in coins)
+            // {
+            //     c.Draw(spriteBatch, gameTime);
+            // }
         }
         
-        public void Spawn(EntityObject obj, int kind) {
-            if (kind == 2)
-            {
-                player = (Player)obj;
-                pathfind.player = player;
-            }
-            else if (kind == 1)
-            {
-                enemies.Add((Enemy)obj);
-                pathfind.enemies = enemies;
-            }
-            else if (kind == 0) coins.Add((Coin)obj);
+        public void Spawn(EntityObject obj) {
+            objects.Add(obj);
+            // if (kind == 2)
+            // {
+            //     player = (Player)obj;
+            //     pathfind.player = player;
+            // }
+            // else if (kind == 1)
+            // {
+            //     enemies.Add((Enemy)obj);
+            //     pathfind.enemies = enemies;
+            // }
+            // else if (kind == 0) coins.Add((Coin)obj);
         }
 
         public void Clean(bool player) {
-            if (player)
-                this.player = null;
-            enemies = new List<Enemy>();
-            coins = new List<Coin>();
+            objects = new List<EntityObject>();
+            // if (player)
+            //     this.player = null;
+            // enemies = new List<Enemy>();
+            // coins = new List<Coin>();
         }
 
         /// <summary>
@@ -154,8 +197,8 @@ namespace UpgradePlatformer.Entities
                 switch (t.CollisionKind) {
                     case 100:
                         obj.TakeDamage(1);
-                        if (obj == (LivingObject)player)
-                            player.Velocity = new Vector2(0, -4);
+                        if (obj == (LivingObject)player())
+                            player().Velocity = new Vector2(0, -4);
                         break;
                     case 101:
                         if (intersection.Height > 0.5 * t.TileSize.Y)
@@ -210,12 +253,12 @@ namespace UpgradePlatformer.Entities
                         obj.Y = temp.Y;
                         break;
                     case 103:
-                        if (obj == (LivingObject)player)
+                        if (obj == (LivingObject)player())
                             em.Push(new Event("WORLD_SHOW", (uint)levelManager.ActiveWorldNum() + 1, new Point(0)));
                         break;
                     case 104:
 
-                        if(player.Y < t.Position.Y)
+                        if(player().Y < t.Position.Y)
                         {
                             //checks conditions to move the player up or down
                             if (intersection.Width > intersection.Height - 20)
@@ -251,14 +294,14 @@ namespace UpgradePlatformer.Entities
         }
 
         public int GetPlayerHp() {
-            if (player != null)
-                return player.CurrentHP;
+            if (player() != null)
+                return player().CurrentHP;
             return -1;
         }
 
         public void RespawnPlayer() {
-            if (player != null)
-                player.Respawn();
+            if (player() != null)
+                player().Respawn();
         }
         public void FlipPlayerSide(GraphicsDeviceManager graphicsDevice) {
             // if (player != null)
@@ -272,10 +315,9 @@ namespace UpgradePlatformer.Entities
         /// <returns></returns>
         public int MaxPlayerHP()
         {
-            if (player != null)
-                return player.MaxHP;
+            if (player() != null)
+                return player().MaxHP;
             return 0;
         }
     }
-    class EntityObject { }
 }
