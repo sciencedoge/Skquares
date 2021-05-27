@@ -81,7 +81,7 @@ namespace UpgradePlatformer.Entities
         {
             this.objects = new List<EntityObject>();
 
-            objects.Add((EntityObject)new UpgradeEntity(10, new Rectangle(100, 300, 25, 25), UpgradeManager.Instance.Root));
+            objects.Add((EntityObject)new Pillar(10, new Rectangle(100, 300, 25, 25), UpgradeManager.Instance.Root));
 
             this.playerMoney = 0;
 

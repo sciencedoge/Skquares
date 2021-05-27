@@ -13,7 +13,7 @@ namespace UpgradePlatformer.Entities
     //Date: 5/26/2021
     //Purpose: Creates UpgradeEntities to be used in the game
     //========================================================
-    class UpgradeEntity : CollectibleObject
+    class Pillar : CollectibleObject
     {
         private Upgrade upgrade;
 
@@ -24,7 +24,7 @@ namespace UpgradePlatformer.Entities
         /// <param name="texture">texture of the upgrade</param>
         /// <param name="hitbox">hitbox of the entity</param>
         /// <param name="upgrade">the actual upgrade</param>
-        public UpgradeEntity(int cost, Rectangle hitbox, Upgrade upgrade)
+        public Pillar(int cost, Rectangle hitbox, Upgrade upgrade)
             :base(cost, hitbox, EntityKind.UPGRADE)
         {
             this.upgrade = upgrade;
