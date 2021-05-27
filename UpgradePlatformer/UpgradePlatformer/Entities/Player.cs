@@ -8,6 +8,7 @@ using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Music;
+using UpgradePlatformer.Upgrade_Stuff;
 
 namespace UpgradePlatformer.Entities
 {
@@ -24,17 +25,7 @@ namespace UpgradePlatformer.Entities
         private bool keyUp, keyDown, keyLeft, keyRight;
         private bool ducking;
 
-        private static int maxJumps = 1;
-
-        /// <summary>
-        /// gets or sets the max jumps of the player
-        /// </summary>
-        public int MaxJumps
-        {
-            get { return maxJumps; }
-            set { maxJumps = value; }
-        }
-
+        private static int maxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.XtraJump) + 1;
 
         /// <summary>
         /// Creates a player object

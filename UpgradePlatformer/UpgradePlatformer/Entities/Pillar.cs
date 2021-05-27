@@ -25,9 +25,11 @@ namespace UpgradePlatformer.Entities
         /// <param name="hitbox">hitbox of the entity</param>
         /// <param name="upgrade">the actual upgrade</param>
         public Pillar(int cost, Rectangle hitbox, Upgrade upgrade)
-            :base(cost, hitbox, EntityKind.UPGRADE)
+            :base(-cost, hitbox, EntityKind.UPGRADE)
         {
             this.upgrade = upgrade;
+            this.SpriteBounds = new Rectangle(0, 45, 16, 16);
+            UpdateSprite();
         }
 
 
@@ -41,24 +43,26 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="obj">a living object</param>
         /// <returns></returns>
-        public Upgrade Intersects(LivingObject obj, int totalMoney)
+        public override int Intersects(EntityObject o)
         {
+            if (o.Kind != EntityKind.PLAYER) return 0;
+            LivingObject obj = (LivingObject)o;
             if (IsActive && obj != null)
             {
                 if (this.hitbox.Intersects(obj.Hitbox))
                 {
-                    if(ValidIntersection(totalMoney) == true)
+                    if(ValidIntersection() == true)
                     {
                         //the coin is no longer active
-                        return this.upgrade;
+                        return this.upgrade.Cost * -1;
                     }                 
                 }
                 else
                 {
-                    return null;
+                    return 0;
                 }
             }
-            return null;
+            return 0;
         }
 
         /// <summary>
@@ -66,11 +70,11 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="totalMoney">the total money of the player</param>
         /// <returns></returns>
-        private bool ValidIntersection(int totalMoney)
+        private bool ValidIntersection()
         {
             List<Upgrade> upgrades = UpgradeManager.Instance.CanBeLearned();
            
-            if (totalMoney - this.value < 0
+            if (EntityManager.Instance.PlayerMoney - upgrade.Cost < 0
                 && !upgrades.Contains(upgrade))
             {
                 return false;

@@ -19,7 +19,7 @@ namespace UpgradePlatformer.Entities
     class CollectibleObject : EntityObject
     {
         //Fields
-        private Rectangle SpriteBounds = new Rectangle(0, 7, 5, 5);
+        protected Rectangle SpriteBounds;
         protected int value;
         protected Graphics.Sprite sprite;
         protected Rectangle hitbox;
@@ -53,6 +53,9 @@ namespace UpgradePlatformer.Entities
             this.hitbox = hitbox;
             this.IsActive = true;
             this.spriteSize = hitbox.Size;
+        }
+        
+        public void UpdateSprite() {
             this.sprite = new Sprite(
                 SpriteBounds,
                 new Vector2(SpriteBounds.X - (SpriteBounds.Width / 2),
@@ -103,9 +106,11 @@ namespace UpgradePlatformer.Entities
 
         public override void Update(GameTime gameTime) { }
         public override int Intersects(List<EntityObject> objects) {
-            int result = 0;
-            foreach (EntityObject o in objects) result += Intersects(o);
-            return result;
+            foreach (EntityObject o in objects) {
+                if (o.Kind == EntityKind.PLAYER)
+                    return Intersects(o);
+            }
+            return 0;
         }
     }
 }

@@ -17,7 +17,11 @@ namespace UpgradePlatformer.Entities
     {
         //Constructor
         public Coin(int value, Rectangle hitbox)
-            : base(value, hitbox, EntityKind.COIN) { }
+            : base(value, hitbox, EntityKind.COIN) 
+        {
+            SpriteBounds = new Rectangle(0, 7, 5, 5);
+            UpdateSprite();
+        }
 
         public void Update()
         {

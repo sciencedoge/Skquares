@@ -43,7 +43,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// </summary>
         /// <param name="value">value of the upgrade</param>
         /// <param name="type">type of the upgrade</param>
-        public void Add(int value, UPGRADE_TYPE type, int cost)
+        public void Add(int value, UpgradeType type, int cost)
         {
             if(root == null)
             {
@@ -63,10 +63,10 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// <param name="node">parent node</param>
         /// <param name="value">value of the new node</param>
         /// <param name="type">new node type</param>
-        private void Add(Upgrade upgrade, int value, UPGRADE_TYPE type, int cost)
+        private void Add(Upgrade upgrade, int value, UpgradeType type, int cost)
         {
             //Health node, all stored to the LEFT of the tree
-            if(type == UPGRADE_TYPE.Health)
+            if(type == UpgradeType.Health)
             {
                 if (upgrade.Left == null)
                 {
@@ -78,8 +78,8 @@ namespace UpgradePlatformer.Upgrade_Stuff
                 }
             }
 
-            //Speed node, stored to the RIGHT of the tree
-            else if(type == UPGRADE_TYPE.XtraJump)
+            //Jump node, stored to the RIGHT of the tree
+            else if(type == UpgradeType.XtraJump)
             {
                 if(upgrade.Right == null)
                 {
@@ -92,7 +92,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
             }
 
             //Speed node, stored to the RIGHT of the tree
-            else if (type == UPGRADE_TYPE.Weapon)
+            else if (type == UpgradeType.Weapon)
             {
                 if (upgrade.Right == null)
                 {
@@ -103,6 +103,31 @@ namespace UpgradePlatformer.Upgrade_Stuff
                     Add(upgrade.Right, value, type, cost);
                 }
             }
+        }
+
+        public int GetAmmnt(UpgradeType Type, Upgrade upgrade = null) {
+            if (upgrade == null)
+                upgrade = Root;
+            //LRC Data pattern
+            int result = 0;
+
+            if (upgrade.IsLearned)
+            {
+                if (upgrade.Type == Type)
+                    result += 1;
+
+                if (upgrade.Left != null)
+                {
+                    result += GetAmmnt(Type, upgrade.Left);
+                }
+
+                if (upgrade.Right != null)
+                {
+                    result += GetAmmnt(Type, upgrade.Right);
+                }
+            }
+
+            return result;
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
     /// <summary>
     /// Dictates which type this upgrade is.
     /// </summary>
-    public enum UPGRADE_TYPE
+    public enum UpgradeType
     {
         XtraJump,
         Health,
@@ -27,7 +27,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         private bool canBeLearned;
         private int cost;
 
-        private UPGRADE_TYPE type;
+        private UpgradeType type;
 
         private Upgrade left;
         private Upgrade right;
@@ -90,7 +90,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// <summary>
         /// returns the type of the upgrade
         /// </summary>
-        public UPGRADE_TYPE Type
+        public UpgradeType Type
         {
             get { return type; }
         }
@@ -101,7 +101,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// Creates a new Upgrade object
         /// </summary>
         /// <param name="value">value of the upgrade</param>
-        public Upgrade(int value, UPGRADE_TYPE type, int cost)
+        public Upgrade(int value, UpgradeType type, int cost)
         {
             this.upgradeValue = value;
             this.isLearned = false;

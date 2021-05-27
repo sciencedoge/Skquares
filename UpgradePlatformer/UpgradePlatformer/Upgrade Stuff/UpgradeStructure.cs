@@ -13,17 +13,17 @@ namespace UpgradePlatformer.Upgrade_Stuff
     {
         public UpgradeStructure()
         {
-            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.XtraJump, 10);
-            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 10);
-            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Weapon, 20);
-            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 30);
-            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 30);
-            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 40);
-            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 40);
-            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 50);
-            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 60);
-            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 70);
-            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 80);
+            UpgradeManager.Instance.Add(1, UpgradeType.XtraJump, 10);
+            UpgradeManager.Instance.Add(1, UpgradeType.Health, 10);
+            UpgradeManager.Instance.Add(1, UpgradeType.Weapon, 20);
+            UpgradeManager.Instance.Add(1, UpgradeType.Health, 30);
+            UpgradeManager.Instance.Add(1, UpgradeType.Health, 30);
+            UpgradeManager.Instance.Add(1, UpgradeType.Health, 40);
+            UpgradeManager.Instance.Add(1, UpgradeType.Health, 40);
+            UpgradeManager.Instance.Add(1, UpgradeType.Health, 50);
+            UpgradeManager.Instance.Add(1, UpgradeType.Health, 60);
+            UpgradeManager.Instance.Add(1, UpgradeType.Health, 70);
+            UpgradeManager.Instance.Add(1, UpgradeType.Health, 80);
 
         }
     }
