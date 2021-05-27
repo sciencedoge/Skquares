@@ -106,38 +106,30 @@ namespace UpgradePlatformer.Upgrade_Stuff
         }
 
         /// <summary>
-        /// resets the possible upgrades list
-        /// </summary>
-        public void EstablishPossibleList()
-        {
-            possibleUpgrades = new List<Upgrade>();
-        }
-
-        /// <summary>
         /// Lists all of the upgrades
         /// purchased by the player
         /// </summary>
         public List<Upgrade> CanBeLearned(Upgrade upgrade)
-        {
+        { 
             //LRC Data pattern
+            List<Upgrade> result = new List<Upgrade>();
 
             if (upgrade.IsLearned)
             {
                 if(upgrade.Left != null)
                 {
-                    CanBeLearned(upgrade.Left);
+                    result.AddRange(CanBeLearned(upgrade.Right));
                 }
                 
                 if(upgrade.Right != null)
                 {
-                    CanBeLearned(upgrade.Right);
+                    result.AddRange(CanBeLearned(upgrade.Right));
                 }
-
-                possibleUpgrades.Add(upgrade);
-
+            } else {
+                return new List<Upgrade>{upgrade};
             }
 
-            return new List<Upgrade>();
+            return result;
         }
     }
 }
