@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.Graphics;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Entities
 {
@@ -100,7 +101,8 @@ namespace UpgradePlatformer.Entities
             return 0;
         }
 
-        public override void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
+        public override void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager,
+            SoundManager soundManager)
         {
             
         }

@@ -6,6 +6,7 @@ using System.Text;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.Upgrade_Stuff;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Entities
 {
@@ -59,6 +60,7 @@ namespace UpgradePlatformer.Entities
         }
         private LevelManager levelManager;
         private UpgradeManager upgradeManager;
+        private SoundManager soundManager;
         private int playerMoney;
         private Level currentLevel;
         private PathfindingAI pathfind;
@@ -73,11 +75,12 @@ namespace UpgradePlatformer.Entities
 
 
         public EntityManager(Texture2D texture, GraphicsDeviceManager device,
-            LevelManager levelMan, UpgradeManager upgradeManager)
+            LevelManager levelMan, UpgradeManager upgradeManager, SoundManager soundManager)
         {
             this.objects = new List<EntityObject>();
             this.levelManager = levelMan;
             this.upgradeManager = upgradeManager;
+            this.soundManager = soundManager;
 
             objects.Add((EntityObject)new UpgradeEntity(10, texture, new Rectangle(100, 300, 25, 25), upgradeManager.Root, upgradeManager));
 
@@ -101,13 +104,26 @@ namespace UpgradePlatformer.Entities
                 foreach (EntityObject obj in objects)
                 {
                     if (obj == null) continue;
-                    obj.Update(gameTime, eventManager, inputManager, levelManager);
+                    obj.Update(gameTime, eventManager, inputManager, levelManager, soundManager);
                     Intersects(obj, eventManager);
-                    playerMoney += obj.Intersects(objects);
+                    int gainedMoney = obj.Intersects(objects);
+                    
+                    if(gainedMoney > 0)
+                    {
+                        soundManager.PlaySFX("coin");
+                        playerMoney += gainedMoney;
+                    }
+
+                    
                 }
                 if (player() != null)
                     if (player().CurrentHP <= 0)
-                        eventManager.Push(new Event("STATE_MACHINE", 2, new Point(0)));
+                    {
+                        soundManager.PlayMusic("gameover");
+                        eventManager.Push(new Event("STATE_MACHINE", 2, new Point(0)));                      
+                    }
+
+                        
                 pathfind.Update(this);
                 pathfind.UpdateCosts();
                 pathfind.MoveToPlayer();
@@ -177,7 +193,11 @@ namespace UpgradePlatformer.Entities
                             if (t.Position.Top - intersection.Top == 0)
                             {
                                 temp.Y -= intersection.Height;
-                                obj.OnFloorCollide();
+                                if(obj.JumpsLeft == 0)
+                                {
+                                    soundManager.PlaySFX("land");
+                                }
+                                obj.OnFloorCollide();                               
                             }
 
                             //moves player down
@@ -232,7 +252,11 @@ namespace UpgradePlatformer.Entities
                                 if (t.Position.Top - intersection.Top == 0)
                                 {
                                     temp.Y -= intersection.Height;
-                                    obj.OnFloorCollide();
+                                    if (obj.JumpsLeft == 0)
+                                    {
+                                        soundManager.PlaySFX("land");
+                                    }
+                                    obj.OnFloorCollide();                                  
                                 }
 
                                 obj.Velocity = new Vector2(obj.Velocity.X, 0);

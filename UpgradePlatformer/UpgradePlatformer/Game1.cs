@@ -9,6 +9,8 @@ using UpgradePlatformer.Entities;
 using UpgradePlatformer.FSM;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Upgrade_Stuff;
+using Microsoft.Xna.Framework.Content;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer
 {
@@ -19,6 +21,7 @@ namespace UpgradePlatformer
     //===============================================================
     public class Game1 : Game
     {
+        
         private const string ASSET_NAME_SPRITESHEET = "SpriteSheet";
 
         private GraphicsDeviceManager _graphics;
@@ -34,6 +37,8 @@ namespace UpgradePlatformer
         private UpgradeManager upgradeManager;
         private UpgradeStructure structure;
 
+        private SoundManager _soundManager;
+
 #if DEBUG
         private UIText Stats;
         double frameRate = 0.0;
@@ -46,8 +51,8 @@ namespace UpgradePlatformer
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
-             
+            IsMouseVisible = true;         
+            
         }
 
         protected override void Initialize()
@@ -66,7 +71,10 @@ namespace UpgradePlatformer
             _inputManager = new InputManager();
             _eventManager = new EventManager();
             _levelManager = new LevelManager(_spriteSheetTexture, _graphics);
-            _entityManager = new EntityManager(_spriteSheetTexture, _graphics, _levelManager, upgradeManager);
+            ContentManager content = Content;
+            _soundManager = new SoundManager(content);
+            _entityManager = new EntityManager(_spriteSheetTexture, _graphics, _levelManager, upgradeManager, _soundManager);
+
 
             // create connections in state machine
             Flag playButtonPressMenu = new Flag(0, 1);
@@ -83,12 +91,15 @@ namespace UpgradePlatformer
 
             // create state machinez
             _stateMachine = new FiniteStateMachine(new List<StateMachineState>{Menu, Game, Escape, Respawn});
+            _soundManager.PlayMusic("menu");
             
             // create ui elements
             int ButtonWidth = 200;
             UIButton playButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
             playButton.onClick = new UIAction(() =>
             {
+                _soundManager.PlaySFX("button");
+                _soundManager.PlayMusic("game");
                 _eventManager.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
                 _entityManager.RespawnPlayer();
             });
@@ -97,6 +108,7 @@ namespace UpgradePlatformer
             UIButton closeButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40));
             closeButton.onClick = new UIAction(() =>
             {
+                _soundManager.PlaySFX("button");
                 _eventManager.Push(new Event("QUIT", 0, new Point(0, 0)));
                 _entityManager.RespawnPlayer();
             });
@@ -199,7 +211,8 @@ namespace UpgradePlatformer
 #endif
         }
         protected override void LoadContent()
-        {
+        {            
+
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);

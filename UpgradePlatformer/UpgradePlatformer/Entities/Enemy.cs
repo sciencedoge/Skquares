@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.Input;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Entities
 {
@@ -84,7 +85,8 @@ namespace UpgradePlatformer.Entities
                 position.X = _graphics.PreferredBackBufferWidth + hitbox.Width;
         }
 
-        public override void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
+        public override void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager,
+            SoundManager soundManager)
         {
             if (IsActive)
             {

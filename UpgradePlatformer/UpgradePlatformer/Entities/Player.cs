@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Entities
 {
@@ -80,7 +81,8 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="gt"></param>
         /// <param name="keys"></param>
-        public override void Update(GameTime gt, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
+        public override void Update(GameTime gt, EventManager eventManager, InputManager inputManager, LevelManager levelManager,
+            SoundManager soundManager)
         {
             if (IsActive)
             {
@@ -105,6 +107,10 @@ namespace UpgradePlatformer.Entities
 
                     if (keyUp)
                     {
+                        if(jumpsLeft > 0)
+                        {
+                            soundManager.PlaySFX("jump");
+                        }                       
                         //check for ground collision
                         if (jumpsLeft > 0 && velocity.Y >= -4f)
                         {

@@ -33,7 +33,7 @@ namespace UpgradePlatformer.Entities
         {
             this.enemies = enemies;
             this.player = player;
-            speed = 0.5f;
+            speed = 1f;
             goombaAINum = speed;
             relationships = new Vector2[enemies.Count, 1];
         }
