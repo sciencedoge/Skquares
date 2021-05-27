@@ -4,36 +4,43 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UpgradePlatformer.Entities;
+using UpgradePlatformer.Graphics;
+using UpgradePlatformer.Input;
 
 namespace UpgradePlatformer.Levels
 {
     class LevelManager
     {
+        private static readonly Lazy<LevelManager>
+            lazy =
+            new Lazy<LevelManager>
+                (() => new LevelManager());
+        public static LevelManager Instance { get { return lazy.Value; } }
         List<World> Worlds;
         int activeWorld;
         int _activeWorld;
         
-        public void Update(EntityManager em, Texture2D texture, GraphicsDeviceManager device) {
+        public void Update() {
             if (activeWorld != _activeWorld) {
                 activeWorld = _activeWorld;
-                em.Clean(true);
-                Worlds[activeWorld].LoadEntities(em, texture, device, true);
+                EntityManager.Instance.Clean(true);
+                Worlds[activeWorld].LoadEntities(true);
             }
-            ActiveWorld().Update(em, texture, device);
+            ActiveWorld().Update();
         }
 
-        public LevelManager(Texture2D texture, GraphicsDeviceManager graphics)
+        public LevelManager()
         {
             Worlds = new List<World>();
             _activeWorld = 0;
-            Load(texture, new List<string>{"DEATH_MENU"}, graphics, 0);
-            Load(texture, new List<string>{"clouds2", "clouds1", "clouds3"}, graphics, 0);
-            Load(texture, new List<string>{"cave", "coinHeaven"}, graphics, 1);
+            Load(new List<string>{"DEATH_MENU"}, 0);
+            Load(new List<string>{"clouds2", "clouds1", "clouds3"}, 0);
+            Load(new List<string>{"cave", "coinHeaven"}, 1);
         }
-        
-        public void Load(Texture2D texture, List<String> Names, GraphicsDeviceManager graphics, int level)
+
+        public void Load(List<String> Names, int level)
         {
-            Worlds.Add(new World(texture, Names, graphics, level));
+            Worlds.Add(new World(Names, level));
         }
 
 

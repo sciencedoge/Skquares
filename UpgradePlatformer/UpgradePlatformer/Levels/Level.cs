@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UpgradePlatformer.Entities;
+using UpgradePlatformer.Graphics;
 
 namespace UpgradePlatformer.Levels
 {
@@ -13,14 +14,12 @@ namespace UpgradePlatformer.Levels
         public String Name;
         int TileWidth, TileHeight;
         Tile[,] TileMap;
-        GraphicsDeviceManager Graphics;
-
         public Tile[,] Tiles
         {
             get { return TileMap; }
         }
 
-        public void Load(Texture2D texture, String name)
+        public void Load(String name)
         {
             Name = name;
             FileStream stream = new FileStream("Content/Levels/" + name + ".level_Finished", FileMode.Open);
@@ -29,26 +28,25 @@ namespace UpgradePlatformer.Levels
             TileWidth = reader.ReadInt32();
             TileHeight = reader.ReadInt32();
 
-            Vector2 tileSize = new Vector2(Graphics.PreferredBackBufferWidth / TileWidth, (Graphics.PreferredBackBufferHeight - 40) / TileHeight);
+            Vector2 tileSize = new Vector2(Sprite.graphics.PreferredBackBufferWidth / TileWidth, (Sprite.graphics.PreferredBackBufferHeight - 40) / TileHeight);
 
             TileMap = new Tile[TileWidth, TileHeight];
 
-            Tile empty = new Tile(texture, 9, 0, 0, 9, new Vector2(1), null);
+            Tile empty = new Tile(9, 0, 0, 9, new Vector2(1), null);
 
             for (int y = 0; y < TileHeight; y++)
-                TileMap[0, y] = new Tile(texture, reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize, empty);
+                TileMap[0, y] = new Tile(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize, empty);
             
             for (int x = 1; x < TileWidth; x++)
                 for (int y = 0; y < TileHeight; y++)
-                    TileMap[x, y] = new Tile(texture, reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize, TileMap[x - 1, y]);
+                    TileMap[x, y] = new Tile(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize, TileMap[x - 1, y]);
             reader.Close();
             stream.Close();
         }
 
-        public Level(Texture2D texture, String name, GraphicsDeviceManager graphics)
+        public Level(String name)
         {
-            Graphics = graphics;
-            Load(texture, name);
+            Load(name);
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -84,7 +82,7 @@ namespace UpgradePlatformer.Levels
             return Tiles;
         }
 
-        public void LoadEntities(EntityManager em, Texture2D texture, GraphicsDeviceManager device, bool player)
+        public void LoadEntities(bool player)
         {
             for (int x = 0; x < TileHeight; x++) {
                 for (int y = 0; y < TileWidth; y++)
@@ -95,14 +93,14 @@ namespace UpgradePlatformer.Levels
                         continue;
                     EntityObject o = null;
 #if DEBUG
-                    if (t.Kind == 2 && player) o = (EntityObject)new Player(int.MaxValue, 2, new Rectangle(t.Position.Location, new Point(25, 25)), texture, device, 2);
+                    if (t.Kind == 2 && player) o = (EntityObject)new Player(int.MaxValue, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #else
-                    if (t.Kind == 2 && player) o = (EntityObject)new Player(3, 2, new Rectangle(t.Position.Location, new Point(25, 25)), texture, device, 2);
+                    if (t.Kind == 2 && player) o = (EntityObject)new Player(3, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #endif
-                    else if (t.Kind == 1) o = (EntityObject)new Enemy(10, 2, new Rectangle(t.Position.Location, new Point(25, 25)), texture, device, 1);
-                    else if (t.Kind == 0) o = (EntityObject)new Coin(1, texture, new Rectangle(t.Position.Location, new Point(15, 15)));
+                    else if (t.Kind == 1) o = (EntityObject)new Enemy(10, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 1);
+                    else if (t.Kind == 0) o = (EntityObject)new Coin(1, new Rectangle(t.Position.Location, new Point(15, 15)));
                     if (o != null)
-                        em.Spawn(o);
+                        EntityManager.Instance.Spawn(o);
                 }
             }
         }

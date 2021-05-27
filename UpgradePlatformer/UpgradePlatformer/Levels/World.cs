@@ -13,27 +13,27 @@ namespace UpgradePlatformer.Levels
         int activeLevel;
         int _activeLevel;
         
-        public void Update(EntityManager em, Texture2D texture, GraphicsDeviceManager device) {
+        public void Update() {
             if (activeLevel != _activeLevel) {
                 activeLevel = _activeLevel;
-                em.Clean(false);
-                Levels[activeLevel].LoadEntities(em, texture, device, false);
+                EntityManager.Instance.Clean(false);
+                Levels[activeLevel].LoadEntities(false);
             }
         }
 
-        public void LoadEntities(EntityManager em, Texture2D texture, GraphicsDeviceManager device, bool player) =>
-            Levels[activeLevel].LoadEntities(em, texture, device, player);
-        public World(Texture2D texture, List<String> levels, GraphicsDeviceManager graphics, int defaultLevel)
+        public void LoadEntities(bool player) =>
+            Levels[activeLevel].LoadEntities(player);
+        public World(List<String> levels, int defaultLevel)
         {
             Levels = new List<Level>();
             _activeLevel = defaultLevel;
             foreach (string level in levels)
-                Load(texture, level, graphics);
+                Load(level);
         }
         
-        public void Load(Texture2D texture, String Name, GraphicsDeviceManager graphics)
+        public void Load(String Name)
         {
-            Levels.Add(new Level(texture, Name, graphics));
+            Levels.Add(new Level(Name));
         }
 
 

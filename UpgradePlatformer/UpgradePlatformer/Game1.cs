@@ -23,15 +23,9 @@ namespace UpgradePlatformer
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private UIManager _uiManager;
-        private InputManager _inputManager;
-        private EventManager _eventManager;
-        private LevelManager _levelManager;
-        private EntityManager _entityManager;
         private SpriteFont _font;
         private FiniteStateMachine _stateMachine;
         private UIGroup mainMenu, pauseMenu, deathMenu, topHud;
-        private UpgradeManager upgradeManager;
         private UpgradeStructure structure;
 
 #if DEBUG
@@ -57,16 +51,17 @@ namespace UpgradePlatformer
             _graphics.PreferredBackBufferHeight = 700;
             _graphics.PreferredBackBufferWidth = 660;
             _graphics.ApplyChanges();
-
-            upgradeManager = new UpgradeManager();
-            structure = new UpgradeStructure(upgradeManager);
+            
+            Sprite.texture = _spriteSheetTexture;
+            Sprite.graphics = _graphics;
+            
+            structure = new UpgradeStructure();
 
             // setup manager scripts 
-            _uiManager = new UIManager();
-            _inputManager = new InputManager();
-            _eventManager = new EventManager();
-            _levelManager = new LevelManager(_spriteSheetTexture, _graphics);
-            _entityManager = new EntityManager(_spriteSheetTexture, _graphics, _levelManager, upgradeManager);
+            new UIManager();
+            new InputManager();
+            new EventManager();
+            new EntityManager();
 
             // create connections in state machine
             Flag playButtonPressMenu = new Flag(0, 1);
@@ -89,23 +84,23 @@ namespace UpgradePlatformer
             UIButton playButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
             playButton.onClick = new UIAction(() =>
             {
-                _eventManager.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
-                _entityManager.RespawnPlayer();
+                EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
+                EntityManager.Instance.RespawnPlayer();
             });
             playButton.Text.Text = "Play";
 
             UIButton closeButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40));
             closeButton.onClick = new UIAction(() =>
             {
-                _eventManager.Push(new Event("QUIT", 0, new Point(0, 0)));
-                _entityManager.RespawnPlayer();
+                EventManager.Instance.Push(new Event("QUIT", 0, new Point(0, 0)));
+                EntityManager.Instance.RespawnPlayer();
             });
             closeButton.Text.Text = "Quit";
             
             UIButton continueButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
             continueButton.onClick = new UIAction(() =>
             {
-                _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
+                EventManager.Instance.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
             });
             continueButton.Text.Text = "Continue";
 
@@ -124,13 +119,13 @@ namespace UpgradePlatformer
                 string result = "";
 
                 int cap = 0;
-                for (float i = 0; i < _entityManager.MaxPlayerHP(); i += _entityManager.MaxPlayerHP() / 10) {
-                    if (i < _entityManager.GetPlayerHp()) result += "=";
+                for (float i = 0; i < EntityManager.Instance.MaxPlayerHP(); i += EntityManager.Instance.MaxPlayerHP() / 10) {
+                    if (i < EntityManager.Instance.GetPlayerHp()) result += "=";
                     else result += " ";
                     if (cap++ > 10) break;
                 }
 
-                return $"[{result}]X1 ${_entityManager.PlayerMoney}";
+                return $"[{result}]X1 ${EntityManager.Instance.PlayerMoney}";
             });
 
             // initialize uiGroups
@@ -142,48 +137,48 @@ namespace UpgradePlatformer
             topHud = new UIGroup(new List<UIElement> { HpText }, bounds);
 
             // add uiGroups to uiManager
-            _uiManager.Add(mainMenu);
-            _uiManager.Add(pauseMenu);
-            _uiManager.Add(deathMenu);
-            _uiManager.Add(topHud);
+            UIManager.Instance.Add(mainMenu);
+            UIManager.Instance.Add(pauseMenu);
+            UIManager.Instance.Add(deathMenu);
+            UIManager.Instance.Add(topHud);
 
             // create event listeners
             EventAction Action_Button_Press = new EventAction((uint e) =>
             {
                 if (e == 0)
-                    _eventManager.Push(new Event("WORLD_SHOW", 1, new Point(0, 0)));
+                    EventManager.Instance.Push(new Event("WORLD_SHOW", 1, new Point(0, 0)));
                 _stateMachine.SetFlag((int)e);
                 return true;
             });
-            _eventManager.AddListener(Action_Button_Press, "STATE_MACHINE");
+            EventManager.Instance.AddListener(Action_Button_Press, "STATE_MACHINE");
 
             EventAction Action_State_Machine = new EventAction((uint e) =>
             {
-                if (e == (uint)Keys.Escape) _eventManager.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
-                else if (e == (uint)Keys.Enter && (_stateMachine.currentState != 1)) _eventManager.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
+                if (e == (uint)Keys.Escape) EventManager.Instance.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
+                else if (e == (uint)Keys.Enter && (_stateMachine.currentState != 1)) EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
 #if DEBUG
                 else if (_stateMachine.currentState == 0) return false;
-                else if (e == (uint)Keys.Q) _levelManager.Prev();
-                else if (e == (uint)Keys.E) _levelManager.Next();
+                else if (e == (uint)Keys.Q) LevelManager.Instance.Prev();
+                else if (e == (uint)Keys.E) LevelManager.Instance.Next();
 #endif
                 else return false;
                 return true;
             });
-            _eventManager.AddListener(Action_State_Machine, "KEY_DOWN");
+            EventManager.Instance.AddListener(Action_State_Machine, "KEY_DOWN");
 
             EventAction Action_World_Show = new EventAction((uint e) =>
             {
-                _levelManager.SetWorld((int)e);
+                LevelManager.Instance.SetWorld((int)e);
                 return true;
             });
-            _eventManager.AddListener(Action_World_Show, "WORLD_SHOW");
+            EventManager.Instance.AddListener(Action_World_Show, "WORLD_SHOW");
 
             EventAction Action_Level_Show = new EventAction((uint e) =>
             {
-                _levelManager.SetLevel((int)e);
+                LevelManager.Instance.SetLevel((int)e);
                 return true;
             });
-            _eventManager.AddListener(Action_Level_Show, "LEVEL_SHOW");
+            EventManager.Instance.AddListener(Action_Level_Show, "LEVEL_SHOW");
 
             EventAction Action_Quit_Game = new EventAction((uint e) =>
             {
@@ -191,11 +186,11 @@ namespace UpgradePlatformer
                 return true;
             });
 
-            _eventManager.AddListener(Action_Quit_Game, "QUIT");
+            EventManager.Instance.AddListener(Action_Quit_Game, "QUIT");
 
 #if DEBUG
             Stats = new UIText(_font, new Rectangle(0, 40, 0, 0), 1, Color.White);
-            _uiManager.Add(Stats);
+            UIManager.Instance.Add(Stats);
 #endif
         }
         protected override void LoadContent()
@@ -209,11 +204,11 @@ namespace UpgradePlatformer
         protected override void Update(GameTime gameTime)
         {
             // update managers
-            _inputManager.Update(_eventManager);
+            InputManager.Instance.Update();
             if (_stateMachine.currentState == 1) 
-                _entityManager.Update(gameTime, _eventManager, _inputManager, _levelManager);
-            _uiManager.Update(gameTime, _eventManager);
-            _levelManager.Update(_entityManager, _spriteSheetTexture, _graphics);
+                EntityManager.Instance.Update(gameTime);
+            UIManager.Instance.Update(gameTime);
+            LevelManager.Instance.Update();
 
             // StateMachine related Updates
             mainMenu.IsActive  = _stateMachine.currentState == 0;
@@ -227,8 +222,8 @@ namespace UpgradePlatformer
                 frameRate = (double)frameCounter / gameTime.ElapsedGameTime.TotalSeconds;
             }
             frameCounter = 0;
-            Stats.Text = frameRate.ToString("F2") + "\nWRLD:" + _levelManager.ActiveWorldNum() + "\nLVL:" + _levelManager.ActiveLevelNum() + "\nHP:" + _entityManager.GetPlayerHp()
-            + "\nMoney:" + _entityManager.PlayerMoney;
+            Stats.Text = frameRate.ToString("F2") + "\nWRLD:" + LevelManager.Instance.ActiveWorldNum() + "\nLVL:" + LevelManager.Instance.ActiveLevelNum() + "\nHP:" + EntityManager.Instance.GetPlayerHp()
+            + "\nMoney:" + EntityManager.Instance.PlayerMoney;
 #endif
 
             base.Update(gameTime);
@@ -243,13 +238,13 @@ namespace UpgradePlatformer
             GraphicsDevice.Clear(Color.Black);
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
-            _levelManager.Draw(_spriteBatch);
+            LevelManager.Instance.Draw(_spriteBatch);
 
             if (_stateMachine.currentState != 0) {
-                _entityManager.Draw(gameTime, _spriteBatch);
+                EntityManager.Instance.Draw(gameTime, _spriteBatch);
             }
 
-            _uiManager.Draw(gameTime, _spriteBatch);
+            UIManager.Instance.Draw(gameTime, _spriteBatch);
 
             _spriteBatch.End();
 

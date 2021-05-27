@@ -11,6 +11,11 @@ namespace UpgradePlatformer.UI
     public delegate void UIAction();
     class UIManager
     {
+        private static readonly Lazy<UIManager>
+            lazy =
+            new Lazy<UIManager>
+                (() => new UIManager());
+        public static UIManager Instance { get { return lazy.Value; } }
         List<UIElement> UIElements;
 
         public UIManager()
@@ -22,9 +27,9 @@ namespace UpgradePlatformer.UI
         /// Do some random stuff before draw
         /// </summary>
         /// <param name="gameTime">a gameTime Object</param>
-        public void Update(GameTime gameTime, EventManager eventManager)
+        public void Update(GameTime gameTime)
         {
-            Event ev = eventManager.Pop("MOUSE_DOWN");
+            Event ev = EventManager.Instance.Pop("MOUSE_DOWN");
 
             if (ev != null) ProcessClick(ev.MousePosition, ev.Data);
 
@@ -105,9 +110,8 @@ namespace UpgradePlatformer.UI
         /// Stores the Center Rectangle, really just for refrence
         /// </summary>
         private Rectangle _Center;
-        public UISprite(Texture2D texture, Rectangle position, Rectangle center, Vector2 origin, Color tintColor) : base(texture, position, origin, tintColor)
+        public UISprite(Rectangle position, Rectangle center, Vector2 origin, Color tintColor) : base(position, origin, tintColor)
         {
-            Texture = texture;
             Position = position;
             Center = center;
             Origin = origin;
@@ -158,51 +162,51 @@ namespace UpgradePlatformer.UI
                 // section B
                 tmp = renderSections[1, 0];
                 tmp.Location = new Point(x, renderRect.Top);
-                spriteBatch.Draw(Texture, tmp, renderSections[1, 0], TintColor, rotation, Origin, SpriteEffects.None, 0f);
+                spriteBatch.Draw(texture, tmp, renderSections[1, 0], TintColor, rotation, Origin, SpriteEffects.None, 0f);
 
                 for (int y = renderRect.Y + renderSections[0, 0].Height; y < renderRect.Bottom - renderSections[0, 2].Height; y += renderSections[1, 1].Height)
                 {
                     // section E
                     tmp = renderSections[1, 1];
                     tmp.Location = new Point(x, y);
-                    spriteBatch.Draw(Texture, tmp, renderSections[1, 1], TintColor, rotation, Origin, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(texture, tmp, renderSections[1, 1], TintColor, rotation, Origin, SpriteEffects.None, 0f);
                 }
                 // section H
                 tmp = renderSections[1, 2];
                 tmp.Location = new Point(x, renderRect.Bottom - renderSections[0, 2].Height);
-                spriteBatch.Draw(Texture, tmp, renderSections[1, 2], TintColor, rotation, Origin, SpriteEffects.None, 0f);
+                spriteBatch.Draw(texture, tmp, renderSections[1, 2], TintColor, rotation, Origin, SpriteEffects.None, 0f);
             }
             for (int y = renderRect.Y + renderSections[0, 0].Height; y < renderRect.Bottom - renderSections[0, 2].Height; y += renderSections[1, 1].Height)
             {
                 //Section D
                 tmp = renderSections[0, 1];
                 tmp.Location = new Point(renderRect.Left, y);
-                spriteBatch.Draw(Texture, tmp, renderSections[0, 1], TintColor, rotation, Origin, SpriteEffects.None, 0f);
+                spriteBatch.Draw(texture, tmp, renderSections[0, 1], TintColor, rotation, Origin, SpriteEffects.None, 0f);
 
                 //Section F
                 tmp = renderSections[2, 1];
                 tmp.Location = new Point(renderRect.Right - renderSections[2, 0].Width, y);
-                spriteBatch.Draw(Texture, tmp, renderSections[2, 1], TintColor, rotation, Origin, SpriteEffects.None, 0f);
+                spriteBatch.Draw(texture, tmp, renderSections[2, 1], TintColor, rotation, Origin, SpriteEffects.None, 0f);
             }
             //Section A
             tmp = renderSections[0, 0];
             tmp.Location = new Point(renderRect.Left, renderRect.Top);
-            spriteBatch.Draw(Texture, tmp, renderSections[0, 0], TintColor, rotation, Origin, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, tmp, renderSections[0, 0], TintColor, rotation, Origin, SpriteEffects.None, 0f);
 
             //Section C
             tmp = renderSections[0, 2];
             tmp.Location = new Point(renderRect.Left, renderRect.Bottom - renderSections[0, 2].Height);
-            spriteBatch.Draw(Texture, tmp, renderSections[0, 2], TintColor, rotation, Origin, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, tmp, renderSections[0, 2], TintColor, rotation, Origin, SpriteEffects.None, 0f);
 
             //Section G
             tmp = renderSections[2, 0];
             tmp.Location = new Point(renderRect.Right - renderSections[2, 0].Width, renderRect.Top);
-            spriteBatch.Draw(Texture, tmp, renderSections[2, 0], TintColor, rotation, Origin, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, tmp, renderSections[2, 0], TintColor, rotation, Origin, SpriteEffects.None, 0f);
 
             //Section I
             tmp = renderSections[2, 2];
             tmp.Location = new Point(renderRect.Right - renderSections[2, 0].Width, renderRect.Bottom - renderSections[0, 2].Height);
-            spriteBatch.Draw(Texture, tmp, renderSections[2, 2], TintColor, rotation, Origin, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, tmp, renderSections[2, 2], TintColor, rotation, Origin, SpriteEffects.None, 0f);
         }
     }
 }

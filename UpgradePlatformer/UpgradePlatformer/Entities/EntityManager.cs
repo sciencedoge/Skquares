@@ -16,6 +16,12 @@ namespace UpgradePlatformer.Entities
     //=================================================
     class EntityManager
     {
+        private static readonly Lazy<EntityManager>
+            lazy =
+            new Lazy<EntityManager>
+                (() => new EntityManager());
+        public static EntityManager Instance { get { return lazy.Value; } }
+
         //Fields
 
         //player and enemies
@@ -57,8 +63,6 @@ namespace UpgradePlatformer.Entities
             }
             return null;
         }
-        private LevelManager levelManager;
-        private UpgradeManager upgradeManager;
         private int playerMoney;
         private Level currentLevel;
         private PathfindingAI pathfind;
@@ -72,14 +76,11 @@ namespace UpgradePlatformer.Entities
         }
 
 
-        public EntityManager(Texture2D texture, GraphicsDeviceManager device,
-            LevelManager levelMan, UpgradeManager upgradeManager)
+        public EntityManager()
         {
             this.objects = new List<EntityObject>();
-            this.levelManager = levelMan;
-            this.upgradeManager = upgradeManager;
 
-            objects.Add((EntityObject)new UpgradeEntity(10, texture, new Rectangle(100, 300, 25, 25), upgradeManager.Root, upgradeManager));
+            objects.Add((EntityObject)new UpgradeEntity(10, new Rectangle(100, 300, 25, 25), UpgradeManager.Instance.Root));
 
             this.playerMoney = 0;
 
@@ -93,21 +94,21 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="eventManager"></param>
-        public void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
+        public void Update(GameTime gameTime)
         {
-            currentLevel = levelManager.ActiveLevel();
+            currentLevel = LevelManager.Instance.ActiveLevel();
             // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++) {
                 foreach (EntityObject obj in objects)
                 {
                     if (obj == null) continue;
-                    obj.Update(gameTime, eventManager, inputManager, levelManager);
-                    Intersects(obj, eventManager);
+                    obj.Update(gameTime);
+                    Intersects(obj);
                     playerMoney += obj.Intersects(objects);
                 }
                 if (player() != null)
                     if (player().CurrentHP <= 0)
-                        eventManager.Push(new Event("STATE_MACHINE", 2, new Point(0)));
+                        EventManager.Instance.Push(new Event("STATE_MACHINE", 2, new Point(0)));
                 pathfind.Update(this);
                 pathfind.UpdateCosts();
                 pathfind.MoveToPlayer();
@@ -144,7 +145,7 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Checks if an entity intersects with anything
         /// </summary>
-        public void Intersects(EntityObject o, EventManager em)
+        public void Intersects(EntityObject o)
         {
             if (!new List<EntityKind> { EntityKind.PLAYER, EntityKind.ENEMY}.Contains(o.Kind))
                 return;
@@ -161,8 +162,10 @@ namespace UpgradePlatformer.Entities
                 switch (t.CollisionKind) {
                     case 100:
                         obj.TakeDamage(1);
-                        if (obj == (LivingObject)player())
+                        if (obj == (LivingObject)player()) {
                             player().Velocity = new Vector2(0, -4);
+                            player().JumpsLeft = 0;
+                        }
                         break;
                     case 101:
                         if (intersection.Height > 0.5 * t.TileSize.Y)
@@ -218,7 +221,7 @@ namespace UpgradePlatformer.Entities
                         break;
                     case 103:
                         if (obj == (LivingObject)player())
-                            em.Push(new Event("WORLD_SHOW", (uint)levelManager.ActiveWorldNum() + 1, new Point(0)));
+                            EventManager.Instance.Push(new Event("WORLD_SHOW", (uint)LevelManager.Instance.ActiveWorldNum() + 1, new Point(0)));
                         break;
                     case 104:
 

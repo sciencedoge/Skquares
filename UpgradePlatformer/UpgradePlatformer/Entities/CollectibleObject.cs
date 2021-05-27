@@ -46,14 +46,14 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Creates a CollectibleObject object
         /// </summary>
-        public CollectibleObject(int value, Texture2D sprite, Rectangle hitbox, EntityKind kind) : base(kind)
+        public CollectibleObject(int value, Rectangle hitbox, EntityKind kind) : base(kind)
         {
             this.value = value;
             this.hitbox = hitbox;
             this.IsActive = true;
             this.spriteSize = hitbox.Size;
             this.sprite = new Sprite(
-                sprite, SpriteBounds,
+                SpriteBounds,
                 new Vector2(SpriteBounds.X - (SpriteBounds.Width / 2),
                 SpriteBounds.Y - (SpriteBounds.Height / 2)),
                 Color.White);
@@ -100,10 +100,7 @@ namespace UpgradePlatformer.Entities
             return 0;
         }
 
-        public override void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
-        {
-            
-        }
+        public override void Update(GameTime gameTime) { }
         public override int Intersects(List<EntityObject> objects) {
             int result = 0;
             foreach (EntityObject o in objects) result += Intersects(o);

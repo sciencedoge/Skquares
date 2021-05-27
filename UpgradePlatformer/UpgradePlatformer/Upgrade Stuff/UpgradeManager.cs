@@ -11,6 +11,11 @@ namespace UpgradePlatformer.Upgrade_Stuff
     //============================================
     class UpgradeManager
     {
+        private static readonly Lazy<UpgradeManager>
+            lazy =
+            new Lazy<UpgradeManager>
+                (() => new UpgradeManager());
+        public static UpgradeManager Instance { get { return lazy.Value; } }
         private Upgrade root;
 
         private List<Upgrade> possibleUpgrades;

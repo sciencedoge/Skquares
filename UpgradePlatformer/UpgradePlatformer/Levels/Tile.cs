@@ -25,7 +25,7 @@ namespace UpgradePlatformer.Levels
         public Rectangle Position;
         public bool Spawner;
 
-        public Tile(Texture2D texture, int kind, int rotation, int collision, int spawner, Vector2 tileSize, Tile above)
+        public Tile(int kind, int rotation, int collision, int spawner, Vector2 tileSize, Tile above)
         {
             Kind = kind;
             TileSize = tileSize;
@@ -38,20 +38,20 @@ namespace UpgradePlatformer.Levels
             if (Kind == 9 && above != null)
             {
                 if (above.Kind == 7) {
-                    Sprite = new Sprite(texture, TILE_SPRITE_CLOUD_BOT, TileCenter, COLORS[6]);
+                    Sprite = new Sprite(TILE_SPRITE_CLOUD_BOT, TileCenter, COLORS[6]);
                     Kind = 10;
                 }
             }
             else if (Kind == 7)
             {
-                if (above.Kind != 9 && !above.Spawner) Sprite = new Sprite(texture, TILE_SPRITE_CLOUD_MID, TileCenter, COLORS[kind - 1]);
-                else Sprite = new Sprite(texture, TILE_SPRITE_CLOUD, TileCenter, COLORS[kind - 1]);
+                if (above.Kind != 9 && !above.Spawner) Sprite = new Sprite(TILE_SPRITE_CLOUD_MID, TileCenter, COLORS[kind - 1]);
+                else Sprite = new Sprite(TILE_SPRITE_CLOUD, TileCenter, COLORS[kind - 1]);
             }
-            else if (Kind == 5) Sprite = new Sprite(texture, TILE_SPRITE_SPIKE, TileCenter, COLORS[kind - 1]);
+            else if (Kind == 5) Sprite = new Sprite(TILE_SPRITE_SPIKE, TileCenter, COLORS[kind - 1]);
             else if (Kind == 6)
-                Sprite = new Sprite(texture, TILE_SPRITE_GOAL, TileCenter, COLORS[kind - 1]);
+                Sprite = new Sprite(TILE_SPRITE_GOAL, TileCenter, COLORS[kind - 1]);
             else
-                Sprite = new Sprite(texture, TILE_SPRITE, TileCenter, COLORS[kind - 1]);
+                Sprite = new Sprite(TILE_SPRITE, TileCenter, COLORS[kind - 1]);
             Rotation = (MathF.PI * 0.5f) * rotation;
             CollisionKind = collision;
         }

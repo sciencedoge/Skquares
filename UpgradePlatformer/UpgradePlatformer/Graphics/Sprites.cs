@@ -9,7 +9,8 @@ namespace UpgradePlatformer.Graphics
     public class Sprite
     {
         public static bool Dim;
-        public Texture2D Texture;
+        public static Texture2D texture;
+        public static GraphicsDeviceManager graphics;
         public SpriteEffects effects = SpriteEffects.None;
         public Rectangle Position;
         public Vector2 Origin;
@@ -22,9 +23,8 @@ namespace UpgradePlatformer.Graphics
         /// <param name="position">the position of the texture on the sheet</param>
         /// <param name="origin">the center of the Sprite</param>
         /// <param name="tintColor">the color to tint the sprite</param>
-        public Sprite(Texture2D texture, Rectangle position, Vector2 origin, Color tintColor)
+        public Sprite(Rectangle position, Vector2 origin, Color tintColor)
         {
-            Texture = texture;
             Position = position;
             Origin = origin;
             TintColor = tintColor;
@@ -53,7 +53,7 @@ namespace UpgradePlatformer.Graphics
             Rectangle renderRect = Position;
             renderRect.Location = renderPosition + new Point(0, 40) + (Origin / 2).ToPoint();
             renderRect.Size = Size.ToPoint();
-            spriteBatch.Draw(Texture, renderRect, Position, c, rotation, Origin, effects, 0f);
+            spriteBatch.Draw(texture, renderRect, Position, c, rotation, Origin, effects, 0f);
         }
     }
 }

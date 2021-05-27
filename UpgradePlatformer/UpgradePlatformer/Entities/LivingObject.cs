@@ -149,7 +149,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="maxHp">max hp of the object</param>
         public LivingObject(int maxHp, int damage, Rectangle hitbox,
-            Texture2D texture, int jumpsLeft, EntityKind kind) : base(kind)
+            int jumpsLeft, EntityKind kind) : base(kind)
         {
             this.maxHp = maxHp;
             currentHp = maxHp;
@@ -160,7 +160,7 @@ namespace UpgradePlatformer.Entities
             this.jumpsLeft = jumpsLeft;
 
             this.sprite = new Sprite(
-                texture, SpriteBounds, 
+                SpriteBounds, 
                 new Vector2(SpriteBounds.X - (SpriteBounds.Width / 2),
                 SpriteBounds.Y - (SpriteBounds.Height / 2)),
                 Color.White);
@@ -212,7 +212,7 @@ namespace UpgradePlatformer.Entities
 
         public abstract void OnFloorCollide();
 
-        public virtual void ApplyGravity(LevelManager lm, EventManager em)
+        public virtual void ApplyGravity()
         {
             position += velocity;
             velocity += gravity;

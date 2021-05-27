@@ -11,19 +11,19 @@ namespace UpgradePlatformer.Upgrade_Stuff
     //===============================================
     class UpgradeStructure
     {
-        public UpgradeStructure(UpgradeManager manager)
+        public UpgradeStructure()
         {
-            manager.Add(1, UPGRADE_TYPE.XtraJump, 10);
-            manager.Add(1, UPGRADE_TYPE.Health, 10);
-            manager.Add(1, UPGRADE_TYPE.Weapon, 20);
-            manager.Add(1, UPGRADE_TYPE.Health, 30);
-            manager.Add(1, UPGRADE_TYPE.Health, 30);
-            manager.Add(1, UPGRADE_TYPE.Health, 40);
-            manager.Add(1, UPGRADE_TYPE.Health, 40);
-            manager.Add(1, UPGRADE_TYPE.Health, 50);
-            manager.Add(1, UPGRADE_TYPE.Health, 60);
-            manager.Add(1, UPGRADE_TYPE.Health, 70);
-            manager.Add(1, UPGRADE_TYPE.Health, 80);
+            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.XtraJump, 10);
+            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 10);
+            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Weapon, 20);
+            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 30);
+            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 30);
+            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 40);
+            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 40);
+            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 50);
+            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 60);
+            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 70);
+            UpgradeManager.Instance.Add(1, UPGRADE_TYPE.Health, 80);
 
         }
     }

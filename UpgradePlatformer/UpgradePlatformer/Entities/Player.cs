@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
+using UpgradePlatformer.Graphics;
 
 namespace UpgradePlatformer.Entities
 {
@@ -24,9 +25,6 @@ namespace UpgradePlatformer.Entities
 
         private static int maxJumps = 1;
 
-        //screen bounds stuff
-        private GraphicsDeviceManager _graphics;
-
         /// <summary>
         /// gets or sets the max jumps of the player
         /// </summary>
@@ -40,13 +38,10 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Creates a player object
         /// </summary>
-        public Player(int maxHp, int damage, Rectangle hitbox,
-            Texture2D texture, GraphicsDeviceManager device, int jumpsLeft)
-            : base(maxHp, damage, hitbox, texture, jumpsLeft, EntityKind.PLAYER)
+        public Player(int maxHp, int damage, Rectangle hitbox, int jumpsLeft)
+            : base(maxHp, damage, hitbox, jumpsLeft, EntityKind.PLAYER)
         {
             this.jumpsLeft = jumpsLeft;
-
-            this._graphics = device;
         }
 
         //Methods
@@ -80,11 +75,11 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="gt"></param>
         /// <param name="keys"></param>
-        public override void Update(GameTime gt, EventManager eventManager, InputManager inputManager, LevelManager levelManager)
+        public override void Update(GameTime gt)
         {
             if (IsActive)
             {
-                CheckForInput(inputManager, eventManager);
+                CheckForInput();
 
                 if (keyDown)
                 {
@@ -117,7 +112,7 @@ namespace UpgradePlatformer.Entities
                         }
                     }
                 }
-                ApplyGravity(levelManager, eventManager);
+                ApplyGravity();
                 hitbox.Location = position.ToPoint();
                 if (ducking)
                 {
@@ -139,27 +134,27 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Applies gravity to the player
         /// </summary>
-        public override void ApplyGravity(LevelManager lm, EventManager em)
+        public override void ApplyGravity()
         {
-            base.ApplyGravity(lm, em);
+            base.ApplyGravity();
 
-            if (position.Y > _graphics.PreferredBackBufferHeight - hitbox.Height + 9)
+            if (position.Y > Sprite.graphics.PreferredBackBufferHeight - hitbox.Height + 9)
             {
-                position.Y = _graphics.PreferredBackBufferHeight - hitbox.Height + 9;
+                position.Y = Sprite.graphics.PreferredBackBufferHeight - hitbox.Height + 9;
                 velocity.Y = 0;
             }
 
-            if (position.X > _graphics.PreferredBackBufferWidth) {
-                em.Push(new Event("LEVEL_SHOW", (uint)lm.ActiveLevelNum() + 1, new Point()));
+            if (position.X > Sprite.graphics.PreferredBackBufferWidth) {
+                EventManager.Instance.Push(new Event("LEVEL_SHOW", (uint)LevelManager.Instance.ActiveLevelNum() + 1, new Point()));
                 position.X = 0 + hitbox.Width;
             }
 
             if (position.X < 0) {
-                em.Push(new Event("LEVEL_SHOW", (uint)lm.ActiveLevelNum() - 1, new Point()));
-                position.X = _graphics.PreferredBackBufferWidth - hitbox.Width;
+                EventManager.Instance.Push(new Event("LEVEL_SHOW", (uint)LevelManager.Instance.ActiveLevelNum() - 1, new Point()));
+                position.X = Sprite.graphics.PreferredBackBufferWidth - hitbox.Width;
             }
 
-            if (position.Y >= _graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 2;
+            if (position.Y >= Sprite.graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 2;
         }
         
         public Vector2 GetVelocitySize()
@@ -180,11 +175,11 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// 
         /// </summary>
-        public void CheckForInput(InputManager inputManager, EventManager eventManager)
+        public void CheckForInput()
         {
-            inputManager.Update(eventManager);
-            Event dev = eventManager.Pop("KEY_DOWN");
-            Event uev = eventManager.Pop("KEY_UP");
+            InputManager.Instance.Update();
+            Event dev = EventManager.Instance.Pop("KEY_DOWN");
+            Event uev = EventManager.Instance.Pop("KEY_UP");
             if (dev != null)
             {
                 Keys down = (Keys)dev.Data;

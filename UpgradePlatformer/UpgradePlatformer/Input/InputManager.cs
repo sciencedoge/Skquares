@@ -7,6 +7,12 @@ using System.Text;
 namespace UpgradePlatformer.Input
 {
     class InputManager {
+        private static readonly Lazy<InputManager>
+            lazy =
+            new Lazy<InputManager>
+                (() => new InputManager());
+        public static InputManager Instance { get { return lazy.Value; } }
+
         public MouseState mouseState;
         public MouseState prevMouseState;
         public KeyboardState kbState;
@@ -22,7 +28,7 @@ namespace UpgradePlatformer.Input
         /// Updates the InputEvent List
         /// </summary>
         /// <param name="gameTime"></param>
-        public void Update(EventManager _eventManager)
+        public void Update()
         {
             prevMouseState = mouseState;
             mouseState = Mouse.GetState();
@@ -31,28 +37,28 @@ namespace UpgradePlatformer.Input
 
             if (prevMouseState.LeftButton != mouseState.LeftButton)
             {
-                _eventManager.Push(new Event(CheckChangeType(prevMouseState.LeftButton, "MOUSE_UP", "MOUSE_DOWN"), 0, mouseState.Position));
+                EventManager.Instance.Push(new Event(CheckChangeType(prevMouseState.LeftButton, "MOUSE_UP", "MOUSE_DOWN"), 0, mouseState.Position));
             }
             if (prevMouseState.RightButton != mouseState.RightButton)
             {
-                _eventManager.Push(new Event(CheckChangeType(prevMouseState.RightButton, "MOUSE_UP", "MOUSE_DOWN"), 1, mouseState.Position));
+                EventManager.Instance.Push(new Event(CheckChangeType(prevMouseState.RightButton, "MOUSE_UP", "MOUSE_DOWN"), 1, mouseState.Position));
             }
             if (prevMouseState.MiddleButton != mouseState.MiddleButton)
             {
-                _eventManager.Push(new Event(CheckChangeType(prevMouseState.MiddleButton, "MOUSE_UP", "MOUSE_DOWN"), 2, mouseState.Position));
+                EventManager.Instance.Push(new Event(CheckChangeType(prevMouseState.MiddleButton, "MOUSE_UP", "MOUSE_DOWN"), 2, mouseState.Position));
             }
             List<Keys> newKeys = new List<Keys>(kbState.GetPressedKeys());
             foreach (Keys k in prevKbState.GetPressedKeys())
             {
                 if (!newKeys.Contains(k))
                 {
-                    _eventManager.Push(new Event("KEY_UP", (uint)k, mouseState.Position));
+                    EventManager.Instance.Push(new Event("KEY_UP", (uint)k, mouseState.Position));
                 }
                 else newKeys.Remove(k);
             }
             foreach (Keys k in newKeys)
             {
-                _eventManager.Push(new Event("KEY_DOWN", (uint)k, mouseState.Position));
+                EventManager.Instance.Push(new Event("KEY_DOWN", (uint)k, mouseState.Position));
             }
         }
 

@@ -52,9 +52,9 @@ namespace UpgradePlatformer.UI
             Text.Centered = true;
             NormalTextColor = Color.White;
             InvertedTextColor = Color.Black;
-            NormalSprite = new UISprite(texture, BUTTON_NORMAL_SPRITE, BUTTON_NORMAL_CENTER, new Vector2(0, 0), Color.White);
-            ClickedSprite = new UISprite(texture, BUTTON_CLICKED_SPRITE, BUTTON_CLICKED_CENTER, new Vector2(0, 0), Color.White);
-            DisabledSprite = new UISprite(texture, BUTTON_DISABLED_SPRITE, BUTTON_DISABLED_CENTER, new Vector2(0, 0), Color.White);
+            NormalSprite = new UISprite(BUTTON_NORMAL_SPRITE, BUTTON_NORMAL_CENTER, new Vector2(0, 0), Color.White);
+            ClickedSprite = new UISprite(BUTTON_CLICKED_SPRITE, BUTTON_CLICKED_CENTER, new Vector2(0, 0), Color.White);
+            DisabledSprite = new UISprite(BUTTON_DISABLED_SPRITE, BUTTON_DISABLED_CENTER, new Vector2(0, 0), Color.White);
         }
 
         /// <summary>

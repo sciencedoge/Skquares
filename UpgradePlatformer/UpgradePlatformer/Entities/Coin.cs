@@ -16,8 +16,8 @@ namespace UpgradePlatformer.Entities
     class Coin : CollectibleObject
     {
         //Constructor
-        public Coin(int value, Texture2D texture, Rectangle hitbox)
-            : base(value, texture, hitbox, EntityKind.COIN) { }
+        public Coin(int value, Rectangle hitbox)
+            : base(value, hitbox, EntityKind.COIN) { }
 
         public void Update()
         {
