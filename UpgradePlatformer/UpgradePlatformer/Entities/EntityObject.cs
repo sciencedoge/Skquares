@@ -14,7 +14,7 @@ namespace UpgradePlatformer.Entities
 
         public bool IsActive;
         public abstract void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager,
-            SoundManager soundManager);
+            SoundManager soundManaer);
         public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
         public abstract int Intersects(List<EntityObject> objects);
         public EntityKind Kind;
