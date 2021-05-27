@@ -109,8 +109,10 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// Lists all of the upgrades
         /// purchased by the player
         /// </summary>
-        public List<Upgrade> CanBeLearned(Upgrade upgrade)
+        public List<Upgrade> CanBeLearned(Upgrade upgrade = null)
         { 
+            if (upgrade == null) 
+                upgrade = Root;
             //LRC Data pattern
             List<Upgrade> result = new List<Upgrade>();
 

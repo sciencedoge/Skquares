@@ -68,8 +68,7 @@ namespace UpgradePlatformer.Entities
         /// <returns></returns>
         private bool ValidIntersection(int totalMoney)
         {
-            UpgradeManager.Instance.EstablishPossibleList();
-            List<Upgrade> upgrades = UpgradeManager.Instance.CanBeLearned(UpgradeManager.Instance.Root);
+            List<Upgrade> upgrades = UpgradeManager.Instance.CanBeLearned();
            
             if (totalMoney - this.value < 0
                 && !upgrades.Contains(upgrade))
