@@ -16,7 +16,6 @@ namespace UpgradePlatformer.Entities
     class UpgradeEntity : CollectibleObject
     {
         private Upgrade upgrade;
-        private UpgradeManager upgradeManager;
 
         /// <summary>
         /// Creates a new Upgrade Entity object
@@ -69,8 +68,8 @@ namespace UpgradePlatformer.Entities
         /// <returns></returns>
         private bool ValidIntersection(int totalMoney)
         {
-            upgradeManager.EstablishPossibleList();
-            List<Upgrade> upgrades = upgradeManager.CanBeLearned(upgradeManager.Root);
+            UpgradeManager.Instance.EstablishPossibleList();
+            List<Upgrade> upgrades = UpgradeManager.Instance.CanBeLearned(UpgradeManager.Instance.Root);
            
             if (totalMoney - this.value < 0
                 && !upgrades.Contains(upgrade))
