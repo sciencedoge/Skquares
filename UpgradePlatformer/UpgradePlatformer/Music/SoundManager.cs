@@ -16,7 +16,12 @@ namespace UpgradePlatformer.Music
     //==================================================
     class SoundManager
     {
-        private ContentManager content;
+        private static readonly Lazy<SoundManager>
+            lazy =
+            new Lazy<SoundManager>
+                (() => new SoundManager());
+        public static SoundManager Instance { get { return lazy.Value; } }
+        public ContentManager content;
 
         private SoundEffect buttonClick;
         private SoundEffect jump;
@@ -26,16 +31,6 @@ namespace UpgradePlatformer.Music
         private Song fart;
         private Song star;
         private Song amogus;
-
-        /// <summary>
-        /// Creates a new SoundManager object
-        /// </summary>
-        /// <param name="content"></param>
-        public SoundManager(ContentManager content)
-        {
-            this.content = content;
-            LoadContent();
-        }
 
         /// <summary>
         /// Loads SFX and music
