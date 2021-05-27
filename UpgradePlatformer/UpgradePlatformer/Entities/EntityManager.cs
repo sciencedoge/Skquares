@@ -6,6 +6,7 @@ using System.Text;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.Upgrade_Stuff;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Entities
 {
@@ -104,11 +105,24 @@ namespace UpgradePlatformer.Entities
                     if (obj == null) continue;
                     obj.Update(gameTime);
                     Intersects(obj);
-                    playerMoney += obj.Intersects(objects);
+                    int gainedMoney = obj.Intersects(objects);
+                    
+                    if(gainedMoney > 0)
+                    {
+                        SoundManager.Instance.PlaySFX("coin");
+                        playerMoney += gainedMoney;
+                    }
+
+                    
                 }
                 if (player() != null)
                     if (player().CurrentHP <= 0)
-                        EventManager.Instance.Push(new Event("STATE_MACHINE", 2, new Point(0)));
+                    {
+                        SoundManager.Instance.PlayMusic("gameover");
+                        EventManager.Instance.Push(new Event("STATE_MACHINE", 2, new Point(0)));                      
+                    }
+
+                        
                 pathfind.Update(this);
                 pathfind.UpdateCosts();
                 pathfind.MoveToPlayer();
@@ -180,7 +194,11 @@ namespace UpgradePlatformer.Entities
                             if (t.Position.Top - intersection.Top == 0)
                             {
                                 temp.Y -= intersection.Height;
-                                obj.OnFloorCollide();
+                                if(obj.JumpsLeft == 0)
+                                {
+                                    SoundManager.Instance.PlaySFX("land");
+                                }
+                                obj.OnFloorCollide();                               
                             }
 
                             //moves player down
@@ -235,7 +253,11 @@ namespace UpgradePlatformer.Entities
                                 if (t.Position.Top - intersection.Top == 0)
                                 {
                                     temp.Y -= intersection.Height;
-                                    obj.OnFloorCollide();
+                                    if (obj.JumpsLeft == 0)
+                                    {
+                                        SoundManager.Instance.PlaySFX("land");
+                                    }
+                                    obj.OnFloorCollide();                                  
                                 }
 
                                 obj.Velocity = new Vector2(obj.Velocity.X, 0);

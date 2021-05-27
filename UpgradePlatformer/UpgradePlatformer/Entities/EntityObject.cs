@@ -6,6 +6,7 @@ using System.Text;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.Upgrade_Stuff;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Entities
 {

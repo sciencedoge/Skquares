@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.Input;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Entities
 {

@@ -29,14 +29,56 @@
 #begin Levels/clouds2.level_Finished
 /copy:Levels/clouds2.level_Finished
 
-#begin Levels/coinHeaven.level_Finished
-/copy:Levels/coinHeaven.level_Finished
-
 #begin Levels/clouds3.level_Finished
 /copy:Levels/clouds3.level_Finished
 
+#begin Levels/coinHeaven.level_Finished
+/copy:Levels/coinHeaven.level_Finished
+
 #begin Levels/DEATH_MENU.level_Finished
 /copy:Levels/DEATH_MENU.level_Finished
+
+#begin Music/allstar.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/allstar.mp3
+
+#begin Music/AMOGUS.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/AMOGUS.mp3
+
+#begin Music/button.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/button.wav
+
+#begin Music/coin.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/coin.wav
+
+#begin Music/fart.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/fart.mp3
+
+#begin Music/jump.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/jump.wav
+
+#begin Music/jumpland.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/jumpland.wav
 
 #begin SpriteSheet.png
 /importer:TextureImporter

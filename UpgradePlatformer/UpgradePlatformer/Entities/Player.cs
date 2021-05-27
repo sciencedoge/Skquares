@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.Graphics;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Entities
 {
@@ -100,6 +101,10 @@ namespace UpgradePlatformer.Entities
 
                     if (keyUp)
                     {
+                        if(jumpsLeft > 0)
+                        {
+                            SoundManager.Instance.PlaySFX("jump");
+                        }                       
                         //check for ground collision
                         if (jumpsLeft > 0 && velocity.Y >= -4f)
                         {
