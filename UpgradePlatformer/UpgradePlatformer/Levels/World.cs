@@ -16,7 +16,6 @@ namespace UpgradePlatformer.Levels
         public void Update(EntityManager em, Texture2D texture, GraphicsDeviceManager device) {
             if (activeLevel != _activeLevel) {
                 activeLevel = _activeLevel;
-                em.FlipPlayerSide(device);
                 em.Clean(false);
                 Levels[activeLevel].LoadEntities(em, texture, device, false);
             }

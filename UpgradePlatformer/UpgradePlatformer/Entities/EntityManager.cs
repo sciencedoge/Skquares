@@ -57,9 +57,6 @@ namespace UpgradePlatformer.Entities
             }
             return null;
         }
-        // private Player player;
-        // private List<Enemy> enemies;
-        // private List<Coin> coins;
         private LevelManager levelManager;
         private UpgradeManager upgradeManager;
         private int playerMoney;
@@ -108,63 +105,11 @@ namespace UpgradePlatformer.Entities
                     Intersects(obj, eventManager);
                     playerMoney += obj.Intersects(objects);
                 }
-                // if (player() != null) {
-                //     player().Update(gameTime, eventManager, inputManager, levelManager);
-                //     Intersects(player(), eventManager);
-                // }
-                
-                // foreach (Enemy e in enemies)
-                // {
-                //     e.Update(gameTime, levelManager, eventManager);
-                //     Intersects(e, eventManager);
-                // }
-
-                // foreach (Coin c in coins)
-                // {
-                //     c.Update();
-                //     playerMoney += c.Intersects(player);
-                // }
-                // if (player() != null)
-                //     player().Intersects(enemies());
-
-                // foreach(UpgradeEntity e in upgradeEntities)
-                // {
-                //     e.Update();
-                //     Upgrade newUpgrade = e.Intersects(player, playerMoney);
-
-                //     if(newUpgrade != null)
-                //     {
-                //         switch (newUpgrade.Type) 
-                //         {
-                //             case UPGRADE_TYPE.XtraJump:
-                //                 player.MaxJumps++;
-                //                 break;
-                //             case UPGRADE_TYPE.Health:
-                //                 player.MaxHP++;
-                //                 break;
-                //             case UPGRADE_TYPE.Weapon:
-                //                 player.Damage++;
-                //                 break;
-                //         }
-                //     }
-                // }
-
-                // if (player() != null)
-                //     player().Intersects(enemies);
                 pathfind.Update(this);
                 pathfind.UpdateCosts();
                 pathfind.MoveToPlayer();
                 pathfind.EnemyIntersection();
-            }
-                
-
-            
-            // if (player != null) {
-            //     if (player.CurrentHP <= 0)
-            //     {
-            //         eventManager.Push(new Event("STATE_MACHINE", 2, new Point(0, 0)));
-            //     }
-            // }                         
+            }                   
         }
 
         /// <summary>
@@ -179,32 +124,11 @@ namespace UpgradePlatformer.Entities
                 if (obj == null) continue;
                 obj.Draw(spriteBatch, gameTime);
             }
-            // if (player != null)
-            //     player.Draw(spriteBatch, gameTime);
-            // foreach(Enemy e in enemies)
-            // {
-            //     e.Draw(spriteBatch, gameTime);
-            // }
-            // foreach(Coin c in coins)
-            // {
-            //     c.Draw(spriteBatch, gameTime);
-            // }
         }
         
         public void Spawn(EntityObject obj) {
             if (obj != null)
                 objects.Add(obj);
-            // if (kind == 2)
-            // {
-            //     player = (Player)obj;
-            //     pathfind.player = player;
-            // }
-            // else if (kind == 1)
-            // {
-            //     enemies.Add((Enemy)obj);
-            //     pathfind.enemies = enemies;
-            // }
-            // else if (kind == 0) coins.Add((Coin)obj);
         }
 
         public void Clean(bool player) {
@@ -339,11 +263,6 @@ namespace UpgradePlatformer.Entities
         public void RespawnPlayer() {
             if (player() != null)
                 player().Respawn();
-        }
-        public void FlipPlayerSide(GraphicsDeviceManager graphicsDevice) {
-            // if (player != null)
-            //     player.Position = new Vector2(graphicsDevice.PreferredBackBufferWidth - (player.Position.X + player.Hitbox.Width), player.Position.Y);
-            // player.Velocity = new Vector2(0);
         }
 
         /// <summary>
