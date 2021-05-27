@@ -104,7 +104,16 @@ namespace UpgradePlatformer.Entities
                 {
                     if (obj == null) continue;
                     obj.Update(gameTime);
-                    Intersects(obj);
+                    if (obj is Pillar)
+                    {
+                        Pillar p = (Pillar)obj;
+
+                        playerMoney += p.Intersects(player());
+                    }
+                    else
+                    {
+                        Intersects(obj);
+                    }                    
                     int gainedMoney = obj.Intersects(objects);
                     
                     if(gainedMoney > 0)
