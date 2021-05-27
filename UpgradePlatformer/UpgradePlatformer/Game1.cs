@@ -124,7 +124,7 @@ namespace UpgradePlatformer
                 string result = "";
 
                 int cap = 0;
-                for (int i = 0; i < _entityManager.MaxPlayerHP(); i += _entityManager.MaxPlayerHP() / 10) {
+                for (float i = 0; i < _entityManager.MaxPlayerHP(); i += _entityManager.MaxPlayerHP() / 10) {
                     if (i < _entityManager.GetPlayerHp()) result += "=";
                     else result += " ";
                     if (cap++ > 10) break;
@@ -137,7 +137,7 @@ namespace UpgradePlatformer
             Rectangle bounds = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
 
             mainMenu = new UIGroup(new List<UIElement>{ TitleText, playButton, closeButton}, bounds);
-            pauseMenu = new UIGroup(new List<UIElement> { PauseText, playButton, closeButton }, bounds);
+            pauseMenu = new UIGroup(new List<UIElement> { PauseText, continueButton, closeButton }, bounds);
             deathMenu = new UIGroup(new List<UIElement> { playButton, closeButton }, bounds);
             topHud = new UIGroup(new List<UIElement> { HpText }, bounds);
 

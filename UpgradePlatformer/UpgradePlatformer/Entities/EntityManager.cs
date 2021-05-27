@@ -105,6 +105,9 @@ namespace UpgradePlatformer.Entities
                     Intersects(obj, eventManager);
                     playerMoney += obj.Intersects(objects);
                 }
+                if (player() != null)
+                    if (player().CurrentHP <= 0)
+                        eventManager.Push(new Event("STATE_MACHINE", 2, new Point(0)));
                 pathfind.Update(this);
                 pathfind.UpdateCosts();
                 pathfind.MoveToPlayer();

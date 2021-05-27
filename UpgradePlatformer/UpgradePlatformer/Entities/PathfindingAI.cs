@@ -16,6 +16,7 @@ namespace UpgradePlatformer.Entities
     class PathfindingAI
     {
         //fields
+        private float speed;
         public Player player;
         public List<Enemy> _enemies;
         public List<Enemy> enemies { get => _enemies; set { _enemies = value; relationships = new Vector2[enemies.Count, 1];} }
@@ -32,8 +33,8 @@ namespace UpgradePlatformer.Entities
         {
             this.enemies = enemies;
             this.player = player;
-
-            goombaAINum = 1f;
+            speed = 0.5f;
+            goombaAINum = speed;
             relationships = new Vector2[enemies.Count, 1];
         }
 
@@ -67,13 +68,13 @@ namespace UpgradePlatformer.Entities
                     if(enemies[i].X > player.X
                         && !enemies[i].Colliding)
                     {
-                        enemies[i].X -= 1f;
+                        enemies[i].X -= speed;
                         enemies[i].Flip = false;
                     }
                     else if(enemies[i].X < player.X
                         && !enemies[i].Colliding)
                     {
-                        enemies[i].X += 1f;
+                        enemies[i].X += speed;
                         enemies[i].Flip = true;
                     }
                     else
