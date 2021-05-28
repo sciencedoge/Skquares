@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpgradePlatformer", "UpgradePlatformer\UpgradePlatformer.csproj", "{41D984A5-9444-4338-92C0-577987E9EC47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpgradePlatformerAndroid", "UpgradePlatformerAndroid\UpgradePlatformerAndroid.csproj", "{7508FB43-A2E1-4570-9178-424AD2AF3993}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,12 +15,6 @@ Global
 		{41D984A5-9444-4338-92C0-577987E9EC47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41D984A5-9444-4338-92C0-577987E9EC47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41D984A5-9444-4338-92C0-577987E9EC47}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7508FB43-A2E1-4570-9178-424AD2AF3993}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7508FB43-A2E1-4570-9178-424AD2AF3993}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7508FB43-A2E1-4570-9178-424AD2AF3993}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{7508FB43-A2E1-4570-9178-424AD2AF3993}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7508FB43-A2E1-4570-9178-424AD2AF3993}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7508FB43-A2E1-4570-9178-424AD2AF3993}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
