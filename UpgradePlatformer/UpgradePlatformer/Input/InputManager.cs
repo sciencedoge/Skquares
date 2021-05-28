@@ -12,7 +12,6 @@ namespace UpgradePlatformer.Input
             new Lazy<InputManager>
                 (() => new InputManager());
         public static InputManager Instance { get { return lazy.Value; } }
-
         public MouseState mouseState;
         public MouseState prevMouseState;
         public KeyboardState kbState;
@@ -35,18 +34,15 @@ namespace UpgradePlatformer.Input
             prevKbState = kbState;
             kbState = Keyboard.GetState();
 
+            if (prevMouseState.Position != mouseState.Position)
+                EventManager.Instance.Push(new Event("MOUSE_MOVE", 0, mouseState.Position));
             if (prevMouseState.LeftButton != mouseState.LeftButton)
-            {
                 EventManager.Instance.Push(new Event(CheckChangeType(prevMouseState.LeftButton, "MOUSE_UP", "MOUSE_DOWN"), 0, mouseState.Position));
-            }
             if (prevMouseState.RightButton != mouseState.RightButton)
-            {
                 EventManager.Instance.Push(new Event(CheckChangeType(prevMouseState.RightButton, "MOUSE_UP", "MOUSE_DOWN"), 1, mouseState.Position));
-            }
             if (prevMouseState.MiddleButton != mouseState.MiddleButton)
-            {
                 EventManager.Instance.Push(new Event(CheckChangeType(prevMouseState.MiddleButton, "MOUSE_UP", "MOUSE_DOWN"), 2, mouseState.Position));
-            }
+
             List<Keys> newKeys = new List<Keys>(kbState.GetPressedKeys());
             foreach (Keys k in prevKbState.GetPressedKeys())
             {
