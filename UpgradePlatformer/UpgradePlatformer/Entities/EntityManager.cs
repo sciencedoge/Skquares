@@ -30,6 +30,7 @@ namespace UpgradePlatformer.Entities
 
         public List<Enemy> enemies()
         {
+  
             List<Enemy> result = new List<Enemy>();
 
             foreach (EntityObject obj in objects)
@@ -41,6 +42,7 @@ namespace UpgradePlatformer.Entities
 
             return result;
         }
+       
         public List<Coin> coins()
         {
             List<Coin> result = new List<Coin>();
@@ -109,8 +111,8 @@ namespace UpgradePlatformer.Entities
                         {
                             obj.Update(gameTime);
                             pathfind.Update(this);
-                            pathfind.UpdateCosts();
-                            pathfind.MoveToPlayer();
+                            pathfind.UpdateCosts();                          
+                            pathfind.MoveToPlayer();                           
                         }
                     }
                     else
@@ -303,8 +305,8 @@ namespace UpgradePlatformer.Entities
         public Rectangle GetTempHitbox(LivingObject obj)
         {
             return new Rectangle(
-                new Point(obj.Hitbox.X,
-                obj.Hitbox.Y),
+                new Point((int)obj.X,
+                (int)obj.Y),
                 new Point(obj.Hitbox.Width,
                 obj.Hitbox.Height));
         }
