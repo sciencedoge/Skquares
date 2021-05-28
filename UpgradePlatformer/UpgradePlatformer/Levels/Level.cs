@@ -101,7 +101,7 @@ namespace UpgradePlatformer.Levels
                     }
                     if (q) continue;
                     EntityObject o = null;
-                    if (t.Kind == 3) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location, new Point(40, 40)), UpgradeManager.Instance.CanBeLearned()[0], t);
+                    if (t.Kind == 3) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location, new Point(15, 15)), UpgradeManager.Instance.CanBeLearned()[0], t);
 #if DEBUG
                     else if (t.Kind == 2 && player) o = (EntityObject)new Player(int.MaxValue, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #else
