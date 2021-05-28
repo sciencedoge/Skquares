@@ -183,12 +183,12 @@ namespace UpgradePlatformer.Entities
         {
             if (cooldown != 0)
                 return;
-            cooldown = cooldownTime;
             this.currentHp -= amount;
             if (CurrentHP <= 0)
             {
                 IsActive = false;
             }
+            cooldown = cooldownTime;          
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace UpgradePlatformer.Entities
         public override void Draw(SpriteBatch sb, GameTime gt)
         {
             if (IsActive)
-            {
+            {          
                 sprite.Draw(sb, hitbox.Location, 0, spriteSize.ToVector2());
             }
         }
@@ -217,10 +217,7 @@ namespace UpgradePlatformer.Entities
             position += velocity;
             velocity += gravity;
 
-            velocity.X *= 0.70f;
-
-            cooldown --;
-            cooldown = Math.Max(cooldown, 0);
+            velocity.X *= 0.70f;            
         }
         
         public void resetPosition(){

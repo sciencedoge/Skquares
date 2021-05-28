@@ -79,6 +79,9 @@ namespace UpgradePlatformer.Entities
         {
             if (IsActive)
             {
+                cooldown--;
+                cooldown = Math.Max(cooldown, 0);
+
                 CheckForInput();
 
                 if (keyDown)

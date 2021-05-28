@@ -100,6 +100,7 @@ namespace UpgradePlatformer.Entities
             for (int i = 0; i < 5; i ++) {
                 foreach (EntityObject obj in objects)
                 {
+                    if (obj.IsActive == false) continue;
                     if (obj == null) continue;
                     obj.Update(gameTime);
                     if (obj is Pillar)
@@ -190,7 +191,10 @@ namespace UpgradePlatformer.Entities
                         break;
                     case 101:
                         if (intersection.Height > 0.5 * t.TileSize.Y)
-                            obj.TakeDamage(obj.MaxHP);
+                        {
+                            obj.CurrentHP = 0;
+                            obj.IsActive = false;
+                        }                           
                         break;
                     case 102:
                         //checks conditions to move the player up or down
