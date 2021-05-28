@@ -101,6 +101,9 @@ namespace UpgradePlatformer.Entities
                         Joystick.X = -1;
                     }
                     velocity.X += speedX * Joystick.X;
+                    sprite.effects = SpriteEffects.None;
+                    if (Joystick.X > 0)
+                        sprite.effects = SpriteEffects.FlipHorizontally;
 
                     if (keyUp)
                     {
@@ -200,9 +203,6 @@ namespace UpgradePlatformer.Entities
             if (jev != null)
                 Joystick = jev.MousePosition.ToVector2() / 5;
             //Joystick *= .5;
-            sprite.effects = SpriteEffects.None;
-            if (Joystick.X > 0)
-                sprite.effects = SpriteEffects.FlipHorizontally;
         }
 
         /// <summary>
