@@ -59,6 +59,7 @@ namespace UpgradePlatformer
             Sprite.graphics = _graphics;
             
             structure = new UpgradeStructure();
+            new LevelManager();
 
             // setup sound manager
             SoundManager.Instance.content = Content;

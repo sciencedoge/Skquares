@@ -23,6 +23,7 @@ namespace UpgradePlatformer.Entities
         //Fields
         private const int NORMAL_HITBOX_WIDTH = 25, NORMAL_HITBOX_HEIGHT = 25, DUCK_HITBOX_HEIGHT = 15, DUCK_HITBOX_WIDTH = 27;
         private bool keyUp, keyDown, keyLeft, keyRight;
+        private Vector2 Joystick;
         private bool ducking;
 
         private static int maxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.XtraJump) + 1;
@@ -93,13 +94,13 @@ namespace UpgradePlatformer.Entities
                     ducking = false;
                     if (keyRight)
                     {
-                        velocity.X += speedX;
+                        Joystick.X = 1;
                     }
-
                     if (keyLeft)
                     {
-                        velocity.X -= speedX;
+                        Joystick.X = -1;
                     }
+                    velocity.X += speedX * Joystick.X;
 
                     if (keyUp)
                     {
@@ -129,14 +130,6 @@ namespace UpgradePlatformer.Entities
                 spriteSize = (hitbox.Size.ToVector2() * GetVelocitySize()).ToPoint();
             }           
         }
-        
-        /// <summary>
-        /// Updates the gravity of the player
-        /// </summary>
-        /// <param name="gt"></param>
-        // public override void Update(GameTime gt, LevelManager lm, EventManager em)
-        // {
-        // }
 
         /// <summary>
         /// Applies gravity to the player
@@ -187,6 +180,7 @@ namespace UpgradePlatformer.Entities
             InputManager.Instance.Update();
             Event dev = EventManager.Instance.Pop("KEY_DOWN");
             Event uev = EventManager.Instance.Pop("KEY_UP");
+            Event jev = EventManager.Instance.Pop("GAME_PAD_JOYSTICK");
             if (dev != null)
             {
                 Keys down = (Keys)dev.Data;
@@ -203,6 +197,9 @@ namespace UpgradePlatformer.Entities
                 else if (up == Keys.S) keyDown = false;
                 else if (up == Keys.D) keyRight = false;
             }
+            if (jev != null)
+                Joystick = jev.MousePosition.ToVector2() / 5;
+            //Joystick *= .5;
         }
         
         /// <summary>

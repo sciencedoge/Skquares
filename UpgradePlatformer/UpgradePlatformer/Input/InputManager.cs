@@ -16,11 +16,14 @@ namespace UpgradePlatformer.Input
         public MouseState prevMouseState;
         public KeyboardState kbState;
         public KeyboardState prevKbState;
+        public GamePadState padState;
+        public GamePadState prevPadState;
 
         public InputManager()
         {
             mouseState = new MouseState();
             kbState = new KeyboardState();
+            padState = new GamePadState();
         }
 
         /// <summary>
@@ -33,6 +36,13 @@ namespace UpgradePlatformer.Input
             mouseState = Mouse.GetState();
             prevKbState = kbState;
             kbState = Keyboard.GetState();
+            prevPadState = padState;
+            padState = GamePad.GetState(0);
+
+            EventManager.Instance.Push(new Event("GAME_PAD_JOYSTICK", 0, (padState.ThumbSticks.Left * 5).ToPoint()));
+
+            if (prevPadState.Buttons.A != padState.Buttons.A)
+                EventManager.Instance.Push(new Event(CheckChangeType(prevPadState.Buttons.A, "KEY_UP", "KEY_DOWN"), (uint)Keys.W, mouseState.Position));
 
             if (prevMouseState.Position != mouseState.Position)
                 EventManager.Instance.Push(new Event("MOUSE_MOVE", 0, mouseState.Position));

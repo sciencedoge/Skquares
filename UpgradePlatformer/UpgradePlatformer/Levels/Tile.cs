@@ -15,6 +15,8 @@ namespace UpgradePlatformer.Levels
         private static Rectangle TILE_SPRITE_CLOUD_MID = new Rectangle(32, 45, 16, 16);
         private static Rectangle TILE_SPRITE_CLOUD_BOT = new Rectangle(16, 45, 16, 16);
         private static Rectangle TILE_SPRITE_SPIKE = new Rectangle(32, 13, 16, 16);
+        private static Rectangle TILE_SPRITE_LAVA_TOP = new Rectangle(0, 45, 16, 16);
+        private static Rectangle TILE_SPRITE_LAVA_BOT = new Rectangle(0, 61, 16, 16);
         private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.White,  Color.White,  Color.White, Color.Orange, Color.Transparent};
         private Sprite Sprite;
         private Vector2 TileCenter;
@@ -37,10 +39,17 @@ namespace UpgradePlatformer.Levels
             TileCenter = new Vector2(TileSize.X / 2, TileSize.Y / 2);
             if (Kind == 9 && above != null)
             {
-                if (above.Kind == 7) {
+                if (above.Kind == 7)
+                {
                     Sprite = new Sprite(TILE_SPRITE_CLOUD_BOT, TileCenter, COLORS[6]);
                     Kind = 10;
                 }
+            }
+            else if (Kind == 8)
+            {
+                if (above == null) Sprite = new Sprite(TILE_SPRITE_LAVA_TOP, TileCenter, COLORS[6]);
+                if (above.Kind != 9 && !above.Spawner) Sprite = new Sprite(TILE_SPRITE_LAVA_BOT, TileCenter, COLORS[6]);
+                else Sprite = new Sprite(TILE_SPRITE_LAVA_TOP, TileCenter, COLORS[6]);
             }
             else if (Kind == 7)
             {
