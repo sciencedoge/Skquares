@@ -80,6 +80,12 @@
 /processorParam:Quality=Best
 /build:Music/jumpland.wav
 
+#begin Music/Sigh.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Sigh.mp3
+
 #begin SpriteSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor
