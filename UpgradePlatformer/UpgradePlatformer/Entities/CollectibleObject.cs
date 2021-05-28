@@ -25,6 +25,8 @@ namespace UpgradePlatformer.Entities
         protected Rectangle hitbox;
         protected Point spriteSize;
 
+        protected Tile tile;
+
         //properties
         /// <summary>
         /// returns the value of the
@@ -47,12 +49,13 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Creates a CollectibleObject object
         /// </summary>
-        public CollectibleObject(int value, Rectangle hitbox, EntityKind kind) : base(kind)
+        public CollectibleObject(int value, Rectangle hitbox, EntityKind kind, Tile t) : base(kind)
         {
             this.value = value;
             this.hitbox = hitbox;
             this.IsActive = true;
             this.spriteSize = hitbox.Size;
+            tile = t;
         }
         
         public void UpdateSprite() {
@@ -94,6 +97,7 @@ namespace UpgradePlatformer.Entities
                 {
                     //the coin is no longer active
                     IsActive = false;
+                    LevelManager.Instance.Collect(tile);
                     return value;
                 }
                 else

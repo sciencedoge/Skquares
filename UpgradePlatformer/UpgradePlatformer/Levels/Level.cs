@@ -15,6 +15,8 @@ namespace UpgradePlatformer.Levels
         public String Name;
         int TileWidth, TileHeight;
         Tile[,] TileMap;
+
+        public List<LevelCollectedEntity> Collected;
         public Tile[,] Tiles
         {
             get { return TileMap; }
@@ -47,6 +49,7 @@ namespace UpgradePlatformer.Levels
 
         public Level(String name)
         {
+            Collected = new List<LevelCollectedEntity>();
             Load(name);
         }
 
@@ -92,15 +95,20 @@ namespace UpgradePlatformer.Levels
                     Tile t = Tiles[x, y];
                     if (!t.Spawner)
                         continue;
+                    bool q = false;
+                    foreach (LevelCollectedEntity e in Collected) {
+                        if (e.tile == t) q = true;
+                    }
+                    if (q) continue;
                     EntityObject o = null;
-                    if (t.Kind == 3) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location, new Point(40, 40)), UpgradeManager.Instance.CanBeLearned()[0]);
+                    if (t.Kind == 3) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location, new Point(40, 40)), UpgradeManager.Instance.CanBeLearned()[0], t);
 #if DEBUG
                     else if (t.Kind == 2 && player) o = (EntityObject)new Player(int.MaxValue, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #else
                     else if (t.Kind == 2 && player) o = (EntityObject)new Player(3, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #endif
                     else if (t.Kind == 1) o = (EntityObject)new Enemy(10, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 1);
-                    else if (t.Kind == 0) o = (EntityObject)new Coin(1, new Rectangle(t.Position.Location, new Point(15, 15)));
+                    else if (t.Kind == 0) o = (EntityObject)new Coin(1, new Rectangle(t.Position.Location, new Point(15, 15)), t);
                     if (o != null)
                         EntityManager.Instance.Spawn(o);
                 }

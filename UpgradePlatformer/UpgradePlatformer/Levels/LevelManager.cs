@@ -66,6 +66,14 @@ namespace UpgradePlatformer.Levels
         {
             SetWorld(activeWorld - 1);
         }
+        
+        /// <summary>
+        /// adds a tile to the list
+        /// </summary>
+        /// <param name="t"></param>
+        public void Collect(Tile t) {
+            ActiveLevel().Collected.Add(new LevelCollectedEntity(t));
+        }
 
         public void SetLevel(int id) => ActiveWorld().SetLevel(id);
         public List<Tile> spawners() => Worlds[activeWorld].GetSpawners();

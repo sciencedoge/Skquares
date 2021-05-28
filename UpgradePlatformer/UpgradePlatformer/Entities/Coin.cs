@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using UpgradePlatformer.Levels;
 
 namespace UpgradePlatformer.Entities
 {
@@ -16,8 +17,8 @@ namespace UpgradePlatformer.Entities
     class Coin : CollectibleObject
     {
         //Constructor
-        public Coin(int value, Rectangle hitbox)
-            : base(value, hitbox, EntityKind.COIN) 
+        public Coin(int value, Rectangle hitbox, Tile t)
+            : base(value, hitbox, EntityKind.COIN, t) 
         {
             SpriteBounds = new Rectangle(0, 7, 5, 5);
             UpdateSprite();

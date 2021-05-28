@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Upgrade_Stuff;
+using UpgradePlatformer.Levels;
 
 namespace UpgradePlatformer.Entities
 {
@@ -24,8 +25,8 @@ namespace UpgradePlatformer.Entities
         /// <param name="texture">texture of the upgrade</param>
         /// <param name="hitbox">hitbox of the entity</param>
         /// <param name="upgrade">the actual upgrade</param>
-        public Pillar(int cost, Rectangle hitbox, Upgrade upgrade)
-            :base(-cost, hitbox, EntityKind.UPGRADE)
+        public Pillar(int cost, Rectangle hitbox, Upgrade upgrade, Tile t)
+            :base(-cost, hitbox, EntityKind.UPGRADE, t)
         {
             this.upgrade = upgrade;
             this.SpriteBounds = new Rectangle(0, 45, 16, 16);
@@ -45,6 +46,7 @@ namespace UpgradePlatformer.Entities
         /// <returns></returns>
         public override int Intersects(EntityObject o)
         {
+            if (o == null) return 0;
             if (o.Kind != EntityKind.PLAYER) return 0;
             LivingObject obj = (LivingObject)o;
             if (IsActive && obj != null)
