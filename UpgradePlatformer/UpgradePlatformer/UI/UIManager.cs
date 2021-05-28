@@ -69,7 +69,21 @@ namespace UpgradePlatformer.UI
             }
             return false;
         }
+        public void MouseMove(Point position) {
+            foreach (UIElement e in UIElements)
+            {
+                e.Focused = false;
+                if (e.Bounds.Contains(position) && e.IsActive)
+                {
+                    e.WhenMoved(position - e.Bounds.Location);
+                }
+            }
+        }
 
+        /// <summary>
+        /// adds a uielement to the list
+        /// </summary>
+        /// <param name="element">the element to add</param>
         public void Add(UIElement element)
         {
             UIElements.Add(element);

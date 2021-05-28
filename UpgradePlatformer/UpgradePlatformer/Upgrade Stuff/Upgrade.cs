@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UpgradePlatformer.Entities;
 
 namespace UpgradePlatformer.Upgrade_Stuff
 {
@@ -67,8 +68,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// </summary>
         public bool CanLearn
         {
-            get { return canBeLearned; }
-            set { canBeLearned = value; }
+            get => cost <= EntityManager.Instance.PlayerMoney;
         }
 
         /// <summary>

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace UpgradePlatformer.Input
 {
-    public delegate bool EventAction(uint Data);
+    public delegate bool EventAction(Event e);
 
     class EventManager
     {
@@ -39,7 +39,7 @@ namespace UpgradePlatformer.Input
         {
             foreach (EventListener el in Listeners)
                 if (el.LookingFor == e.Kind)
-                    if (el.Action(e.Data))
+                    if (el.Action(e))
                         return;
             Events.Insert(0, e);
             if (Events.Count > MAX_EVENTS) Events.RemoveAt(Events.Count - 1);
@@ -97,7 +97,7 @@ namespace UpgradePlatformer.Input
     /// - KEY_UP
     ///    - Key Value in Some encoding
     /// </summary>
-    class Event
+    public class Event
     {
         public String Kind;
         public uint Data;

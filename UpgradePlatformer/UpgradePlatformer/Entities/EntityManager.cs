@@ -80,9 +80,7 @@ namespace UpgradePlatformer.Entities
         public EntityManager()
         {
             this.objects = new List<EntityObject>();
-
-            objects.Add((EntityObject)new Pillar(10, new Rectangle(100, 300, 25, 25), UpgradeManager.Instance.Root));
-
+            
             this.playerMoney = 0;
 
             pathfind = new PathfindingAI(enemies(), player());

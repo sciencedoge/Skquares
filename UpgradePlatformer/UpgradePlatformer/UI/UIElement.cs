@@ -8,6 +8,8 @@ namespace UpgradePlatformer.UI
 {
     abstract class UIElement
     {
+        public UIElement nextFocus, prevFocus;
+        public bool Focused = false;
         public bool IsActive = true;
         public Rectangle Bounds;
         
@@ -28,6 +30,14 @@ namespace UpgradePlatformer.UI
         /// </summary>
         /// <param name="at">where the button UIElement was clicked 0,0 being the top corner</param>
         public abstract void WhenClicked(Point at);
+
+        /// <summary>
+        ///  updates the focused uielements
+        /// </summary>
+        /// <param name="at"></param>
+        public virtual void WhenMoved(Point at) {
+            Focused = true;
+        }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

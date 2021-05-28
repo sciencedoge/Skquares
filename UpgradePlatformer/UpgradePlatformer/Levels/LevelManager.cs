@@ -35,7 +35,7 @@ namespace UpgradePlatformer.Levels
             _activeWorld = 0;
             Load(new List<string>{"DEATH_MENU"}, 0);
             Load(new List<string>{"clouds2", "clouds1", "clouds3"}, 0);
-            Load(new List<string>{"cave", "coinHeaven"}, 1);
+            Load(new List<string>{"cave", "coinHeaven"}, 0);
         }
 
         public void Load(List<String> Names, int level)
@@ -65,6 +65,14 @@ namespace UpgradePlatformer.Levels
         public void Prev()
         {
             SetWorld(activeWorld - 1);
+        }
+        
+        /// <summary>
+        /// adds a tile to the list
+        /// </summary>
+        /// <param name="t"></param>
+        public void Collect(Tile t) {
+            ActiveLevel().Collected.Add(new LevelCollectedEntity(t));
         }
 
         public void SetLevel(int id) => ActiveWorld().SetLevel(id);

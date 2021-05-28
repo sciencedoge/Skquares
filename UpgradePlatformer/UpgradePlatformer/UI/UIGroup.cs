@@ -22,6 +22,17 @@ namespace UpgradePlatformer.UI
             }
         }
 
+        public override void WhenMoved(Point position)
+        {
+            foreach (UIElement e in UIElements)
+            {
+                e.Focused = false;
+                if (e.Bounds.Contains(position) && e.IsActive)
+                {
+                    e.WhenMoved(position - e.Bounds.Location);
+                }
+            }
+        }
         public override void WhenClicked(Point position)
         {
             foreach (UIElement e in UIElements)

@@ -109,7 +109,7 @@ namespace UpgradePlatformer
             });
             continueButton.Text.Text = "Continue";
 
-            UIText TitleText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.White);
+            UIText TitleText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.Black);
             TitleText.Text = "platformergamething";
             TitleText.Centered = true;
 
@@ -148,50 +148,58 @@ namespace UpgradePlatformer
             UIManager.Instance.Add(topHud);
 
             // create event listeners
-            EventAction Action_Button_Press = new EventAction((uint e) =>
+            EventAction Action_Button_Press = new EventAction((Event e) =>
             {
-                if (e == 0)
+                if (e.Data == 0)
                     EventManager.Instance.Push(new Event("WORLD_SHOW", 1, new Point(0, 0)));
-                _stateMachine.SetFlag((int)e);
+                _stateMachine.SetFlag((int)e.Data);
                 return true;
             });
             EventManager.Instance.AddListener(Action_Button_Press, "STATE_MACHINE");
 
-            EventAction Action_State_Machine = new EventAction((uint e) =>
+            EventAction Action_State_Machine = new EventAction((Event e) =>
             {
-                if (e == (uint)Keys.Escape) EventManager.Instance.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
-                else if (e == (uint)Keys.Enter && (_stateMachine.currentState != 1)) EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
+                if (e.Data == (uint)Keys.Escape) EventManager.Instance.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
+                else if (e.Data == (uint)Keys.Enter && (_stateMachine.currentState != 1)) EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
 #if DEBUG
                 else if (_stateMachine.currentState == 0) return false;
-                else if (e == (uint)Keys.Q) LevelManager.Instance.Prev();
-                else if (e == (uint)Keys.E) LevelManager.Instance.Next();
+                else if (e.Data == (uint)Keys.Q) LevelManager.Instance.Prev();
+                else if (e.Data == (uint)Keys.E) LevelManager.Instance.Next();
 #endif
                 else return false;
                 return true;
             });
             EventManager.Instance.AddListener(Action_State_Machine, "KEY_DOWN");
 
-            EventAction Action_World_Show = new EventAction((uint e) =>
+            EventAction Action_World_Show = new EventAction((Event e) =>
             {
-                LevelManager.Instance.SetWorld((int)e);
+                LevelManager.Instance.SetWorld((int)e.Data);
                 return true;
             });
             EventManager.Instance.AddListener(Action_World_Show, "WORLD_SHOW");
 
-            EventAction Action_Level_Show = new EventAction((uint e) =>
+            EventAction Action_Level_Show = new EventAction((Event e) =>
             {
-                LevelManager.Instance.SetLevel((int)e);
+                LevelManager.Instance.SetLevel((int)e.Data);
                 return true;
             });
             EventManager.Instance.AddListener(Action_Level_Show, "LEVEL_SHOW");
 
-            EventAction Action_Quit_Game = new EventAction((uint e) =>
+            EventAction Action_Quit_Game = new EventAction((Event e) =>
             {
                 Exit();
                 return true;
             });
 
             EventManager.Instance.AddListener(Action_Quit_Game, "QUIT");
+
+            EventAction Action_Mouse_Move = new EventAction((Event e) =>
+            {
+                UIManager.Instance.MouseMove(e.MousePosition);
+                return true;
+            });
+
+            EventManager.Instance.AddListener(Action_Mouse_Move, "MOUSE_MOVE");
 
 #if DEBUG
             Stats = new UIText(_font, new Rectangle(0, 40, 0, 0), 1, Color.White);
@@ -221,6 +229,8 @@ namespace UpgradePlatformer
             topHud.IsActive    = _stateMachine.currentState == 1;
             pauseMenu.IsActive = _stateMachine.currentState == 2;
             deathMenu.IsActive = _stateMachine.currentState == 3;
+            Sprite.Dim         = _stateMachine.currentState == 2
+                              || _stateMachine.currentState == 3;
 
 #if DEBUG
             if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
@@ -231,7 +241,6 @@ namespace UpgradePlatformer
             Stats.Text = frameRate.ToString("F2") + "\nWRLD:" + LevelManager.Instance.ActiveWorldNum() + "\nLVL:" + LevelManager.Instance.ActiveLevelNum() + "\nHP:" + EntityManager.Instance.GetPlayerHp()
             + "\nMoney:" + EntityManager.Instance.PlayerMoney;
 #endif
-
             base.Update(gameTime);
         }
 

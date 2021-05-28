@@ -8,8 +8,11 @@ using UpgradePlatformer.Entities;
 
 namespace UpgradePlatformer.Levels
 {
-    class LevelCollectedEntities
+    class LevelCollectedEntity
     {
-
+        public Tile tile;
+        public LevelCollectedEntity(Tile t) {
+            tile = t;
+        }
     }
 }
