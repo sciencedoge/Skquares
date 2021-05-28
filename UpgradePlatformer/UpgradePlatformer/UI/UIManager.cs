@@ -16,7 +16,9 @@ namespace UpgradePlatformer.UI
             new Lazy<UIManager>
                 (() => new UIManager());
         public static UIManager Instance { get { return lazy.Value; } }
+        
         List<UIElement> UIElements;
+        public UIElement focused;
 
         public UIManager()
         {
@@ -69,10 +71,10 @@ namespace UpgradePlatformer.UI
             }
             return false;
         }
-        public void MouseMove(Point position) {
+        public void MouseMove(Point position)
+        {
             foreach (UIElement e in UIElements)
             {
-                e.Focused = false;
                 if (e.Bounds.Contains(position) && e.IsActive)
                 {
                     e.WhenMoved(position - e.Bounds.Location);
@@ -87,6 +89,36 @@ namespace UpgradePlatformer.UI
         public void Add(UIElement element)
         {
             UIElements.Add(element);
+        }
+
+        public void Nav(bool reverse)
+        {
+            focused.Focused = false;
+            if (reverse)
+            {
+                focused.prevFocus.Focused = true;
+                focused = focused.prevFocus;
+                return;
+            }
+            focused.nextFocus.Focused = true;
+            focused = focused.nextFocus;
+        }
+
+        public static void SetupFocusLoop(List<UIElement> elements)
+        {
+            if (elements.Count == 2)
+            {
+                elements[0].nextFocus = elements[1];
+                elements[1].prevFocus = elements[0];
+            }
+            for (int i = 1; i < elements.Count - 1; i++)
+            {
+                elements[i - 1].nextFocus = elements[i];
+                elements[i].prevFocus = elements[i - 1];
+            }
+            elements[elements.Count - 1].nextFocus = elements[0];
+            elements[0].prevFocus = elements[elements.Count - 1];
+            return;
         }
     }
 

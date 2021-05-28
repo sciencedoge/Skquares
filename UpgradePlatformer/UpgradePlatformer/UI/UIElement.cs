@@ -37,6 +37,7 @@ namespace UpgradePlatformer.UI
         /// <param name="at"></param>
         public virtual void WhenMoved(Point at) {
             Focused = true;
+            UIManager.Instance.focused = this;
         }
 
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
