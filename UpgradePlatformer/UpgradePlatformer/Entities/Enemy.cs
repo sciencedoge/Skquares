@@ -52,6 +52,8 @@ namespace UpgradePlatformer.Entities
         public Enemy(int maxHp, int damage, Rectangle hitbox, int jumpsLeft)
             :base(maxHp, damage, hitbox, jumpsLeft, EntityKind.ENEMY)
         {
+            gravity = new Vector2(0, 0.2f);
+            jumpVelocity = new Vector2(0, -2f);
             this.jumpsLeft = jumpsLeft;
 
             spawnPoint = new Point(hitbox.X, hitbox.Y);

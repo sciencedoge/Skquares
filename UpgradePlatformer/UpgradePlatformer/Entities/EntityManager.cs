@@ -97,12 +97,27 @@ namespace UpgradePlatformer.Entities
         {
             currentLevel = LevelManager.Instance.ActiveLevel();
             // IMPORTANT: Subframes are calculated here
+
             for (int i = 0; i < 5; i ++) {
                 foreach (EntityObject obj in objects)
                 {
                     if (obj.IsActive == false) continue;
                     if (obj == null) continue;
-                    obj.Update(gameTime);
+                    if(obj is Enemy)
+                    {
+                        if(i % 5 == 0 || i % 3 == 0)
+                        {
+                            obj.Update(gameTime);
+                            pathfind.Update(this);
+                            pathfind.UpdateCosts();
+                            pathfind.MoveToPlayer();
+                        }
+                    }
+                    else
+                    {
+                        obj.Update(gameTime);
+                    }
+                    
                     if (obj is Pillar)
                     {
                         Pillar p = (Pillar)obj;
@@ -131,10 +146,7 @@ namespace UpgradePlatformer.Entities
                     }
 
                         
-                pathfind.Update(this);
-                pathfind.UpdateCosts();
-                pathfind.MoveToPlayer();
-                pathfind.EnemyIntersection();
+                
             }                   
         }
 
