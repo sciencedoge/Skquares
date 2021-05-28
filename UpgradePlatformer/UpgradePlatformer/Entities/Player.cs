@@ -28,6 +28,14 @@ namespace UpgradePlatformer.Entities
         private static int maxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.XtraJump) + 1;
 
         /// <summary>
+        /// returns whether or not the player is ducking
+        /// </summary>
+        public bool Ducking
+        {
+            get { return ducking; }
+        }
+
+        /// <summary>
         /// Creates a player object
         /// </summary>
         public Player(int maxHp, int damage, Rectangle hitbox, int jumpsLeft)

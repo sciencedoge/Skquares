@@ -270,7 +270,11 @@ namespace UpgradePlatformer.Entities
                                 obj.Velocity = new Vector2(obj.Velocity.X, 0);
                             }
                             obj.Y = temp.Y;
-                        }                       
+                        }
+                        if (player().Ducking)
+                        {
+                            player().Y += 15;
+                        }
                         break;
                 }
             }
