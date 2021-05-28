@@ -212,7 +212,11 @@ namespace UpgradePlatformer.Entities
         {
             currentHp = maxHp;
             IsActive = true;
-            velocity = new Vector2(0, 0);
+            Joystick = new Vector2();
+            keyUp = false;
+            keyDown = false;
+            keyLeft = false;
+            keyRight = false;
             resetPosition();
         }
     }
