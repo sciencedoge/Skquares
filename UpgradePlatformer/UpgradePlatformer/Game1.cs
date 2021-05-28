@@ -160,7 +160,12 @@ namespace UpgradePlatformer
 
             EventAction Action_State_Machine = new EventAction((Event e) =>
             {
-                if (e.Data == (uint)Keys.Escape) EventManager.Instance.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
+                if (e.Data == (uint)Keys.Escape)
+                {
+                    EventManager.Instance.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
+                    if (_stateMachine.currentState == 2) SoundManager.Instance.PlayMusic("pause");
+                    else SoundManager.Instance.PlayMusic("continue");
+                }
                 else if (e.Data == (uint)Keys.Enter && (_stateMachine.currentState != 1)) EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
 #if DEBUG
                 else if (_stateMachine.currentState == 0) return false;
@@ -203,7 +208,7 @@ namespace UpgradePlatformer
             EventManager.Instance.AddListener(Action_Mouse_Move, "MOUSE_MOVE");
 
 #if DEBUG
-            Stats = new UIText(_font, new Rectangle(0, 40, 0, 0), 1, Color.White);
+            Stats = new UIText(_font, new Rectangle(0, 40, 0, 0), 1, Color.Gray );
             UIManager.Instance.Add(Stats);
 #endif
         }
@@ -238,6 +243,7 @@ namespace UpgradePlatformer
             {
                 frameRate = (double)frameCounter / gameTime.ElapsedGameTime.TotalSeconds;
             }
+            frameCounter = 0;
             frameCounter = 0;
             Stats.Text = frameRate.ToString("F2") + "\nWRLD:" + LevelManager.Instance.ActiveWorldNum() + "\nLVL:" + LevelManager.Instance.ActiveLevelNum() + "\nHP:" + EntityManager.Instance.GetPlayerHp()
             + "\nMoney:" + EntityManager.Instance.PlayerMoney;
