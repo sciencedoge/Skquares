@@ -45,6 +45,12 @@ namespace UpgradePlatformer.Input
                 EventManager.Instance.Push(new Event(CheckChangeType(prevPadState.Buttons.A, "KEY_UP", "KEY_DOWN"), (uint)Keys.W, mouseState.Position));
             if (prevPadState.Buttons.Start != padState.Buttons.Start)
                 EventManager.Instance.Push(new Event(CheckChangeType(prevPadState.Buttons.Start, "KEY_UP", "KEY_DOWN"), (uint)Keys.Escape, mouseState.Position));
+            
+            if (prevPadState.DPad.Up != padState.DPad.Up && padState.DPad.Up == ButtonState.Pressed)
+                EventManager.Instance.Push(new Event("NAV", 0, mouseState.Position));
+
+            if (prevPadState.DPad.Down != padState.DPad.Down && padState.DPad.Down == ButtonState.Pressed)
+                EventManager.Instance.Push(new Event("NAV", 1, mouseState.Position));
 
             if (prevMouseState.Position != mouseState.Position)
                 EventManager.Instance.Push(new Event("MOUSE_MOVE", 0, mouseState.Position));
