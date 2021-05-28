@@ -35,7 +35,7 @@ namespace UpgradePlatformer.Levels
             Worlds = new List<World>();
             _activeWorld = 0;
             Load(new List<string>{"DEATH_MENU"}, 0);
-            Load(new List<string>{"clouds2", "clouds1", "clouds3"}, 0);
+            Load(new List<string>{"clouds2", "clouds1Fix", "clouds3"}, 0);
             Load(new List<string>{"cave", "coinHeaven"}, 0);
         }
 
