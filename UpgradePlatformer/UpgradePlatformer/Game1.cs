@@ -109,7 +109,7 @@ namespace UpgradePlatformer
             });
             continueButton.Text.Text = "Continue";
 
-            UIText TitleText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.White);
+            UIText TitleText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.Black);
             TitleText.Text = "platformergamething";
             TitleText.Centered = true;
 
@@ -229,6 +229,8 @@ namespace UpgradePlatformer
             topHud.IsActive    = _stateMachine.currentState == 1;
             pauseMenu.IsActive = _stateMachine.currentState == 2;
             deathMenu.IsActive = _stateMachine.currentState == 3;
+            Sprite.Dim         = _stateMachine.currentState == 2
+                              || _stateMachine.currentState == 3;
 
 #if DEBUG
             if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
