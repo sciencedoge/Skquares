@@ -9,7 +9,7 @@ namespace UpgradePlatformer.Levels
 {
     class Tile
     {
-        private static Rectangle TILE_SPRITE = new Rectangle(0, 12, 16, 16);
+        private static Rectangle TILE_SPRITE = new Rectangle(0, 13, 16, 16);
         private static Rectangle TILE_SPRITE_GOAL = new Rectangle(16, 29, 16, 16);
         private static Rectangle TILE_SPRITE_CLOUD = new Rectangle(32, 29, 16, 16);
         private static Rectangle TILE_SPRITE_CLOUD_MID = new Rectangle(32, 45, 16, 16);
