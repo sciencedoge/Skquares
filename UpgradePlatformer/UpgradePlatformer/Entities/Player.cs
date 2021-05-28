@@ -101,7 +101,8 @@ namespace UpgradePlatformer.Entities
                         Joystick.X = -1;
                     }
                     velocity.X += speedX * Joystick.X;
-                    sprite.effects = SpriteEffects.None;
+                    if (Joystick.X < 0)
+                        sprite.effects = SpriteEffects.None;
                     if (Joystick.X > 0)
                         sprite.effects = SpriteEffects.FlipHorizontally;
 
