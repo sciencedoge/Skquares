@@ -212,6 +212,7 @@ namespace UpgradePlatformer.Entities
         {
             currentHp = maxHp;
             IsActive = true;
+            velocity = new Vector2(0, 0);
             resetPosition();
         }
     }
