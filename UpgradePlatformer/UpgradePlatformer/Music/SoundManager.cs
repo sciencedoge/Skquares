@@ -41,7 +41,7 @@ namespace UpgradePlatformer.Music
             jump = content.Load<SoundEffect>("Music/jump");
             land = content.Load<SoundEffect>("Music/jumpland");
             coinGrab = content.Load<SoundEffect>("Music/coin");
-            fart = content.Load<Song>("Music/fart");
+            fart = content.Load<Song>("Music/Sigh");
             star = content.Load<Song>("Music/allstar");
             amogus = content.Load<Song>("Music/AMOGUS");
         }
@@ -55,7 +55,7 @@ namespace UpgradePlatformer.Music
             switch (action.ToLower().Trim())
             {
                 case "button":
-                    buttonClick.Play(0.5f, 0, 0);
+                    buttonClick.Play(1f, 0, 0);
                     break;
                 case "jump":
                     jump.Play(0.02f, 0, 0);
@@ -77,10 +77,16 @@ namespace UpgradePlatformer.Music
         {
             switch(section.ToLower().Trim())
             {
+                case "continue":
+                    MediaPlayer.Resume();
+                    break;
+                case "pause":
+                    MediaPlayer.Pause();
+                    break;
                 case "menu":
-                    MediaPlayer.Stop();         
+                    MediaPlayer.Stop();
                     MediaPlayer.Play(fart);
-                    MediaPlayer.IsRepeating = true;
+                    MediaPlayer.IsRepeating = false;
                     break;
                 case "game":
                     MediaPlayer.Stop();
