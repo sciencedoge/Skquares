@@ -75,7 +75,7 @@ namespace UpgradePlatformer.Entities
             List<Upgrade> upgrades = UpgradeManager.Instance.CanBeLearned();
            
             if (EntityManager.Instance.PlayerMoney - upgrade.Cost < 0
-                && !upgrades.Contains(upgrade))
+                || !upgrades.Contains(upgrade))
             {
                 return false;
             }
