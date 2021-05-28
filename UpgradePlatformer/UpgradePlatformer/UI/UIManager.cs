@@ -36,6 +36,10 @@ namespace UpgradePlatformer.UI
             if (ev != null) ProcessClick(ev.MousePosition, ev.Data);
 
             foreach (UIElement e in UIElements)
+                e.ResetActive();
+              
+
+            foreach (UIElement e in UIElements)
             {
                 e.Update(gameTime);
             }
@@ -102,16 +106,33 @@ namespace UpgradePlatformer.UI
             }
             focused.nextFocus.Focused = true;
             focused = focused.nextFocus;
+            if (focused.IsActive == false)
+            {
+                UIElement n = GetActive();
+                if (n == null) return;
+                focused = n;
+                focused.Focused = true;
+            }
+        }
+        public UIElement GetActive()
+        {
+            foreach (UIElement e in UIElements)
+            {
+                UIElement n = e.GetActive();
+                if (n != null) return n;
+            }
+            return null;
+        }
+
+
+        public void Select(bool reverse)
+        {
+            focused.WhenClicked(new Point(0));
         }
 
         public static void SetupFocusLoop(List<UIElement> elements)
         {
-            if (elements.Count == 2)
-            {
-                elements[0].nextFocus = elements[1];
-                elements[1].prevFocus = elements[0];
-            }
-            for (int i = 1; i < elements.Count - 1; i++)
+            for (int i = 1; i < elements.Count; i++)
             {
                 elements[i - 1].nextFocus = elements[i];
                 elements[i].prevFocus = elements[i - 1];

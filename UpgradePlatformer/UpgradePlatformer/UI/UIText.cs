@@ -59,6 +59,7 @@ namespace UpgradePlatformer.UI
                 spriteBatch.DrawString(Font, Text, Bounds.Location.ToVector2(), color, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 0f);
         }
 
+        public override UIElement GetActive() { return null; }
         public override UISprite CurrentSprite() { return null; }
     }
 }

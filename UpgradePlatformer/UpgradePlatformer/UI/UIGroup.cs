@@ -15,9 +15,27 @@ namespace UpgradePlatformer.UI
         }
         public override UISprite CurrentSprite() { return null; }
 
+        public override void ResetActive()
+        {
+            foreach (UIElement e in UIElements)
+            {
+                e.ResetActive();
+            }
+        }
+        public override UIElement GetActive()
+        {
+            foreach (UIElement e in UIElements)
+            {
+                UIElement n = e.GetActive();
+                if (n != null) return n;
+            }
+            return null;
+        }
+
         public override void Update(GameTime gameTime) {
             foreach (UIElement e in UIElements)
             {
+                e.IsActive = e.IsActive || IsActive;
                 e.Update(gameTime);
             }
         }

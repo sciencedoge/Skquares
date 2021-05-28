@@ -42,7 +42,15 @@ namespace UpgradePlatformer.Input
             EventManager.Instance.Push(new Event("GAME_PAD_JOYSTICK", 0, (padState.ThumbSticks.Left * 5).ToPoint()));
 
             if (prevPadState.Buttons.A != padState.Buttons.A)
+            {
                 EventManager.Instance.Push(new Event(CheckChangeType(prevPadState.Buttons.A, "KEY_UP", "KEY_DOWN"), (uint)Keys.W, mouseState.Position));
+                if (padState.Buttons.A == ButtonState.Pressed)
+                    EventManager.Instance.Push(new Event("SELECT", 0, mouseState.Position));
+            }
+
+            if (prevPadState.Buttons.B != padState.Buttons.B && padState.Buttons.B == ButtonState.Pressed)
+                EventManager.Instance.Push(new Event("SELECT", 1, mouseState.Position));
+
             if (prevPadState.Buttons.Start != padState.Buttons.Start)
                 EventManager.Instance.Push(new Event(CheckChangeType(prevPadState.Buttons.Start, "KEY_UP", "KEY_DOWN"), (uint)Keys.Escape, mouseState.Position));
             

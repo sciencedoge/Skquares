@@ -1148,5 +1148,10 @@ namespace LevelEditor
                 }               
             }           
         }
+
+        private void Metadata_Click(object sender, EventArgs e)
+        {
+
+        }
     }   
 }

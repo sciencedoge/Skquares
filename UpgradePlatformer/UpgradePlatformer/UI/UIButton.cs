@@ -61,7 +61,7 @@ namespace UpgradePlatformer.UI
         /// <param name="at">where the button UIElement was clicked 0,0 being the top corner</param>
         public override void WhenClicked(Point at)
         {
-            if (Disabled || ClickTime != 0) return;
+            if (!IsActive || Disabled || ClickTime != 0) return;
 
             ClickTime = ClickTimeout;
             onClick();
@@ -76,10 +76,8 @@ namespace UpgradePlatformer.UI
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            if (IsActive) {
-                CurrentSprite().Draw(spriteBatch, Bounds, 0);
-                Text.Draw(gameTime, spriteBatch);
-            }
+            CurrentSprite().Draw(spriteBatch, Bounds, 0);
+            Text.Draw(gameTime, spriteBatch);
         }
     }
 }

@@ -31,6 +31,9 @@ namespace UpgradePlatformer.UI
         /// <param name="at">where the button UIElement was clicked 0,0 being the top corner</param>
         public abstract void WhenClicked(Point at);
 
+        public virtual void ResetActive() => IsActive = false;
+        public virtual UIElement GetActive() => IsActive ? this : null;
+
         /// <summary>
         ///  updates the focused uielements
         /// </summary>
