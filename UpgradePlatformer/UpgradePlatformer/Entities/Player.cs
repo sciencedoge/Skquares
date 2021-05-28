@@ -185,9 +185,9 @@ namespace UpgradePlatformer.Entities
             {
                 Keys down = (Keys)dev.Data;
                 if (down == Keys.W) keyUp = true;
-                else if (down == Keys.A) { keyLeft = true; sprite.effects = SpriteEffects.None; }
+                else if (down == Keys.A) { keyLeft = true;  }
                 else if (down == Keys.S) keyDown = true;
-                else if (down == Keys.D) { keyRight = true; sprite.effects = SpriteEffects.FlipHorizontally; }
+                else if (down == Keys.D) { keyRight = true;  }
             }
             if (uev != null)
             {
@@ -200,8 +200,11 @@ namespace UpgradePlatformer.Entities
             if (jev != null)
                 Joystick = jev.MousePosition.ToVector2() / 5;
             //Joystick *= .5;
+            sprite.effects = SpriteEffects.None;
+            if (Joystick.X > 0)
+                sprite.effects = SpriteEffects.FlipHorizontally;
         }
-        
+
         /// <summary>
         /// Respawns the player
         /// </summary>
