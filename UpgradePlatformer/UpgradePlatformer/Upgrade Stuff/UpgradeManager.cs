@@ -48,7 +48,6 @@ namespace UpgradePlatformer.Upgrade_Stuff
             if(root == null)
             {
                 this.root = new Upgrade(value, type, cost);
-                root.CanLearn = true;
             }
             else
             {

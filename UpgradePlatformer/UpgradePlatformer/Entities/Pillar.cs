@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Upgrade_Stuff;
 using UpgradePlatformer.Levels;
+using UpgradePlatformer.Graphics;
 
 namespace UpgradePlatformer.Entities
 {
@@ -16,6 +17,7 @@ namespace UpgradePlatformer.Entities
     //========================================================
     class Pillar : CollectibleObject
     {
+        static List<Sprite> upgradeSprites;
         private Upgrade upgrade;
 
         /// <summary>
@@ -28,14 +30,29 @@ namespace UpgradePlatformer.Entities
         public Pillar(int cost, Rectangle hitbox, Upgrade upgrade, Tile t)
             :base(-cost, hitbox, EntityKind.UPGRADE, t)
         {
+            if (upgradeSprites == null) {
+                upgradeSprites = new List<Sprite>();
+                upgradeSprites.Add(new Sprite(new Rectangle(5, 7, 5, 5), new Vector2(0, 0), Color.LimeGreen));
+                upgradeSprites.Add(new Sprite(new Rectangle(10, 7, 5, 5), new Vector2(0, 0), Color.Red));
+                upgradeSprites.Add(new Sprite(new Rectangle(15, 7, 5, 5), new Vector2(0, 0), Color.Blue));
+                upgradeSprites.Add(new Sprite(new Rectangle(5, 7, 5, 5), new Vector2(0, 0), Color.White));
+                upgradeSprites.Add(new Sprite(new Rectangle(10, 7, 5, 5), new Vector2(0, 0), Color.White));
+                upgradeSprites.Add(new Sprite(new Rectangle(15, 7, 5, 5), new Vector2(0, 0), Color.White));
+            }
             this.upgrade = upgrade;
-            this.SpriteBounds = new Rectangle(0, 45, 16, 16);
             UpdateSprite();
         }
 
-
-        public void Update()
+        public override void Update(GameTime gameTime)
         {
+            int offset = 0;
+            if (upgrade.Type == UpgradeType.Health)
+                offset = 1;
+            if (upgrade.Type == UpgradeType.Weapon)
+                offset = 2;
+            if (!upgrade.CanLearn)
+                offset += 3;
+            sprite = upgradeSprites[offset];
             spriteSize = hitbox.Size;
         }
 
