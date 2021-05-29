@@ -229,7 +229,7 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// resets the entitys position
         /// </summary>
-        public void resetPosition(){
+        public void ResetPosition(){
             position = spawn.ToVector2();
         }
     }

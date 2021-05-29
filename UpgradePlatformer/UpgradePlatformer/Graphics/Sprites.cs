@@ -67,8 +67,10 @@ namespace UpgradePlatformer.Graphics
         /// </summary>
         /// <returns>a new sprite</returns>
         public Sprite Copy() {
-            Sprite spr = new Sprite(Position, Origin, TintColor);
-            spr.effects = effects;
+            Sprite spr = new Sprite(Position, Origin, TintColor)
+            {
+                effects = effects
+            };
             return spr;
         }
     }

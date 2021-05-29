@@ -43,11 +43,13 @@ namespace UpgradePlatformer.UI
         /// creates a UIButton
         /// </summary>
         /// <param name="bounds">What the coords of the button are</param>
-        public UIButton(Texture2D texture, SpriteFont font, Rectangle bounds)
+        public UIButton(SpriteFont font, Rectangle bounds)
         {
             Bounds = bounds;
-            Text = new UIText(font, Bounds, 1, Color.Black);
-            Text.Centered = true;
+            Text = new UIText(font, Bounds, 1, Color.Black)
+            {
+                Centered = true
+            };
             NormalTextColor = Color.White;
             InvertedTextColor = Color.Black;
             NormalSprite = new UISprite(BUTTON_NORMAL_SPRITE, BUTTON_NORMAL_CENTER, new Vector2(0, 0), Color.White);

@@ -112,7 +112,7 @@ namespace UpgradePlatformer.Levels
         /// gets the spawners in the active level
         /// </summary>
         /// <returns>the spawners</returns>
-        public List<Tile> spawners() => Worlds[activeWorld].GetSpawners();
+        public List<Tile> Spawners() => Worlds[activeWorld].GetSpawners();
         /// <summary>
         /// gets collisions for the level
         /// </summary>

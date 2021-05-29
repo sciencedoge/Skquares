@@ -71,7 +71,7 @@ namespace UpgradePlatformer.Graphics
     {
         public List<Sprite> sprites;
         private int sprite, counter;
-        private int framesPerSprite;
+        private readonly int framesPerSprite;
         
         /// <summary>
         /// creates an animation
@@ -89,7 +89,7 @@ namespace UpgradePlatformer.Graphics
         /// <param name="gameTime">a GameTime object</param>
         public void Update(GameTime gameTime) {
             if ((counter ++ % framesPerSprite) == 0) sprite ++;
-            sprite = sprite % (sprites.Count);
+            sprite %= (sprites.Count);
         }
 
         /// <summary>

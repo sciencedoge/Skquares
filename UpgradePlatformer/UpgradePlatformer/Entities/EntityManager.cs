@@ -32,7 +32,7 @@ namespace UpgradePlatformer.Entities
         private List<EntityObject> objects;
         private int playerMoney;
         private Level currentLevel;
-        private PathfindingAI pathfind;
+        private readonly PathfindingAI pathfind;
 
         //methods
 
@@ -40,7 +40,7 @@ namespace UpgradePlatformer.Entities
         /// gets all the enemys in the manager
         /// </summary>
         /// <returns>the enemys</returns>
-        public List<Enemy> enemies()
+        public List<Enemy> Enemies()
         {
 
             List<Enemy> result = new List<Enemy>();
@@ -59,7 +59,7 @@ namespace UpgradePlatformer.Entities
         /// gets all the coins in the manager
         /// </summary>
         /// <returns>the coins</returns>
-        public List<Coin> coins()
+        public List<Coin> Coins()
         {
             List<Coin> result = new List<Coin>();
 
@@ -77,7 +77,7 @@ namespace UpgradePlatformer.Entities
         /// gets the player in the manager
         /// </summary>
         /// <returns>the player</returns>
-        public Player player()
+        public Player Player()
         {
             foreach (EntityObject obj in objects)
             {
@@ -102,7 +102,7 @@ namespace UpgradePlatformer.Entities
         public EntityManager()
         {
             this.objects = new List<EntityObject>();
-            pathfind = new PathfindingAI(enemies(), player());
+            pathfind = new PathfindingAI(Enemies(), Player());
         }
 
         /// <summary>
@@ -133,21 +133,19 @@ namespace UpgradePlatformer.Entities
                     else
                     {
                         obj.Update(gameTime);
-                        if (obj is LivingObject)
-                            ((LivingObject)obj).animation.Update(gameTime);
+                        if (obj is LivingObject @object)
+                            @object.animation.Update(gameTime);
                     }
-                    
-                    if (obj is Pillar)
-                    {
-                        Pillar p = (Pillar)obj;
 
-                         p.Intersects(player());
+                    if (obj is Pillar p)
+                    {
+                        p.Intersects(Player());
                     }
                     else
                     {
                         Intersects(obj);
                     }
-                    
+
                     int gainedMoney = obj.Intersects(objects);
                     playerMoney += gainedMoney;
 
@@ -157,8 +155,8 @@ namespace UpgradePlatformer.Entities
                         playerMoney += gainedMoney;
                     }
                 }
-                if (player() != null)
-                    if (player().CurrentHP <= 0)
+                if (Player() != null)
+                    if (Player().CurrentHP <= 0)
                     {
                         SoundManager.Instance.PlayMusic("gameover");
                         EventManager.Instance.Push(new Event("STATE_MACHINE", 2, new Point(0)));                      
@@ -197,7 +195,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="player">wether the player should be removed</param>
         public void Clean(bool player) {
-            EntityObject plyr = (EntityObject)this.player();
+            EntityObject plyr = (EntityObject)this.Player();
             objects = new List<EntityObject>();
             if (!player)
                 objects.Add(plyr);
@@ -224,9 +222,9 @@ namespace UpgradePlatformer.Entities
                 switch (t.CollisionKind) {
                     case 100:
                         obj.TakeDamage(1);
-                        if (obj == (LivingObject)player()) {
-                            player().Velocity = new Vector2(0, -4);
-                            player().JumpsLeft = 0;
+                        if (obj == (LivingObject)Player()) {
+                            Player().Velocity = new Vector2(0, -4);
+                            Player().JumpsLeft = 0;
                         }
                         break;
                     case 101:
@@ -278,9 +276,8 @@ namespace UpgradePlatformer.Entities
 
                             //marks true because the enemy is colliding
                             //with a wall
-                            if (obj is Enemy)
+                            if (obj is Enemy e)
                             {
-                                Enemy e = (Enemy)obj;
                                 e.Colliding = true;
                             }
                         }                   
@@ -290,11 +287,11 @@ namespace UpgradePlatformer.Entities
                         break;
                     case 103:
                         // goal tile
-                        if (obj == (LivingObject)player())
+                        if (obj == (LivingObject)Player())
                             EventManager.Instance.Push(new Event("WORLD_SHOW", (uint)LevelManager.Instance.ActiveWorldNum() + 1, new Point(0)));
                         break;
                     case 104:
-                        if(player().Y < t.Position.Y)
+                        if(Player().Y < t.Position.Y)
                         {
                             //checks conditions to move the player up or down
                             if (intersection.Width > intersection.Height - 20)
@@ -315,9 +312,9 @@ namespace UpgradePlatformer.Entities
                             }
                             obj.Y = temp.Y;
                         }
-                        if (player().Ducking)
+                        if (Player().Ducking)
                         {
-                            player().Y += 15;
+                            Player().Y += 15;
                         }
                         break;
                 }
@@ -343,8 +340,8 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <returns>the players hp</returns>
         public int GetPlayerHp() {
-            if (player() != null)
-                return player().CurrentHP;
+            if (Player() != null)
+                return Player().CurrentHP;
             return -1;
         }
 
@@ -352,8 +349,8 @@ namespace UpgradePlatformer.Entities
         /// respawns the player
         /// </summary>
         public void RespawnPlayer() {
-            if (player() != null)
-                player().Respawn();
+            if (Player() != null)
+                Player().Respawn();
         }
 
         /// <summary>
@@ -362,8 +359,8 @@ namespace UpgradePlatformer.Entities
         /// <returns>the max hp</returns>
         public int MaxPlayerHP()
         {
-            if (player() != null)
-                return player().MaxHP;
+            if (Player() != null)
+                return Player().MaxHP;
             return 0;
         }
     }

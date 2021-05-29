@@ -25,7 +25,7 @@ namespace UpgradePlatformer.Entities
         private bool keyUp, keyDown, keyLeft, keyRight;
         private Vector2 Joystick;
         private bool ducking;
-        private static int maxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.XtraJump) + 1;
+        private static int MaxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.XtraJump) + 1;
 
         /// <summary>
         /// returns whether or not the player is ducking
@@ -183,7 +183,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public override void OnFloorCollide()
         {
-            jumpsLeft = maxJumps;
+            jumpsLeft = MaxJumps;
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace UpgradePlatformer.Entities
             keyDown = false;
             keyLeft = false;
             keyRight = false;
-            resetPosition();
+            ResetPosition();
         }
     }
 }

@@ -16,10 +16,10 @@ namespace UpgradePlatformer.Entities
     class PathfindingAI
     {
         //fields
-        private float speed;
+        private readonly float speed;
         public Player player;
         public List<Enemy> _enemies;
-        public List<Enemy> enemies { get => _enemies; set { _enemies = value; relationships = new Vector2[enemies.Count, 1];} }
+        public List<Enemy> Enemies { get => _enemies; set { _enemies = value; relationships = new Vector2[Enemies.Count, 1];} }
         private float goombaAINum;
         private Vector2[,] relationships;
 
@@ -31,7 +31,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public PathfindingAI(List<Enemy> enemies, Player player)
         {
-            this.enemies = enemies;
+            this.Enemies = enemies;
             this.player = player;
             speed = 1f;
             goombaAINum = speed;
@@ -47,10 +47,10 @@ namespace UpgradePlatformer.Entities
         {
             if (player == null)
                 return;
-            for (int i = 0; i < enemies.Count; i++)
+            for (int i = 0; i < Enemies.Count; i++)
             {
-                float distX = Math.Abs(enemies[i].Position.X - player.Position.X);
-                float distY = Math.Abs(enemies[i].Position.Y - player.Position.Y);
+                float distX = Math.Abs(Enemies[i].Position.X - player.Position.X);
+                float distY = Math.Abs(Enemies[i].Position.Y - player.Position.Y);
                 relationships[i, 0] = new Vector2(distX, distY);
             }
         }
@@ -61,47 +61,47 @@ namespace UpgradePlatformer.Entities
         public void MoveToPlayer()
         {
             if (player == null) return;
-            for(int i = 0; i < enemies.Count; i++)
+            for(int i = 0; i < Enemies.Count; i++)
             {
                 if(relationships[i, 0].X < 150)
                 {
-                    if(enemies[i].X > player.X
-                        && !enemies[i].Colliding)
+                    if(Enemies[i].X > player.X
+                        && !Enemies[i].Colliding)
                     {
-                        enemies[i].X -= speed;
-                        enemies[i].Flip = false;
+                        Enemies[i].X -= speed;
+                        Enemies[i].Flip = false;
                     }
-                    else if(enemies[i].X < player.X
-                        && !enemies[i].Colliding)
+                    else if(Enemies[i].X < player.X
+                        && !Enemies[i].Colliding)
                     {
-                        enemies[i].X += speed;
-                        enemies[i].Flip = true;
+                        Enemies[i].X += speed;
+                        Enemies[i].Flip = true;
                     }
                     else
                     {
-                        enemies[i].Colliding = false;
+                        Enemies[i].Colliding = false;
                     }
 
                     if (relationships[i, 0].Y > 20
-                        && player.Y < enemies[i].Y)
+                        && player.Y < Enemies[i].Y)
                     {
-                        AIJump(enemies[i]);                       
+                        AIJump(Enemies[i]);                       
                     }
                 }
 
                 else
                 {
-                    enemies[i].Flip = goombaAINum > 0;
-                    if(enemies[i].Colliding)
+                    Enemies[i].Flip = goombaAINum > 0;
+                    if(Enemies[i].Colliding)
                     {
                         goombaAINum *= -1;
-                        enemies[i].X += goombaAINum;
-                        enemies[i].Colliding = false;
+                        Enemies[i].X += goombaAINum;
+                        Enemies[i].Colliding = false;
                     }
 
-                    if (!enemies[i].Colliding)
+                    if (!Enemies[i].Colliding)
                     {
-                        enemies[i].X += goombaAINum;
+                        Enemies[i].X += goombaAINum;
                     }                
                 }
             }
@@ -129,9 +129,9 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public void EnemyIntersection()
         {
-            foreach(Enemy e in enemies)
+            foreach(Enemy e in Enemies)
             {
-                foreach(Enemy e2 in enemies)
+                foreach(Enemy e2 in Enemies)
                 {
                     
                 }
@@ -142,8 +142,8 @@ namespace UpgradePlatformer.Entities
         /// updates the entitys
         /// </summary>
         public void Update() {
-            enemies = EntityManager.Instance.enemies();
-            player = EntityManager.Instance.player();
+            Enemies = EntityManager.Instance.Enemies();
+            player = EntityManager.Instance.Player();
         }
     }
 }

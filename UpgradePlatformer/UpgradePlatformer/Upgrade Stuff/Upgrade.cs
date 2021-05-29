@@ -25,7 +25,6 @@ namespace UpgradePlatformer.Upgrade_Stuff
         //Fields
         private int upgradeValue;
         private bool isLearned;
-        private bool canBeLearned;
         private int cost;
 
         private UpgradeType type;

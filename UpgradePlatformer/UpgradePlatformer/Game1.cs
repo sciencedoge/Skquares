@@ -25,12 +25,11 @@ namespace UpgradePlatformer
         
         private const string ASSET_NAME_SPRITESHEET = "SpriteSheet";
 
-        private GraphicsDeviceManager _graphics;
+        private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont _font;
         private FiniteStateMachine _stateMachine;
         private UIGroup mainMenu, pauseMenu, deathMenu, topHud, options;
-        private UpgradeStructure structure;
         private SaveManager Save;
 
 #if DEBUG
@@ -60,7 +59,7 @@ namespace UpgradePlatformer
             Sprite.texture = _spriteSheetTexture;
             Sprite.graphics = _graphics;
             
-            structure = new UpgradeStructure();
+            new UpgradeStructure();
             new LevelManager();
 
             // setup sound manager
@@ -98,92 +97,127 @@ namespace UpgradePlatformer
 #region  UIELEMENTS
             // create ui elements
             int ButtonWidth = 200;
-            UIButton playButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
-            playButton.onClick = new UIAction((i) =>
+            UIButton playButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40))
             {
-                SoundManager.Instance.PlaySFX("button");
-                SoundManager.Instance.PlayMusic("game");
-                EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
-                EntityManager.Instance.RespawnPlayer();
-            });
+                onClick = new UIAction((i) =>
+                {
+                    SoundManager.Instance.PlaySFX("button");
+                    SoundManager.Instance.PlayMusic("game");
+                    EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
+                    EntityManager.Instance.RespawnPlayer();
+                })
+            };
             playButton.Text.Text = "Play";
 
-            UIButton closeButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 500, ButtonWidth, 40));
-            closeButton.onClick = new UIAction((i) =>
+            UIButton closeButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 500, ButtonWidth, 40))
             {
-                EventManager.Instance.Push(new Event("QUIT", 0, new Point(0, 0)));
-            });
+                onClick = new UIAction((i) =>
+                {
+                    EventManager.Instance.Push(new Event("QUIT", 0, new Point(0, 0)));
+                })
+            };
             closeButton.Text.Text = "Quit";
 
-            UIButton continueButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
-            continueButton.onClick = new UIAction((i) =>
+            UIButton continueButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40))
             {
-                EventManager.Instance.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
-            });
+                onClick = new UIAction((i) =>
+                {
+                    EventManager.Instance.Push(new Event("STATE_MACHINE", 1, new Point(0, 0)));
+                })
+            };
             continueButton.Text.Text = "Continue";
 
-            UIButton OptionsButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40));
-            OptionsButton.onClick = new UIAction((i) =>
+            UIButton OptionsButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40))
             {
-                EventManager.Instance.Push(new Event("STATE_MACHINE", 3, new Point(0, 0)));
-            });
+                onClick = new UIAction((i) =>
+                {
+                    EventManager.Instance.Push(new Event("STATE_MACHINE", 3, new Point(0, 0)));
+                })
+            };
             OptionsButton.Text.Text = "Options";
 
-            UIButton backButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 500, ButtonWidth, 40));
-            backButton.onClick = new UIAction((i) =>
+            UIButton backButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 500, ButtonWidth, 40))
             {
-                EventManager.Instance.Push(new Event("STATE_MACHINE", 4, new Point(0, 0)));
-            });
+                onClick = new UIAction((i) =>
+                {
+                    EventManager.Instance.Push(new Event("STATE_MACHINE", 4, new Point(0, 0)));
+                })
+            };
             backButton.Text.Text = "Back";
 
-            UIToggle muteToggle = new UIToggle(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
-            muteToggle.onClick = new UIAction((i) => 
+            UIToggle muteToggle = new UIToggle(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40))
             {
-                SoundManager.Instance.Muted = i == 1;
-                Save.Data.muted = SoundManager.Instance.Muted;
-                Save.Save();
-            });
+                onClick = new UIAction((i) =>
+                {
+                    SoundManager.Instance.Muted = i == 1;
+                    Save.Data.muted = SoundManager.Instance.Muted;
+                    Save.Save();
+                })
+            };
             muteToggle.Text.update = new UITextUpdate(() =>
             {
                 return SoundManager.Instance.Muted ? "Muted: x" : "Muted: -";
             });
             muteToggle.toggled = SoundManager.Instance.Muted;
 
-            UIText TitleText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.Black);
-            TitleText.Text = "platformergamething";
-            TitleText.Centered = true;
+            // TODO: Add Fullscreen
+            //UIToggle fullscreenToggle = new UIToggle(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40));
+            //fullscreenToggle.onClick = new UIAction((i) =>
+            //{
+            //     = i == 1;
+            //    Save.Data.fullscreen = SoundManager.Instance.Muted;
+            //    Save.Save();
+            //});
+            //fullscreenToggle.Text.update = new UITextUpdate(() =>
+            //{
+            //    return SoundManager.Instance.Muted ? "Muted: x" : "Muted: -";
+            //});
+            //fullscreenToggle.toggled = SoundManager.Instance.Muted;
 
-            UIText PauseText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.White);
-            PauseText.Text = "paused";
-            PauseText.Centered = true;
+            UIText TitleText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.Black)
+            {
+                Text = "platformergamething",
+                Centered = true
+            };
 
-            UIText HpText = new UIText(_font, new Rectangle(0, 0, 0, 0), 2, Color.White);
-            HpText.Text = "[          ]";
-            HpText.Centered = false;
-            HpText.update = new UITextUpdate(() => {
-                string result = "";
-                if (EntityManager.Instance.GetPlayerHp() == -1) return "";
-                int cap = 0;
-                if (EntityManager.Instance.MaxPlayerHP() < 10) {
-                    for (int i = 0; i < EntityManager.Instance.MaxPlayerHP(); i ++)
+            UIText PauseText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.White)
+            {
+                Text = "paused",
+                Centered = true
+            };
+
+            UIText HpText = new UIText(_font, new Rectangle(0, 0, 0, 0), 2, Color.White)
+            {
+                Text = "[          ]",
+                Centered = false,
+                update = new UITextUpdate(() =>
+                {
+                    string result = "";
+                    if (EntityManager.Instance.GetPlayerHp() == -1) return "";
+                    int cap = 0;
+                    if (EntityManager.Instance.MaxPlayerHP() < 10)
+                    {
+                        for (int i = 0; i < EntityManager.Instance.MaxPlayerHP(); i++)
+                        {
+                            if (i < EntityManager.Instance.GetPlayerHp()) result += "=";
+                            else result += " ";
+                            if (cap++ > 10) break;
+                        }
+                        return $"[{result}]X1 ${EntityManager.Instance.PlayerMoney}";
+                    }
+                    for (float i = 0; i < EntityManager.Instance.MaxPlayerHP(); i += EntityManager.Instance.MaxPlayerHP() / 10)
                     {
                         if (i < EntityManager.Instance.GetPlayerHp()) result += "=";
                         else result += " ";
                         if (cap++ > 10) break;
                     }
-                    return $"[{result}]X1 ${EntityManager.Instance.PlayerMoney}";
-                }
-                for (float i = 0; i < EntityManager.Instance.MaxPlayerHP(); i += EntityManager.Instance.MaxPlayerHP() / 10) {
-                    if (i < EntityManager.Instance.GetPlayerHp()) result += "=";
-                    else result += " ";
-                    if (cap++ > 10) break;
-                }
 
-                return $"[{result}]X1 ${EntityManager.Instance.PlayerMoney}";
-            });
+                    return $"[{result}]X1 ${EntityManager.Instance.PlayerMoney}";
+                })
+            };
             #endregion
 
-#region UILAYOUT
+            #region UILAYOUT
             // initialize uiGroups
             Rectangle bounds = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
 
