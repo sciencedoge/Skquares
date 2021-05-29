@@ -62,26 +62,25 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="obj">a living object</param>
         /// <returns></returns>
-        public override int Intersects(List<EntityObject> objs)
+        public override int Intersects(EntityObject o)
         {
-            foreach (EntityObject o in objs) if (o is Player) {
-                LivingObject obj = (LivingObject)o;
-                if (IsActive && obj != null)
+            if (o == null) return 0;
+            if (o.Kind != EntityKind.PLAYER) return 0;
+            LivingObject obj = (LivingObject)o;
+            if (IsActive && obj != null)
+            {
+                if (this.hitbox.Intersects(obj.Hitbox))
                 {
-                    if (this.hitbox.Intersects(obj.Hitbox))
+                    if(ValidIntersection() == true)
                     {
-                        if(ValidIntersection() == true)
-                        {
-                            //the coin is no longer active
-                            return this.upgrade.Cost * -1;
-                        }                 
-                    }
-                    else
-                    {
-                        return 0;
-                    }
+                        //the coin is no longer active
+                        return this.upgrade.Cost * -1;
+                    }                 
                 }
-                return 0;
+                else
+                {
+                    return 0;
+                }
             }
             return 0;
         }
