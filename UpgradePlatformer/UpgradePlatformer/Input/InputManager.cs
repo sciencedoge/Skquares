@@ -29,7 +29,6 @@ namespace UpgradePlatformer.Input
         /// <summary>
         /// Updates the InputEvent List
         /// </summary>
-        /// <param name="gameTime"></param>
         public void Update()
         {
             prevMouseState = mouseState;
@@ -85,11 +84,11 @@ namespace UpgradePlatformer.Input
         }
 
         /// <summary>
-        /// Helper function for Update decideds event kinds from changes
+        /// checks for an event change
         /// </summary>
-        /// <param name="up"></param>
-        /// <param name="down"></param>
-        /// <param name="down"></param>
+        /// <param name="prev">the previous event</param>
+        /// <param name="up">the up event name</param>
+        /// <param name="down">the down event name</param>
         /// <returns></returns>
         public String CheckChangeType(ButtonState prev, String up, String down)
         {
