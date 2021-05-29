@@ -43,6 +43,11 @@ namespace UpgradePlatformer.UI
             UIManager.Instance.focused = this;
         }
 
+        /// <summary>
+        /// draws the ui element if active
+        /// </summary>
+        /// <param name="gameTime">the GameTime object</param>
+        /// <param name="spriteBatch">the SpriteBatch object</param>
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (IsActive)

@@ -13,8 +13,12 @@ namespace UpgradePlatformer.UI
             UIElements = elements;
             Bounds = bounds;
         }
+
         public override UISprite CurrentSprite() { return null; }
 
+        /// <summary>
+        /// resets the active uiElements
+        /// </summary>
         public override void ResetActive()
         {
             foreach (UIElement e in UIElements)
@@ -22,6 +26,11 @@ namespace UpgradePlatformer.UI
                 e.ResetActive();
             }
         }
+
+        /// <summary>
+        /// gets the active element
+        /// </summary>
+        /// <returns>the element</returns>
         public override UIElement GetActive()
         {
             foreach (UIElement e in UIElements)
@@ -32,6 +41,10 @@ namespace UpgradePlatformer.UI
             return null;
         }
 
+        /// <summary>
+        /// updates the UIGroup
+        /// </summary>
+        /// <param name="gameTime">a GameTime object</param>
         public override void Update(GameTime gameTime) {
             foreach (UIElement e in UIElements)
             {
@@ -40,6 +53,10 @@ namespace UpgradePlatformer.UI
             }
         }
 
+        /// <summary>
+        /// processes a mouse move event
+        /// </summary>
+        /// <param name="position">where the mouse was moved</param>
         public override void WhenMoved(Point position)
         {
             foreach (UIElement e in UIElements)
@@ -51,6 +68,11 @@ namespace UpgradePlatformer.UI
                 }
             }
         }
+
+        /// <summary>
+        /// processes a mouse click event
+        /// </summary>
+        /// <param name="position">where the mouse was</param>
         public override void WhenClicked(Point position)
         {
             foreach (UIElement e in UIElements)
@@ -61,6 +83,12 @@ namespace UpgradePlatformer.UI
                 }
             }
         }
+
+        /// <summary>
+        /// draws the UIElements in the group
+        /// </summary>
+        /// <param name="gameTime">the GameTime object</param>
+        /// <param name="spriteBatch">the SpriteBatch object</param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (!IsActive)

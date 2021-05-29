@@ -11,6 +11,9 @@ namespace UpgradePlatformer.UI
     public delegate void UIAction(int i);
     class UIManager
     {
+        /// <summary>
+        /// Singleton stuff
+        /// </summary>
         private static readonly Lazy<UIManager>
             lazy =
             new Lazy<UIManager>
@@ -20,6 +23,9 @@ namespace UpgradePlatformer.UI
         List<UIElement> UIElements;
         public UIElement focused;
 
+        /// <summary>
+        /// creates the ui manager
+        /// </summary>
         public UIManager()
         {
             UIElements = new List<UIElement>();
@@ -95,6 +101,10 @@ namespace UpgradePlatformer.UI
             UIElements.Add(element);
         }
 
+        /// <summary>
+        /// navigates the ui
+        /// </summary>
+        /// <param name="reverse">weter to go backwards</param>
         public void Nav(bool reverse)
         {
             UIElement start = focused;
@@ -112,6 +122,10 @@ namespace UpgradePlatformer.UI
             } while (focused.IsActive == false && focused != start);
         }
 
+        /// <summary>
+        /// finds the first active ui element
+        /// </summary>
+        /// <returns>the uielement or null if none active</returns>
         public UIElement GetActive()
         {
             foreach (UIElement e in UIElements)
@@ -122,7 +136,10 @@ namespace UpgradePlatformer.UI
             return null;
         }
 
-
+        /// <summary>
+        /// selects a uiElement
+        /// </summary>
+        /// <param name="reverse">wether to go backwards</param>
         public void Select(bool reverse)
         {
             if (reverse)
@@ -131,6 +148,10 @@ namespace UpgradePlatformer.UI
                 focused.WhenClicked(new Point(0));
         }
 
+        /// <summary>
+        /// setup the focus loop for the uielements
+        /// </summary>
+        /// <param name="elements">the elements in order</param>
         public static void SetupFocusLoop(List<UIElement> elements)
         {
             for (int i = 1; i < elements.Count; i++)

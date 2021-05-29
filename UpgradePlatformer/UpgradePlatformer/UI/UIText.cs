@@ -18,7 +18,7 @@ namespace UpgradePlatformer.UI
         public Color color;
 
         /// <summary>
-        /// Updates the Button
+        /// Updates the Text
         /// </summary>
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
@@ -28,9 +28,9 @@ namespace UpgradePlatformer.UI
         }
 
         /// <summary>
-        /// creates a UIButton
+        /// creates a UIText object
         /// </summary>
-        /// <param name="bounds">What the coords of the button are</param>
+        /// <param name="bounds">What the coords of the text are</param>
         public UIText(SpriteFont font, Rectangle bounds, int scale, Color c)
         {
             Bounds = bounds;
@@ -42,11 +42,10 @@ namespace UpgradePlatformer.UI
         }
 
         /// <summary>
-        /// Calls the onclick function if Disabled is false
+        /// draws the Text
         /// </summary>
-        /// <param name="at">where the button UIElement was clicked 0,0 being the top corner</param>
-        public override void WhenClicked(Point at) {}
-
+        /// <param name="gameTime">the Gametime object</param>
+        /// <param name="spriteBatch">the spritebatch object</param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (!IsActive)
@@ -59,6 +58,7 @@ namespace UpgradePlatformer.UI
                 spriteBatch.DrawString(Font, Text, Bounds.Location.ToVector2(), color, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 0f);
         }
 
+        public override void WhenClicked(Point at) { }
         public override UIElement GetActive() { return null; }
         public override UISprite CurrentSprite() { return null; }
     }

@@ -68,6 +68,10 @@ namespace UpgradePlatformer.UI
             onClick(0);
         }
 
+        /// <summary>
+        /// gets the current sprite of the button
+        /// </summary>
+        /// <returns>a ui sprite for the button</returns>
         public override UISprite CurrentSprite()
         {
             if (Disabled) return DisabledSprite;
@@ -75,6 +79,12 @@ namespace UpgradePlatformer.UI
             if (Focused) return FocusedSprite;
             return NormalSprite;
         }
+
+        /// <summary>
+        /// draws the button
+        /// </summary>
+        /// <param name="gameTime">the Gametime object</param>
+        /// <param name="spriteBatch">the spritebatch object</param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             CurrentSprite().Draw(spriteBatch, Bounds, 0);
