@@ -9,13 +9,20 @@ namespace UpgradePlatformer.Graphics
 {
     class AnimationManager
     {
+        /// <summary>
+        /// Singleton Stuff
+        /// </summary>
         private static readonly Lazy<AnimationManager>
             lazy =
             new Lazy<AnimationManager>
                 (() => new AnimationManager());
         public static AnimationManager Instance { get { return lazy.Value; } }
+
         public List<AnimationFSM> animations;
 
+        /// <summary>
+        /// creates the animation Manager and all animations
+        /// </summary>
         public AnimationManager()
         {
             Sprite[,] AllSprites = new Sprite[20, 20];

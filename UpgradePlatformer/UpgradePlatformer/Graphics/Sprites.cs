@@ -19,7 +19,6 @@ namespace UpgradePlatformer.Graphics
         /// <summary>
         /// creates a sprite object
         /// </summary>
-        /// <param name="texture">a Texture2D of the sprite sheet</param>
         /// <param name="position">the position of the texture on the sheet</param>
         /// <param name="origin">the center of the Sprite</param>
         /// <param name="tintColor">the color to tint the sprite</param>
@@ -33,14 +32,21 @@ namespace UpgradePlatformer.Graphics
         /// <summary>
         /// renders a sprite object
         /// </summary>
-        /// <param name="spriteBatch">A SpriteBatch Object</param>
-        /// <param name="renderPosistion">where to put the orgin of the sprite</param>
-        /// <param name="rotation">the rotation of the sprite in RADIANS</param>
+        /// <param name="spriteBatch">the SpriteBatch object</param>
+        /// <param name="renderPosition">where to render the sprite</param>
+        /// <param name="rotation">the rotation of the sprite</param>
         public void Draw(SpriteBatch spriteBatch, Point renderPosition, float rotation)
         {
             Draw(spriteBatch, renderPosition, rotation, Position.Size.ToVector2());
         }
 
+        /// <summary>
+        /// renders a sprite object
+        /// </summary>
+        /// <param name="spriteBatch">the SpriteBatch object</param>
+        /// <param name="renderPosition">where to render the sprite</param>
+        /// <param name="rotation">the rotation of the sprite</param>
+        /// <param name="Size">the size to render the sprite</param>
         public void Draw(SpriteBatch spriteBatch, Point renderPosition, float rotation, Vector2 Size)
         {
             Color c = TintColor;
@@ -55,6 +61,11 @@ namespace UpgradePlatformer.Graphics
             renderRect.Size = Size.ToPoint();
             spriteBatch.Draw(texture, renderRect, Position, c, rotation, Origin, effects, 0f);
         }
+
+        /// <summary>
+        /// copys a sprite, problaby not needed
+        /// </summary>
+        /// <returns>a new sprite</returns>
         public Sprite Copy() {
             Sprite spr = new Sprite(Position, Origin, TintColor);
             spr.effects = effects;
