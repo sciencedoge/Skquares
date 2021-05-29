@@ -31,6 +31,8 @@ namespace UpgradePlatformer
         private FiniteStateMachine _stateMachine;
         private UIGroup mainMenu, pauseMenu, deathMenu, topHud, options;
         private SaveManager Save;
+        private RenderTarget2D _lightTarget, _mainTarget;
+
 
 #if DEBUG
         private UIText Stats;
@@ -58,8 +60,8 @@ namespace UpgradePlatformer
             
             Sprite.texture = _spriteSheetTexture;
             Sprite.graphics = _graphics;
-            
-            new UpgradeStructure();
+
+            UpgradeStructure.InitStructure();
             new LevelManager();
 
             // setup sound manager
@@ -317,6 +319,8 @@ namespace UpgradePlatformer
             Stats = new UIText(_font, new Rectangle(0, 40, 0, 0), 1, Color.Gray);
             UIManager.Instance.Add(Stats);
 #endif
+            _lightTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+            _mainTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
         }
         protected override void LoadContent()
         {
@@ -328,6 +332,8 @@ namespace UpgradePlatformer
 
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
             _font = Content.Load<SpriteFont>("Fonts/Poland");
+            Sprite.Shaders = new List<Effect>();
+            Sprite.Shaders.Add(Content.Load<Effect>("Shaders/ShaderLava"));
         }
 
         protected override void Update(GameTime gameTime)
@@ -369,16 +375,45 @@ namespace UpgradePlatformer
 #if DEBUG
             frameCounter++;
 #endif
+            GraphicsDevice.SetRenderTarget(_lightTarget);
+            GraphicsDevice.Clear(Color.White);
+            if (LevelManager.Instance.Light) {
+                GraphicsDevice.Clear(Color.Black);
+
+                _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, null, null, null, null);
+
+                LevelManager.Instance.DrawLightMap(_spriteBatch);
+
+                _spriteBatch.End();
+            }
+
+            GraphicsDevice.SetRenderTarget(_mainTarget);
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
+            _spriteBatch.Begin(blendState: BlendState.AlphaBlend);
 
             LevelManager.Instance.Draw(_spriteBatch);
             if (_stateMachine.currentState != 0) EntityManager.Instance.Draw(gameTime, _spriteBatch);
-            UIManager.Instance.Draw(gameTime, _spriteBatch);
 
             _spriteBatch.End();
 
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.Black);
+
+            Sprite.Shaders[0].Parameters["MaskTexture"].SetValue(_lightTarget);
+            
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, Sprite.Shaders[0], null);
+            
+            _spriteBatch.Draw(_mainTarget, Vector2.Zero, Color.White);
+            
+            _spriteBatch.End();
+            
+            _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
+            
+            UIManager.Instance.Draw(gameTime, _spriteBatch);
+            
+            _spriteBatch.End();
+            
             base.Draw(gameTime);
         }
     }

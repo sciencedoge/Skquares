@@ -15,6 +15,7 @@ namespace UpgradePlatformer.Levels
         public String Name;
         int TileWidth, TileHeight;
         Tile[,] TileMap;
+        public bool Light;
 
         public List<LevelCollectedEntity> Collected;
         public Tile[,] Tiles
@@ -26,8 +27,9 @@ namespace UpgradePlatformer.Levels
         /// Loads a level into the level var
         /// </summary>
         /// <param name="name">the name of the level</param>
-        public void Load(String name)
+        public void Load(String name, bool light)
         {
+            Light = light;
             Name = name;
             FileStream stream = new FileStream("Content/Levels/" + name + ".level_Finished", FileMode.Open);
             BinaryReader reader = new BinaryReader(stream);
@@ -55,10 +57,10 @@ namespace UpgradePlatformer.Levels
         /// creates a level from a file
         /// </summary>
         /// <param name="name">the name of the file</param>
-        public Level(String name)
+        public Level(String name, bool Light)
         {
             Collected = new List<LevelCollectedEntity>();
-            Load(name);
+            Load(name, Light);
         }
 
         /// <summary>
@@ -72,6 +74,16 @@ namespace UpgradePlatformer.Levels
                     TileMap[y, x].Draw(spriteBatch, new Vector2((x) * TileMap[0, 0].TileSize.X, (y) * TileMap[0, 0].TileSize.Y) + new Vector2());
         }
 
+        /// <summary>
+        /// draws the active level in the active world
+        /// </summary>
+        /// <param name="spriteBatch">the SpriteBatch object</param>
+        public void DrawLightMap(SpriteBatch spriteBatch)
+        {
+            for (int x = 0; x < TileHeight; x++)
+                for (int y = 0; y < TileWidth; y++)
+                    TileMap[y, x].DrawLightMap(spriteBatch, new Vector2((x) * TileMap[0, 0].TileSize.X, (y) * TileMap[0, 0].TileSize.Y) + new Vector2());
+        }
         /// <summary>
         /// Gets Spawners for the level
         /// </summary>

@@ -9,10 +9,9 @@ namespace UpgradePlatformer.Upgrade_Stuff
     //Date: 5/26/2021
     //Purpose: establishes the upgrade tree
     //===============================================
-    class UpgradeStructure
+    static class UpgradeStructure
     {
-        public UpgradeStructure()
-        {
+        public static void InitStructure() {
             UpgradeManager.Instance.Add(1, UpgradeType.XtraJump, 10);
             UpgradeManager.Instance.Add(1, UpgradeType.Health, 10);
             UpgradeManager.Instance.Add(1, UpgradeType.Weapon, 20);

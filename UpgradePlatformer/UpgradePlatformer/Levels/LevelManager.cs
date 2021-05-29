@@ -43,19 +43,9 @@ namespace UpgradePlatformer.Levels
         {
             Worlds = new List<World>();
             _activeWorld = 0;
-            Load(new List<string>{"DEATH_MENU"}, 0);
-            Load(new List<string>{"clouds2", "clouds1Fix", "clouds3"}, 0);
-            Load(new List<string>{"cave", "coinHeaven"}, 0);
-        }
-
-        /// <summary>
-        /// loads a world into memory
-        /// </summary>
-        /// <param name="Names">the names of the levels</param>
-        /// <param name="level">the level to start on</param>
-        public void Load(List<String> Names, int level)
-        {
-            Worlds.Add(new World(Names, level));
+            Worlds.Add(new World(new List<string>{"DEATH_MENU"}, 0, false));
+            Worlds.Add(new World(new List<string>{"clouds2", "clouds1Fix", "clouds3"}, 0, false));
+            Worlds.Add(new World(new List<string>{"cave", "coinHeaven"}, 0, true));
         }
 
         /// <summary>
@@ -65,6 +55,15 @@ namespace UpgradePlatformer.Levels
         public void Draw(SpriteBatch spriteBatch)
         {
             Worlds[activeWorld].Draw(spriteBatch);
+        }
+
+        /// <summary>
+        /// draws the active level in the active world
+        /// </summary>
+        /// <param name="spriteBatch">the SpriteBatch object</param>
+        public void DrawLightMap(SpriteBatch spriteBatch)
+        {
+            Worlds[activeWorld].DrawLightMap(spriteBatch);
         }
 
         /// <summary>
@@ -144,5 +143,6 @@ namespace UpgradePlatformer.Levels
         /// </summary>
         /// <returns>the id</returns>
         public int ActiveWorldNum() => activeWorld;
+        public bool Light => ActiveLevel().Light;
     }
 }

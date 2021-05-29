@@ -12,6 +12,7 @@ namespace UpgradePlatformer.Levels
         List<Level> Levels;
         int activeLevel;
         int _activeLevel;
+        bool Light = false;
         
         /// <summary>
         /// updates the level if needed
@@ -36,8 +37,9 @@ namespace UpgradePlatformer.Levels
         /// </summary>
         /// <param name="levels">the levels in the world</param>
         /// <param name="defaultLevel">the default level</param>
-        public World(List<String> levels, int defaultLevel)
+        public World(List<String> levels, int defaultLevel, bool light)
         {
+            Light = light;
             Levels = new List<Level>();
             _activeLevel = defaultLevel;
             foreach (string level in levels)
@@ -50,7 +52,7 @@ namespace UpgradePlatformer.Levels
         /// <param name="Name"></param>
         public void Load(String Name)
         {
-            Levels.Add(new Level(Name));
+            Levels.Add(new Level(Name, Light));
         }
 
         /// <summary>
@@ -60,6 +62,15 @@ namespace UpgradePlatformer.Levels
         public void Draw(SpriteBatch spriteBatch)
         {
             Levels[activeLevel].Draw(spriteBatch);
+        }
+
+        /// <summary>
+        /// draws the active level in the active world
+        /// </summary>
+        /// <param name="spriteBatch">the SpriteBatch object</param>
+        public void DrawLightMap(SpriteBatch spriteBatch)
+        {
+            Levels[activeLevel].DrawLightMap(spriteBatch);
         }
 
         /// <summary>

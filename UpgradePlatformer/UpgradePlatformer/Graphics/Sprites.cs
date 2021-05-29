@@ -8,6 +8,7 @@ namespace UpgradePlatformer.Graphics
 {
     public class Sprite
     {
+        public static List<Effect> Shaders;
         public static bool Dim;
         public static Texture2D texture;
         public static GraphicsDeviceManager graphics;
