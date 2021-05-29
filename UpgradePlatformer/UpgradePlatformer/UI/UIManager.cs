@@ -8,7 +8,7 @@ using UpgradePlatformer.Input;
 
 namespace UpgradePlatformer.UI
 {
-    public delegate void UIAction();
+    public delegate void UIAction(int i);
     class UIManager
     {
         private static readonly Lazy<UIManager>
@@ -97,23 +97,21 @@ namespace UpgradePlatformer.UI
 
         public void Nav(bool reverse)
         {
-            focused.Focused = false;
-            if (reverse)
+            UIElement start = focused;
+            do 
             {
-                focused.prevFocus.Focused = true;
-                focused = focused.prevFocus;
-                return;
-            }
-            focused.nextFocus.Focused = true;
-            focused = focused.nextFocus;
-            if (focused.IsActive == false)
-            {
-                UIElement n = GetActive();
-                if (n == null) return;
-                focused = n;
-                focused.Focused = true;
-            }
+                focused.Focused = false;
+                if (reverse)
+                {
+                    focused.prevFocus.Focused = true;
+                    focused = focused.prevFocus;
+                } else {
+                    focused.nextFocus.Focused = true;
+                    focused = focused.nextFocus;
+                }
+            } while (focused.IsActive == false && focused != start);
         }
+
         public UIElement GetActive()
         {
             foreach (UIElement e in UIElements)
@@ -127,7 +125,10 @@ namespace UpgradePlatformer.UI
 
         public void Select(bool reverse)
         {
-            focused.WhenClicked(new Point(0));
+            if (reverse)
+                EventManager.Instance.Push(new Event("STATE_MACHINE", 4, new Point()));
+            else
+                focused.WhenClicked(new Point(0));
         }
 
         public static void SetupFocusLoop(List<UIElement> elements)

@@ -107,11 +107,11 @@ namespace UpgradePlatformer.Levels
                     EntityObject o = null;
                     if (t.Kind == 3 && UpgradeManager.Instance.CanBeLearned().Count != 0) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location.X, t.Position.Y - 15, 15, 15), UpgradeManager.Instance.CanBeLearned()[0], t);
 #if DEBUG
-                    else if (t.Kind == 2 && player) o = (EntityObject)new Player(int.MaxValue, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
+                    else if (t.Kind == 2 && player) o = (EntityObject)new Player(30, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #else
                     else if (t.Kind == 2 && player) o = (EntityObject)new Player(3, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #endif
-                    else if (t.Kind == 1) o = (EntityObject)new Enemy(10, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 1);
+                    else if (t.Kind == 1) o = (EntityObject)new Enemy(10, 1, new Rectangle(t.Position.Location, new Point(25, 25)), 1);
                     else if (t.Kind == 0) o = (EntityObject)new Coin(1, new Rectangle(t.Position.Location, new Point(15, 15)), t);
                     if (o != null)
                         EntityManager.Instance.Spawn(o);

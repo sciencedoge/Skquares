@@ -6,7 +6,7 @@ using System.Text;
 
 namespace UpgradePlatformer.UI
 {
-    class UIButton : UIElement
+    class UIToggle : UIElement
     {
         // Setup constants for sprites
         private static Rectangle BUTTON_NORMAL_SPRITE = new Rectangle(0, 0, 7, 7);
@@ -25,25 +25,23 @@ namespace UpgradePlatformer.UI
         public bool Disabled = false;
         private Color NormalTextColor, InvertedTextColor;
         public int ClickTimeout = 5;
-        private int ClickTime;
+        private bool toggled;
 
         /// <summary>
-        /// Updates the Button
+        /// Updates the Toggle
         /// </summary>
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
-            ClickTime = Math.Max(0, ClickTime - 1);
-            Text.Update(gameTime);
             Text.color = InvertedTextColor;
-            if (Disabled || ClickTime != 0) return;
+            if (Disabled || toggled) return;
             Text.color = NormalTextColor;
         }
 
         /// <summary>
-        /// creates a UIButton
+        /// creates a UIToggle
         /// </summary>
         /// <param name="bounds">What the coords of the button are</param>
-        public UIButton(Texture2D texture, SpriteFont font, Rectangle bounds)
+        public UIToggle(Texture2D texture, SpriteFont font, Rectangle bounds)
         {
             Bounds = bounds;
             Text = new UIText(font, Bounds, 1, Color.Black);
@@ -62,16 +60,17 @@ namespace UpgradePlatformer.UI
         /// <param name="at">where the button UIElement was clicked 0,0 being the top corner</param>
         public override void WhenClicked(Point at)
         {
-            if (!IsActive || Disabled || ClickTime != 0) return;
+            if (!IsActive || Disabled) return;
 
-            ClickTime = ClickTimeout;
-            onClick(0);
+            toggled = !toggled;
+            if (toggled) onClick(1);
+            else onClick(0);
         }
 
         public override UISprite CurrentSprite()
         {
             if (Disabled) return DisabledSprite;
-            if (ClickTime != 0) return ClickedSprite;
+            if (toggled) return ClickedSprite;
             if (Focused) return FocusedSprite;
             return NormalSprite;
         }
