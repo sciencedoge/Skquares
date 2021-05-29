@@ -43,29 +43,35 @@ namespace UpgradePlatformer.Entities
         public bool Flip;
 
         /// <summary>
-        /// Creates an enemy object
+        /// creates an enemy object
         /// </summary>
-        /// <param name="maxHp">the max hp of the enemy</param>
-        /// <param name="damage">the damage that the enemy deals</param>
-        /// <param name="hitbox">the hitbox of the enemy</param>
-        /// <param name="texture">the texture of the enemy</param>
+        /// <param name="maxHp">the enemys hp</param>
+        /// <param name="damage">the damage the enemy deals</param>
+        /// <param name="hitbox">the starting hitbox of the enemy</param>
+        /// <param name="jumpsLeft">the ammount of jumps the enemy has</param>
         public Enemy(int maxHp, int damage, Rectangle hitbox, int jumpsLeft)
             :base(maxHp, damage, hitbox, jumpsLeft, EntityKind.ENEMY)
         {
-            gravity = new Vector2(0, 1f);
+            gravity = new Vector2(0, 0.8f);
             jumpVelocity = new Vector2(0, -10f);
             this.jumpsLeft = jumpsLeft;
 
             spawnPoint = new Point(hitbox.X, hitbox.Y);
             currentlyColliding = false;
             this.animation = new AnimationFSM(AnimationManager.Instance.animations[0]);
-            // this.sprite.Position = new Rectangle(0, 29, 15, 15);
         }
+
+        /// <summary>
+        /// processes a floor collision
+        /// </summary>
         public override void OnFloorCollide()
         {
             this.jumpsLeft = 1;
         }
 
+        /// <summary>
+        /// processes gravity for the enemy
+        /// </summary>
         public override void ApplyGravity()
         {
             base.ApplyGravity();
@@ -78,13 +84,17 @@ namespace UpgradePlatformer.Entities
                 this.Colliding = false;
             }
 
-            if (position.X > Sprite.graphics.PreferredBackBufferWidth + hitbox.Width)
-                position.X = 0 - hitbox.Width;
-
-            if (position.X < 0 - hitbox.Width)
-                position.X = Sprite.graphics.PreferredBackBufferWidth + hitbox.Width;
+            // locks enemy in room
+            if (position.X > Sprite.graphics.PreferredBackBufferWidth - hitbox.Width)
+                position.X = Sprite.graphics.PreferredBackBufferWidth - hitbox.Width;
+            else if (position.X < 0 + hitbox.Width)
+                position.X = 0 + hitbox.Width;
         }
-
+        
+        /// <summary>
+        /// processes a frame of movement for an enemy
+        /// </summary>
+        /// <param name="gameTime">a GameTime object</param>
         public override void Update(GameTime gameTime)
         {
             if (IsActive)
@@ -94,6 +104,12 @@ namespace UpgradePlatformer.Entities
                 ApplyGravity();
             }
         }
+
+        /// <summary>
+        /// processes intersections for an enemy, does nothing
+        /// </summary>
+        /// <param name="objects"></param>
+        /// <returns></returns>
         public override int Intersects(List<EntityObject> objects) {return 0; }
     }
 }

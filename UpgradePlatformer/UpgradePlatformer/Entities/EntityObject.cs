@@ -17,6 +17,11 @@ namespace UpgradePlatformer.Entities
         public abstract void Draw(SpriteBatch spriteBatch, GameTime gameTime);
         public abstract int Intersects(List<EntityObject> objects);
         public EntityKind Kind;
+
+        /// <summary>
+        /// creates an entity object
+        /// </summary>
+        /// <param name="kind"></param>
         public EntityObject(EntityKind kind) {
             Kind = kind;
             IsActive = true;

@@ -51,7 +51,7 @@ namespace UpgradePlatformer.Entities
         /// Checks if the player intersects with another living object
         /// </summary>
         /// <param name="obj"></param>
-        /// <returns></returns>
+        /// <returns>0</returns>
         public override int Intersects(List<EntityObject> obj)
         {
             if (IsActive)
@@ -74,8 +74,7 @@ namespace UpgradePlatformer.Entities
         /// Updates the player's position based on the
         /// key pressed
         /// </summary>
-        /// <param name="gt"></param>
-        /// <param name="keys"></param>
+        /// <param name="gt">updates the players position</param>
         public override void Update(GameTime gt)
         {
             if (IsActive)
@@ -164,7 +163,11 @@ namespace UpgradePlatformer.Entities
 
             if (position.Y >= Sprite.graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 2;
         }
-        
+
+        /// <summary>
+        /// resizes the player based on velocity
+        /// </summary>
+        /// <returns>a size vector</returns>
         public Vector2 GetVelocitySize()
         {
             Vector2 result = new Vector2(1, 1);
@@ -175,13 +178,16 @@ namespace UpgradePlatformer.Entities
             return result;
         }
 
+        /// <summary>
+        /// resets max jumps
+        /// </summary>
         public override void OnFloorCollide()
         {
             jumpsLeft = maxJumps;
         }
 
         /// <summary>
-        /// 
+        /// processes input events
         /// </summary>
         public void CheckForInput()
         {
@@ -207,7 +213,6 @@ namespace UpgradePlatformer.Entities
             }
             if (jev != null)
                 Joystick = jev.MousePosition.ToVector2() / 5;
-            //Joystick *= .5;
         }
 
         /// <summary>

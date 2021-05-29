@@ -27,6 +27,7 @@ namespace UpgradePlatformer.Entities
         /// <param name="texture">texture of the upgrade</param>
         /// <param name="hitbox">hitbox of the entity</param>
         /// <param name="upgrade">the actual upgrade</param>
+        /// <param name="t">the tile where the object spawned</param>
         public Pillar(int cost, Rectangle hitbox, Upgrade upgrade, Tile t)
             :base(-cost, hitbox, EntityKind.UPGRADE, t)
         {
@@ -61,25 +62,26 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         /// <param name="obj">a living object</param>
         /// <returns></returns>
-        public override int Intersects(EntityObject o)
+        public override int Intersects(List<EntityObject> objs)
         {
-            if (o == null) return 0;
-            if (o.Kind != EntityKind.PLAYER) return 0;
-            LivingObject obj = (LivingObject)o;
-            if (IsActive && obj != null)
-            {
-                if (this.hitbox.Intersects(obj.Hitbox))
+            foreach (EntityObject o in objs) if (o is Player) {
+                LivingObject obj = (LivingObject)o;
+                if (IsActive && obj != null)
                 {
-                    if(ValidIntersection() == true)
+                    if (this.hitbox.Intersects(obj.Hitbox))
                     {
-                        //the coin is no longer active
-                        return this.upgrade.Cost * -1;
-                    }                 
+                        if(ValidIntersection() == true)
+                        {
+                            //the coin is no longer active
+                            return this.upgrade.Cost * -1;
+                        }                 
+                    }
+                    else
+                    {
+                        return 0;
+                    }
                 }
-                else
-                {
-                    return 0;
-                }
+                return 0;
             }
             return 0;
         }

@@ -58,6 +58,9 @@ namespace UpgradePlatformer.Entities
             tile = t;
         }
         
+        /// <summary>
+        /// updates the bounds of the sprite
+        /// </summary>
         public void UpdateSprite() {
             this.sprite = new Sprite(
                 SpriteBounds,
@@ -108,7 +111,17 @@ namespace UpgradePlatformer.Entities
             return 0;
         }
 
+        /// <summary>
+        /// updates the sprite
+        /// </summary>
+        /// <param name="gameTime">a GameTime object</param>
         public override void Update(GameTime gameTime) { }
+
+        /// <summary>
+        /// processes intersections with objects
+        /// </summary>
+        /// <param name="objects">all entity objects</param>
+        /// <returns>the ammount of money earned</returns>
         public override int Intersects(List<EntityObject> objects) {
             foreach (EntityObject o in objects) {
                 if (o.Kind == EntityKind.PLAYER)

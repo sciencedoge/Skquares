@@ -24,6 +24,9 @@ namespace UpgradePlatformer.Entities
             UpdateSprite();
         }
 
+        /// <summary>
+        /// updates the Coin
+        /// </summary>
         public void Update()
         {
             spriteSize = hitbox.Size;

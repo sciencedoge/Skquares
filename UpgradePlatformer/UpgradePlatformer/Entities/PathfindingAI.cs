@@ -124,6 +124,9 @@ namespace UpgradePlatformer.Entities
             }
         }
 
+        /// <summary>
+        /// processes enemy intersections
+        /// </summary>
         public void EnemyIntersection()
         {
             foreach(Enemy e in enemies)
@@ -135,9 +138,12 @@ namespace UpgradePlatformer.Entities
             }
         }
 
-        public void Update(EntityManager em) {
-            enemies = em.enemies();
-            player = em.player();
+        /// <summary>
+        /// updates the entitys
+        /// </summary>
+        public void Update() {
+            enemies = EntityManager.Instance.enemies();
+            player = EntityManager.Instance.player();
         }
     }
 }

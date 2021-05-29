@@ -145,9 +145,13 @@ namespace UpgradePlatformer.Entities
         //const
 
         /// <summary>
-        /// Creates a new LivingObject object
+        /// creates a living object
         /// </summary>
-        /// <param name="maxHp">max hp of the object</param>
+        /// <param name="maxHp">the max hp of the object</param>
+        /// <param name="damage">the damage the object deals</param>
+        /// <param name="hitbox">the starting hitbox of the object</param>
+        /// <param name="jumpsLeft">the ammount of jumps to start with</param>
+        /// <param name="kind">the kind of the object</param>
         public LivingObject(int maxHp, int damage, Rectangle hitbox,
             int jumpsLeft, EntityKind kind) : base(kind)
         {
@@ -207,13 +211,13 @@ namespace UpgradePlatformer.Entities
         }
 
         /// <summary>
-        /// Updates entities every frame
+        /// processes floor collisions
         /// </summary>
-        /// <param name="gt">gameTime</param>
-        //public abstract void Update(GameTime gameTime, EventManager eventManager, InputManager inputManager, LevelManager levelManager);
-
         public abstract void OnFloorCollide();
 
+        /// <summary>
+        /// applys gravity to the entity
+        /// </summary>
         public virtual void ApplyGravity()
         {
             position += velocity;
@@ -222,6 +226,9 @@ namespace UpgradePlatformer.Entities
             velocity.X *= 0.70f;            
         }
         
+        /// <summary>
+        /// resets the entitys position
+        /// </summary>
         public void resetPosition(){
             position = spawn.ToVector2();
         }

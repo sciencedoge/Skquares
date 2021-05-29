@@ -17,6 +17,9 @@ namespace UpgradePlatformer.Entities
     //=================================================
     class EntityManager
     {
+        /// <summary>
+        /// Singleton stuff
+        /// </summary>
         private static readonly Lazy<EntityManager>
             lazy =
             new Lazy<EntityManager>
@@ -27,10 +30,19 @@ namespace UpgradePlatformer.Entities
 
         //player and enemies
         private List<EntityObject> objects;
+        private int playerMoney;
+        private Level currentLevel;
+        private PathfindingAI pathfind;
 
+        //methods
+
+        /// <summary>
+        /// gets all the enemys in the manager
+        /// </summary>
+        /// <returns>the enemys</returns>
         public List<Enemy> enemies()
         {
-  
+
             List<Enemy> result = new List<Enemy>();
 
             foreach (EntityObject obj in objects)
@@ -42,7 +54,11 @@ namespace UpgradePlatformer.Entities
 
             return result;
         }
-       
+
+        /// <summary>
+        /// gets all the coins in the manager
+        /// </summary>
+        /// <returns>the coins</returns>
         public List<Coin> coins()
         {
             List<Coin> result = new List<Coin>();
@@ -56,6 +72,11 @@ namespace UpgradePlatformer.Entities
 
             return result;
         }
+
+        /// <summary>
+        /// gets the player in the manager
+        /// </summary>
+        /// <returns>the player</returns>
         public Player player()
         {
             foreach (EntityObject obj in objects)
@@ -66,9 +87,6 @@ namespace UpgradePlatformer.Entities
             }
             return null;
         }
-        private int playerMoney;
-        private Level currentLevel;
-        private PathfindingAI pathfind;
 
         /// <summary>
         /// returns player's current money
@@ -78,29 +96,27 @@ namespace UpgradePlatformer.Entities
             get { return playerMoney; }
         }
 
-
+        /// <summary>
+        /// creates the entity manager
+        /// </summary>
         public EntityManager()
         {
             this.objects = new List<EntityObject>();
-            
-            this.playerMoney = 0;
-
             pathfind = new PathfindingAI(enemies(), player());
         }
-
-        //methods
 
         /// <summary>
         /// Updates the entities in the game
         /// </summary>
         /// <param name="gameTime"></param>
-        /// <param name="eventManager"></param>
         public void Update(GameTime gameTime)
         {
             currentLevel = LevelManager.Instance.ActiveLevel();
             // IMPORTANT: Subframes are calculated here
 
-            for (int i = 0; i < 5; i ++) {
+            for (int i = 0; i < 5; i ++)
+            {
+                pathfind.Update();
                 foreach (EntityObject obj in objects)
                 {
                     if (obj.IsActive == false) continue;
@@ -110,7 +126,6 @@ namespace UpgradePlatformer.Entities
                         if(i % 5 == 0)
                         {
                             obj.Update(gameTime);
-                            pathfind.Update(this);
                             pathfind.UpdateCosts();                          
                             pathfind.MoveToPlayer();                           
                         }
@@ -126,21 +141,21 @@ namespace UpgradePlatformer.Entities
                     {
                         Pillar p = (Pillar)obj;
 
-                        playerMoney += p.Intersects(player());
+                         p.Intersects(player());
                     }
                     else
                     {
                         Intersects(obj);
-                    }                    
-                    int gainedMoney = obj.Intersects(objects);
+                    }
                     
-                    if(gainedMoney > 0)
+                    int gainedMoney = obj.Intersects(objects);
+                    playerMoney += gainedMoney;
+
+                    if (gainedMoney > 0)
                     {
                         SoundManager.Instance.PlaySFX("coin");
                         playerMoney += gainedMoney;
                     }
-
-                    
                 }
                 if (player() != null)
                     if (player().CurrentHP <= 0)
@@ -168,11 +183,19 @@ namespace UpgradePlatformer.Entities
             }
         }
         
+        /// <summary>
+        /// spawns an entity object
+        /// </summary>
+        /// <param name="obj">the object</param>
         public void Spawn(EntityObject obj) {
             if (obj != null)
                 objects.Add(obj);
         }
 
+        /// <summary>
+        /// removes all entity objects
+        /// </summary>
+        /// <param name="player">wether the player should be removed</param>
         public void Clean(bool player) {
             EntityObject plyr = (EntityObject)this.player();
             objects = new List<EntityObject>();
@@ -181,8 +204,9 @@ namespace UpgradePlatformer.Entities
         }
 
         /// <summary>
-        /// Checks if an entity intersects with anything
+        /// checks for intersections between all objects and a single object
         /// </summary>
+        /// <param name="o">the object to check</param>
         public void Intersects(EntityObject o)
         {
             if (!new List<EntityKind> { EntityKind.PLAYER, EntityKind.ENEMY}.Contains(o.Kind))
@@ -265,11 +289,11 @@ namespace UpgradePlatformer.Entities
                         obj.Y = temp.Y;
                         break;
                     case 103:
+                        // goal tile
                         if (obj == (LivingObject)player())
                             EventManager.Instance.Push(new Event("WORLD_SHOW", (uint)LevelManager.Instance.ActiveWorldNum() + 1, new Point(0)));
                         break;
                     case 104:
-
                         if(player().Y < t.Position.Y)
                         {
                             //checks conditions to move the player up or down
@@ -301,9 +325,10 @@ namespace UpgradePlatformer.Entities
         }
 
         /// <summary>
-        /// returns a temp hitbox
+        /// gets a hitbox from an object
         /// </summary>
-        /// <returns></returns>
+        /// <param name="obj">the object</param>
+        /// <returns>the hitbox</returns>
         public Rectangle GetTempHitbox(LivingObject obj)
         {
             return new Rectangle(
@@ -313,12 +338,19 @@ namespace UpgradePlatformer.Entities
                 obj.Hitbox.Height));
         }
 
+        /// <summary>
+        /// gets the current player hp
+        /// </summary>
+        /// <returns>the players hp</returns>
         public int GetPlayerHp() {
             if (player() != null)
                 return player().CurrentHP;
             return -1;
         }
 
+        /// <summary>
+        /// respawns the player
+        /// </summary>
         public void RespawnPlayer() {
             if (player() != null)
                 player().Respawn();
@@ -327,7 +359,7 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// returns the max hp of the player
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the max hp</returns>
         public int MaxPlayerHP()
         {
             if (player() != null)
