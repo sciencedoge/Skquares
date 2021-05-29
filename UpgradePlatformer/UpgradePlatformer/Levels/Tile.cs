@@ -27,6 +27,15 @@ namespace UpgradePlatformer.Levels
         public Rectangle Position;
         public bool Spawner;
 
+        /// <summary>
+        /// creates a tile object
+        /// </summary>
+        /// <param name="kind">the tile kind</param>
+        /// <param name="rotation">the rotation of the tile</param>
+        /// <param name="collision">the collision kind of the tile</param>
+        /// <param name="spawner">the spawner id of the tile</param>
+        /// <param name="tileSize">the size of the tile</param>
+        /// <param name="above">the tile above this one</param>
         public Tile(int kind, int rotation, int collision, int spawner, Vector2 tileSize, Tile above)
         {
             Kind = kind;
@@ -65,6 +74,11 @@ namespace UpgradePlatformer.Levels
             CollisionKind = collision;
         }
         
+        /// <summary>
+        /// draws a tile
+        /// </summary>
+        /// <param name="spriteBatch">the Sprite Batch object</param>
+        /// <param name="position">the position of the tile on the map</param>
         public void Draw(SpriteBatch spriteBatch, Vector2 position)
         {
             if (Kind == 9 || Spawner)
@@ -72,6 +86,11 @@ namespace UpgradePlatformer.Levels
             UpdatePos(position);
             Sprite.Draw(spriteBatch, Position.Location, Rotation, Position.Size.ToVector2());
         }
+
+        /// <summary>
+        /// sets the positon of the tile for collisions
+        /// </summary>
+        /// <param name="position">the position</param>
         public void UpdatePos(Vector2 position)
         {
             Position = new Rectangle(position.ToPoint() + TileSize.ToPoint() - TileCenter.ToPoint(), TileSize.ToPoint());

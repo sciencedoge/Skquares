@@ -11,6 +11,9 @@ namespace UpgradePlatformer.Levels
 {
     class LevelManager
     {
+        /// <summary>
+        /// Singleton Stuff
+        /// </summary>
         private static readonly Lazy<LevelManager>
             lazy =
             new Lazy<LevelManager>
@@ -21,6 +24,9 @@ namespace UpgradePlatformer.Levels
         int activeWorld;
         int _activeWorld;
         
+        /// <summary>
+        /// Updates the level manager
+        /// </summary>
         public void Update() {
             if (activeWorld != _activeWorld) {
                 activeWorld = _activeWorld;
@@ -30,6 +36,9 @@ namespace UpgradePlatformer.Levels
             ActiveWorld().Update();
         }
 
+        /// <summary>
+        /// creates a level manager
+        /// </summary>
         public LevelManager()
         {
             Worlds = new List<World>();
@@ -39,17 +48,29 @@ namespace UpgradePlatformer.Levels
             Load(new List<string>{"cave", "coinHeaven"}, 0);
         }
 
+        /// <summary>
+        /// loads a world into memory
+        /// </summary>
+        /// <param name="Names">the names of the levels</param>
+        /// <param name="level">the level to start on</param>
         public void Load(List<String> Names, int level)
         {
             Worlds.Add(new World(Names, level));
         }
 
-
+        /// <summary>
+        /// draws the active level in the active world
+        /// </summary>
+        /// <param name="spriteBatch">the SpriteBatch object</param>
         public void Draw(SpriteBatch spriteBatch)
         {
             Worlds[activeWorld].Draw(spriteBatch);
         }
 
+        /// <summary>
+        /// sets the active world
+        /// </summary>
+        /// <param name="id">the world id</param>
         public void SetWorld(int id) {
             if (id < 0) {
                 _activeWorld = Worlds.Count - 1;
@@ -58,31 +79,70 @@ namespace UpgradePlatformer.Levels
             _activeWorld = id % (Worlds.Count);
         }
 
+        /// <summary>
+        /// goes to the next world
+        /// </summary>
         public void Next()
         {
             SetWorld(activeWorld + 1);
         }
 
+        /// <summary>
+        /// goes to the previous world
+        /// </summary>
         public void Prev()
         {
             SetWorld(activeWorld - 1);
         }
         
         /// <summary>
-        /// adds a tile to the list
+        /// adds a tile to the list of collected tiles
         /// </summary>
         /// <param name="t"></param>
         public void Collect(Tile t) {
             ActiveLevel().Collected.Add(new LevelCollectedEntity(t));
         }
 
+        /// <summary>
+        /// sets the active level
+        /// </summary>
+        /// <param name="id">the id of the level</param>
         public void SetLevel(int id) => ActiveWorld().SetLevel(id);
+        /// <summary>
+        /// gets the spawners in the active level
+        /// </summary>
+        /// <returns>the spawners</returns>
         public List<Tile> spawners() => Worlds[activeWorld].GetSpawners();
+        /// <summary>
+        /// gets collisions for the level
+        /// </summary>
+        /// <param name="r">the rectangle of tiles</param>
+        /// <returns></returns>
         public List<Tile> GetCollisions(Rectangle r) => Worlds[activeWorld].GetCollisions(r);
+        /// <summary>
+        /// gets the active level
+        /// </summary>
+        /// <returns>the level</returns>
         public Level ActiveLevel() => ActiveWorld().ActiveLevel();
+        /// <summary>
+        /// gets the active world
+        /// </summary>
+        /// <returns>the world</returns>
         public World ActiveWorld() => Worlds[activeWorld];
+        /// <summary>
+        /// gets the active level name
+        /// </summary>
+        /// <returns>the active levels name</returns>
         public String ActiveLevelName() => ActiveWorld().ActiveLevelName();
+        /// <summary>
+        /// gets the id of the active level
+        /// </summary>
+        /// <returns>the id</returns>
         public int ActiveLevelNum() => ActiveWorld().ActiveLevelNum();
+        /// <summary>
+        /// gets the id of the active world
+        /// </summary>
+        /// <returns>the id</returns>
         public int ActiveWorldNum() => activeWorld;
     }
 }

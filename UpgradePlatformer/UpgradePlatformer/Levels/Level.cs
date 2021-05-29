@@ -51,12 +51,20 @@ namespace UpgradePlatformer.Levels
             stream.Close();
         }
 
+        /// <summary>
+        /// creates a level from a file
+        /// </summary>
+        /// <param name="name">the name of the file</param>
         public Level(String name)
         {
             Collected = new List<LevelCollectedEntity>();
             Load(name);
         }
 
+        /// <summary>
+        /// draws the level
+        /// </summary>
+        /// <param name="spriteBatch">the SpriteBatch Object</param>
         public void Draw(SpriteBatch spriteBatch)
         {
             for (int x = 0; x < TileHeight; x++)
@@ -64,6 +72,10 @@ namespace UpgradePlatformer.Levels
                     TileMap[y, x].Draw(spriteBatch, new Vector2((x) * TileMap[0, 0].TileSize.X, (y) * TileMap[0, 0].TileSize.Y) + new Vector2());
         }
 
+        /// <summary>
+        /// Gets Spawners for the level
+        /// </summary>
+        /// <returns>the spawners</returns>
         public List<Tile> GetSpawners()
         {
             List<Tile> result = new List<Tile>();
@@ -77,6 +89,7 @@ namespace UpgradePlatformer.Levels
         /// colliding rectangles for the map
         /// </summary>
         /// <param name="r">the rectangle to check</param>
+        /// <param name="RedundancySize">the size of tiles to check</param>
         /// <returns>a list of colliding rectangles</returns>
         public List<Tile> GetCollisions(Rectangle r, int RedundancySize = 1)
         {
@@ -90,6 +103,10 @@ namespace UpgradePlatformer.Levels
             return Tiles;
         }
 
+        /// <summary>
+        /// loads entitys in the current level
+        /// </summary>
+        /// <param name="player">wether to add a player</param>
         public void LoadEntities(bool player)
         {
             for (int x = 0; x < TileHeight; x++) {

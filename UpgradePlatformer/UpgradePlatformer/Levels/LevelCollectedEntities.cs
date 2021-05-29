@@ -8,6 +8,9 @@ using UpgradePlatformer.Entities;
 
 namespace UpgradePlatformer.Levels
 {
+    /// <summary>
+    /// stores collected entitys within levels
+    /// </summary>
     class LevelCollectedEntity
     {
         public Tile tile;
