@@ -15,7 +15,6 @@ namespace UpgradePlatformer.Saves
     public class IsolatedStorageSaveManager : SaveManager
     {
         /// <summary>
-        /// /// <summary>
         /// Creates a new save game manager based on .NET IsolatedStorage.
         /// </summary>
         /// <param name="folderName">Name of the folder containing the save.</param>
