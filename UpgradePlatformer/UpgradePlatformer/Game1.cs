@@ -65,6 +65,7 @@ namespace UpgradePlatformer
             SoundManager.Instance.content = Content;
             SoundManager.Instance.LoadContent();
 
+#region  STATEMACHINE
             // create connections in state machine
             Flag playButtonPressMenu = new Flag(0, 1);
             Flag escapeKeyPressGame = new Flag(1, 2);
@@ -90,7 +91,9 @@ namespace UpgradePlatformer
 
             // start menu music
             SoundManager.Instance.PlayMusic("menu");
-            
+#endregion
+
+#region  UIELEMENTS
             // create ui elements
             int ButtonWidth = 200;
             UIButton playButton = new UIButton(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
@@ -131,6 +134,17 @@ namespace UpgradePlatformer
             });
             backButton.Text.Text = "Back";
 
+            UIToggle muteToggle = new UIToggle(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40));
+            muteToggle.onClick = new UIAction((i) => 
+            {
+                SoundManager.Instance.Muted = i == 1;
+            });
+            muteToggle.Text.update = new UITextUpdate(() =>
+            {
+                return SoundManager.Instance.Muted ? "Muted: x" : "Muted: -";
+            });
+            muteToggle.toggled = true;
+
             UIText TitleText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.Black);
             TitleText.Text = "platformergamething";
             TitleText.Centered = true;
@@ -163,14 +177,14 @@ namespace UpgradePlatformer
 
                 return $"[{result}]X1 ${EntityManager.Instance.PlayerMoney}";
             });
-
+#endregion
             // initialize uiGroups
             Rectangle bounds = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
 
             mainMenu = new UIGroup(new List<UIElement>{ TitleText, playButton, closeButton, OptionsButton}, bounds);
             pauseMenu = new UIGroup(new List<UIElement> { PauseText, continueButton, closeButton, OptionsButton }, bounds);
             deathMenu = new UIGroup(new List<UIElement> { playButton, closeButton}, bounds);
-            options = new UIGroup(new List<UIElement> { backButton }, bounds);
+            options = new UIGroup(new List<UIElement> { backButton, muteToggle }, bounds);
             topHud = new UIGroup(new List<UIElement> { HpText }, bounds);
 
             // add uiGroups to uiManager
@@ -256,7 +270,7 @@ namespace UpgradePlatformer
             UIManager.Instance.focused = playButton;
 
 #if DEBUG
-            Stats = new UIText(_font, new Rectangle(0, 40, 0, 0), 1, Color.Gray );
+            Stats = new UIText(_font, new Rectangle(0, 40, 0, 0), 1, Color.Gray);
             UIManager.Instance.Add(Stats);
 #endif
         }
@@ -311,12 +325,9 @@ namespace UpgradePlatformer
             GraphicsDevice.Clear(Color.Black);
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
+
             LevelManager.Instance.Draw(_spriteBatch);
-
-            if (_stateMachine.currentState != 0) {
-                EntityManager.Instance.Draw(gameTime, _spriteBatch);
-            }
-
+            if (_stateMachine.currentState != 0) EntityManager.Instance.Draw(gameTime, _spriteBatch);
             UIManager.Instance.Draw(gameTime, _spriteBatch);
 
             _spriteBatch.End();

@@ -25,13 +25,14 @@ namespace UpgradePlatformer.UI
         public bool Disabled = false;
         private Color NormalTextColor, InvertedTextColor;
         public int ClickTimeout = 5;
-        private bool toggled;
+        public bool toggled;
 
         /// <summary>
         /// Updates the Toggle
         /// </summary>
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime) {
+            Text.Update(gameTime);
             Text.color = InvertedTextColor;
             if (Disabled || toggled) return;
             Text.color = NormalTextColor;

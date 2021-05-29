@@ -23,6 +23,7 @@ namespace UpgradePlatformer.Music
         public static SoundManager Instance { get { return lazy.Value; } }
         public ContentManager content;
 
+        public bool Muted {get {return MediaPlayer.IsMuted; } set {MediaPlayer.IsMuted = value;}}
         private SoundEffect buttonClick;
         private SoundEffect jump;
         private SoundEffect land;
@@ -52,6 +53,7 @@ namespace UpgradePlatformer.Music
         /// <param name="action">action of the player</param>
         public void PlaySFX(string action)
         {
+            if (Muted) return;
             switch (action.ToLower().Trim())
             {
                 case "button":
