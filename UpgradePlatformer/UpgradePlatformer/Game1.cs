@@ -390,7 +390,7 @@ namespace UpgradePlatformer
             GraphicsDevice.SetRenderTarget(_mainTarget);
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(blendState: BlendState.AlphaBlend);
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 
             LevelManager.Instance.Draw(_spriteBatch);
             if (_stateMachine.currentState != 0) EntityManager.Instance.Draw(gameTime, _spriteBatch);

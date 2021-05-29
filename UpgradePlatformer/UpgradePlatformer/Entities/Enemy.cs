@@ -58,14 +58,14 @@ namespace UpgradePlatformer.Entities
 
             spawnPoint = new Point(hitbox.X, hitbox.Y);
             currentlyColliding = false;
-            this.animation = new AnimationFSM(AnimationManager.Instance.animations[0]);
+            this.animation = new AnimationFSM(AnimationManager.Instance.animations[1]);
         }
 
         /// <summary>
         /// processes a floor collision
         /// </summary>
         public override void OnFloorCollide()
-        {
+        {   
             this.jumpsLeft = 1;
         }
 

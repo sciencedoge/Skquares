@@ -30,6 +30,11 @@ namespace UpgradePlatformer.Graphics
                 for (int j = 0; j < 20; j++)
                     AllSprites[j, i] = new Sprite(new Rectangle(16 * i, 13 + 16 * j, 16, 16), new Vector2(8, 8), Color.White);
             animations = new List<AnimationFSM>();
+            AddPlayerFSM(AllSprites);
+            AddEnemyFSM(AllSprites);
+        }
+        public void AddPlayerFSM(Sprite[,] AllSprites)
+        {
 
             // ==========
             // player fsm
@@ -59,8 +64,40 @@ namespace UpgradePlatformer.Graphics
 
             // init
             FiniteStateMachine playerFSM = new FiniteStateMachine(new List<StateMachineState> { RightS, LeftS, RightM, LeftM });
-
             animations.Add(new AnimationFSM(playerFSM, new List<Animation> { AniRightS, AniLeftS, AniRightM, AniLeftM }));
+        }
+
+        public void AddEnemyFSM(Sprite[,] AllSprites)
+        {
+
+            // ==========
+            // enemyr fsm
+            // ==========
+            // flags
+            Flag LeftSLock = new Flag(2, 1);
+            Flag LeftSRight = new Flag(1, 2);
+            Flag LeftLLose = new Flag(3, 0);
+            Flag LeftLRight = new Flag(1, 3);
+            Flag RightSLock = new Flag(2, 3);
+            Flag RightSLeft = new Flag(0, 0);
+            Flag RightLLose = new Flag(3, 2);
+            Flag RightLLeft = new Flag(0, 1);
+
+            // states
+            StateMachineState LeftS = new StateMachineState(new List<Flag> { LeftSLock, LeftSRight });
+            Animation AniLeftS = new Animation(new List<Sprite> { AllSprites[1, 0].Copy() }, 2);
+            StateMachineState LeftL = new StateMachineState(new List<Flag> { LeftLLose, LeftLRight });
+            Animation AniLeftL = new Animation(new List<Sprite> { AllSprites[0, 4].Copy() }, 2);
+            StateMachineState RightS = new StateMachineState(new List<Flag> { RightSLeft, RightSLock });
+            Animation AniRightS = new Animation(new List<Sprite> { AllSprites[1, 0].Copy() }, 2);
+            AniRightS.sprites[0].effects = SpriteEffects.FlipHorizontally;
+            StateMachineState RightL = new StateMachineState(new List<Flag> { RightLLeft, RightLLose });
+            Animation AniRightL = new Animation(new List<Sprite> { AllSprites[0, 4].Copy() }, 2);
+            AniRightL.sprites[0].effects = SpriteEffects.FlipHorizontally;
+
+            // init
+            FiniteStateMachine enemyFSM = new FiniteStateMachine(new List<StateMachineState> { LeftS, LeftL, RightS, RightL });
+            animations.Add(new AnimationFSM(enemyFSM, new List<Animation> { AniLeftS, AniLeftL, AniRightS, AniRightL, }));
         }
     }
 }
