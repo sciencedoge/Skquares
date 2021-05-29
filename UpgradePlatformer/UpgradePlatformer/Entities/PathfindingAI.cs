@@ -69,14 +69,14 @@ namespace UpgradePlatformer.Entities
                     if (Enemies[i].X > player.X
                         && !Enemies[i].Colliding)
                     {
-                        Enemies[i].animation.SetFlag(1);
+                        Enemies[i].animation.SetFlag(0);
                         Enemies[i].X -= speed;
                         Enemies[i].Flip = false;
                     }
                     else if(Enemies[i].X < player.X
                         && !Enemies[i].Colliding)
                     {
-                        Enemies[i].animation.SetFlag(0);
+                        Enemies[i].animation.SetFlag(1);
                         Enemies[i].X += speed;
                         Enemies[i].Flip = true;
                     }
@@ -98,7 +98,7 @@ namespace UpgradePlatformer.Entities
                     Enemies[i].Flip = goombaAINum > 0;
                     if(Enemies[i].Colliding)
                     {
-                        if (goombaAINum > 0)
+                        if (goombaAINum < 0)
                             Enemies[i].animation.SetFlag(1);
                         else
                             Enemies[i].animation.SetFlag(0);
