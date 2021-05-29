@@ -86,6 +86,12 @@
 /processorParam:Quality=Best
 /build:Music/Sigh.mp3
 
+#begin Shaders/ShaderLava.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/ShaderLava.fx
+
 #begin SpriteSheet.png
 /importer:TextureImporter
 /processor:TextureProcessor

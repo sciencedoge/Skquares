@@ -37,5 +37,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Music\" />
+    <Folder Include="Content\Shaders\" />
   </ItemGroup>
 </Project>
