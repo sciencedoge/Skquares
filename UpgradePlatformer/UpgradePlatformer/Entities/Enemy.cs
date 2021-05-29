@@ -52,13 +52,14 @@ namespace UpgradePlatformer.Entities
         public Enemy(int maxHp, int damage, Rectangle hitbox, int jumpsLeft)
             :base(maxHp, damage, hitbox, jumpsLeft, EntityKind.ENEMY)
         {
-            gravity = new Vector2(0, 0.2f);
-            jumpVelocity = new Vector2(0, -2f);
+            gravity = new Vector2(0, 1f);
+            jumpVelocity = new Vector2(0, -10f);
             this.jumpsLeft = jumpsLeft;
 
             spawnPoint = new Point(hitbox.X, hitbox.Y);
             currentlyColliding = false;
-            this.sprite.Position = new Rectangle(0, 29, 15, 15);
+            this.animation = new AnimationFSM(AnimationManager.Instance.animations[0]);
+            // this.sprite.Position = new Rectangle(0, 29, 15, 15);
         }
         public override void OnFloorCollide()
         {
@@ -91,9 +92,6 @@ namespace UpgradePlatformer.Entities
                 hitbox.Location = position.ToPoint();
                 spriteSize = hitbox.Size;
                 ApplyGravity();
-                sprite.effects = SpriteEffects.None;
-                if (Flip)
-                    sprite.effects = SpriteEffects.FlipHorizontally;
             }
         }
         public override int Intersects(List<EntityObject> objects) {return 0; }

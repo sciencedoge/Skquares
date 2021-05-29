@@ -14,6 +14,10 @@ namespace UpgradePlatformer.FSM
             currentState = 0;
             States = states;
         }
+
+        public FiniteStateMachine Copy() {
+            return new FiniteStateMachine(States);
+        }
         public void SetFlag(int id)
         {
             for (int i = 0; i < States.Count; i++)

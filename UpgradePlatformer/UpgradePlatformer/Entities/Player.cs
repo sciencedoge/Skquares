@@ -25,7 +25,6 @@ namespace UpgradePlatformer.Entities
         private bool keyUp, keyDown, keyLeft, keyRight;
         private Vector2 Joystick;
         private bool ducking;
-
         private static int maxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.XtraJump) + 1;
 
         /// <summary>
@@ -42,6 +41,7 @@ namespace UpgradePlatformer.Entities
         public Player(int maxHp, int damage, Rectangle hitbox, int jumpsLeft)
             : base(maxHp, damage, hitbox, jumpsLeft, EntityKind.PLAYER)
         {
+            this.animation = new AnimationFSM(AnimationManager.Instance.animations[0]);
             this.jumpsLeft = jumpsLeft;
         }
 
@@ -102,9 +102,13 @@ namespace UpgradePlatformer.Entities
                     }
                     velocity.X += speedX * Joystick.X;
                     if (Joystick.X < 0)
-                        sprite.effects = SpriteEffects.None;
+                        animation.SetFlag(0);
                     if (Joystick.X > 0)
-                        sprite.effects = SpriteEffects.FlipHorizontally;
+                        animation.SetFlag(1);
+                    if (Joystick.X != 0)
+                        animation.SetFlag(2);
+                    else
+                        animation.SetFlag(3);
 
                     if (keyUp)
                     {

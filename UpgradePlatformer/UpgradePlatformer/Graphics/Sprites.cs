@@ -55,5 +55,10 @@ namespace UpgradePlatformer.Graphics
             renderRect.Size = Size.ToPoint();
             spriteBatch.Draw(texture, renderRect, Position, c, rotation, Origin, effects, 0f);
         }
+        public Sprite Copy() {
+            Sprite spr = new Sprite(Position, Origin, TintColor);
+            spr.effects = effects;
+            return spr;
+        }
     }
 }

@@ -39,7 +39,7 @@ namespace UpgradePlatformer.Entities
         protected Point spawn;
 
         //sprite info
-        protected Sprite sprite;
+        public AnimationFSM animation;
 
         protected Rectangle hitbox;
 
@@ -159,11 +159,13 @@ namespace UpgradePlatformer.Entities
             this.hitbox = hitbox;
             this.jumpsLeft = jumpsLeft;
 
-            this.sprite = new Sprite(
-                SpriteBounds, 
-                new Vector2(SpriteBounds.X - (SpriteBounds.Width / 2),
-                SpriteBounds.Y - (SpriteBounds.Height / 2)),
-                Color.White);
+            // this.sprite = new Sprite(
+            //     SpriteBounds, 
+            //     new Vector2(SpriteBounds.X - (SpriteBounds.Width / 2),
+            //     SpriteBounds.Y - (SpriteBounds.Height / 2)),
+            //     Color.White);
+            spriteSize = SpriteBounds.Size;
+            this.animation = AnimationManager.Instance.animations[0];
             this.spawn = hitbox.Location;
 
             gravity = new Vector2(0, 0.1f);
@@ -200,7 +202,7 @@ namespace UpgradePlatformer.Entities
         {
             if (IsActive)
             {          
-                sprite.Draw(sb, hitbox.Location, 0, spriteSize.ToVector2());
+                animation.Draw(sb, hitbox.Location, 0, spriteSize.ToVector2());
             }
         }
 

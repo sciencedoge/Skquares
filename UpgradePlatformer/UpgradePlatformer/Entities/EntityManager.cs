@@ -107,7 +107,7 @@ namespace UpgradePlatformer.Entities
                     if (obj == null) continue;
                     if(obj is Enemy)
                     {
-                        if(i % 5 == 0 || i % 3 == 0)
+                        if(i % 5 == 0)
                         {
                             obj.Update(gameTime);
                             pathfind.Update(this);
@@ -118,6 +118,8 @@ namespace UpgradePlatformer.Entities
                     else
                     {
                         obj.Update(gameTime);
+                        if (obj is LivingObject)
+                            ((LivingObject)obj).animation.Update(gameTime);
                     }
                     
                     if (obj is Pillar)
