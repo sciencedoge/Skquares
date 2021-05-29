@@ -11,6 +11,7 @@ using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Upgrade_Stuff;
 using Microsoft.Xna.Framework.Content;
 using UpgradePlatformer.Music;
+using UpgradePlatformer.Saves;
 
 namespace UpgradePlatformer
 {
@@ -30,6 +31,7 @@ namespace UpgradePlatformer
         private FiniteStateMachine _stateMachine;
         private UIGroup mainMenu, pauseMenu, deathMenu, topHud, options;
         private UpgradeStructure structure;
+        private SaveManager Save;
 
 #if DEBUG
         private UIText Stats;
@@ -138,12 +140,14 @@ namespace UpgradePlatformer
             muteToggle.onClick = new UIAction((i) => 
             {
                 SoundManager.Instance.Muted = i == 1;
+                Save.Data.muted = SoundManager.Instance.Muted;
+                Save.Save();
             });
             muteToggle.Text.update = new UITextUpdate(() =>
             {
                 return SoundManager.Instance.Muted ? "Muted: x" : "Muted: -";
             });
-            muteToggle.toggled = true;
+            muteToggle.toggled = SoundManager.Instance.Muted;
 
             UIText TitleText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.Black);
             TitleText.Text = "platformergamething";
@@ -177,7 +181,9 @@ namespace UpgradePlatformer
 
                 return $"[{result}]X1 ${EntityManager.Instance.PlayerMoney}";
             });
-#endregion
+            #endregion
+
+#region UILAYOUT
             // initialize uiGroups
             Rectangle bounds = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
 
@@ -194,7 +200,9 @@ namespace UpgradePlatformer
             UIManager.Instance.Add(topHud);
             UIManager.Instance.Add(options);
             UIManager.SetupFocusLoop(new List<UIElement> { playButton, continueButton, OptionsButton, closeButton, backButton });
+            #endregion
 
+#region EVENTS
             // create event listeners
             EventAction Action_Button_Press = new EventAction((Event e) =>
             {
@@ -254,6 +262,7 @@ namespace UpgradePlatformer
 
             EventAction Action_Quit_Game = new EventAction((Event e) =>
             {
+                Save.Save();
                 Exit();
                 return true;
             });
@@ -267,15 +276,19 @@ namespace UpgradePlatformer
             });
 
             EventManager.Instance.AddListener(Action_Mouse_Move, "MOUSE_MOVE");
+#endregion
             UIManager.Instance.focused = playButton;
-
+            
 #if DEBUG
             Stats = new UIText(_font, new Rectangle(0, 40, 0, 0), 1, Color.Gray);
             UIManager.Instance.Add(Stats);
 #endif
         }
         protected override void LoadContent()
-        {            
+        {
+            Save = new IsolatedStorageSaveManager("UpgradePlatformer", "options.dat");
+            Save.Load();
+            SoundManager.Instance.Muted = Save.Data.muted;
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
