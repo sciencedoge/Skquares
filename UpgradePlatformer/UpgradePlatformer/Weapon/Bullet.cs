@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using UpgradePlatformer.Entities;
+using UpgradePlatformer.Levels;
 
 namespace UpgradePlatformer.Weapon
 {
@@ -97,10 +98,25 @@ namespace UpgradePlatformer.Weapon
                 location -= speed;
                 this.hitbox = new Rectangle(location.ToPoint(), new Point(10, 10));
                 Intersects();
-                if(location == path)
+                
+                foreach(Tile t in LevelManager.Instance.ActiveLevel().Tiles)
+                {
+                    if(t.CollisionKind != 9 && !t.Spawner)
+                    {
+                        if (hitbox.Intersects(t.Position))
+                        {
+                            isActive = false;
+                        }
+                    }                   
+                }
+
+                if(location.X > Sprite.graphics.PreferredBackBufferWidth 
+                    || location.X < 0 || location.Y > Sprite.graphics.PreferredBackBufferHeight ||
+                    location.Y < 0)
                 {
                     isActive = false;
                 }
+                    
             }            
         }
     }
