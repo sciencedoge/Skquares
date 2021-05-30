@@ -369,7 +369,7 @@ namespace UpgradePlatformer
             EventAction Action_Mouse_Move = new EventAction((Event e) =>
             {
                 UIManager.Instance.MouseMove(e.MousePosition);
-                return true;
+                return false;
             });
 
             EventManager.Instance.AddListener(Action_Mouse_Move, "MOUSE_MOVE");

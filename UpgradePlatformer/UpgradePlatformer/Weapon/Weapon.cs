@@ -5,6 +5,7 @@ using UpgradePlatformer.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using UpgradePlatformer.Input;
 
 namespace UpgradePlatformer.Weapon
 {
@@ -28,7 +29,8 @@ namespace UpgradePlatformer.Weapon
 
         private Rectangle spriteBounds;
 
-        private MouseState ms; //using this for now (not very familiar with current input system)
+        private Point MousePos; //using this for now (not very familiar with current input system)
+        private bool Click;
 
         //Properties
 
@@ -68,14 +70,14 @@ namespace UpgradePlatformer.Weapon
             this.effect = SpriteEffects.None;
 
             bullets = new List<Bullet>();
-        }      
+        }
 
         //Methods
         
         public Vector2 FindDistance()
         {
-            float distX = position.X - ms.X;
-            float distY = position.Y - ms.Y;
+            float distX = position.X - MousePos.X;
+            float distY = position.Y - MousePos.Y;
 
             return new Vector2(distX, distY);
         }
@@ -105,7 +107,6 @@ namespace UpgradePlatformer.Weapon
         {
             if (isActive)
             {
-                animation.Draw(sb, position.ToPoint(), rotation, new Vector2(14));
                 for (int i = bullets.Count - 1; i > 0; i--)
                 {
                     if (bullets[i].isActive)
@@ -113,6 +114,7 @@ namespace UpgradePlatformer.Weapon
                         bullets[i].Draw(sb);
                     }
                 }
+                animation.Draw(sb, position.ToPoint(), rotation, new Vector2(14));
             }
         }
 
@@ -121,6 +123,7 @@ namespace UpgradePlatformer.Weapon
         /// </summary>
         public void Update()
         {
+            CheckForInput();
 
             for (int i = bullets.Count - 1; i > 0; i--)
             {
@@ -134,17 +137,43 @@ namespace UpgradePlatformer.Weapon
                 }
             }
 
-            ms = Mouse.GetState();
-
             Vector2 path = FindDistance();
 
             rotation = FindRotation(path);
 
-            if(ms.LeftButton == ButtonState.Pressed)
+            if (Click)
             {
-                bullets.Add(new Bullet(path, Position));      
+                bullets.Add(new Bullet(path, Position + new Vector2(7)));      
             }
         }
 
+        /// <summary>
+        /// checks for input and reacts accordingly
+        /// </summary>
+        public void CheckForInput()
+        {
+            Event mev = EventManager.Instance.Pop("MOUSE_MOVE");
+            if (mev != null)
+            {
+                MousePos = mev.MousePosition;
+            }
+            Event rjev = EventManager.Instance.Pop("RGAME_PAD_JOYSTICK");
+            if (rjev != null)
+            {
+                MousePos = rjev.MousePosition + Position.ToPoint();
+            }
+            Event dev = EventManager.Instance.Pop("MOUSE_DOWN");
+
+            if (dev != null && dev.Data == 0)
+            {
+                Click = true;
+            }
+            Event uev = EventManager.Instance.Pop("MOUSE_UP");
+
+            if (uev != null && uev.Data == 0)
+            {
+                Click = false;
+            }
+        }
     }
 }
