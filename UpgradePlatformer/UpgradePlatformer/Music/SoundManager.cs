@@ -42,7 +42,7 @@ namespace UpgradePlatformer.Music
             jump = content.Load<SoundEffect>("Music/jump");
             land = content.Load<SoundEffect>("Music/jumpland");
             coinGrab = content.Load<SoundEffect>("Music/coin");
-            fart = content.Load<Song>("Music/Sigh");
+            fart = content.Load<Song>("Music/fart");
             star = content.Load<Song>("Music/allstar");
             amogus = content.Load<Song>("Music/AMOGUS");
         }
@@ -88,7 +88,7 @@ namespace UpgradePlatformer.Music
                 case "menu":
                     MediaPlayer.Stop();
                     MediaPlayer.Play(fart);
-                    MediaPlayer.IsRepeating = false;
+                    MediaPlayer.IsRepeating = true;
                     break;
                 case "game":
                     MediaPlayer.Stop();

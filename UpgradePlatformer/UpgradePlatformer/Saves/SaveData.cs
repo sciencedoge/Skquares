@@ -13,5 +13,7 @@ namespace UpgradePlatformer.Saves
     public class SaveData
     {
         public bool muted;
+        public bool valid;
+        public uint lastWorld;
     }
 }

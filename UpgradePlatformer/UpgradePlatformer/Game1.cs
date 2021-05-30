@@ -80,14 +80,15 @@ namespace UpgradePlatformer
             Flag optionsButtonPressMenu = new Flag(3, 4);
             Flag backPressOptions = new Flag(4, 0);
             Flag backPressOptionsGame = new Flag(4, 2);
+            Flag menuPressPause = new Flag(5, 0);
 
             // create state machine states
-            StateMachineState Menu = new StateMachineState(new List<Flag> { playButtonPressMenu, optionsButtonPressMenu });                     // 0
-            StateMachineState Game = new StateMachineState(new List<Flag> { escapeKeyPressGame, PlayerDeathGame });                             // 1
-            StateMachineState Escape = new StateMachineState(new List<Flag> { escapeKeyPressEscape, optionsButtonPressGame, backPressEscape }); // 2
-            StateMachineState Respawn = new StateMachineState(new List<Flag> { playButtonPressRespawn });                                       // 3
-            StateMachineState Options = new StateMachineState(new List<Flag> { backPressOptions });                                             // 4
-            StateMachineState OptionsGame = new StateMachineState(new List<Flag> { backPressOptionsGame });                                     // 5
+            StateMachineState Menu = new StateMachineState(new List<Flag> { playButtonPressMenu, optionsButtonPressMenu });                                     // 0
+            StateMachineState Game = new StateMachineState(new List<Flag> { escapeKeyPressGame, PlayerDeathGame });                                             // 1
+            StateMachineState Escape = new StateMachineState(new List<Flag> { escapeKeyPressEscape, optionsButtonPressGame, backPressEscape, menuPressPause }); // 2
+            StateMachineState Respawn = new StateMachineState(new List<Flag> { playButtonPressRespawn });                                                       // 3
+            StateMachineState Options = new StateMachineState(new List<Flag> { backPressOptions });                                                             // 4
+            StateMachineState OptionsGame = new StateMachineState(new List<Flag> { backPressOptionsGame });                                                     // 5
 
             // create state machine
             _stateMachine = new FiniteStateMachine(new List<StateMachineState>{Menu, Game, Escape, Respawn, Options, OptionsGame});
@@ -103,6 +104,7 @@ namespace UpgradePlatformer
             {
                 onClick = new UIAction((i) =>
                 {
+                    EventManager.Instance.Push(new Event("WORLD_SHOW", Save.Data.lastWorld, new Point(0, 0)));
                     SoundManager.Instance.PlaySFX("button");
                     SoundManager.Instance.PlayMusic("game");
                     EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
@@ -110,6 +112,23 @@ namespace UpgradePlatformer
                 })
             };
             playButton.Text.Text = "Play";
+            playButton.Disabled = !Save.Data.valid;
+
+            UIButton newButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40))
+            {
+                onClick = new UIAction((i) =>
+                {
+                    EventManager.Instance.Push(new Event("WORLD_SHOW", 1, new Point(0, 0)));
+                    SoundManager.Instance.PlaySFX("button");
+                    Save.Data.valid = true;
+                    Save.Data.lastWorld = 1;
+                    Save.Save();
+                    SoundManager.Instance.PlayMusic("game");
+                    EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
+                    EntityManager.Instance.RespawnPlayer();
+                })
+            };
+            newButton.Text.Text = "New Game";
 
             UIButton closeButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 500, ButtonWidth, 40))
             {
@@ -120,6 +139,16 @@ namespace UpgradePlatformer
             };
             closeButton.Text.Text = "Quit";
 
+            UIButton menuButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40))
+            {
+                onClick = new UIAction((i) =>
+                {
+                    LevelManager.Instance.SetWorld(0);
+                    EventManager.Instance.Push(new Event("STATE_MACHINE", 5, new Point(0, 0)));
+                })
+            };
+            menuButton.Text.Text = "Menu";
+
             UIButton continueButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40))
             {
                 onClick = new UIAction((i) =>
@@ -129,7 +158,7 @@ namespace UpgradePlatformer
             };
             continueButton.Text.Text = "Continue";
 
-            UIButton OptionsButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40))
+            UIButton OptionsButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 400, ButtonWidth, 40))
             {
                 onClick = new UIAction((i) =>
                 {
@@ -223,8 +252,8 @@ namespace UpgradePlatformer
             // initialize uiGroups
             Rectangle bounds = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
 
-            mainMenu = new UIGroup(new List<UIElement>{ TitleText, playButton, closeButton, OptionsButton}, bounds);
-            pauseMenu = new UIGroup(new List<UIElement> { PauseText, continueButton, closeButton, OptionsButton }, bounds);
+            mainMenu = new UIGroup(new List<UIElement>{ TitleText, playButton, newButton, closeButton, OptionsButton}, bounds);
+            pauseMenu = new UIGroup(new List<UIElement> { PauseText, continueButton, menuButton, OptionsButton, closeButton}, bounds);
             deathMenu = new UIGroup(new List<UIElement> { playButton, closeButton}, bounds);
             options = new UIGroup(new List<UIElement> { backButton, muteToggle }, bounds);
             topHud = new UIGroup(new List<UIElement> { HpText }, bounds);
@@ -235,15 +264,13 @@ namespace UpgradePlatformer
             UIManager.Instance.Add(deathMenu);
             UIManager.Instance.Add(topHud);
             UIManager.Instance.Add(options);
-            UIManager.SetupFocusLoop(new List<UIElement> { playButton, continueButton, OptionsButton, closeButton, backButton });
+            UIManager.SetupFocusLoop(new List<UIElement> { playButton, newButton, continueButton, menuButton, OptionsButton, closeButton, backButton });
             #endregion
 
 #region EVENTS
             // create event listeners
             EventAction Action_Button_Press = new EventAction((Event e) =>
             {
-                if (e.Data == 0)
-                    EventManager.Instance.Push(new Event("WORLD_SHOW", 1, new Point(0, 0)));
                 _stateMachine.SetFlag((int)e.Data);
                 return true;
             });
@@ -271,6 +298,8 @@ namespace UpgradePlatformer
             EventAction Action_World_Show = new EventAction((Event e) =>
             {
                 LevelManager.Instance.SetWorld((int)e.Data);
+                Save.Data.lastWorld = e.Data;
+                Save.Save();
                 return true;
             });
             EventManager.Instance.AddListener(Action_World_Show, "WORLD_SHOW");
@@ -405,7 +434,7 @@ namespace UpgradePlatformer
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, Sprite.Shaders[0], null);
             
             _spriteBatch.Draw(_mainTarget, Vector2.Zero, Color.White);
-            
+
             _spriteBatch.End();
             
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
