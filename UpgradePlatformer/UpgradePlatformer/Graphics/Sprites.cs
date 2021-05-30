@@ -47,6 +47,18 @@ namespace UpgradePlatformer.Graphics
         /// <param name="spriteBatch">the SpriteBatch object</param>
         /// <param name="renderPosition">where to render the sprite</param>
         /// <param name="rotation">the rotation of the sprite</param>
+        public void Draw(SpriteBatch spriteBatch, Point renderPosition, float rotation, SpriteEffects effect)
+        {
+            this.effects = effect;
+            Draw(spriteBatch, renderPosition, rotation, Position.Size.ToVector2());
+        }
+
+        /// <summary>
+        /// renders a sprite object
+        /// </summary>
+        /// <param name="spriteBatch">the SpriteBatch object</param>
+        /// <param name="renderPosition">where to render the sprite</param>
+        /// <param name="rotation">the rotation of the sprite</param>
         /// <param name="Size">the size to render the sprite</param>
         public void Draw(SpriteBatch spriteBatch, Point renderPosition, float rotation, Vector2 Size)
         {

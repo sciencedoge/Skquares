@@ -144,7 +144,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
             {
                 if(upgrade.Left != null)
                 {
-                    result.AddRange(CanBeLearned(upgrade.Right));
+                    result.AddRange(CanBeLearned(upgrade.Left));
                 }
                 
                 if(upgrade.Right != null)
