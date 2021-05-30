@@ -20,7 +20,7 @@ namespace UpgradePlatformer.Levels
                 (() => new LevelManager());
         public static LevelManager Instance { get { return lazy.Value; } }
 
-        List<World> Worlds;
+        public List<World> Worlds;
         int activeWorld;
         int _activeWorld;
         

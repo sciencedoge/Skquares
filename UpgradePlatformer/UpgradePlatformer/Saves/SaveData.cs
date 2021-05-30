@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UpgradePlatformer.Levels;
 
 namespace UpgradePlatformer.Saves
 {
@@ -15,5 +16,7 @@ namespace UpgradePlatformer.Saves
         public bool muted;
         public bool valid;
         public uint lastWorld;
+        public int money;
+        public List<LevelCollectedEntity> collectedEntities;
     }
 }

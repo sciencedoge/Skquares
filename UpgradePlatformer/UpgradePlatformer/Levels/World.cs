@@ -9,7 +9,7 @@ namespace UpgradePlatformer.Levels
 {
     class World
     {
-        List<Level> Levels;
+        public List<Level> Levels;
         int activeLevel;
         int _activeLevel;
         bool Light = false;

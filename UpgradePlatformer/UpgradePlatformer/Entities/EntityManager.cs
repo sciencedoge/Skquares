@@ -94,6 +94,7 @@ namespace UpgradePlatformer.Entities
         public int PlayerMoney
         {
             get { return playerMoney; }
+            set { playerMoney = value; }
         }
 
         /// <summary>
@@ -137,21 +138,16 @@ namespace UpgradePlatformer.Entities
                             @object.animation.Update(gameTime);
                     }
 
-                    if (obj is Pillar p)
-                    {
-                        p.Intersects(Player());
-                    }
-                    else
-                    {
-                        Intersects(obj);
-                    }
+                    Intersects(obj);
 
                     int gainedMoney = obj.Intersects(objects);
-                    playerMoney += gainedMoney;
 
                     if (gainedMoney > 0)
                     {
                         SoundManager.Instance.PlaySFX("coin");
+                        playerMoney += gainedMoney;
+                    } else if (gainedMoney < 0)
+                    {
                         playerMoney += gainedMoney;
                     }
                 }
@@ -161,9 +157,6 @@ namespace UpgradePlatformer.Entities
                         SoundManager.Instance.PlayMusic("gameover");
                         EventManager.Instance.Push(new Event("STATE_MACHINE", 2, new Point(0)));                      
                     }
-
-                        
-                
             }                   
         }
 

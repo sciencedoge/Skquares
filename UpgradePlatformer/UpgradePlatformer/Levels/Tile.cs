@@ -7,7 +7,8 @@ using UpgradePlatformer.Graphics;
 
 namespace UpgradePlatformer.Levels
 {
-    class Tile
+    [Serializable]
+    public class Tile
     {
         private static Rectangle TILE_SPRITE = new Rectangle(0, 13, 16, 16);
         private static Rectangle TILE_EMPTY = new Rectangle(48, 29, 32, 32);
@@ -18,7 +19,7 @@ namespace UpgradePlatformer.Levels
         private static Rectangle TILE_SPRITE_SPIKE = new Rectangle(32, 13, 16, 16);
         private static Rectangle TILE_SPRITE_LAVA_TOP = new Rectangle(0, 45, 16, 16);
         private static Rectangle TILE_SPRITE_LAVA_BOT = new Rectangle(0, 61, 16, 16);
-        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.White,  Color.White,  Color.White, Color.Orange, Color.White};
+        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.White, Color.White, Color.White, Color.Orange, Color.White };
         private Sprite Sprite;
         private Vector2 TileCenter;
         public Vector2 TileSize;
@@ -47,15 +48,15 @@ namespace UpgradePlatformer.Levels
                 return;
             }
             TileCenter = new Vector2(TileSize.X / 2, TileSize.Y / 2);
-            if (Kind == 9 )
+            if (Kind == 9)
             {
                 Sprite = new Sprite(TILE_EMPTY, TileCenter, COLORS[kind - 1]);
                 if (above != null)
-                if (above.Kind == 7)
-                {
-                    Sprite = new Sprite(TILE_SPRITE_CLOUD_BOT, TileCenter, COLORS[6]);
-                    Kind = 10;
-                }
+                    if (above.Kind == 7)
+                    {
+                        Sprite = new Sprite(TILE_SPRITE_CLOUD_BOT, TileCenter, COLORS[6]);
+                        Kind = 10;
+                    }
             }
             else if (Kind == 8)
             {
@@ -76,6 +77,8 @@ namespace UpgradePlatformer.Levels
             Rotation = (MathF.PI * 0.5f) * rotation;
             CollisionKind = collision;
         }
+
+        public Tile() { }
 
         /// <summary>
         /// draws a tile

@@ -130,7 +130,7 @@ namespace UpgradePlatformer.Levels
                         continue;
                     bool q = false;
                     foreach (LevelCollectedEntity e in Collected) {
-                        if (e.tile == t) q = true;
+                        if (e.tile.Position == t.Position) q = true;
                     }
                     if (q) continue;
                     EntityObject o = null;

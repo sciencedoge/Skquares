@@ -104,6 +104,7 @@ namespace UpgradePlatformer
             {
                 onClick = new UIAction((i) =>
                 {
+                    EventManager.Instance.Push(new Event("LOAD", 0, new Point(0, 0)));
                     EventManager.Instance.Push(new Event("WORLD_SHOW", Save.Data.lastWorld, new Point(0, 0)));
                     SoundManager.Instance.PlaySFX("button");
                     SoundManager.Instance.PlayMusic("game");
@@ -118,6 +119,10 @@ namespace UpgradePlatformer
             {
                 onClick = new UIAction((i) =>
                 {
+                    foreach (World w in LevelManager.Instance.Worlds)
+                        foreach (Level l in w.Levels)
+                            l.Collected = new List<LevelCollectedEntity>();
+                    EntityManager.Instance.PlayerMoney = 0;
                     EventManager.Instance.Push(new Event("WORLD_SHOW", 1, new Point(0, 0)));
                     SoundManager.Instance.PlaySFX("button");
                     Save.Data.valid = true;
@@ -143,6 +148,7 @@ namespace UpgradePlatformer
             {
                 onClick = new UIAction((i) =>
                 {
+                    EventManager.Instance.Push(new Event("SAVE", 0, new Point(0, 0)));
                     LevelManager.Instance.SetWorld(0);
                     EventManager.Instance.Push(new Event("STATE_MACHINE", 5, new Point(0, 0)));
                 })
@@ -181,8 +187,7 @@ namespace UpgradePlatformer
                 onClick = new UIAction((i) =>
                 {
                     SoundManager.Instance.Muted = i == 1;
-                    Save.Data.muted = SoundManager.Instance.Muted;
-                    Save.Save();
+                    EventManager.Instance.Push(new Event("SAVE", 0, new Point(0, 0)));
                 })
             };
             muteToggle.Text.update = new UITextUpdate(() =>
@@ -264,7 +269,7 @@ namespace UpgradePlatformer
             UIManager.Instance.Add(deathMenu);
             UIManager.Instance.Add(topHud);
             UIManager.Instance.Add(options);
-            UIManager.SetupFocusLoop(new List<UIElement> { playButton, newButton, continueButton, menuButton, OptionsButton, closeButton, backButton });
+            UIManager.SetupFocusLoop(new List<UIElement> { muteToggle, playButton, newButton, continueButton, menuButton, OptionsButton, closeButton, backButton });
             #endregion
 
 #region EVENTS
@@ -298,8 +303,7 @@ namespace UpgradePlatformer
             EventAction Action_World_Show = new EventAction((Event e) =>
             {
                 LevelManager.Instance.SetWorld((int)e.Data);
-                Save.Data.lastWorld = e.Data;
-                Save.Save();
+                EventManager.Instance.Push(new Event("SAVE", 0, new Point(0, 0)));
                 return true;
             });
             EventManager.Instance.AddListener(Action_World_Show, "WORLD_SHOW");
@@ -327,7 +331,7 @@ namespace UpgradePlatformer
 
             EventAction Action_Quit_Game = new EventAction((Event e) =>
             {
-                Save.Save();
+                EventManager.Instance.Push(new Event("SAVE", 0, new Point(0, 0)));
                 Exit();
                 return true;
             });
@@ -341,7 +345,38 @@ namespace UpgradePlatformer
             });
 
             EventManager.Instance.AddListener(Action_Mouse_Move, "MOUSE_MOVE");
-#endregion
+
+            EventAction Action_Save = new EventAction((Event e) =>
+            {
+                if (_stateMachine.currentState == 0) return true;
+                List<LevelCollectedEntity> lces = new List<LevelCollectedEntity>();
+                foreach (World w in LevelManager.Instance.Worlds)
+                    foreach (Level l in w.Levels)
+                        foreach (LevelCollectedEntity obj in l.Collected)
+                            lces.Add(obj);
+                Save.Data.collectedEntities = lces;
+                Save.Data.muted = SoundManager.Instance.Muted;
+                Save.Data.lastWorld = (uint)LevelManager.Instance.ActiveWorldNum();
+                Save.Data.money = EntityManager.Instance.PlayerMoney;
+                Save.Save();
+                return true;
+            });
+            EventManager.Instance.AddListener(Action_Save, "SAVE");
+
+            EventAction Action_Load = new EventAction((Event e) =>
+            {
+                foreach (World w in LevelManager.Instance.Worlds)
+                    foreach (Level l in w.Levels)
+                        l.Collected = new List<LevelCollectedEntity>();
+                if (Save.Data.collectedEntities != null)
+                    foreach (LevelCollectedEntity obj in Save.Data.collectedEntities)
+                        LevelManager.Instance.Worlds[obj.World].Levels[obj.Level].Collected.Add(obj);
+                SoundManager.Instance.Muted = Save.Data.muted;
+                EntityManager.Instance.PlayerMoney = Save.Data.money;
+                return true;
+            });
+            EventManager.Instance.AddListener(Action_Load, "LOAD");
+            #endregion
             UIManager.Instance.focused = playButton;
             
 #if DEBUG
@@ -350,12 +385,12 @@ namespace UpgradePlatformer
 #endif
             _lightTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             _mainTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+            EventManager.Instance.Push(new Event("LOAD", 0, new Point(0, 0)));
         }
         protected override void LoadContent()
         {
             Save = new IsolatedStorageSaveManager("UpgradePlatformer", "options.dat");
             Save.Load();
-            SoundManager.Instance.Muted = Save.Data.muted;
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
