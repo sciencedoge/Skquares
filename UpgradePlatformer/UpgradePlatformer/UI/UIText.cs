@@ -13,7 +13,7 @@ namespace UpgradePlatformer.UI
         public SpriteFont Font;
         public int ClickTimeout = 5;
         public UITextUpdate update = new UITextUpdate(() => "");
-        public int Scale;
+        public float Scale;
         public bool Centered = false;
         public Color color;
 
@@ -31,7 +31,7 @@ namespace UpgradePlatformer.UI
         /// creates a UIText object
         /// </summary>
         /// <param name="bounds">What the coords of the text are</param>
-        public UIText(SpriteFont font, Rectangle bounds, int scale, Color c)
+        public UIText(SpriteFont font, Rectangle bounds, float scale, Color c)
         {
             Bounds = bounds;
             Font = font;

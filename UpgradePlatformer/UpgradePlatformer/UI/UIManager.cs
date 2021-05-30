@@ -111,11 +111,10 @@ namespace UpgradePlatformer.UI
             do 
             {
                 focused.Focused = false;
-                if (reverse)
-                {
+                if (reverse && focused.prevFocus != null) {
                     focused.prevFocus.Focused = true;
                     focused = focused.prevFocus;
-                } else {
+                } else if (focused.nextFocus != null) {
                     focused.nextFocus.Focused = true;
                     focused = focused.nextFocus;
                 }

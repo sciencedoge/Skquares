@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UpgradePlatformer.UI;
 
 namespace UpgradePlatformer.Upgrade_Stuff
 {
@@ -11,6 +12,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
     //===============================================
     static class UpgradeStructure
     {
+        public static UIPanel panel;
         public static void InitStructure() {
             UpgradeManager.Instance.Add(1, UpgradeType.EXTRA_JUMP, 10);
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 10);
@@ -23,7 +25,11 @@ namespace UpgradePlatformer.Upgrade_Stuff
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 60);
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 70);
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 80);
-
+        }
+        public static void ShowMessage(Upgrade ug)
+        {
+            panel.Text.Text = ug.UnlockText;
+            panel.show(360);
         }
     }
 }

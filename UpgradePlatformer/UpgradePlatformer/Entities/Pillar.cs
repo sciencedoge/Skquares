@@ -103,7 +103,8 @@ namespace UpgradePlatformer.Entities
             else
             {
                 IsActive = false;
-                upgrade.IsLearned = true; 
+                UpgradeStructure.ShowMessage(upgrade);
+                upgrade.IsLearned = true;
                 return true;
             }
         }

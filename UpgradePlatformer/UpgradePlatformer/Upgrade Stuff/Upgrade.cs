@@ -31,9 +31,10 @@ namespace UpgradePlatformer.Upgrade_Stuff
 
         private Upgrade left;
         private Upgrade right;
-
         //prop
-        
+
+        public String UnlockText => $"You unlocked the {GetName(type)}\nUpgrade, now you {GetEffect(type)}!";
+
         /// <summary>
         /// Returns or sets the left neighbor
         /// </summary>
@@ -107,6 +108,37 @@ namespace UpgradePlatformer.Upgrade_Stuff
 
             this.type = type;
             this.cost = cost;
+        }
+
+        private static String GetName(UpgradeType type)
+        {
+            int level = UpgradeManager.Instance.GetAmmnt(type) + 1;
+            switch (type)
+            {
+                case UpgradeType.EXTRA_JUMP:
+                    return $"Another Jump {level}";
+                case UpgradeType.HEALTH:
+                    return $"Health {level}";
+                case UpgradeType.WEAPON:
+                    return $"Weapon {level}";
+                default:
+                    return "Broken";
+            }
+        }
+        private static String GetEffect(UpgradeType type)
+        {
+            int level = UpgradeManager.Instance.GetAmmnt(type) + 1;
+            switch (type)
+            {
+                case UpgradeType.EXTRA_JUMP:
+                    return $"can jump {level + 1} times";
+                case UpgradeType.HEALTH:
+                    return $"have {level * 3 + 3} health";
+                case UpgradeType.WEAPON:
+                    return $"can deal {level} damage";
+                default:
+                    return "Broken";
+            }
         }
     }
 }

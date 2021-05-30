@@ -64,6 +64,12 @@ namespace UpgradePlatformer
             Sprite.graphics = _graphics;
 
             UpgradeStructure.InitStructure();
+            UpgradeStructure.panel = new UIPanel(_font, new Rectangle(5, _graphics.PreferredBackBufferHeight - 95, _graphics.PreferredBackBufferWidth - 10, 90)) {
+                cond = new ShowCond(() => {
+                    return _stateMachine.currentState == 1;
+                })
+            };
+            //UpgradeStructure.panel.Show(0);
             new LevelManager();
 
             // setup sound manager
@@ -108,6 +114,7 @@ namespace UpgradePlatformer
                 {
                     EventManager.Instance.Push(new Event("LOAD", 0, new Point(0, 0)));
                     EventManager.Instance.Push(new Event("WORLD_SHOW", Save.Data.lastWorld, new Point(0, 0)));
+                    LevelManager.Instance.SetLevel(1);
                     SoundManager.Instance.PlaySFX("button");
                     SoundManager.Instance.PlayMusic("game");
                     EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
@@ -271,6 +278,8 @@ namespace UpgradePlatformer
             UIManager.Instance.Add(deathMenu);
             UIManager.Instance.Add(topHud);
             UIManager.Instance.Add(options);
+            UIManager.Instance.Add(UpgradeStructure.panel);
+
             UIManager.SetupFocusLoop(new List<UIElement> { muteToggle, playButton, newButton, continueButton, menuButton, OptionsButton, closeButton, backButton });
             #endregion
 
