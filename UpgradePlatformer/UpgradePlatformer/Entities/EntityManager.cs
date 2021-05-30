@@ -140,7 +140,7 @@ namespace UpgradePlatformer.Entities
 
                     if (obj is Pillar p)
                     {
-                        p.Intersects(Player());
+                       playerMoney -= p.Intersects(Player());
                     }
                     else
                     {
