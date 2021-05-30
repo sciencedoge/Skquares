@@ -123,7 +123,6 @@ namespace UpgradePlatformer.Entities
                 if (keyDown || Joystick.Y < -.5)
                 {
                     ducking = true;
-                    Velocity += new Vector2(0, 1);
                 }
                 else
                 {
