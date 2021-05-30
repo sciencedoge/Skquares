@@ -102,6 +102,8 @@ namespace UpgradePlatformer.Entities
         {
             if (IsActive)
             {
+                CheckForInput();
+
                 if (this.damage > 0 && weapon.IsActive == false)
                 {
                     weapon.IsActive = true;
@@ -118,7 +120,6 @@ namespace UpgradePlatformer.Entities
                 cooldown--;
                 cooldown = Math.Max(cooldown, 0);
 
-                CheckForInput();
 
                 if (keyDown || Joystick.Y < -.5)
                 {
@@ -284,8 +285,10 @@ namespace UpgradePlatformer.Entities
                 else if (up == Keys.S) keyDown = false;
                 else if (up == Keys.D) keyRight = false;
             }
-            if (jev != null)
+            if (jev != null) {
+                EventManager.Instance.Push(jev);
                 Joystick = jev.MousePosition.ToVector2() / 5;
+            }
         }
 
         /// <summary>
