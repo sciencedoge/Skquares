@@ -16,7 +16,7 @@ namespace UpgradePlatformer.Input
                 (() => new EventManager());
         public static EventManager Instance { get { return lazy.Value; } }
         
-        public const byte MAX_EVENTS = 10; // the maximum events before theyre overridden
+        public const byte MAX_EVENTS = 20; // the maximum events before theyre overridden
         private List<Event> Events;
         private List<EventListener> Listeners;
 
