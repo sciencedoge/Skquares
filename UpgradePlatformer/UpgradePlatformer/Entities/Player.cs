@@ -29,6 +29,8 @@ namespace UpgradePlatformer.Entities
 
         private bool landed;
 
+        private int sameVelocityFrames;
+
         /// <summary>
         /// Gets or sets whether the player is landed
         /// </summary>
@@ -56,6 +58,8 @@ namespace UpgradePlatformer.Entities
             this.jumpsLeft = jumpsLeft;
 
             landed = true;
+
+            sameVelocityFrames = 0;
         }
 
         //Methods
@@ -124,19 +128,35 @@ namespace UpgradePlatformer.Entities
 
                     if (keyUp)
                     {
+                        
                         this.landed = false;
                         if(jumpsLeft > 0)
-                        {
+                        {                            
                             SoundManager.Instance.PlaySFX("jump");
                         }                       
                         //check for ground collision
                         if (jumpsLeft > 0 && velocity.Y >= -4f)
                         {
                             velocity.Y += jumpVelocity.Y;
+                            if(velocity.Y == jumpVelocity.Y)
+                            {
+                                sameVelocityFrames++;
+                            }
+                            else
+                            {
+                                sameVelocityFrames = 0;
+                            }
+
+                            if(sameVelocityFrames >= 5)
+                            {
+                                jumpsLeft = 0;
+                                keyUp = false;
+                            }
                         }
                         else if (!(velocity.Y >= -4f))
                         {
                             keyUp = false;
+                            
                             jumpsLeft -= 1;
                         }
                     }

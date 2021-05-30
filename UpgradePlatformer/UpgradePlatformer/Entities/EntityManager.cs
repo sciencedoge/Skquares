@@ -250,6 +250,7 @@ namespace UpgradePlatformer.Entities
                                     if(!player.Landed)
                                     {
                                         player.Landed = true;
+                                        
                                         SoundManager.Instance.PlaySFX("land");
                                     }
                                 }
@@ -286,7 +287,10 @@ namespace UpgradePlatformer.Entities
                             {
                                 e.Colliding = true;
                             }
-                        }                   
+
+                            obj.Velocity = new Vector2(0, obj.Velocity.Y);
+
+                        }
 
                         obj.X = temp.X;
                         obj.Y = temp.Y;
