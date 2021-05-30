@@ -25,8 +25,6 @@ namespace UpgradePlatformer.Weapon
 
         private List<Bullet> bullets;
 
-        private SpriteEffects effect;
-
         private Rectangle spriteBounds;
 
         private Point MousePos; //using this for now (not very familiar with current input system)
@@ -69,8 +67,6 @@ namespace UpgradePlatformer.Weapon
 
             this.animation = AnimationManager.Instance.animations[2];
             this.isActive = false;
-
-            this.effect = SpriteEffects.None;
 
             bullets = new List<Bullet>();
         }
@@ -146,6 +142,7 @@ namespace UpgradePlatformer.Weapon
 
             if (Click)
             {
+                Click = false;
                 bullets.Add(new Bullet(path, Position + new Vector2(7)));      
             }
         }
@@ -172,41 +169,13 @@ namespace UpgradePlatformer.Weapon
             {
                 Click = true;
             }
-            Event uev = EventManager.Instance.Pop("MOUSE_UP");
-                b = ButtonState.Pressed;
-                if (!SingleMousePress())
-                {
-                    bullets.Add(new Bullet(path, Position));
-                }                    
-            }
-            else
-            {
-                b = ButtonState.Released;
-            }
-
-            prevB = b;
-        }
-
-        /// <summary>
-        /// Returns whether or not a single mouse press needs to be done
-        /// </summary>
-        /// <returns>true - yes; false- no</returns>
-        private bool SingleMousePress()
-        {
-            if (prevB == b)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-            if (uev != null && uev.Data == 0)
-            {
-                Click = false;
-            }
+            //Event uev = EventManager.Instance.Pop("MOUSE_UP");
+            //    b = ButtonState.Pressed;
+            //    if (!SingleMousePress())
+            //    {
+            //        bullets.Add(new Bullet(path, Position));
+            //    }                    
+            //}
         }
     }
 }
