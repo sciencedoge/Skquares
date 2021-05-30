@@ -12,6 +12,7 @@ using UpgradePlatformer.Upgrade_Stuff;
 using Microsoft.Xna.Framework.Content;
 using UpgradePlatformer.Music;
 using UpgradePlatformer.Saves;
+using System;
 
 namespace UpgradePlatformer
 {
@@ -50,6 +51,7 @@ namespace UpgradePlatformer
             
         }
 
+        int joycooldown = 20;
         protected override void Initialize()
         {
             base.Initialize();
@@ -86,7 +88,7 @@ namespace UpgradePlatformer
             StateMachineState Menu = new StateMachineState(new List<Flag> { playButtonPressMenu, optionsButtonPressMenu });                                     // 0
             StateMachineState Game = new StateMachineState(new List<Flag> { escapeKeyPressGame, PlayerDeathGame });                                             // 1
             StateMachineState Escape = new StateMachineState(new List<Flag> { escapeKeyPressEscape, optionsButtonPressGame, backPressEscape, menuPressPause }); // 2
-            StateMachineState Respawn = new StateMachineState(new List<Flag> { playButtonPressRespawn });                                                       // 3
+            StateMachineState Respawn = new StateMachineState(new List<Flag> { playButtonPressRespawn, menuPressPause });                                       // 3
             StateMachineState Options = new StateMachineState(new List<Flag> { backPressOptions });                                                             // 4
             StateMachineState OptionsGame = new StateMachineState(new List<Flag> { backPressOptionsGame });                                                     // 5
 
@@ -259,7 +261,7 @@ namespace UpgradePlatformer
 
             mainMenu = new UIGroup(new List<UIElement>{ TitleText, playButton, newButton, closeButton, OptionsButton}, bounds);
             pauseMenu = new UIGroup(new List<UIElement> { PauseText, continueButton, menuButton, OptionsButton, closeButton}, bounds);
-            deathMenu = new UIGroup(new List<UIElement> { playButton, closeButton}, bounds);
+            deathMenu = new UIGroup(new List<UIElement> { playButton, menuButton, closeButton}, bounds);
             options = new UIGroup(new List<UIElement> { backButton, muteToggle }, bounds);
             topHud = new UIGroup(new List<UIElement> { HpText }, bounds);
 
@@ -314,6 +316,23 @@ namespace UpgradePlatformer
                 return true;
             });
             EventManager.Instance.AddListener(Action_Nav, "NAV");
+
+            EventAction Action_Joystick = new EventAction((Event e) =>
+            {
+                if (joycooldown > 0) return false;
+                if (e.MousePosition.Y > .5)
+                {
+                    UIManager.Instance.Nav(true);
+                    joycooldown = 10;
+                }
+                else if (e.MousePosition.Y < -.5)
+                {
+                    UIManager.Instance.Nav(false);
+                    joycooldown = 10;
+                }
+                return false;
+            });
+            EventManager.Instance.AddListener(Action_Joystick, "GAME_PAD_JOYSTICK");
 
             EventAction Action_Select = new EventAction((Event e) =>
             {
@@ -402,6 +421,8 @@ namespace UpgradePlatformer
 
         protected override void Update(GameTime gameTime)
         {
+            joycooldown--;
+            joycooldown = Math.Max(0, joycooldown);
             // update managers
             InputManager.Instance.Update();
             if (_stateMachine.currentState == 1) 
@@ -457,7 +478,7 @@ namespace UpgradePlatformer
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 
             LevelManager.Instance.Draw(_spriteBatch);
-            if (_stateMachine.currentState != 0) EntityManager.Instance.Draw(gameTime, _spriteBatch);
+            if (_stateMachine.currentState != 0 && _stateMachine.currentState != 4) EntityManager.Instance.Draw(gameTime, _spriteBatch);
 
             _spriteBatch.End();
 
