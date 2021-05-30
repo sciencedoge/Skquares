@@ -84,7 +84,7 @@ namespace UpgradePlatformer.Entities
 
                 CheckForInput();
 
-                if (keyDown)
+                if (keyDown || Joystick.Y < -.5)
                 {
                     ducking = true;
                 }
