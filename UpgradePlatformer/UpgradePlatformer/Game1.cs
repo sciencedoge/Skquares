@@ -492,7 +492,9 @@ namespace UpgradePlatformer
             _spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.Blue);
+            if (Sprite.Dim)
+                GraphicsDevice.Clear(Color.DarkBlue);
 
             Sprite.Shaders[0].Parameters["MaskTexture"].SetValue(_lightTarget);
             

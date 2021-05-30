@@ -17,7 +17,7 @@ namespace UpgradePlatformer.Weapon
     {
 
         //Fields
-        private Sprite sprite;
+        private AnimationFSM animation;
         private bool isActive;
         private float rotation;
         private Vector2 position;
@@ -60,12 +60,7 @@ namespace UpgradePlatformer.Weapon
 
             spriteBounds = new Rectangle(17, 14, 14, 14);
 
-            this.sprite = new Sprite(
-               spriteBounds,
-               new Vector2(spriteBounds.X - (spriteBounds.Width / 2),
-               spriteBounds.Y - (spriteBounds.Height / 2)),
-               Color.White);
-
+            this.animation = AnimationManager.Instance.animations[2];
             this.isActive = false;
 
             this.effect = SpriteEffects.None;
@@ -87,11 +82,7 @@ namespace UpgradePlatformer.Weapon
 
             if(distX <= 0)
             {
-                effect = SpriteEffects.FlipHorizontally;
-            }
-            else
-            {
-                effect = SpriteEffects.None;
+                distance += MathF.PI;
             }
 
             return (float)Math.Atan(distY / distX);
@@ -105,7 +96,7 @@ namespace UpgradePlatformer.Weapon
         {
             if (isActive)
             {
-                sprite.Draw(sb, position.ToPoint(), rotation, effect);
+                animation.Draw(sb, position.ToPoint(), rotation, new Vector2(14));
             }
         }
 
