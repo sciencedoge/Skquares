@@ -22,6 +22,8 @@ namespace UpgradePlatformer.Weapon
         private float rotation;
         private Vector2 position;
 
+        private List<Bullet> bullets;
+
         private SpriteEffects effect;
 
         private Rectangle spriteBounds;
@@ -69,23 +71,30 @@ namespace UpgradePlatformer.Weapon
             this.isActive = false;
 
             this.effect = SpriteEffects.None;
+
+            bullets = new List<Bullet>();
         }      
 
         //Methods
         
+        public Vector2 FindDistance()
+        {
+            float distX = position.X - ms.X;
+            float distY = position.Y - ms.Y;
+
+            return new Vector2(distX, distY);
+        }
+
         /// <summary>
         /// finds the current rotation of the weapon
         /// </summary>
         /// <returns></returns>
-        public float FindRotation()
-        {
+        public float FindRotation(Vector2 dist)
+        {           
 
-            float distX = position.X - ms.X;
-            float distY = position.Y - ms.Y;
+            float distance = (float)Math.Atan(dist.Y / dist.X);
 
-            float distance = (float)Math.Atan(distY / distX);
-
-            if(distX <= 0)
+            if(dist.X <= 0)
             {
                 effect = SpriteEffects.FlipHorizontally;
             }
@@ -94,7 +103,7 @@ namespace UpgradePlatformer.Weapon
                 effect = SpriteEffects.None;
             }
 
-            return (float)Math.Atan(distY / distX);
+            return (float)Math.Atan(dist.Y / dist.X);
         }
 
         /// <summary>
@@ -106,6 +115,14 @@ namespace UpgradePlatformer.Weapon
             if (isActive)
             {
                 sprite.Draw(sb, position.ToPoint(), rotation, effect);
+
+                for (int i = bullets.Count - 1; i > 0; i--)
+                {
+                    if (bullets[i].isActive)
+                    {
+                        bullets[i].Draw(sb);
+                    }
+                }
             }
         }
 
@@ -114,9 +131,29 @@ namespace UpgradePlatformer.Weapon
         /// </summary>
         public void Update()
         {
-            ms = Mouse.GetState();
-            rotation = FindRotation();
 
+            for (int i = bullets.Count - 1; i > 0; i--)
+            {
+                if (bullets[i].isActive)
+                {
+                    bullets[i].Update();
+                }
+                else
+                {
+                    bullets.Remove(bullets[i]);
+                }
+            }
+
+            ms = Mouse.GetState();
+
+            Vector2 path = FindDistance();
+
+            rotation = FindRotation(path);
+
+            if(ms.LeftButton == ButtonState.Pressed)
+            {
+                bullets.Add(new Bullet(path, Position));      
+            }
         }
 
     }
