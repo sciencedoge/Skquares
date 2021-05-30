@@ -82,6 +82,7 @@ namespace UpgradePlatformer.Entities
             foreach (EntityObject obj in objects)
             {
                 if (obj == null) continue;
+                
                 if (obj.Kind == EntityKind.PLAYER)
                     return (Player)obj;
             }
@@ -160,10 +161,7 @@ namespace UpgradePlatformer.Entities
                     {
                         SoundManager.Instance.PlayMusic("gameover");
                         EventManager.Instance.Push(new Event("STATE_MACHINE", 2, new Point(0)));                      
-                    }
-
-                        
-                
+                    }           
             }                   
         }
 
@@ -197,6 +195,7 @@ namespace UpgradePlatformer.Entities
         public void Clean(bool player) {
             EntityObject plyr = (EntityObject)this.Player();
             objects = new List<EntityObject>();
+            
             if (!player)
                 objects.Add(plyr);
         }
@@ -209,9 +208,12 @@ namespace UpgradePlatformer.Entities
         {
             if (!new List<EntityKind> { EntityKind.PLAYER, EntityKind.ENEMY}.Contains(o.Kind))
                 return;
+
             LivingObject obj = (LivingObject)o;
+
             if (!obj.IsActive)
                 return;
+
             Rectangle temp = GetTempHitbox(obj);
 
             foreach (Tile t in currentLevel.GetCollisions(temp, 4))
@@ -243,11 +245,15 @@ namespace UpgradePlatformer.Entities
                             if (t.Position.Top - intersection.Top == 0)
                             {
                                 temp.Y -= intersection.Height;
-                                if(obj.JumpsLeft == 0)
+                                if(obj is Player player)
                                 {
-                                    SoundManager.Instance.PlaySFX("land");
+                                    if(!player.Landed)
+                                    {
+                                        player.Landed = true;
+                                        SoundManager.Instance.PlaySFX("land");
+                                    }
                                 }
-                                obj.OnFloorCollide();                               
+                                obj.OnFloorCollide();
                             }
 
                             //moves player down
@@ -301,8 +307,9 @@ namespace UpgradePlatformer.Entities
                                 if (t.Position.Top - intersection.Top == 0)
                                 {
                                     temp.Y -= intersection.Height;
-                                    if (obj.JumpsLeft == 0)
+                                    if (!Player().Landed)
                                     {
+                                        Player().Landed = true;
                                         SoundManager.Instance.PlaySFX("land");
                                     }
                                     obj.OnFloorCollide();                                  

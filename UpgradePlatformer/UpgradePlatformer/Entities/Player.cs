@@ -27,6 +27,17 @@ namespace UpgradePlatformer.Entities
         private bool ducking;
         private static int MaxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.XtraJump) + 1;
 
+        private bool landed;
+
+        /// <summary>
+        /// Gets or sets whether the player is landed
+        /// </summary>
+        public bool Landed
+        {
+            get { return landed; }
+            set { landed = value; }
+        }
+
         /// <summary>
         /// returns whether or not the player is ducking
         /// </summary>
@@ -43,6 +54,8 @@ namespace UpgradePlatformer.Entities
         {
             this.animation = new AnimationFSM(AnimationManager.Instance.animations[0]);
             this.jumpsLeft = jumpsLeft;
+
+            landed = true;
         }
 
         //Methods
@@ -111,6 +124,7 @@ namespace UpgradePlatformer.Entities
 
                     if (keyUp)
                     {
+                        this.landed = false;
                         if(jumpsLeft > 0)
                         {
                             SoundManager.Instance.PlaySFX("jump");
@@ -128,6 +142,11 @@ namespace UpgradePlatformer.Entities
                     }
                 }
                 ApplyGravity();
+
+                if(Velocity.Y > 1 && landed)
+                {
+                    landed = false;
+                }
                 hitbox.Location = position.ToPoint();
                 if (ducking)
                 {
