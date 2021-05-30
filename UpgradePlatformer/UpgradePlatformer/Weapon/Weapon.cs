@@ -5,6 +5,7 @@ using UpgradePlatformer.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
+using UpgradePlatformer.Input;
 
 namespace UpgradePlatformer.Weapon
 {
@@ -17,7 +18,7 @@ namespace UpgradePlatformer.Weapon
     {
 
         //Fields
-        private Sprite sprite;
+        private AnimationFSM animation;
         private bool isActive;
         private float rotation;
         private Vector2 position;
@@ -28,7 +29,8 @@ namespace UpgradePlatformer.Weapon
 
         private Rectangle spriteBounds;
 
-        private MouseState ms; //using this for now (not very familiar with current input system)
+        private Point MousePos; //using this for now (not very familiar with current input system)
+        private bool Click;
 
         private ButtonState b;
         private ButtonState prevB;
@@ -65,25 +67,20 @@ namespace UpgradePlatformer.Weapon
 
             spriteBounds = new Rectangle(17, 14, 14, 14);
 
-            this.sprite = new Sprite(
-               spriteBounds,
-               new Vector2(spriteBounds.X - (spriteBounds.Width / 2),
-               spriteBounds.Y - (spriteBounds.Height / 2)),
-               Color.White);
-
+            this.animation = AnimationManager.Instance.animations[2];
             this.isActive = false;
 
             this.effect = SpriteEffects.None;
 
             bullets = new List<Bullet>();
-        }      
+        }
 
         //Methods
         
         public Vector2 FindDistance()
         {
-            float distX = position.X - ms.X;
-            float distY = position.Y - ms.Y;
+            float distX = position.X - MousePos.X;
+            float distY = position.Y - MousePos.Y;
 
             return new Vector2(distX, distY);
         }
@@ -99,11 +96,7 @@ namespace UpgradePlatformer.Weapon
 
             if(dist.X <= 0)
             {
-                effect = SpriteEffects.FlipHorizontally;
-            }
-            else
-            {
-                effect = SpriteEffects.None;
+                distance += MathF.PI;
             }
 
             return (float)Math.Atan(dist.Y / dist.X);
@@ -117,8 +110,6 @@ namespace UpgradePlatformer.Weapon
         {
             if (isActive)
             {
-                sprite.Draw(sb, position.ToPoint(), rotation, effect);
-
                 for (int i = bullets.Count - 1; i > 0; i--)
                 {
                     if (bullets[i].isActive)
@@ -126,6 +117,7 @@ namespace UpgradePlatformer.Weapon
                         bullets[i].Draw(sb);
                     }
                 }
+                animation.Draw(sb, position.ToPoint(), rotation, new Vector2(14));
             }
         }
 
@@ -134,6 +126,7 @@ namespace UpgradePlatformer.Weapon
         /// </summary>
         public void Update()
         {
+            CheckForInput();
 
             for (int i = bullets.Count - 1; i > 0; i--)
             {
@@ -147,14 +140,39 @@ namespace UpgradePlatformer.Weapon
                 }
             }
 
-            ms = Mouse.GetState();
-
             Vector2 path = FindDistance();
 
             rotation = FindRotation(path);
 
-            if(ms.LeftButton == ButtonState.Pressed)
+            if (Click)
             {
+                bullets.Add(new Bullet(path, Position + new Vector2(7)));      
+            }
+        }
+
+        /// <summary>
+        /// checks for input and reacts accordingly
+        /// </summary>
+        public void CheckForInput()
+        {
+            Event mev = EventManager.Instance.Pop("MOUSE_MOVE");
+            if (mev != null)
+            {
+                MousePos = mev.MousePosition;
+            }
+            Event rjev = EventManager.Instance.Pop("RGAME_PAD_JOYSTICK");
+            if (rjev != null)
+            {
+                if (Vector2.Distance(rjev.MousePosition.ToVector2(), new Vector2()) > 2)
+                    MousePos = rjev.MousePosition + Position.ToPoint();
+            }
+            Event dev = EventManager.Instance.Pop("MOUSE_DOWN");
+
+            if (dev != null && dev.Data == 0)
+            {
+                Click = true;
+            }
+            Event uev = EventManager.Instance.Pop("MOUSE_UP");
                 b = ButtonState.Pressed;
                 if (!SingleMousePress())
                 {
@@ -185,5 +203,10 @@ namespace UpgradePlatformer.Weapon
             }
         }
 
+            if (uev != null && uev.Data == 0)
+            {
+                Click = false;
+            }
+        }
     }
 }

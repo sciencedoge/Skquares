@@ -369,7 +369,7 @@ namespace UpgradePlatformer
             EventAction Action_Mouse_Move = new EventAction((Event e) =>
             {
                 UIManager.Instance.MouseMove(e.MousePosition);
-                return true;
+                return false;
             });
 
             EventManager.Instance.AddListener(Action_Mouse_Move, "MOUSE_MOVE");
@@ -492,7 +492,9 @@ namespace UpgradePlatformer
             _spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.Blue);
+            if (Sprite.Dim)
+                GraphicsDevice.Clear(Color.DarkBlue);
 
             Sprite.Shaders[0].Parameters["MaskTexture"].SetValue(_lightTarget);
             

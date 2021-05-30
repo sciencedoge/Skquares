@@ -37,7 +37,7 @@ namespace UpgradePlatformer.Weapon
         /// <param name="location"></param>
         public Bullet(Vector2 path, Vector2 location)
         {
-            spriteBounds = new Rectangle(17, 14, 14, 14);
+            spriteBounds = new Rectangle(20, 7, 5, 5);
             this.path = path;
             this.location = location;
             this.speed = new Vector2(path.X / 60, path.Y / 60);

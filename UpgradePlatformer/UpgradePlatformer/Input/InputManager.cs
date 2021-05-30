@@ -26,6 +26,8 @@ namespace UpgradePlatformer.Input
             padState = new GamePadState();
         }
 
+        private int thing;
+
         /// <summary>
         /// Updates the InputEvent List
         /// </summary>
@@ -38,7 +40,11 @@ namespace UpgradePlatformer.Input
             prevPadState = padState;
             padState = GamePad.GetState(0);
 
-            EventManager.Instance.Push(new Event("GAME_PAD_JOYSTICK", 0, (padState.ThumbSticks.Left * 5).ToPoint()));
+            if (thing++ % 3 == 0)
+            {
+                EventManager.Instance.Push(new Event("GAME_PAD_JOYSTICK", 0, (padState.ThumbSticks.Left * 5).ToPoint()));
+                EventManager.Instance.Push(new Event("RGAME_PAD_JOYSTICK", 0, (padState.ThumbSticks.Right * 5).ToPoint()));
+            }
 
             if (prevPadState.Buttons.A != padState.Buttons.A)
             {

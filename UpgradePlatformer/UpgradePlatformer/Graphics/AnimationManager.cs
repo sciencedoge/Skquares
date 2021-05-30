@@ -113,9 +113,9 @@ namespace UpgradePlatformer.Graphics
 
             // states
             StateMachineState Shoot = new StateMachineState(new List<Flag> { ShootLook });
-            Animation AniShoot = new Animation(new List<Sprite> { AllSprites[1, 3].Copy() }, 2);
+            Animation AniShoot = new Animation(new List<Sprite> { AllSprites[3, 1].Copy() }, 2);
             StateMachineState Look = new StateMachineState(new List<Flag> { LookShoot });
-            Animation AniLook = new Animation(new List<Sprite> { AllSprites[1, 3].Copy() }, 2);
+            Animation AniLook = new Animation(new List<Sprite> { AllSprites[3, 1].Copy() }, 2);
 
             // init
             FiniteStateMachine diamondFSM = new FiniteStateMachine(new List<StateMachineState> { Shoot, Look });
