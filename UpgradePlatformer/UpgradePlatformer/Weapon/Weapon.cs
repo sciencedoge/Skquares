@@ -157,7 +157,7 @@ namespace UpgradePlatformer.Weapon
             {
                 MousePos = mev.MousePosition;
             }
-            Event rjev = EventManager.Instance.Pop("RGAME_PAD_JOYSTICK");
+            Event rjev = EventManager.Instance.Pop("GAME_PAD_JOYSTICK");
             if (rjev != null)
             {
                 if (Vector2.Distance(rjev.MousePosition.ToVector2(), new Vector2()) > 2)

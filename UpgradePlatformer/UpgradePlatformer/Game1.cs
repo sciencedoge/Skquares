@@ -238,6 +238,10 @@ namespace UpgradePlatformer
                 update = new UITextUpdate(() =>
                 {
                     string result = "";
+#if DEBUG
+                    result += frameRate.ToString("F2");
+#endif
+                    result += "[";
                     if (EntityManager.Instance.GetPlayerHp() == -1) return "";
                     int cap = 0;
                     if (EntityManager.Instance.MaxPlayerHP() < 10)
@@ -248,7 +252,7 @@ namespace UpgradePlatformer
                             else result += " ";
                             if (cap++ > 10) break;
                         }
-                        return $"[{result}]X1 ${EntityManager.Instance.PlayerMoney}";
+                        return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}";
                     }
                     for (float i = 0; i < EntityManager.Instance.MaxPlayerHP(); i += EntityManager.Instance.MaxPlayerHP() / 10)
                     {
@@ -257,12 +261,12 @@ namespace UpgradePlatformer
                         if (cap++ > 10) break;
                     }
 
-                    return $"[{result}]X1 ${EntityManager.Instance.PlayerMoney}";
+                    return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}";
                 })
             };
-            #endregion
+#endregion
 
-            #region UILAYOUT
+#region UILAYOUT
             // initialize uiGroups
             Rectangle bounds = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
 
@@ -281,7 +285,7 @@ namespace UpgradePlatformer
             UIManager.Instance.Add(UpgradeStructure.panel);
 
             UIManager.SetupFocusLoop(new List<UIElement> { muteToggle, playButton, newButton, continueButton, menuButton, OptionsButton, closeButton, backButton });
-            #endregion
+#endregion
 
 #region EVENTS
             // create event listeners
@@ -404,7 +408,7 @@ namespace UpgradePlatformer
                 return true;
             });
             EventManager.Instance.AddListener(Action_Load, "LOAD");
-            #endregion
+#endregion
             UIManager.Instance.focused = playButton;
             
 #if DEBUG
@@ -482,7 +486,9 @@ namespace UpgradePlatformer
             }
 
             GraphicsDevice.SetRenderTarget(_mainTarget);
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.LightBlue);
+            if (Sprite.Dim)
+                GraphicsDevice.Clear(Color.Blue);
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 
@@ -492,9 +498,6 @@ namespace UpgradePlatformer
             _spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(Color.Blue);
-            if (Sprite.Dim)
-                GraphicsDevice.Clear(Color.DarkBlue);
 
             Sprite.Shaders[0].Parameters["MaskTexture"].SetValue(_lightTarget);
             
