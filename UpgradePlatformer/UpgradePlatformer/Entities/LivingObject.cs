@@ -71,7 +71,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public int Damage
         {
-            get { return damage; }
+            get { return IsActive ? damage : 0; }
             set { damage = value; }
         }
 
