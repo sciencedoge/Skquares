@@ -32,6 +32,7 @@ namespace UpgradePlatformer.Graphics
             animations = new List<AnimationFSM>();
             AddPlayerFSM(AllSprites);
             AddEnemyFSM(AllSprites);
+            AddDiamondFSM(AllSprites);
         }
         public void AddPlayerFSM(Sprite[,] AllSprites)
         {
@@ -98,6 +99,27 @@ namespace UpgradePlatformer.Graphics
             // init
             FiniteStateMachine enemyFSM = new FiniteStateMachine(new List<StateMachineState> { LeftS, LeftL, RightS, RightL });
             animations.Add(new AnimationFSM(enemyFSM, new List<Animation> { AniLeftS, AniLeftL, AniRightS, AniRightL, }));
+        }
+
+        public void AddDiamondFSM(Sprite[,] AllSprites)
+        {
+
+            // ==========
+            // enemyr fsm
+            // ==========
+            // flags
+            Flag LookShoot = new Flag(0, 0);
+            Flag ShootLook = new Flag(1, 1);
+
+            // states
+            StateMachineState Shoot = new StateMachineState(new List<Flag> { ShootLook });
+            Animation AniShoot = new Animation(new List<Sprite> { AllSprites[1, 3].Copy() }, 2);
+            StateMachineState Look = new StateMachineState(new List<Flag> { LookShoot });
+            Animation AniLook = new Animation(new List<Sprite> { AllSprites[1, 3].Copy() }, 2);
+
+            // init
+            FiniteStateMachine diamondFSM = new FiniteStateMachine(new List<StateMachineState> { Shoot, Look });
+            animations.Add(new AnimationFSM(diamondFSM, new List<Animation> { AniShoot, AniLook}));
         }
     }
 }
