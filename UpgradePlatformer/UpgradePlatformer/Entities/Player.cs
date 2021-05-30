@@ -27,6 +27,19 @@ namespace UpgradePlatformer.Entities
         private bool ducking;
         private static int MaxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.EXTRA_JUMP) + 1;
 
+        private bool landed;
+
+        private int sameVelocityFrames;
+
+        /// <summary>
+        /// Gets or sets whether the player is landed
+        /// </summary>
+        public bool Landed
+        {
+            get { return landed; }
+            set { landed = value; }
+        }
+
         /// <summary>
         /// returns whether or not the player is ducking
         /// </summary>
@@ -43,6 +56,10 @@ namespace UpgradePlatformer.Entities
         {
             this.animation = new AnimationFSM(AnimationManager.Instance.animations[0]);
             this.jumpsLeft = jumpsLeft;
+
+            landed = true;
+
+            sameVelocityFrames = 0;
         }
 
         //Methods
@@ -112,23 +129,45 @@ namespace UpgradePlatformer.Entities
 
                     if (keyUp)
                     {
+                        
+                        this.landed = false;
                         if(jumpsLeft > 0)
-                        {
+                        {                            
                             SoundManager.Instance.PlaySFX("jump");
                         }                       
                         //check for ground collision
                         if (jumpsLeft > 0 && velocity.Y >= -4f)
                         {
                             velocity.Y += jumpVelocity.Y;
+                            if(velocity.Y == jumpVelocity.Y)
+                            {
+                                sameVelocityFrames++;
+                            }
+                            else
+                            {
+                                sameVelocityFrames = 0;
+                            }
+
+                            if(sameVelocityFrames >= 5)
+                            {
+                                jumpsLeft = 0;
+                                keyUp = false;
+                            }
                         }
                         else if (!(velocity.Y >= -4f))
                         {
                             keyUp = false;
+                            
                             jumpsLeft -= 1;
                         }
                     }
                 }
                 ApplyGravity();
+
+                if(Velocity.Y > 1 && landed)
+                {
+                    landed = false;
+                }
                 hitbox.Location = position.ToPoint();
                 if (ducking)
                 {
