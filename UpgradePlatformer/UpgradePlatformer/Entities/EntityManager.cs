@@ -155,6 +155,7 @@ namespace UpgradePlatformer.Entities
                     if (Player().CurrentHP <= 0)
                     {
                         SoundManager.Instance.PlayMusic("gameover");
+                        EventManager.Instance.Push(new Event("SAVE", 0, new Point(0)));
                         EventManager.Instance.Push(new Event("STATE_MACHINE", 2, new Point(0)));                      
                     }
             }                   
