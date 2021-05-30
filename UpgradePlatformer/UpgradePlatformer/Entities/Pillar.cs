@@ -47,9 +47,9 @@ namespace UpgradePlatformer.Entities
         public override void Update(GameTime gameTime)
         {
             int offset = 0;
-            if (upgrade.Type == UpgradeType.Health)
+            if (upgrade.Type == UpgradeType.HEALTH)
                 offset = 1;
-            if (upgrade.Type == UpgradeType.Weapon)
+            if (upgrade.Type == UpgradeType.WEAPON)
                 offset = 2;
             if (!upgrade.CanLearn)
                 offset += 3;

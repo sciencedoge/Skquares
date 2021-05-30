@@ -65,7 +65,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         private void Add(Upgrade upgrade, int value, UpgradeType type, int cost)
         {
             //Health node, all stored to the LEFT of the tree
-            if(type == UpgradeType.Health)
+            if(type == UpgradeType.HEALTH)
             {
                 if (upgrade.Left == null)
                 {
@@ -78,7 +78,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
             }
 
             //Jump node, stored to the RIGHT of the tree
-            else if(type == UpgradeType.XtraJump)
+            else if(type == UpgradeType.EXTRA_JUMP)
             {
                 if(upgrade.Right == null)
                 {
@@ -91,7 +91,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
             }
 
             //Speed node, stored to the RIGHT of the tree
-            else if (type == UpgradeType.Weapon)
+            else if (type == UpgradeType.WEAPON)
             {
                 if (upgrade.Right == null)
                 {

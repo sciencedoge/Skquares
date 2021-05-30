@@ -25,7 +25,7 @@ namespace UpgradePlatformer.Entities
         private bool keyUp, keyDown, keyLeft, keyRight;
         private Vector2 Joystick;
         private bool ducking;
-        private static int MaxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.XtraJump) + 1;
+        private static int MaxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.EXTRA_JUMP) + 1;
 
         /// <summary>
         /// returns whether or not the player is ducking
