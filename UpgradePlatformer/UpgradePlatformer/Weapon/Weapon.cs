@@ -30,6 +30,9 @@ namespace UpgradePlatformer.Weapon
 
         private MouseState ms; //using this for now (not very familiar with current input system)
 
+        private ButtonState b;
+        private ButtonState prevB;
+
         //Properties
 
         /// <summary>
@@ -152,7 +155,33 @@ namespace UpgradePlatformer.Weapon
 
             if(ms.LeftButton == ButtonState.Pressed)
             {
-                bullets.Add(new Bullet(path, Position));      
+                b = ButtonState.Pressed;
+                if (!SingleMousePress())
+                {
+                    bullets.Add(new Bullet(path, Position));
+                }                    
+            }
+            else
+            {
+                b = ButtonState.Released;
+            }
+
+            prevB = b;
+        }
+
+        /// <summary>
+        /// Returns whether or not a single mouse press needs to be done
+        /// </summary>
+        /// <returns>true - yes; false- no</returns>
+        private bool SingleMousePress()
+        {
+            if (prevB == b)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
