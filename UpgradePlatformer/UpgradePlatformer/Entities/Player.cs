@@ -9,6 +9,7 @@ using UpgradePlatformer.Levels;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Music;
 using UpgradePlatformer.Upgrade_Stuff;
+using UpgradePlatformer.Weapon;
 
 namespace UpgradePlatformer.Entities
 {
@@ -25,6 +26,8 @@ namespace UpgradePlatformer.Entities
         private bool keyUp, keyDown, keyLeft, keyRight;
         private Vector2 Joystick;
         private bool ducking;
+
+        private Weapon.Weapon weapon;
         private static int MaxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.EXTRA_JUMP) + 1;
 
         private bool landed;
@@ -58,6 +61,9 @@ namespace UpgradePlatformer.Entities
             this.jumpsLeft = jumpsLeft;
 
             landed = true;
+
+            weapon = new Weapon.Weapon(new Vector2(this.X + hitbox.Width,
+                this.Y - hitbox.Height));
 
             sameVelocityFrames = 0;
         }
@@ -96,6 +102,19 @@ namespace UpgradePlatformer.Entities
         {
             if (IsActive)
             {
+                if (this.damage > 0 && weapon.IsActive == false)
+                {
+                    weapon.IsActive = true;
+                }
+
+                if (weapon.IsActive)
+                {
+                    weapon.Position = new Vector2(this.X +  hitbox.Width,
+                this.Y -  hitbox.Height);
+
+                    weapon.Update();
+                }
+
                 cooldown--;
                 cooldown = Math.Max(cooldown, 0);
 
@@ -148,7 +167,7 @@ namespace UpgradePlatformer.Entities
                                 sameVelocityFrames = 0;
                             }
 
-                            if(sameVelocityFrames >= 5)
+                            if(sameVelocityFrames >= 10)
                             {
                                 jumpsLeft = 0;
                                 keyUp = false;
@@ -176,6 +195,21 @@ namespace UpgradePlatformer.Entities
                 else hitbox.Size = (new Point(NORMAL_HITBOX_WIDTH, NORMAL_HITBOX_HEIGHT));
                 spriteSize = (hitbox.Size.ToVector2() * GetVelocitySize()).ToPoint();
             }           
+        }
+
+        /// <summary>
+        /// Used for drawing the weapon to the screen
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="gt"></param>
+        public override void Draw(SpriteBatch sb, GameTime gt)
+        {
+            base.Draw(sb, gt);
+
+            if (weapon.IsActive)
+            {
+                weapon.Draw(sb);
+            }
         }
 
         /// <summary>

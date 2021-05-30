@@ -23,7 +23,7 @@ namespace UpgradePlatformer.Entities
         private static readonly Lazy<EntityManager>
             lazy =
             new Lazy<EntityManager>
-                (() => new EntityManager());
+            (() => new EntityManager());
         public static EntityManager Instance { get { return lazy.Value; } }
 
         //Fields
