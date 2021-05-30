@@ -244,7 +244,7 @@ namespace UpgradePlatformer.Entities
                                 temp.Y -= intersection.Height;
                                 if(obj is Player player)
                                 {
-                                    if(!player.Landed)
+                                    if(!player.Landed && !Player().Ducking)
                                     {
                                         player.Landed = true;
                                         
@@ -308,7 +308,7 @@ namespace UpgradePlatformer.Entities
                                 if (t.Position.Top - intersection.Top == 0)
                                 {
                                     temp.Y -= intersection.Height;
-                                    if (!Player().Landed)
+                                    if (!Player().Landed && !Player().Ducking)
                                     {
                                         Player().Landed = true;
                                         SoundManager.Instance.PlaySFX("land");
