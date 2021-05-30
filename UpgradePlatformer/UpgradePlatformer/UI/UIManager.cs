@@ -39,7 +39,11 @@ namespace UpgradePlatformer.UI
         {
             Event ev = EventManager.Instance.Pop("MOUSE_DOWN");
 
-            if (ev != null) ProcessClick(ev.MousePosition, ev.Data);
+            if (ev != null)
+            {
+                EventManager.Instance.Push(ev);
+                ProcessClick(ev.MousePosition, ev.Data);
+            }
 
             foreach (UIElement e in UIElements)
                 e.ResetActive();
