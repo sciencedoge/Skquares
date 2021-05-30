@@ -115,9 +115,11 @@ namespace UpgradePlatformer.Entities
             currentLevel = LevelManager.Instance.ActiveLevel();
             // IMPORTANT: Subframes are calculated here
 
+            pathfind.Update();
+            pathfind.UpdateCosts();
+            pathfind.MoveToPlayer();
             for (int i = 0; i < 5; i ++)
             {
-                pathfind.Update();
                 foreach (EntityObject obj in objects)
                 {
                     if (obj.IsActive == false) continue;
@@ -126,9 +128,7 @@ namespace UpgradePlatformer.Entities
                     {
                         if(i % 5 == 0)
                         {
-                            obj.Update(gameTime);
-                            pathfind.UpdateCosts();                          
-                            pathfind.MoveToPlayer();                           
+                            obj.Update(gameTime);             
                         }
                     }
                     else
