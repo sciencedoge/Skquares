@@ -21,6 +21,7 @@ namespace UpgradePlatformer.Entities
         //Fields
         protected Rectangle SpriteBounds;
         protected int value;
+        protected int Bob;
         protected Graphics.Sprite sprite;
         protected Point spriteSize;
 
@@ -54,6 +55,7 @@ namespace UpgradePlatformer.Entities
             this.hitbox = hitbox;
             this.IsActive = true;
             this.spriteSize = hitbox.Size;
+            this.Bob = 3;
             tile = t;
         }
         
@@ -78,8 +80,8 @@ namespace UpgradePlatformer.Entities
             //if the sprite is active, draws it to the screen
             if (IsActive)
             {
-                Vector2 Bob = new Vector2(0, 3 * (float)Math.Cos(gt.TotalGameTime.TotalMilliseconds / 100));
-                sprite.Draw(sb, hitbox.Location + Bob.ToPoint() - new Point(hitbox.Width, hitbox.Height / 2), 0, spriteSize.ToVector2());
+                Vector2 frameBob = new Vector2(0, Bob * (float)Math.Cos(gt.TotalGameTime.TotalMilliseconds / 100));
+                sprite.Draw(sb, hitbox.Location + frameBob.ToPoint() - new Point(hitbox.Width, hitbox.Height / 2), 0, spriteSize.ToVector2());
             }
         }
 

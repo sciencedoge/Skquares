@@ -20,8 +20,9 @@ namespace UpgradePlatformer.Entities
         public Torch(int value, Rectangle hitbox, Tile t)
             : base(value, hitbox, EntityKind.TORCH, t) 
         {
-            SpriteBounds = new Rectangle(0, 7, 5, 5);
+            SpriteBounds = new Rectangle(80, 13, 16, 16);
             UpdateSprite();
+            Bob = 0;
         }
 
         /// <summary>
