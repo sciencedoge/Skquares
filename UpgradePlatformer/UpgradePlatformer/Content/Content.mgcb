@@ -20,8 +20,17 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Poland.spritefont
 
-#begin Levels/cave.level_Finished
-/copy:Levels/cave.level_Finished
+#begin Levels/cave1.level_Finished
+/copy:Levels/cave1.level_Finished
+
+#begin Levels/cave2.level_Finished
+/copy:Levels/cave2.level_Finished
+
+#begin Levels/cave3.level_Finished
+/copy:Levels/cave3.level_Finished
+
+#begin Levels/cave4.level_Finished
+/copy:Levels/cave4.level_Finished
 
 #begin Levels/clouds1Fix.level_Finished
 /copy:Levels/clouds1Fix.level_Finished

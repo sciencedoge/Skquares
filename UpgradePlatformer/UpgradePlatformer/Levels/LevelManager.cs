@@ -45,7 +45,7 @@ namespace UpgradePlatformer.Levels
             _activeWorld = 0;
             Worlds.Add(new World(new List<string>{"DEATH_MENU"}, 0, false));
             Worlds.Add(new World(new List<string>{"clouds2", "clouds1Fix", "clouds3"}, 0, false));
-            Worlds.Add(new World(new List<string>{"cave", "coinHeaven"}, 0, true));
+            Worlds.Add(new World(new List<string>{"cave1", "cave2", "cave3", "cave4"}, 0, true));
         }
 
         /// <summary>
