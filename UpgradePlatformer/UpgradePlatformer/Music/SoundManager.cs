@@ -43,7 +43,7 @@ namespace UpgradePlatformer.Music
             land = content.Load<SoundEffect>("Music/jumpland");
             coinGrab = content.Load<SoundEffect>("Music/coin");
             fart = content.Load<Song>("Music/fart");
-            star = content.Load<Song>("Music/boss");
+            star = content.Load<Song>("Music/allstar");
             amogus = content.Load<Song>("Music/AMOGUS");
         }
 
