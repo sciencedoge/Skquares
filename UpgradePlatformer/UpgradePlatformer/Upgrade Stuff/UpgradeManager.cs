@@ -26,6 +26,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         public Upgrade Root
         {
             get { return root; }
+            set { root = value; }
         }
 
 

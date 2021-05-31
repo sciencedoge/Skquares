@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UpgradePlatformer.Levels;
+using UpgradePlatformer.Upgrade_Stuff;
 
 namespace UpgradePlatformer.Saves
 {
@@ -19,5 +20,6 @@ namespace UpgradePlatformer.Saves
         public uint lastWorld;
         public int money;
         public List<LevelCollectedEntity> collectedEntities;
+        public Upgrade upgrades;
     }
 }
