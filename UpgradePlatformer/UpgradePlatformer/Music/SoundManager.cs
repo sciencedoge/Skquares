@@ -92,7 +92,7 @@ namespace UpgradePlatformer.Music
                     break;
                 case "game":
                     MediaPlayer.Stop();
-                    MediaPlayer.Volume = 0.25f;
+                    MediaPlayer.Volume = 0.05f;
                     MediaPlayer.Play(star);
                     MediaPlayer.IsRepeating = true;
                     break;
