@@ -412,6 +412,7 @@ namespace UpgradePlatformer
                 Save.Data.lastWorld = (uint)LevelManager.Instance.ActiveWorldNum();
                 Save.Data.money = EntityManager.Instance.PlayerMoney;
                 Save.Data.fullscreen = _graphics.IsFullScreen;
+                Save.Data.upgrades = UpgradeManager.Instance.Root;
                 Save.Save();
                 return true;
             });
@@ -428,6 +429,8 @@ namespace UpgradePlatformer
                 SoundManager.Instance.Muted = Save.Data.muted;
                 EntityManager.Instance.PlayerMoney = Save.Data.money;
                 _graphics.IsFullScreen = Save.Data.fullscreen;
+                if (Save.Data.upgrades != null)
+                    UpgradeManager.Instance.Root = Save.Data.upgrades;
                 return true;
             });
             EventManager.Instance.AddListener(Action_Load, "LOAD");

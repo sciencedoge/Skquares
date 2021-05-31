@@ -98,7 +98,7 @@ namespace UpgradePlatformer.Entities
                     Enemies[i].Flip = goombaAINum > 0;
                     if(Enemies[i].Colliding)
                     {
-                        if (goombaAINum < 0)
+                        if (goombaAINum > 0)
                             Enemies[i].animation.SetFlag(1);
                         else
                             Enemies[i].animation.SetFlag(0);

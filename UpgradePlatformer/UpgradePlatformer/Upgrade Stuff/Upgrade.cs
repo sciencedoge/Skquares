@@ -22,8 +22,11 @@ namespace UpgradePlatformer.Upgrade_Stuff
         HEALTH,
         WEAPON
     }
-    class Upgrade
+
+    [Serializable]
+    public class Upgrade
     {
+        public Upgrade() { }
         //Fields
         private int upgradeValue;
         private bool isLearned;
