@@ -34,6 +34,11 @@ namespace UpgradePlatformer
         private SaveManager Save;
         private RenderTarget2D _lightTarget, _mainTarget;
 
+        //Mouse cursor
+        private Rectangle MOUSE_SPRITE_BOUNDS = new Rectangle(25, 7, 5, 5);
+        private Sprite mouseSprite;
+        private MouseState ms;
+
 
 #if DEBUG
         double frameRate = 0.0;
@@ -46,7 +51,9 @@ namespace UpgradePlatformer
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;         
+            IsMouseVisible = true;
+
+            mouseSprite = new Sprite(MOUSE_SPRITE_BOUNDS, new Vector2(0, 0), Color.White);
             
         }
 
@@ -57,6 +64,7 @@ namespace UpgradePlatformer
             // setup resolution
             _graphics.PreferredBackBufferWidth = 630;
             _graphics.PreferredBackBufferHeight = 670;
+            IsMouseVisible = false;
             Window.AllowUserResizing = true;
             //_graphics.IsFullScreen = true;
             //_graphics.HardwareModeSwitch = false;
@@ -449,6 +457,8 @@ namespace UpgradePlatformer
 
         protected override void Update(GameTime gameTime)
         {
+            ms = Mouse.GetState();
+
             if (_graphics.PreferredBackBufferWidth != Window.ClientBounds.Width || _graphics.PreferredBackBufferHeight != Window.ClientBounds.Height)
             {
                 _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
@@ -520,6 +530,7 @@ namespace UpgradePlatformer
 
             LevelManager.Instance.Draw(_spriteBatch, true);
 
+            
             _spriteBatch.End();
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 
@@ -544,12 +555,15 @@ namespace UpgradePlatformer
             _spriteBatch.Draw(_rectangle, new Rectangle(Bounds.Right, 0, _graphics.PreferredBackBufferWidth - Bounds.Right, _graphics.PreferredBackBufferHeight), Color.Black);
             _spriteBatch.Draw(_rectangle, new Rectangle(0, Bounds.Bottom, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight - Bounds.Bottom), Color.Black);
 
+
             _spriteBatch.End();
             
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
             
             UIManager.Instance.Draw(gameTime, _spriteBatch);
-            
+
+            mouseSprite.Draw(_spriteBatch, new Point(ms.X - 2, ms.Y - 40), 0);
+
             _spriteBatch.End();
             
             base.Draw(gameTime);
