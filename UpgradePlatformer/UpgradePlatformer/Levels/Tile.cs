@@ -11,7 +11,7 @@ namespace UpgradePlatformer.Levels
     public class Tile
     {
         private static Rectangle TILE_SPRITE = new Rectangle(0, 13, 16, 16);
-        private static Rectangle TILE_EMPTY = new Rectangle(48, 29, 32, 32);
+        private static Rectangle TILE_EMPTY = new Rectangle(49, 30, 60, 60);
         private static Rectangle TILE_SPRITE_GOAL = new Rectangle(16, 29, 16, 16);
         private static Rectangle TILE_SPRITE_CLOUD = new Rectangle(32, 29, 16, 16);
         private static Rectangle TILE_SPRITE_CLOUD_MID = new Rectangle(32, 45, 16, 16);
@@ -20,7 +20,7 @@ namespace UpgradePlatformer.Levels
         private static Rectangle TILE_SPRITE_LAVA_TOP = new Rectangle(0, 45, 16, 16);
         private static Rectangle TILE_SPRITE_LAVA_BOT = new Rectangle(0, 61, 16, 16);
         private static Rectangle TILE_SPRITE_PLATFORM = new Rectangle(32, 61, 16, 16);
-        private static Color[] COLORS = { Color.Green, Color.Green, Color.Beige, Color.Gray, Color.White, Color.White, Color.White, Color.Orange, Color.White };
+        private static Color[] COLORS = { Color.Green, Color.Green, Color.LightGray, Color.Gray, Color.White, Color.White, Color.White, Color.Orange, Color.White };
         private Sprite Sprite;
         private Vector2 TileCenter;
         public Vector2 TileSize;
@@ -28,6 +28,7 @@ namespace UpgradePlatformer.Levels
         public int CollisionKind;
         public Rectangle Position;
         public bool Spawner;
+        public int SpawnerKind;
 
         /// <summary>
         /// creates a tile object
@@ -44,8 +45,7 @@ namespace UpgradePlatformer.Levels
             TileSize = tileSize;
             if (spawner != 9) {
                 Spawner = true;
-                Kind = spawner - 1000;
-                return;
+                SpawnerKind = spawner - 1000;
             }
             TileCenter = new Vector2(0, 0);
             if (Kind == 9)
@@ -60,7 +60,7 @@ namespace UpgradePlatformer.Levels
             }
             else if (Kind == 1)
             {
-                Sprite = new Sprite(TILE_SPRITE_PLATFORM, TileCenter, COLORS[3]);
+                Sprite = new Sprite(TILE_SPRITE_PLATFORM, TileCenter, COLORS[2]);
             }
             else if (Kind == 8)
             {
@@ -88,9 +88,9 @@ namespace UpgradePlatformer.Levels
         /// </summary>
         /// <param name="spriteBatch">the Sprite Batch object</param>
         /// <param name="position">the position of the tile on the map</param>
-        public void Draw(SpriteBatch spriteBatch, Vector2 position)
+        public void Draw(SpriteBatch spriteBatch, Vector2 position, bool background)
         {
-            if (Kind == 9 || Spawner)
+            if (background != (CollisionKind == 9) || Kind == 9)
                 return;
             UpdatePos(position);
             Sprite.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
@@ -103,11 +103,17 @@ namespace UpgradePlatformer.Levels
         /// <param name="position">the position of the tile on the map</param>
         public void DrawLightMap(SpriteBatch spriteBatch, Vector2 position)
         {
-            if (Kind < 9)
+            if (Kind == 8)
+            {
+                UpdatePos(position);
+                Sprite sp = new Sprite(TILE_EMPTY, new Vector2(32), Color.Orange);
+                sp.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2() * 4);
+            }
+            if (Kind < 9 || !(CollisionKind == 9))
                 return;
             UpdatePos(position);
-            Sprite s = new Sprite(TILE_EMPTY, TileCenter, Color.White);
-            s.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2() * 6);
+            Sprite s = new Sprite(TILE_EMPTY, new Vector2(32), Color.White);
+            s.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2() * 4);
         }
 
         /// <summary>

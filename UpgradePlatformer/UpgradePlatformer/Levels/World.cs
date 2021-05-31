@@ -4,12 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UpgradePlatformer.Entities;
+using UpgradePlatformer.Upgrade_Stuff;
 
 namespace UpgradePlatformer.Levels
 {
     class World
     {
         public List<Level> Levels;
+        public List<UpgradeType> upgrades;
         int activeLevel;
         int _activeLevel;
         bool Light = false;
@@ -37,8 +39,9 @@ namespace UpgradePlatformer.Levels
         /// </summary>
         /// <param name="levels">the levels in the world</param>
         /// <param name="defaultLevel">the default level</param>
-        public World(List<String> levels, int defaultLevel, bool light)
+        public World(List<String> levels, int defaultLevel, bool light, List<UpgradeType> Upgrades)
         {
+            upgrades = Upgrades;
             Light = light;
             Levels = new List<Level>();
             _activeLevel = defaultLevel;
@@ -52,16 +55,16 @@ namespace UpgradePlatformer.Levels
         /// <param name="Name"></param>
         public void Load(String Name)
         {
-            Levels.Add(new Level(Name, Light));
+            Levels.Add(new Level(Name, Light, upgrades[Levels.Count]));
         }
 
         /// <summary>
         /// dtaws the active levl
         /// </summary>
         /// <param name="spriteBatch">a SpriteBatch object</param>
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, bool background)
         {
-            Levels[activeLevel].Draw(spriteBatch);
+            Levels[activeLevel].Draw(spriteBatch, background);
         }
 
         /// <summary>

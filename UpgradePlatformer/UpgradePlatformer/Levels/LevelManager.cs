@@ -6,6 +6,7 @@ using System.Text;
 using UpgradePlatformer.Entities;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Input;
+using UpgradePlatformer.Upgrade_Stuff;
 
 namespace UpgradePlatformer.Levels
 {
@@ -43,18 +44,18 @@ namespace UpgradePlatformer.Levels
         {
             Worlds = new List<World>();
             _activeWorld = 0;
-            Worlds.Add(new World(new List<string>{"DEATH_MENU"}, 0, false));
-            Worlds.Add(new World(new List<string>{"clouds2", "clouds1Fix", "clouds3"}, 0, false));
-            Worlds.Add(new World(new List<string>{"cave1", "cave2", "cave3", "cave4"}, 0, true));
+            Worlds.Add(new World(new List<string>{"DEATH_MENU"}, 0, false, new List<UpgradeType> { UpgradeType.NONE}));
+            Worlds.Add(new World(new List<string>{"clouds2", "clouds1Fix", "clouds3"}, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(new List<string>{"cave1", "cave2", "cave3", "cave4"}, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
         }
 
         /// <summary>
         /// draws the active level in the active world
         /// </summary>
         /// <param name="spriteBatch">the SpriteBatch object</param>
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, bool background)
         {
-            Worlds[activeWorld].Draw(spriteBatch);
+            Worlds[activeWorld].Draw(spriteBatch, background);
         }
 
         /// <summary>

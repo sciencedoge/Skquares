@@ -30,6 +30,7 @@ namespace UpgradePlatformer.Entities
     enum EntityKind {
         PLAYER,
         ENEMY,
+        BOSS,
         COIN,
         UPGRADE,
     }

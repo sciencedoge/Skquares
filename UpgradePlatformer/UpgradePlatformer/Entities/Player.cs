@@ -218,12 +218,12 @@ namespace UpgradePlatformer.Entities
         {
             base.ApplyGravity();
 
-            if (position.X > 630) {
+            if (position.X >= 630) {
                 EventManager.Instance.Push(new Event("LEVEL_SHOW", (uint)LevelManager.Instance.ActiveLevelNum() + 1, new Point()));
                 position.X = 0 + hitbox.Width;
             }
 
-            if (position.X < 0) {
+            if (position.X <= 0) {
                 EventManager.Instance.Push(new Event("LEVEL_SHOW", (uint)LevelManager.Instance.ActiveLevelNum() - 1, new Point()));
                 position.X = 630 - hitbox.Width;
             }
@@ -295,6 +295,13 @@ namespace UpgradePlatformer.Entities
             keyLeft = false;
             keyRight = false;
             ResetPosition();
+        }
+
+        private static Rectangle TILE_EMPTY = new Rectangle(49, 30, 60, 60);
+        public void DrawLightMap(SpriteBatch spriteBatch)
+        {
+            Sprite s = new Sprite(TILE_EMPTY, new Vector2(0, 0), Color.White);
+            s.Draw(spriteBatch, hitbox.Location - hitbox.Size, 0, hitbox.Size.ToVector2() * 4);
         }
     }
 }

@@ -16,6 +16,8 @@ namespace UpgradePlatformer.Upgrade_Stuff
     /// </summary>
     public enum UpgradeType
     {
+        NONE,
+        ANY,
         EXTRA_JUMP,
         HEALTH,
         WEAPON

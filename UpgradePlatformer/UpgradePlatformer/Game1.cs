@@ -499,12 +499,13 @@ namespace UpgradePlatformer
                 GraphicsDevice.Clear(Color.Gray);
             }
             Sprite.Light = true;
-            if (LevelManager.Instance.Light && false) {
+            if (LevelManager.Instance.Light) {
                 GraphicsDevice.Clear(Color.Black);
 
                 _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, null, null, null, null);
 
                 LevelManager.Instance.DrawLightMap(_spriteBatch);
+                EntityManager.Instance.Player().DrawLightMap(_spriteBatch);
 
                 _spriteBatch.End();
             }
@@ -514,8 +515,13 @@ namespace UpgradePlatformer
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 
-            LevelManager.Instance.Draw(_spriteBatch);
+            LevelManager.Instance.Draw(_spriteBatch, true);
+
+            _spriteBatch.End();
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+
             if (_stateMachine.currentState != 0 && _stateMachine.currentState != 4) EntityManager.Instance.Draw(gameTime, _spriteBatch);
+            LevelManager.Instance.Draw(_spriteBatch, false);
 
             _spriteBatch.End();
 
