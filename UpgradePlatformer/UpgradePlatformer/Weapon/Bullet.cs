@@ -52,8 +52,6 @@ namespace UpgradePlatformer.Weapon
             this.hitbox = new Rectangle(location.ToPoint(), new Point(10, 10));
         }
 
-
-
         //Methods
 
         /// <summary>
@@ -64,7 +62,7 @@ namespace UpgradePlatformer.Weapon
         {
             if (isActive)
             {
-                sprite.Draw(sb, location.ToPoint(), 0f);
+                sprite.Draw(sb, location.ToPoint(), 0f, new Vector2(10));
             }
         }
 
@@ -116,7 +114,6 @@ namespace UpgradePlatformer.Weapon
                 {
                     isActive = false;
                 }
-                    
             }            
         }
     }
