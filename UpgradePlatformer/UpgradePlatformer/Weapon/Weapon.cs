@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using UpgradePlatformer.Input;
+using UpgradePlatformer.Entities;
 
 namespace UpgradePlatformer.Weapon
 {
@@ -29,9 +30,6 @@ namespace UpgradePlatformer.Weapon
 
         private Point MousePos; //using this for now (not very familiar with current input system)
         private bool Click;
-
-        private ButtonState b;
-        private ButtonState prevB;
 
         //Properties
 
@@ -157,15 +155,15 @@ namespace UpgradePlatformer.Weapon
             if (mev != null)
             {
                 MousePos = mev.MousePosition;
-                //MousePos.X = (int)(MousePos.X / Sprite.GetScale());
-                //MousePos.Y = (int)(MousePos.Y / Sprite.GetScale());
-                //MousePos += Sprite.GetOrigin();
             }
             Event rjev = EventManager.Instance.Pop("GAME_PAD_JOYSTICK");
             if (rjev != null)
             {
                 if (Vector2.Distance(rjev.MousePosition.ToVector2(), new Vector2()) > 2)
-                    MousePos = rjev.MousePosition + Position.ToPoint();
+                {
+                    rjev.MousePosition.Y *= -1;
+                    MousePos = rjev.MousePosition * new Point(10) + EntityManager.Instance.Player().Position.ToPoint();
+                }
             }
             Event dev = EventManager.Instance.Pop("MOUSE_DOWN");
 

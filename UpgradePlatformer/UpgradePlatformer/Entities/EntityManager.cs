@@ -316,7 +316,7 @@ namespace UpgradePlatformer.Entities
                             EventManager.Instance.Push(new Event("WORLD_SHOW", (uint)LevelManager.Instance.ActiveWorldNum() + 1, new Point(0)));
                         break;
                     case 104:
-                        if(!Player().Ducking && Player().Y < t.Position.Y)
+                        if( Player().Y < t.Position.Y ) //&& !Player().Ducking) // this worked for allowing to go down platforms but it ruind controlls on a controller
                         {
                             //checks conditions to move the player up or down
                             if (intersection.Width > intersection.Height - 20)

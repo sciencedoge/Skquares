@@ -40,7 +40,10 @@ namespace UpgradePlatformer.Weapon
             spriteBounds = new Rectangle(20, 7, 5, 5);
             this.path = path;
             this.location = location;
-            this.speed = new Vector2(path.X / 60, path.Y / 60);
+
+            this.speed = path / Vector2.Distance(path, new Vector2(0, 0)) * 3;
+
+            //this.speed = new Vector2(path.X / 60, path.Y / 60);
 
             this.sprite = new Sprite(
                spriteBounds,
