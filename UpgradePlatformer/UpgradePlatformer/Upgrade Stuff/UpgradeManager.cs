@@ -133,7 +133,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// Lists all of the upgrades
         /// purchased by the player
         /// </summary>
-        public List<Upgrade> CanBeLearned(Upgrade upgrade = null)
+        public List<Upgrade> CanBeLearned(UpgradeType type = UpgradeType.ANY, Upgrade upgrade = null)
         { 
             if (upgrade == null) 
                 upgrade = Root;
@@ -144,15 +144,17 @@ namespace UpgradePlatformer.Upgrade_Stuff
             {
                 if(upgrade.Left != null)
                 {
-                    result.AddRange(CanBeLearned(upgrade.Left));
+                    result.AddRange(CanBeLearned(type, upgrade.Left));
                 }
                 
                 if(upgrade.Right != null)
                 {
-                    result.AddRange(CanBeLearned(upgrade.Right));
+                    result.AddRange(CanBeLearned(type, upgrade.Right));
                 }
             } else {
-                return new List<Upgrade>{upgrade};
+                if (type == UpgradeType.ANY || type == upgrade.Type)
+                    return new List<Upgrade> { upgrade };
+                return new List<Upgrade>();
             }
 
             return result;
