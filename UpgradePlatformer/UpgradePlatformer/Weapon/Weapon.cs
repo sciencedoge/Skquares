@@ -93,7 +93,7 @@ namespace UpgradePlatformer.Weapon
                 distance += MathF.PI;
             }
 
-            System.Diagnostics.Debug.WriteLine(distance * 180/MathF.PI);
+            System.Diagnostics.Debug.WriteLine(distance * (180/MathF.PI));
             return distance;
         }
 
@@ -142,13 +142,15 @@ namespace UpgradePlatformer.Weapon
 
             if (Click)
             {
+                Bullet bullet = new Bullet(path, new Vector2(Position.X + 25, Position.Y - 25));
+                  
                 Click = false;
-                bullets.Add(new Bullet(path, Position + new Vector2(7)));
+                bullets.Add(bullet);
                 animation.SetFlag(1);
             }
         }
 
-        /// <summary>
+        /// <summary>a
         /// checks for input and reacts accordingly
         /// </summary>
         public void CheckForInput()

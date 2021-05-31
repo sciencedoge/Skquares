@@ -265,63 +265,7 @@ namespace UpgradePlatformer.Entities
                         }                           
                         break;
                     case 102:
-                        //checks conditions to move the player up or down
-                        if (intersection.Width > intersection.Height)
-                        {
-                            //short wide rectangle
-                            //moves player up
-                            if (t.Position.Top - intersection.Top == 0)
-                            {
-                                temp.Y -= intersection.Height;
-                                if(obj is Player player)
-                                {
-                                    if(!player.Landed && !Player().Ducking)
-                                    {
-                                        player.Landed = true;
-                                        
-                                        SoundManager.Instance.PlaySFX("land");
-                                    }
-                                }
-                                obj.OnFloorCollide();
-                            }
-
-                            //moves player down
-                            else if (t.Position.Top - intersection.Top != 0)
-                            {
-                                temp.Y += intersection.Height;
-                            }
-                            obj.Velocity = new Vector2(obj.Velocity.X, 0);
-                        }
-
-                        //long skinny rectangle (left or right)
-                        else if (intersection.Width < intersection.Height)
-                        {
-                            obj.Velocity = new Vector2(0, obj.Velocity.Y);
-
-                            //moves the player right
-                            if (t.Position.Right - intersection.Right == 0)
-                            {
-                                temp.X += intersection.Width;
-                            }
-                            //moves the player left
-                            else
-                            {
-                                temp.X -= intersection.Width;
-                            }
-
-                            //marks true because the enemy is colliding
-                            //with a wall
-                            if (obj is Enemy e)
-                            {
-                                e.Colliding = true;
-                            }
-
-                            obj.Velocity = new Vector2(0, obj.Velocity.Y);
-
-                        }
-
-                        obj.X = temp.X;
-                        obj.Y = temp.Y;
+                        RegularCollision(intersection, temp, obj, t);
                         break;
                     case 103:
                         // goal tile
@@ -329,28 +273,35 @@ namespace UpgradePlatformer.Entities
                             EventManager.Instance.Push(new Event("WORLD_SHOW", (uint)LevelManager.Instance.ActiveWorldNum() + 1, new Point(0)));
                         break;
                     case 104:
-                        if( Player().Y < t.Position.Y ) //&& !Player().Ducking) // this worked for allowing to go down platforms but it ruind controlls on a controller
+                        if(obj is Enemy)
                         {
-                            //checks conditions to move the player up or down
-                            if (intersection.Width > intersection.Height - 20)
-                            {
-                                //short wide rectangle
-                                //moves player up
-                                if (t.Position.Top - intersection.Top == 0)
-                                {
-                                    temp.Y -= intersection.Height;
-                                    if (!Player().Landed && !Player().Ducking)
-                                    {
-                                        Player().Landed = true;
-                                        SoundManager.Instance.PlaySFX("land");
-                                    }
-                                    obj.OnFloorCollide();                                  
-                                }
-
-                                obj.Velocity = new Vector2(obj.Velocity.X, 0);
-                            }
-                            obj.Y = temp.Y;
+                            RegularCollision(intersection, temp, obj, t);
                         }
+                        else
+                        {
+                            if (obj.Y < t.Position.Y) //&& !Player().Ducking) // this worked for allowing to go down platforms but it ruind controlls on a controller
+                            {
+                                //checks conditions to move the player up or down
+                                if (intersection.Width > intersection.Height - 20)
+                                {
+                                    //short wide rectangle
+                                    //moves player up
+                                    if (t.Position.Top - intersection.Top == 0)
+                                    {
+                                        temp.Y -= intersection.Height;
+                                        if (!Player().Landed && !Player().Ducking)
+                                        {
+                                            Player().Landed = true;
+                                            SoundManager.Instance.PlaySFX("land");
+                                        }
+                                        obj.OnFloorCollide();
+                                    }
+
+                                    obj.Velocity = new Vector2(obj.Velocity.X, 0);
+                                }
+                                obj.Y = temp.Y;
+                            }
+                        }                       
                         break;
                 }
             }
@@ -397,6 +348,76 @@ namespace UpgradePlatformer.Entities
             if (Player() != null)
                 return Player().MaxHP;
             return 0;
+        }
+
+        /// <summary>
+        /// Regular collision handling
+        /// </summary>
+        /// <param name="intersection"></param>
+        /// <param name="temp"></param>
+        /// <param name="obj"></param>
+        public void RegularCollision(Rectangle intersection, Rectangle temp, EntityObject obj, Tile t)
+        {
+            LivingObject obj2 = (LivingObject)obj;
+
+            //checks conditions to move the player up or down
+            if (intersection.Width > intersection.Height)
+            {
+                //short wide rectangle
+                //moves player up
+                if (t.Position.Top - intersection.Top == 0)
+                {
+                    temp.Y -= intersection.Height;
+                    if (obj2 is Player player)
+                    {
+                        if (!player.Landed && !Player().Ducking)
+                        {
+                            player.Landed = true;
+
+                            SoundManager.Instance.PlaySFX("land");
+                        }
+                       
+                    }
+                    obj2.OnFloorCollide();
+                }
+
+                //moves player down
+                else if (t.Position.Top - intersection.Top != 0)
+                {
+                    temp.Y += intersection.Height;
+                }
+                obj2.Velocity = new Vector2(obj2.Velocity.X, 0);
+            }
+
+            //long skinny rectangle (left or right)
+            else if (intersection.Width < intersection.Height)
+            {
+                obj2.Velocity = new Vector2(0, obj2.Velocity.Y);
+
+                //moves the player right
+                if (t.Position.Right - intersection.Right == 0)
+                {
+                    temp.X += intersection.Width;
+                }
+                //moves the player left
+                else
+                {
+                    temp.X -= intersection.Width;
+                }
+
+                //marks true because the enemy is colliding
+                //with a wall
+                if (obj is Enemy e)
+                {
+                    e.Colliding = true;
+                }
+
+                obj2.Velocity = new Vector2(0, obj2.Velocity.Y);
+
+            }
+
+            obj2.X = temp.X;
+            obj2.Y = temp.Y;
         }
     }
 }
