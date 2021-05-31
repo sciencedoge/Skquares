@@ -316,7 +316,7 @@ namespace UpgradePlatformer.Entities
                             EventManager.Instance.Push(new Event("WORLD_SHOW", (uint)LevelManager.Instance.ActiveWorldNum() + 1, new Point(0)));
                         break;
                     case 104:
-                        if(Player().Y < t.Position.Y)
+                        if(!Player().Ducking && Player().Y < t.Position.Y)
                         {
                             //checks conditions to move the player up or down
                             if (intersection.Width > intersection.Height - 20)
@@ -337,10 +337,6 @@ namespace UpgradePlatformer.Entities
                                 obj.Velocity = new Vector2(obj.Velocity.X, 0);
                             }
                             obj.Y = temp.Y;
-                        }
-                        if (Player().Ducking)
-                        {
-                            Player().Y += 15;
                         }
                         break;
                 }
