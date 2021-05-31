@@ -86,14 +86,15 @@ namespace UpgradePlatformer.Weapon
         public float FindRotation(Vector2 dist)
         {           
 
-            float distance = (float)Math.Atan(dist.Y / dist.X);
+            float distance = MathF.Atan(dist.Y / dist.X);
 
-            if(dist.X <= 0)
+            if(dist.X < 0)
             {
                 distance += MathF.PI;
             }
 
-            return (float)Math.Atan(dist.Y / dist.X);
+            System.Diagnostics.Debug.WriteLine(distance * 180/MathF.PI);
+            return distance;
         }
 
         /// <summary>
@@ -104,14 +105,15 @@ namespace UpgradePlatformer.Weapon
         {
             if (isActive)
             {
+                animation.Draw(sb, position.ToPoint(), rotation, new Vector2(14));
+
                 for (int i = bullets.Count - 1; i > 0; i--)
                 {
                     if (bullets[i].isActive)
                     {
                         bullets[i].Draw(sb);
                     }
-                }
-                animation.Draw(sb, position.ToPoint(), rotation, new Vector2(14));
+                }                
             }
         }
 
