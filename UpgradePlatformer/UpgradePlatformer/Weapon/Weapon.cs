@@ -142,7 +142,7 @@ namespace UpgradePlatformer.Weapon
 
             if (Click)
             {
-                Bullet bullet = new Bullet(path, new Vector2(Position.X + 25, Position.Y - 30));
+                Bullet bullet = new Bullet(path, new Vector2(Position.X + 25, Position.Y - 31));
                   
                 Click = false;
                 bullets.Add(bullet);
