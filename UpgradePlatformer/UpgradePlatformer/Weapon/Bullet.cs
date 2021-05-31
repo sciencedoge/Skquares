@@ -47,7 +47,7 @@ namespace UpgradePlatformer.Weapon
             this.path = path;
             this.location = location;
 
-            this.speed = path / Vector2.Distance(path, new Vector2(0, 0)) * 5;
+            this.speed = path / Vector2.Distance(path, new Vector2(0, 0)) * 2;
 
             //this.speed = new Vector2(path.X / 60, path.Y / 60);
 
