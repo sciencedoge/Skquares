@@ -29,6 +29,12 @@ namespace UpgradePlatformer.Weapon
 
         private Rectangle spriteBounds;
 
+        public Vector2 Location
+        {
+            get { return location; }
+            set { location = value; }
+        }
+
         //Ctor
         /// <summary>
         /// creates a bullet object
@@ -41,7 +47,7 @@ namespace UpgradePlatformer.Weapon
             this.path = path;
             this.location = location;
 
-            this.speed = path / Vector2.Distance(path, new Vector2(0, 0)) * 3;
+            this.speed = path / Vector2.Distance(path, new Vector2(0, 0)) * 5;
 
             //this.speed = new Vector2(path.X / 60, path.Y / 60);
 
@@ -102,7 +108,7 @@ namespace UpgradePlatformer.Weapon
                 
                 foreach(Tile t in LevelManager.Instance.ActiveLevel().Tiles)
                 {
-                    if(t.CollisionKind != 9 && !t.Spawner)
+                    if(t.CollisionKind != 9)
                     {
                         if (hitbox.Intersects(t.Position))
                         {
