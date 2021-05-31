@@ -74,7 +74,7 @@ namespace UpgradePlatformer.Graphics
                 c.B /= 2;
             }
             Rectangle renderRect = Position;
-            renderRect.Location = renderPosition + new Point(0, 40) + (Origin / 2).ToPoint() + GetOrigin();
+            renderRect.Location = renderPosition + new Point(0,(int)(40f * GetScale())) + (Origin / 2).ToPoint() + GetOrigin();
             renderRect.Size = Size.ToPoint();
             spriteBatch.Draw(texture, renderRect, Position, c, rotation, Origin, effects, 0f);
         }
@@ -85,7 +85,7 @@ namespace UpgradePlatformer.Graphics
         /// <returns></returns>
         public static Point GetOrigin()
         {
-            Point Size = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight - 40);
+            Point Size = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight - (int)(40f * GetScale()));
             if (Size.X > Size.Y)
             {
                 return new Point((Size.X - Size.Y) / 2, 0);
@@ -104,7 +104,7 @@ namespace UpgradePlatformer.Graphics
         {
             Rectangle result = new Rectangle();
             result.Location = GetOrigin();
-            result.Size = new Point((int)MathF.Min(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight - 40));
+            result.Size = new Point((int)MathF.Min(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight - 40f * GetScale()));
             return result;
         }
 
@@ -114,7 +114,7 @@ namespace UpgradePlatformer.Graphics
         /// <returns>the size of one unit in the window</returns>
         public static float GetScale()
         {
-            return MathF.Min(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight - 40) / 630f;
+            return MathF.Min(graphics.PreferredBackBufferWidth / 630f, graphics.PreferredBackBufferHeight / 670f) ;
         }
 
         /// <summary>

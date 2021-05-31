@@ -528,7 +528,7 @@ namespace UpgradePlatformer
             _spriteBatch.Draw(_mainTarget, Vector2.Zero, Color.White);
 
             Rectangle Bounds = Sprite.GetRect();
-            Bounds.Location += new Point(0, 40);
+            Bounds.Location += new Point(0, (int)(40f * Sprite.GetScale()));
 
             _spriteBatch.Draw(_rectangle, new Rectangle(0, 0, Bounds.Left, _graphics.PreferredBackBufferHeight), Color.Black);
             _spriteBatch.Draw(_rectangle, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, Bounds.Top), Color.Black);
