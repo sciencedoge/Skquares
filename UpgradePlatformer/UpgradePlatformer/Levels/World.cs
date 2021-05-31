@@ -62,9 +62,9 @@ namespace UpgradePlatformer.Levels
         /// dtaws the active levl
         /// </summary>
         /// <param name="spriteBatch">a SpriteBatch object</param>
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, bool background)
         {
-            Levels[activeLevel].Draw(spriteBatch);
+            Levels[activeLevel].Draw(spriteBatch, background);
         }
 
         /// <summary>

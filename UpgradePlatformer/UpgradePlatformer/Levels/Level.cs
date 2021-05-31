@@ -73,12 +73,12 @@ namespace UpgradePlatformer.Levels
         /// draws the level
         /// </summary>
         /// <param name="spriteBatch">the SpriteBatch Object</param>
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, bool background)
         {
             Vector2 tileSize = new Vector2(DEF_SIZE / TileWidth, DEF_SIZE / TileHeight);
             for (int x = 0; x < TileHeight; x++)
                 for (int y = 0; y < TileWidth; y++)
-                    TileMap[y, x].Draw(spriteBatch, new Vector2(x,y) * tileSize);
+                    TileMap[y, x].Draw(spriteBatch, new Vector2(x,y) * tileSize, background);
         }
 
         /// <summary>
@@ -142,14 +142,14 @@ namespace UpgradePlatformer.Levels
                     }
                     if (q) continue;
                     EntityObject o = null;
-                    if (t.Kind == 3 && UpgradeManager.Instance.CanBeLearned(upgrade).Count != 0) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location.X, t.Position.Y - 15, 15, 15), UpgradeManager.Instance.CanBeLearned()[0], t);
+                    if (t.SpawnerKind == 3 && UpgradeManager.Instance.CanBeLearned(upgrade).Count != 0) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location.X, t.Position.Y - 15, 15, 15), UpgradeManager.Instance.CanBeLearned()[0], t);
 #if DEBUG
-                    else if (t.Kind == 2 && player) o = (EntityObject)new Player(30, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
+                    else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(30, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #else
-                    else if (t.Kind == 2 && player) o = (EntityObject)new Player(3, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
+                    else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(3, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #endif
-                    else if (t.Kind == 1) o = (EntityObject)new Enemy(10, 1, new Rectangle(t.Position.Location, new Point(25, 25)), 1);
-                    else if (t.Kind == 0) o = (EntityObject)new Coin(1, new Rectangle(t.Position.Location, new Point(15, 15)), t);
+                    else if (t.SpawnerKind == 1) o = (EntityObject)new Enemy(10, 1, new Rectangle(t.Position.Location, new Point(25, 25)), 1);
+                    else if (t.SpawnerKind == 0) o = (EntityObject)new Coin(1, new Rectangle(t.Position.Location, new Point(15, 15)), t);
                     if (o != null)
                         EntityManager.Instance.Spawn(o);
                 }

@@ -53,9 +53,9 @@ namespace UpgradePlatformer.Levels
         /// draws the active level in the active world
         /// </summary>
         /// <param name="spriteBatch">the SpriteBatch object</param>
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, bool background)
         {
-            Worlds[activeWorld].Draw(spriteBatch);
+            Worlds[activeWorld].Draw(spriteBatch, background);
         }
 
         /// <summary>
