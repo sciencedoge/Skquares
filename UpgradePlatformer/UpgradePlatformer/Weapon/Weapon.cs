@@ -28,7 +28,7 @@ namespace UpgradePlatformer.Weapon
 
         private Rectangle spriteBounds;
 
-        private Point MousePos; //using this for now (not very familiar with current input system)
+        public Point MousePos; //using this for now (not very familiar with current input system)
         private bool Click;
 
         //Properties
@@ -93,7 +93,7 @@ namespace UpgradePlatformer.Weapon
                 distance += MathF.PI;
             }
 
-            System.Diagnostics.Debug.WriteLine(distance * (180/MathF.PI));
+            //System.Diagnostics.Debug.WriteLine(distance * (180/MathF.PI));
             return distance;
         }
 
@@ -113,7 +113,7 @@ namespace UpgradePlatformer.Weapon
                     {
                         bullets[i].Draw(sb);
                     }
-                }                
+                }      
             }
         }
 
@@ -150,7 +150,7 @@ namespace UpgradePlatformer.Weapon
             }
         }
 
-        /// <summary>a
+        /// <summary>
         /// checks for input and reacts accordingly
         /// </summary>
         public void CheckForInput()
@@ -160,13 +160,22 @@ namespace UpgradePlatformer.Weapon
             {
                 MousePos = mev.MousePosition;
             }
-            Event rjev = EventManager.Instance.Pop("GAME_PAD_JOYSTICK");
+            Event rjev = EventManager.Instance.Pop("RGAME_PAD_JOYSTICK");
             if (rjev != null)
             {
                 if (Vector2.Distance(rjev.MousePosition.ToVector2(), new Vector2()) > 2)
                 {
                     rjev.MousePosition.Y *= -1;
-                    MousePos = rjev.MousePosition * new Point(10) + EntityManager.Instance.Player().Position.ToPoint();
+                    MousePos = rjev.MousePosition * new Point(30) + EntityManager.Instance.Player().hitbox.Center + new Point(0, (int)(40f * Sprite.GetScale()));
+                }
+            }
+            Event jev = EventManager.Instance.Pop("GAME_PAD_JOYSTICK");
+            if (jev != null)
+            {
+                if (Vector2.Distance(jev.MousePosition.ToVector2(), new Vector2()) > 2)
+                {
+                    jev.MousePosition.Y *= -1;
+                    MousePos = jev.MousePosition * new Point(30) + EntityManager.Instance.Player().hitbox.Center + new Point(0, (int)(40f * Sprite.GetScale()));
                 }
             }
             Event dev = EventManager.Instance.Pop("MOUSE_DOWN");

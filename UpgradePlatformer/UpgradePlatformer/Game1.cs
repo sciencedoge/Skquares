@@ -37,7 +37,6 @@ namespace UpgradePlatformer
         //Mouse cursor
         private Rectangle MOUSE_SPRITE_BOUNDS = new Rectangle(25, 7, 5, 5);
         private Sprite mouseSprite;
-        private MouseState ms;
 
 
 #if DEBUG
@@ -460,8 +459,6 @@ namespace UpgradePlatformer
 
         protected override void Update(GameTime gameTime)
         {
-            ms = Mouse.GetState();
-
             if (_graphics.PreferredBackBufferWidth != Window.ClientBounds.Width || _graphics.PreferredBackBufferHeight != Window.ClientBounds.Height)
             {
                 _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
@@ -565,7 +562,8 @@ namespace UpgradePlatformer
             
             UIManager.Instance.Draw(gameTime, _spriteBatch);
 
-            mouseSprite.Draw(_spriteBatch, new Point(ms.X - 2, ms.Y - 40), 0);
+            if (!(IsMouseVisible =  EntityManager.Instance.Player() == null))
+                mouseSprite.Draw(_spriteBatch, new Point(EntityManager.Instance.Player().weapon.MousePos.X - 2, EntityManager.Instance.Player().weapon.MousePos.Y - 40), 0);
 
             _spriteBatch.End();
             
