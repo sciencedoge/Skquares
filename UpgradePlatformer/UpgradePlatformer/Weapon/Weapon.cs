@@ -143,7 +143,8 @@ namespace UpgradePlatformer.Weapon
             if (Click)
             {
                 Click = false;
-                bullets.Add(new Bullet(path, Position + new Vector2(7)));      
+                bullets.Add(new Bullet(path, Position + new Vector2(7)));
+                animation.SetFlag(1);
             }
         }
 
@@ -167,7 +168,9 @@ namespace UpgradePlatformer.Weapon
 
             if (dev != null && dev.Data == 0)
             {
+                EventManager.Instance.Push(dev);
                 Click = true;
+                animation.SetFlag(1);
             }
             //Event uev = EventManager.Instance.Pop("MOUSE_UP");
             //    b = ButtonState.Pressed;

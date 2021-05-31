@@ -41,7 +41,7 @@ namespace UpgradePlatformer.UI
 
             if (ev != null)
             {
-                EventManager.Instance.Push(ev);
+                //EventManager.Instance.Push(ev);
                 ProcessClick(ev.MousePosition, ev.Data);
             }
 
