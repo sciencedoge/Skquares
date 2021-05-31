@@ -237,7 +237,7 @@ namespace UpgradePlatformer
                 Centered = true
             };
 
-            UIText HpText = new UIText(_font, new Rectangle(0, 0, 0, 0), 2, Color.Gray)
+            UIText HpText = new UIText(_font, new Rectangle(0, 0, 0, 0), 2, Color.White)
             {
                 Text = "[          ]",
                 Centered = false,
