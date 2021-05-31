@@ -145,10 +145,7 @@ namespace UpgradePlatformer.Entities
                     if (obj == null) continue;
                     if(obj is Enemy)
                     {
-                        if(i % 5 == 0)
-                        {
-                            obj.Update(gameTime);             
-                        }
+                        obj.Update(gameTime);               
                     }
                     else
                     {
