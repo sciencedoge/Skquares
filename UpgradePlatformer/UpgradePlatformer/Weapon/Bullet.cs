@@ -85,8 +85,11 @@ namespace UpgradePlatformer.Weapon
                 if (hitbox.Intersects(e.Hitbox))
                 {
                     e.CurrentHP -= EntityManager.Instance.Player().Damage;
-                    isActive = false;
 
+                    if (e.IsActive)
+                    {
+                        isActive = false;
+                    }                   
                     if(e.CurrentHP <= 0)
                     {
                         e.IsActive = false;
