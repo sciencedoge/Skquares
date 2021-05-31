@@ -678,14 +678,14 @@ namespace LevelEditor
             texture3.SizeMode = PictureBoxSizeMode.Zoom;
             texture4.Load("../../../Default size/1003.png");
             texture4.SizeMode = PictureBoxSizeMode.Zoom;
+            texture5.Load("../../../Default size/1004.png");
+            texture5.SizeMode = PictureBoxSizeMode.Zoom;
 
             path = "../../../Default size/1000.png";
             texturePic.Load("../../../Default size/1000.png");
             texturePic.Refresh();
             Rotate(texturePic);
 
-            texture5.Image = null;
-            texture5.Enabled = false;
             texture6.Image = null;
             texture6.Enabled = false;
             texture7.Image = null;

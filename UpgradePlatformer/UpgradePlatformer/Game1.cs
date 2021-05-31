@@ -212,18 +212,18 @@ namespace UpgradePlatformer
             muteToggle.toggled = SoundManager.Instance.Muted;
 
             // TODO: Add Fullscreen
-            //UIToggle fullscreenToggle = new UIToggle(_spriteSheetTexture, _font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40));
-            //fullscreenToggle.onClick = new UIAction((i) =>
-            //{
-            //     = i == 1;
-            //    Save.Data.fullscreen = SoundManager.Instance.Muted;
-            //    Save.Save();
-            //});
-            //fullscreenToggle.Text.update = new UITextUpdate(() =>
-            //{
-            //    return SoundManager.Instance.Muted ? "Muted: x" : "Muted: -";
-            //});
-            //fullscreenToggle.toggled = SoundManager.Instance.Muted;
+            UIToggle fullscreenToggle = new UIToggle(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40));
+            fullscreenToggle.onClick = new UIAction((i) =>
+            {
+                _graphics.IsFullScreen = i == 1;
+                _graphics.ApplyChanges();
+                Save.Save();
+            });
+            fullscreenToggle.Text.update = new UITextUpdate(() =>
+            {
+                return _graphics.IsFullScreen ? "Fullscreen: x" : "Fullscreen: -";
+            });
+            fullscreenToggle.toggled = SoundManager.Instance.Muted;
 
             UIText TitleText = new UIText(_font, new Rectangle(0, 100, DEF_SIZE, 0), 2, Color.Black)
             {
@@ -283,7 +283,7 @@ namespace UpgradePlatformer
             mainMenu = new UIGroup(new List<UIElement>{ TitleText, playButton, newButton, closeButton, OptionsButton}, bounds);
             pauseMenu = new UIGroup(new List<UIElement> { PauseText, continueButton, menuButton, OptionsButton, closeButton}, bounds);
             deathMenu = new UIGroup(new List<UIElement> { playButton, menuButton, closeButton}, bounds);
-            options = new UIGroup(new List<UIElement> { backButton, muteToggle }, bounds);
+            options = new UIGroup(new List<UIElement> { backButton, muteToggle, fullscreenToggle }, bounds);
             topHud = new UIGroup(new List<UIElement> { HpText }, bounds);
 
             // add uiGroups to uiManager
@@ -294,7 +294,7 @@ namespace UpgradePlatformer
             UIManager.Instance.Add(options);
             UIManager.Instance.Add(UpgradeStructure.panel);
 
-            UIManager.SetupFocusLoop(new List<UIElement> { muteToggle, playButton, newButton, continueButton, menuButton, OptionsButton, closeButton, backButton });
+            UIManager.SetupFocusLoop(new List<UIElement> { muteToggle, playButton, newButton, fullscreenToggle, continueButton, menuButton, OptionsButton, closeButton, backButton });
 #endregion
 
 #region EVENTS
@@ -403,6 +403,7 @@ namespace UpgradePlatformer
                 Save.Data.muted = SoundManager.Instance.Muted;
                 Save.Data.lastWorld = (uint)LevelManager.Instance.ActiveWorldNum();
                 Save.Data.money = EntityManager.Instance.PlayerMoney;
+                Save.Data.fullscreen = _graphics.IsFullScreen;
                 Save.Save();
                 return true;
             });
@@ -418,6 +419,7 @@ namespace UpgradePlatformer
                         LevelManager.Instance.Worlds[obj.World].Levels[obj.Level].Collected.Add(obj);
                 SoundManager.Instance.Muted = Save.Data.muted;
                 EntityManager.Instance.PlayerMoney = Save.Data.money;
+                _graphics.IsFullScreen = Save.Data.fullscreen;
                 return true;
             });
             EventManager.Instance.AddListener(Action_Load, "LOAD");
@@ -500,12 +502,13 @@ namespace UpgradePlatformer
             }
             Sprite.Light = true;
             if (LevelManager.Instance.Light) {
-                GraphicsDevice.Clear(Color.Black);
+                Color c = new Color(20, 20, 20);
+                GraphicsDevice.Clear(c);
 
                 _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, null, null, null, null);
 
                 LevelManager.Instance.DrawLightMap(_spriteBatch);
-                EntityManager.Instance.Player().DrawLightMap(_spriteBatch);
+                EntityManager.Instance.DrawLightMap(_spriteBatch);
 
                 _spriteBatch.End();
             }

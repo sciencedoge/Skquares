@@ -15,6 +15,7 @@ namespace UpgradePlatformer.Saves
     {
         public bool muted;
         public bool valid;
+        public bool fullscreen;
         public uint lastWorld;
         public int money;
         public List<LevelCollectedEntity> collectedEntities;

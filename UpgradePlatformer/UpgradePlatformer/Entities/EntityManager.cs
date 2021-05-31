@@ -193,7 +193,20 @@ namespace UpgradePlatformer.Entities
                 obj.Draw(spriteBatch, gameTime);
             }
         }
-        
+
+        /// <summary>
+        /// draws the lightmap from entities
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        public void DrawLightMap(SpriteBatch spriteBatch)
+        {
+            foreach (EntityObject obj in objects)
+            {
+                if (obj == null) continue;
+                obj.DrawLightMap(spriteBatch);
+            }
+        }
+
         /// <summary>
         /// spawns an entity object
         /// </summary>
