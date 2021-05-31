@@ -36,7 +36,6 @@ namespace UpgradePlatformer
 
 
 #if DEBUG
-        private UIText Stats;
         double frameRate = 0.0;
         int frameCounter;
 #endif
@@ -231,16 +230,14 @@ namespace UpgradePlatformer
                 Centered = true
             };
 
-            UIText HpText = new UIText(_font, new Rectangle(0, 0, 0, 0), 2, Color.White)
+            UIText HpText = new UIText(_font, new Rectangle(0, 0, 0, 0), 2, Color.Gray)
             {
                 Text = "[          ]",
                 Centered = false,
                 update = new UITextUpdate(() =>
                 {
                     string result = "";
-#if DEBUG
-                    result += frameRate.ToString("F2");
-#endif
+                    string end = "";
                     result += "[";
                     if (EntityManager.Instance.GetPlayerHp() == -1) return "";
                     int cap = 0;
@@ -252,7 +249,10 @@ namespace UpgradePlatformer
                             else result += " ";
                             if (cap++ > 10) break;
                         }
-                        return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}";
+#if DEBUG
+                        end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count();
+#endif
+                        return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}\n{end}";
                     }
                     for (float i = 0; i < EntityManager.Instance.MaxPlayerHP(); i += EntityManager.Instance.MaxPlayerHP() / 10)
                     {
@@ -261,7 +261,10 @@ namespace UpgradePlatformer
                         if (cap++ > 10) break;
                     }
 
-                    return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}";
+#if DEBUG
+                    end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count();
+#endif
+                    return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}\n{end}";
                 })
             };
 #endregion
@@ -410,11 +413,6 @@ namespace UpgradePlatformer
             EventManager.Instance.AddListener(Action_Load, "LOAD");
 #endregion
             UIManager.Instance.focused = playButton;
-            
-#if DEBUG
-            Stats = new UIText(_font, new Rectangle(0, 40, 0, 0), 1, Color.Gray);
-            UIManager.Instance.Add(Stats);
-#endif
             _lightTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             _mainTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             EventManager.Instance.Push(new Event("LOAD", 0, new Point(0, 0)));
@@ -461,8 +459,6 @@ namespace UpgradePlatformer
             }
             frameCounter = 0;
             frameCounter = 0;
-            Stats.Text = frameRate.ToString("F2") + "\nWRLD:" + LevelManager.Instance.ActiveWorldNum() + "\nLVL:" + LevelManager.Instance.ActiveLevelNum() + "\nHP:" + EntityManager.Instance.GetPlayerHp()
-            + "\nMoney:" + EntityManager.Instance.PlayerMoney;
 #endif
             base.Update(gameTime);
         }

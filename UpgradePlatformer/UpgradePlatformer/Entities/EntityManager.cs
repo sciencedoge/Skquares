@@ -37,6 +37,24 @@ namespace UpgradePlatformer.Entities
         //methods
 
         /// <summary>
+        /// gets total number of entities
+        /// </summary>
+        /// <returns></returns>
+        public int Count()
+        {
+
+            int result = 0;
+
+            foreach (EntityObject obj in objects)
+            {
+                if (obj == null || !obj.IsActive) continue;
+                result++;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// gets all the enemys in the manager
         /// </summary>
         /// <returns>the enemys</returns>
@@ -114,11 +132,11 @@ namespace UpgradePlatformer.Entities
         public void Update(GameTime gameTime)
         {
             currentLevel = LevelManager.Instance.ActiveLevel();
-            // IMPORTANT: Subframes are calculated here
 
             pathfind.Update();
             pathfind.UpdateCosts();
             pathfind.MoveToPlayer();
+            // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++)
             {
                 foreach (EntityObject obj in objects)
