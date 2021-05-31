@@ -16,6 +16,7 @@ namespace UpgradePlatformer.Levels
         int TileWidth, TileHeight;
         Tile[,] TileMap;
         public bool Light;
+        private UpgradeType upgrade;
 
         public List<LevelCollectedEntity> Collected;
         public Tile[,] Tiles
@@ -60,9 +61,11 @@ namespace UpgradePlatformer.Levels
         /// creates a level from a file
         /// </summary>
         /// <param name="name">the name of the file</param>
-        public Level(String name, bool Light)
+        public Level(String name, bool Light, UpgradeType ug)
         {
             Collected = new List<LevelCollectedEntity>();
+            upgrade = ug;
+
             Load(name, Light);
         }
 
@@ -139,7 +142,7 @@ namespace UpgradePlatformer.Levels
                     }
                     if (q) continue;
                     EntityObject o = null;
-                    if (t.Kind == 3 && UpgradeManager.Instance.CanBeLearned().Count != 0) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location.X, t.Position.Y - 15, 15, 15), UpgradeManager.Instance.CanBeLearned()[0], t);
+                    if (t.Kind == 3 && UpgradeManager.Instance.CanBeLearned(upgrade).Count != 0) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location.X, t.Position.Y - 15, 15, 15), UpgradeManager.Instance.CanBeLearned()[0], t);
 #if DEBUG
                     else if (t.Kind == 2 && player) o = (EntityObject)new Player(30, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #else
