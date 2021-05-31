@@ -475,6 +475,11 @@ namespace UpgradePlatformer
 #endif
             GraphicsDevice.SetRenderTarget(_lightTarget);
             GraphicsDevice.Clear(Color.White);
+            if (Sprite.Dim)
+            {
+                GraphicsDevice.Clear(Color.Gray);
+            }
+            Sprite.Light = true;
             if (LevelManager.Instance.Light) {
                 GraphicsDevice.Clear(Color.Black);
 
@@ -484,11 +489,9 @@ namespace UpgradePlatformer
 
                 _spriteBatch.End();
             }
-
+            Sprite.Light = false;
             GraphicsDevice.SetRenderTarget(_mainTarget);
             GraphicsDevice.Clear(Color.LightBlue);
-            if (Sprite.Dim)
-                GraphicsDevice.Clear(Color.Blue);
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 

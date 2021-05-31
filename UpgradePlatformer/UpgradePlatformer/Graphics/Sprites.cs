@@ -9,7 +9,7 @@ namespace UpgradePlatformer.Graphics
     public class Sprite
     {
         public static List<Effect> Shaders;
-        public static bool Dim;
+        public static bool Dim, Light;
         public static Texture2D texture;
         public static GraphicsDeviceManager graphics;
         public SpriteEffects effects = SpriteEffects.None;
@@ -63,7 +63,7 @@ namespace UpgradePlatformer.Graphics
         public void Draw(SpriteBatch spriteBatch, Point renderPosition, float rotation, Vector2 Size)
         {
             Color c = TintColor;
-            if (Dim)
+            if (Dim && Light)
             {
                 c.R /= 2;
                 c.G /= 2;
