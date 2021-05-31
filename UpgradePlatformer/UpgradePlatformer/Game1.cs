@@ -321,6 +321,7 @@ namespace UpgradePlatformer
             EventAction Action_World_Show = new EventAction((Event e) =>
             {
                 LevelManager.Instance.SetWorld((int)e.Data);
+                EntityManager.Instance.Player().weapon.Clean();
                 EventManager.Instance.Push(new Event("SAVE", 0, new Point(0, 0)));
                 return true;
             });
@@ -360,6 +361,7 @@ namespace UpgradePlatformer
             EventAction Action_Level_Show = new EventAction((Event e) =>
             {
                 LevelManager.Instance.SetLevel((int)e.Data);
+                EntityManager.Instance.Player().weapon.Clean();
                 return true;
             });
             EventManager.Instance.AddListener(Action_Level_Show, "LEVEL_SHOW");

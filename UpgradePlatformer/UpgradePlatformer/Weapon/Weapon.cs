@@ -173,5 +173,13 @@ namespace UpgradePlatformer.Weapon
                 animation.SetFlag(1);
             }
         }
+
+        /// <summary>
+        /// kills all bullets
+        /// </summary>
+        public void Clean()
+        {
+            bullets = new List<Bullet>();
+        }
     }
 }

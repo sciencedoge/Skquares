@@ -9,7 +9,6 @@ using UpgradePlatformer.Levels;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Music;
 using UpgradePlatformer.Upgrade_Stuff;
-using UpgradePlatformer.Weapon;
 
 namespace UpgradePlatformer.Entities
 {
@@ -27,7 +26,7 @@ namespace UpgradePlatformer.Entities
         private Vector2 Joystick;
         private bool ducking;
 
-        private Weapon.Weapon weapon;
+        public Weapon.Weapon weapon;
         private static int MaxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.EXTRA_JUMP) + 1;
 
         private bool landed;
