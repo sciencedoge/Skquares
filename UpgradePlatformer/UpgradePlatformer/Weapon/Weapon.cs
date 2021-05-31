@@ -172,13 +172,6 @@ namespace UpgradePlatformer.Weapon
                 Click = true;
                 animation.SetFlag(1);
             }
-            //Event uev = EventManager.Instance.Pop("MOUSE_UP");
-            //    b = ButtonState.Pressed;
-            //    if (!SingleMousePress())
-            //    {
-            //        bullets.Add(new Bullet(path, Position));
-            //    }                    
-            //}
         }
     }
 }
