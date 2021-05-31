@@ -47,7 +47,7 @@ namespace UpgradePlatformer.Levels
                 Kind = spawner - 1000;
                 return;
             }
-            TileCenter = new Vector2(0);
+            TileCenter = new Vector2(0, 0);
             if (Kind == 9)
             {
                 Sprite = new Sprite(TILE_EMPTY, TileCenter, COLORS[kind - 1]);

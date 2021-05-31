@@ -427,6 +427,7 @@ namespace UpgradePlatformer
             _mainTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             EventManager.Instance.Push(new Event("LOAD", 0, new Point(0, 0)));
         }
+        Texture2D _rectangle;
         protected override void LoadContent()
         {
             Save = new IsolatedStorageSaveManager("UpgradePlatformer", "options.dat");
@@ -438,6 +439,10 @@ namespace UpgradePlatformer
             _font = Content.Load<SpriteFont>("Fonts/Poland");
             Sprite.Shaders = new List<Effect>();
             Sprite.Shaders.Add(Content.Load<Effect>("Shaders/ShaderLava"));
+            //Filled
+
+            _rectangle = new Texture2D(GraphicsDevice, 1, 1);
+            _rectangle.SetData(new Color[] { Color.Black });
         }
 
         protected override void Update(GameTime gameTime)
@@ -521,6 +526,14 @@ namespace UpgradePlatformer
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, Sprite.Shaders[0], null);
             
             _spriteBatch.Draw(_mainTarget, Vector2.Zero, Color.White);
+
+            Rectangle Bounds = Sprite.GetRect();
+            Bounds.Location += new Point(0, 40);
+
+            _spriteBatch.Draw(_rectangle, new Rectangle(0, 0, Bounds.Left, _graphics.PreferredBackBufferHeight), Color.Black);
+            _spriteBatch.Draw(_rectangle, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, Bounds.Top), Color.Black);
+            _spriteBatch.Draw(_rectangle, new Rectangle(Bounds.Right, 0, _graphics.PreferredBackBufferWidth - Bounds.Right, _graphics.PreferredBackBufferHeight), Color.Black);
+            _spriteBatch.Draw(_rectangle, new Rectangle(0, Bounds.Bottom, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight - Bounds.Bottom), Color.Black);
 
             _spriteBatch.End();
             

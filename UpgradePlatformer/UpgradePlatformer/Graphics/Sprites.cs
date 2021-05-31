@@ -64,8 +64,8 @@ namespace UpgradePlatformer.Graphics
         {
             renderPosition.X = (int)(GetScale() * renderPosition.X);
             renderPosition.Y = (int)(GetScale() * renderPosition.Y);
-            Size.X = (int)(GetScale() * (Size.X + 1));
-            Size.Y = (int)(GetScale() * (Size.Y + 1));
+            Size.X = (int)(GetScale() * (Size.X)) + 1;
+            Size.Y = (int)(GetScale() * (Size.Y)) + 1;
             Color c = TintColor;
             if (Dim && Light)
             {
@@ -85,7 +85,7 @@ namespace UpgradePlatformer.Graphics
         /// <returns></returns>
         public static Point GetOrigin()
         {
-            Point Size = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            Point Size = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight - 40);
             if (Size.X > Size.Y)
             {
                 return new Point((Size.X - Size.Y) / 2, 0);
@@ -103,15 +103,7 @@ namespace UpgradePlatformer.Graphics
         public static Rectangle GetRect()
         {
             Rectangle result = new Rectangle();
-            Point Size = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
-            if (Size.X > Size.Y)
-            {
-                //result.Location = new Point((Size.X - Size.Y) / 2, 0);
-            }
-            else
-            {
-                //result.Location = new Point(0, (Size.Y - Size.X) / 2);
-            }
+            result.Location = GetOrigin();
             result.Size = new Point((int)MathF.Min(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight - 40));
             return result;
         }

@@ -157,9 +157,9 @@ namespace UpgradePlatformer.Weapon
             if (mev != null)
             {
                 MousePos = mev.MousePosition;
-                MousePos.X = (int)(MousePos.X / Sprite.GetScale());
-                MousePos.Y = (int)(MousePos.Y / Sprite.GetScale());
-                MousePos += Sprite.GetOrigin();
+                //MousePos.X = (int)(MousePos.X / Sprite.GetScale());
+                //MousePos.Y = (int)(MousePos.Y / Sprite.GetScale());
+                //MousePos += Sprite.GetOrigin();
             }
             Event rjev = EventManager.Instance.Pop("GAME_PAD_JOYSTICK");
             if (rjev != null)
