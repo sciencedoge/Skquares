@@ -23,6 +23,9 @@ namespace UpgradePlatformer.Levels
             get { return TileMap; }
         }
 
+        /// this is important dont change
+        const int DEF_SIZE = 630;
+
         /// <summary>
         /// Loads a level into the level var
         /// </summary>
@@ -37,7 +40,7 @@ namespace UpgradePlatformer.Levels
             TileWidth = reader.ReadInt32();
             TileHeight = reader.ReadInt32();
 
-            Vector2 tileSize = new Vector2(Sprite.graphics.PreferredBackBufferWidth / TileWidth, (Sprite.graphics.PreferredBackBufferHeight - 40) / TileHeight);
+            Vector2 tileSize = new Vector2(DEF_SIZE / TileWidth, DEF_SIZE / TileHeight);
 
             TileMap = new Tile[TileWidth, TileHeight];
 
@@ -69,9 +72,10 @@ namespace UpgradePlatformer.Levels
         /// <param name="spriteBatch">the SpriteBatch Object</param>
         public void Draw(SpriteBatch spriteBatch)
         {
+            Vector2 tileSize = new Vector2(DEF_SIZE / TileWidth, DEF_SIZE / TileHeight);
             for (int x = 0; x < TileHeight; x++)
                 for (int y = 0; y < TileWidth; y++)
-                    TileMap[y, x].Draw(spriteBatch, new Vector2((x) * TileMap[0, 0].TileSize.X, (y) * TileMap[0, 0].TileSize.Y) + new Vector2());
+                    TileMap[y, x].Draw(spriteBatch, new Vector2(x,y) * tileSize);
         }
 
         /// <summary>
@@ -80,9 +84,10 @@ namespace UpgradePlatformer.Levels
         /// <param name="spriteBatch">the SpriteBatch object</param>
         public void DrawLightMap(SpriteBatch spriteBatch)
         {
+            Vector2 tileSize = new Vector2(DEF_SIZE / TileWidth, DEF_SIZE / TileHeight);
             for (int x = 0; x < TileHeight; x++)
                 for (int y = 0; y < TileWidth; y++)
-                    TileMap[y, x].DrawLightMap(spriteBatch, new Vector2((x) * TileMap[0, 0].TileSize.X, (y) * TileMap[0, 0].TileSize.Y) + new Vector2());
+                    TileMap[y, x].DrawLightMap(spriteBatch, new Vector2(x, y) * tileSize);
         }
         /// <summary>
         /// Gets Spawners for the level

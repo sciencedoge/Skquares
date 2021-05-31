@@ -36,7 +36,6 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Music\" />
     <Folder Include="Content\Shaders\" />
   </ItemGroup>
 </Project>

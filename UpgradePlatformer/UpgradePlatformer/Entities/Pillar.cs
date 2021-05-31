@@ -74,7 +74,8 @@ namespace UpgradePlatformer.Entities
                     if(ValidIntersection() == true)
                     {
                         //the coin is no longer active
-                        return this.upgrade.Cost;
+                        LevelManager.Instance.Collect(tile);
+                        return -this.upgrade.Cost;
                     }                 
                 }
                 else

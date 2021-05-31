@@ -19,12 +19,12 @@ namespace UpgradePlatformer.Levels
         private static Rectangle TILE_SPRITE_SPIKE = new Rectangle(32, 13, 16, 16);
         private static Rectangle TILE_SPRITE_LAVA_TOP = new Rectangle(0, 45, 16, 16);
         private static Rectangle TILE_SPRITE_LAVA_BOT = new Rectangle(0, 61, 16, 16);
-        private static Color[] COLORS = { Color.Green, Color.Brown, Color.Beige, Color.Gray, Color.White, Color.White, Color.White, Color.Orange, Color.White };
+        private static Rectangle TILE_SPRITE_PLATFORM = new Rectangle(32, 61, 16, 16);
+        private static Color[] COLORS = { Color.Green, Color.Green, Color.Beige, Color.Gray, Color.White, Color.White, Color.White, Color.Orange, Color.White };
         private Sprite Sprite;
         private Vector2 TileCenter;
         public Vector2 TileSize;
         public int Kind;
-        public float Rotation;
         public int CollisionKind;
         public Rectangle Position;
         public bool Spawner;
@@ -47,7 +47,7 @@ namespace UpgradePlatformer.Levels
                 Kind = spawner - 1000;
                 return;
             }
-            TileCenter = new Vector2(TileSize.X / 2, TileSize.Y / 2);
+            TileCenter = new Vector2(0, 0);
             if (Kind == 9)
             {
                 Sprite = new Sprite(TILE_EMPTY, TileCenter, COLORS[kind - 1]);
@@ -57,6 +57,10 @@ namespace UpgradePlatformer.Levels
                         Sprite = new Sprite(TILE_SPRITE_CLOUD_BOT, TileCenter, COLORS[6]);
                         Kind = 10;
                     }
+            }
+            else if (Kind == 1)
+            {
+                Sprite = new Sprite(TILE_SPRITE_PLATFORM, TileCenter, COLORS[3]);
             }
             else if (Kind == 8)
             {
@@ -74,7 +78,6 @@ namespace UpgradePlatformer.Levels
                 Sprite = new Sprite(TILE_SPRITE_GOAL, TileCenter, COLORS[kind - 1]);
             else
                 Sprite = new Sprite(TILE_SPRITE, TileCenter, COLORS[kind - 1]);
-            Rotation = (MathF.PI * 0.5f) * rotation;
             CollisionKind = collision;
         }
 
@@ -90,7 +93,7 @@ namespace UpgradePlatformer.Levels
             if (Kind == 9 || Spawner)
                 return;
             UpdatePos(position);
-            Sprite.Draw(spriteBatch, Position.Location, Rotation, Position.Size.ToVector2());
+            Sprite.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
         }
 
         /// <summary>
@@ -104,7 +107,7 @@ namespace UpgradePlatformer.Levels
                 return;
             UpdatePos(position);
             Sprite s = new Sprite(TILE_EMPTY, TileCenter, Color.White);
-            s.Draw(spriteBatch, Position.Location - new Point((int)TileSize.X, (int)TileSize.Y), Rotation, Position.Size.ToVector2() * 6);
+            s.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2() * 6);
         }
 
         /// <summary>
@@ -113,7 +116,7 @@ namespace UpgradePlatformer.Levels
         /// <param name="position">the position</param>
         public void UpdatePos(Vector2 position)
         {
-            Position = new Rectangle(position.ToPoint() + TileSize.ToPoint() - TileCenter.ToPoint(), TileSize.ToPoint());
+            Position = new Rectangle(position.ToPoint(), TileSize.ToPoint());
         }
     }
 }

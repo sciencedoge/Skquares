@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using UpgradePlatformer.Input;
+using UpgradePlatformer.Entities;
 
 namespace UpgradePlatformer.Weapon
 {
@@ -29,9 +30,6 @@ namespace UpgradePlatformer.Weapon
 
         private Point MousePos; //using this for now (not very familiar with current input system)
         private bool Click;
-
-        private ButtonState b;
-        private ButtonState prevB;
 
         //Properties
 
@@ -145,7 +143,8 @@ namespace UpgradePlatformer.Weapon
             if (Click)
             {
                 Click = false;
-                bullets.Add(new Bullet(path, Position + new Vector2(7)));      
+                bullets.Add(new Bullet(path, Position + new Vector2(7)));
+                animation.SetFlag(1);
             }
         }
 
@@ -163,21 +162,27 @@ namespace UpgradePlatformer.Weapon
             if (rjev != null)
             {
                 if (Vector2.Distance(rjev.MousePosition.ToVector2(), new Vector2()) > 2)
-                    MousePos = rjev.MousePosition + Position.ToPoint();
+                {
+                    rjev.MousePosition.Y *= -1;
+                    MousePos = rjev.MousePosition * new Point(10) + EntityManager.Instance.Player().Position.ToPoint();
+                }
             }
             Event dev = EventManager.Instance.Pop("MOUSE_DOWN");
 
             if (dev != null && dev.Data == 0)
             {
+                EventManager.Instance.Push(dev);
                 Click = true;
+                animation.SetFlag(1);
             }
-            //Event uev = EventManager.Instance.Pop("MOUSE_UP");
-            //    b = ButtonState.Pressed;
-            //    if (!SingleMousePress())
-            //    {
-            //        bullets.Add(new Bullet(path, Position));
-            //    }                    
-            //}
+        }
+
+        /// <summary>
+        /// kills all bullets
+        /// </summary>
+        public void Clean()
+        {
+            bullets = new List<Bullet>();
         }
     }
 }

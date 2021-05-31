@@ -40,7 +40,10 @@ namespace UpgradePlatformer.Weapon
             spriteBounds = new Rectangle(20, 7, 5, 5);
             this.path = path;
             this.location = location;
-            this.speed = new Vector2(path.X / 60, path.Y / 60);
+
+            this.speed = path / Vector2.Distance(path, new Vector2(0, 0)) * 3;
+
+            //this.speed = new Vector2(path.X / 60, path.Y / 60);
 
             this.sprite = new Sprite(
                spriteBounds,
@@ -52,8 +55,6 @@ namespace UpgradePlatformer.Weapon
             this.hitbox = new Rectangle(location.ToPoint(), new Point(10, 10));
         }
 
-
-
         //Methods
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace UpgradePlatformer.Weapon
         {
             if (isActive)
             {
-                sprite.Draw(sb, location.ToPoint(), 0f);
+                sprite.Draw(sb, location.ToPoint(), 0f, new Vector2(10));
             }
         }
 
@@ -116,7 +117,6 @@ namespace UpgradePlatformer.Weapon
                 {
                     isActive = false;
                 }
-                    
             }            
         }
     }

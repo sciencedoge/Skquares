@@ -9,7 +9,6 @@ using UpgradePlatformer.Levels;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Music;
 using UpgradePlatformer.Upgrade_Stuff;
-using UpgradePlatformer.Weapon;
 
 namespace UpgradePlatformer.Entities
 {
@@ -27,7 +26,7 @@ namespace UpgradePlatformer.Entities
         private Vector2 Joystick;
         private bool ducking;
 
-        private Weapon.Weapon weapon;
+        public Weapon.Weapon weapon;
         private static int MaxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.EXTRA_JUMP) + 1;
 
         private bool landed;
@@ -219,23 +218,15 @@ namespace UpgradePlatformer.Entities
         {
             base.ApplyGravity();
 
-            if (position.Y > Sprite.graphics.PreferredBackBufferHeight - hitbox.Height + 9)
-            {
-                position.Y = Sprite.graphics.PreferredBackBufferHeight - hitbox.Height + 9;
-                velocity.Y = 0;
-            }
-
-            if (position.X > Sprite.graphics.PreferredBackBufferWidth) {
+            if (position.X > 630) {
                 EventManager.Instance.Push(new Event("LEVEL_SHOW", (uint)LevelManager.Instance.ActiveLevelNum() + 1, new Point()));
                 position.X = 0 + hitbox.Width;
             }
 
             if (position.X < 0) {
                 EventManager.Instance.Push(new Event("LEVEL_SHOW", (uint)LevelManager.Instance.ActiveLevelNum() - 1, new Point()));
-                position.X = Sprite.graphics.PreferredBackBufferWidth - hitbox.Width;
+                position.X = 630 - hitbox.Width;
             }
-
-            if (position.Y >= Sprite.graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 2;
         }
 
         /// <summary>

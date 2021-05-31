@@ -37,6 +37,24 @@ namespace UpgradePlatformer.Entities
         //methods
 
         /// <summary>
+        /// gets total number of entities
+        /// </summary>
+        /// <returns></returns>
+        public int Count()
+        {
+
+            int result = 0;
+
+            foreach (EntityObject obj in objects)
+            {
+                if (obj == null || !obj.IsActive) continue;
+                result++;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// gets all the enemys in the manager
         /// </summary>
         /// <returns>the enemys</returns>
@@ -114,11 +132,11 @@ namespace UpgradePlatformer.Entities
         public void Update(GameTime gameTime)
         {
             currentLevel = LevelManager.Instance.ActiveLevel();
-            // IMPORTANT: Subframes are calculated here
 
             pathfind.Update();
             pathfind.UpdateCosts();
             pathfind.MoveToPlayer();
+            // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++)
             {
                 foreach (EntityObject obj in objects)
@@ -298,7 +316,7 @@ namespace UpgradePlatformer.Entities
                             EventManager.Instance.Push(new Event("WORLD_SHOW", (uint)LevelManager.Instance.ActiveWorldNum() + 1, new Point(0)));
                         break;
                     case 104:
-                        if(Player().Y < t.Position.Y)
+                        if( Player().Y < t.Position.Y ) //&& !Player().Ducking) // this worked for allowing to go down platforms but it ruind controlls on a controller
                         {
                             //checks conditions to move the player up or down
                             if (intersection.Width > intersection.Height - 20)
@@ -319,10 +337,6 @@ namespace UpgradePlatformer.Entities
                                 obj.Velocity = new Vector2(obj.Velocity.X, 0);
                             }
                             obj.Y = temp.Y;
-                        }
-                        if (Player().Ducking)
-                        {
-                            Player().Y += 15;
                         }
                         break;
                 }

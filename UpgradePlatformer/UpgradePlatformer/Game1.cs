@@ -36,7 +36,6 @@ namespace UpgradePlatformer
 
 
 #if DEBUG
-        private UIText Stats;
         double frameRate = 0.0;
         int frameCounter;
 #endif
@@ -56,21 +55,15 @@ namespace UpgradePlatformer
         {
             base.Initialize();
             // setup resolution
-            _graphics.PreferredBackBufferHeight = 700;
-            _graphics.PreferredBackBufferWidth = 660;
+            _graphics.PreferredBackBufferWidth = 630;
+            _graphics.PreferredBackBufferHeight = 670;
+            Window.AllowUserResizing = true;
+            //_graphics.IsFullScreen = true;
+            //_graphics.HardwareModeSwitch = false;
             _graphics.ApplyChanges();
             
             Sprite.texture = _spriteSheetTexture;
             Sprite.graphics = _graphics;
-
-            UpgradeStructure.InitStructure();
-            UpgradeStructure.panel = new UIPanel(_font, new Rectangle(5, _graphics.PreferredBackBufferHeight - 95, _graphics.PreferredBackBufferWidth - 10, 90)) {
-                cond = new ShowCond(() => {
-                    return _stateMachine.currentState == 1;
-                })
-            };
-            //UpgradeStructure.panel.Show(0);
-            new LevelManager();
 
             // setup sound manager
             SoundManager.Instance.content = Content;
@@ -103,12 +96,25 @@ namespace UpgradePlatformer
 
             // start menu music
             SoundManager.Instance.PlayMusic("menu");
-#endregion
+            #endregion
 
-#region  UIELEMENTS
+            #region  UIELEMENTS
+            // define a const with the default screen dims only for ui stuff dont change
+            const int DEF_SIZE = 630;
+
             // create ui elements
+
+            UpgradeStructure.InitStructure();
+            UpgradeStructure.panel = new UIPanel(_font, new Rectangle(5, DEF_SIZE - 55, DEF_SIZE - 10, 90))
+            {
+                cond = new ShowCond(() => {
+                    return _stateMachine.currentState == 1;
+                })
+            };
+            //UpgradeStructure.panel.Show(0);
+            new LevelManager();
             int ButtonWidth = 200;
-            UIButton playButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40))
+            UIButton playButton = new UIButton(_font, new Rectangle((DEF_SIZE - ButtonWidth) / 2, 300, ButtonWidth, 40))
             {
                 onClick = new UIAction((i) =>
                 {
@@ -124,7 +130,7 @@ namespace UpgradePlatformer
             playButton.Text.Text = "Play";
             playButton.Disabled = !Save.Data.valid;
 
-            UIButton newButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40))
+            UIButton newButton = new UIButton(_font, new Rectangle((DEF_SIZE - ButtonWidth) / 2, 350, ButtonWidth, 40))
             {
                 onClick = new UIAction((i) =>
                 {
@@ -144,7 +150,7 @@ namespace UpgradePlatformer
             };
             newButton.Text.Text = "New Game";
 
-            UIButton closeButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 500, ButtonWidth, 40))
+            UIButton closeButton = new UIButton(_font, new Rectangle((DEF_SIZE - ButtonWidth) / 2, 500, ButtonWidth, 40))
             {
                 onClick = new UIAction((i) =>
                 {
@@ -153,7 +159,7 @@ namespace UpgradePlatformer
             };
             closeButton.Text.Text = "Quit";
 
-            UIButton menuButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40))
+            UIButton menuButton = new UIButton(_font, new Rectangle((DEF_SIZE - ButtonWidth) / 2, 350, ButtonWidth, 40))
             {
                 onClick = new UIAction((i) =>
                 {
@@ -164,7 +170,7 @@ namespace UpgradePlatformer
             };
             menuButton.Text.Text = "Menu";
 
-            UIButton continueButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40))
+            UIButton continueButton = new UIButton(_font, new Rectangle((DEF_SIZE - ButtonWidth) / 2, 300, ButtonWidth, 40))
             {
                 onClick = new UIAction((i) =>
                 {
@@ -173,7 +179,7 @@ namespace UpgradePlatformer
             };
             continueButton.Text.Text = "Continue";
 
-            UIButton OptionsButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 400, ButtonWidth, 40))
+            UIButton OptionsButton = new UIButton(_font, new Rectangle((DEF_SIZE - ButtonWidth) / 2, 400, ButtonWidth, 40))
             {
                 onClick = new UIAction((i) =>
                 {
@@ -182,7 +188,7 @@ namespace UpgradePlatformer
             };
             OptionsButton.Text.Text = "Options";
 
-            UIButton backButton = new UIButton(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 500, ButtonWidth, 40))
+            UIButton backButton = new UIButton(_font, new Rectangle((DEF_SIZE - ButtonWidth) / 2, 500, ButtonWidth, 40))
             {
                 onClick = new UIAction((i) =>
                 {
@@ -191,7 +197,7 @@ namespace UpgradePlatformer
             };
             backButton.Text.Text = "Back";
 
-            UIToggle muteToggle = new UIToggle(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 300, ButtonWidth, 40))
+            UIToggle muteToggle = new UIToggle(_font, new Rectangle((DEF_SIZE - ButtonWidth) / 2, 300, ButtonWidth, 40))
             {
                 onClick = new UIAction((i) =>
                 {
@@ -219,13 +225,13 @@ namespace UpgradePlatformer
             //});
             //fullscreenToggle.toggled = SoundManager.Instance.Muted;
 
-            UIText TitleText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.Black)
+            UIText TitleText = new UIText(_font, new Rectangle(0, 100, DEF_SIZE, 0), 2, Color.Black)
             {
                 Text = "platformergamething",
                 Centered = true
             };
 
-            UIText PauseText = new UIText(_font, new Rectangle(0, 100, _graphics.PreferredBackBufferWidth, 0), 2, Color.White)
+            UIText PauseText = new UIText(_font, new Rectangle(0, 100, DEF_SIZE, 0), 2, Color.White)
             {
                 Text = "paused",
                 Centered = true
@@ -238,9 +244,7 @@ namespace UpgradePlatformer
                 update = new UITextUpdate(() =>
                 {
                     string result = "";
-#if DEBUG
-                    result += frameRate.ToString("F2");
-#endif
+                    string end = "";
                     result += "[";
                     if (EntityManager.Instance.GetPlayerHp() == -1) return "";
                     int cap = 0;
@@ -252,7 +256,10 @@ namespace UpgradePlatformer
                             else result += " ";
                             if (cap++ > 10) break;
                         }
-                        return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}";
+#if DEBUG
+                        end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count();
+#endif
+                        return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}\n{end}";
                     }
                     for (float i = 0; i < EntityManager.Instance.MaxPlayerHP(); i += EntityManager.Instance.MaxPlayerHP() / 10)
                     {
@@ -261,14 +268,17 @@ namespace UpgradePlatformer
                         if (cap++ > 10) break;
                     }
 
-                    return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}";
+#if DEBUG
+                    end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count();
+#endif
+                    return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}\n{end}";
                 })
             };
 #endregion
 
 #region UILAYOUT
             // initialize uiGroups
-            Rectangle bounds = new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+            Rectangle bounds = new Rectangle(0, 0, DEF_SIZE, DEF_SIZE);
 
             mainMenu = new UIGroup(new List<UIElement>{ TitleText, playButton, newButton, closeButton, OptionsButton}, bounds);
             pauseMenu = new UIGroup(new List<UIElement> { PauseText, continueButton, menuButton, OptionsButton, closeButton}, bounds);
@@ -318,6 +328,8 @@ namespace UpgradePlatformer
             EventAction Action_World_Show = new EventAction((Event e) =>
             {
                 LevelManager.Instance.SetWorld((int)e.Data);
+                if (EntityManager.Instance.Player() != null)
+                    EntityManager.Instance.Player().weapon.Clean();
                 EventManager.Instance.Push(new Event("SAVE", 0, new Point(0, 0)));
                 return true;
             });
@@ -357,6 +369,7 @@ namespace UpgradePlatformer
             EventAction Action_Level_Show = new EventAction((Event e) =>
             {
                 LevelManager.Instance.SetLevel((int)e.Data);
+                EntityManager.Instance.Player().weapon.Clean();
                 return true;
             });
             EventManager.Instance.AddListener(Action_Level_Show, "LEVEL_SHOW");
@@ -410,15 +423,11 @@ namespace UpgradePlatformer
             EventManager.Instance.AddListener(Action_Load, "LOAD");
 #endregion
             UIManager.Instance.focused = playButton;
-            
-#if DEBUG
-            Stats = new UIText(_font, new Rectangle(0, 40, 0, 0), 1, Color.Gray);
-            UIManager.Instance.Add(Stats);
-#endif
             _lightTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             _mainTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             EventManager.Instance.Push(new Event("LOAD", 0, new Point(0, 0)));
         }
+        Texture2D _rectangle;
         protected override void LoadContent()
         {
             Save = new IsolatedStorageSaveManager("UpgradePlatformer", "options.dat");
@@ -430,10 +439,22 @@ namespace UpgradePlatformer
             _font = Content.Load<SpriteFont>("Fonts/Poland");
             Sprite.Shaders = new List<Effect>();
             Sprite.Shaders.Add(Content.Load<Effect>("Shaders/ShaderLava"));
+            //Filled
+
+            _rectangle = new Texture2D(GraphicsDevice, 1, 1);
+            _rectangle.SetData(new Color[] { Color.Black });
         }
 
         protected override void Update(GameTime gameTime)
         {
+            if (_graphics.PreferredBackBufferWidth != Window.ClientBounds.Width || _graphics.PreferredBackBufferHeight != Window.ClientBounds.Height)
+            {
+                _graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+                _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+                _lightTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+                _mainTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+                _graphics.ApplyChanges();
+            }
             joycooldown--;
             joycooldown = Math.Max(0, joycooldown);
             // update managers
@@ -461,8 +482,6 @@ namespace UpgradePlatformer
             }
             frameCounter = 0;
             frameCounter = 0;
-            Stats.Text = frameRate.ToString("F2") + "\nWRLD:" + LevelManager.Instance.ActiveWorldNum() + "\nLVL:" + LevelManager.Instance.ActiveLevelNum() + "\nHP:" + EntityManager.Instance.GetPlayerHp()
-            + "\nMoney:" + EntityManager.Instance.PlayerMoney;
 #endif
             base.Update(gameTime);
         }
@@ -475,7 +494,12 @@ namespace UpgradePlatformer
 #endif
             GraphicsDevice.SetRenderTarget(_lightTarget);
             GraphicsDevice.Clear(Color.White);
-            if (LevelManager.Instance.Light) {
+            if (Sprite.Dim)
+            {
+                GraphicsDevice.Clear(Color.Gray);
+            }
+            Sprite.Light = true;
+            if (LevelManager.Instance.Light && false) {
                 GraphicsDevice.Clear(Color.Black);
 
                 _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, null, null, null, null);
@@ -484,11 +508,9 @@ namespace UpgradePlatformer
 
                 _spriteBatch.End();
             }
-
+            Sprite.Light = false;
             GraphicsDevice.SetRenderTarget(_mainTarget);
             GraphicsDevice.Clear(Color.LightBlue);
-            if (Sprite.Dim)
-                GraphicsDevice.Clear(Color.Blue);
 
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 
@@ -504,6 +526,14 @@ namespace UpgradePlatformer
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, Sprite.Shaders[0], null);
             
             _spriteBatch.Draw(_mainTarget, Vector2.Zero, Color.White);
+
+            Rectangle Bounds = Sprite.GetRect();
+            Bounds.Location += new Point(0, (int)(40f * Sprite.GetScale()));
+
+            _spriteBatch.Draw(_rectangle, new Rectangle(0, 0, Bounds.Left, _graphics.PreferredBackBufferHeight), Color.Black);
+            _spriteBatch.Draw(_rectangle, new Rectangle(0, 0, _graphics.PreferredBackBufferWidth, Bounds.Top), Color.Black);
+            _spriteBatch.Draw(_rectangle, new Rectangle(Bounds.Right, 0, _graphics.PreferredBackBufferWidth - Bounds.Right, _graphics.PreferredBackBufferHeight), Color.Black);
+            _spriteBatch.Draw(_rectangle, new Rectangle(0, Bounds.Bottom, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight - Bounds.Bottom), Color.Black);
 
             _spriteBatch.End();
             
