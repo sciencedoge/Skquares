@@ -25,7 +25,6 @@ namespace UpgradePlatformer.Levels
         private Vector2 TileCenter;
         public Vector2 TileSize;
         public int Kind;
-        public float Rotation;
         public int CollisionKind;
         public Rectangle Position;
         public bool Spawner;
@@ -48,7 +47,7 @@ namespace UpgradePlatformer.Levels
                 Kind = spawner - 1000;
                 return;
             }
-            TileCenter = new Vector2(TileSize.X / 2, TileSize.Y / 2);
+            TileCenter = new Vector2(0);
             if (Kind == 9)
             {
                 Sprite = new Sprite(TILE_EMPTY, TileCenter, COLORS[kind - 1]);
@@ -79,7 +78,6 @@ namespace UpgradePlatformer.Levels
                 Sprite = new Sprite(TILE_SPRITE_GOAL, TileCenter, COLORS[kind - 1]);
             else
                 Sprite = new Sprite(TILE_SPRITE, TileCenter, COLORS[kind - 1]);
-            Rotation = (MathF.PI * 0.5f) * rotation;
             CollisionKind = collision;
         }
 
@@ -95,7 +93,7 @@ namespace UpgradePlatformer.Levels
             if (Kind == 9 || Spawner)
                 return;
             UpdatePos(position);
-            Sprite.Draw(spriteBatch, Position.Location, Rotation, Position.Size.ToVector2());
+            Sprite.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
         }
 
         /// <summary>
@@ -109,7 +107,7 @@ namespace UpgradePlatformer.Levels
                 return;
             UpdatePos(position);
             Sprite s = new Sprite(TILE_EMPTY, TileCenter, Color.White);
-            s.Draw(spriteBatch, Position.Location - new Point((int)TileSize.X, (int)TileSize.Y), Rotation, Position.Size.ToVector2() * 6);
+            s.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2() * 6);
         }
 
         /// <summary>
@@ -118,7 +116,7 @@ namespace UpgradePlatformer.Levels
         /// <param name="position">the position</param>
         public void UpdatePos(Vector2 position)
         {
-            Position = new Rectangle(position.ToPoint() + TileSize.ToPoint() - TileCenter.ToPoint(), TileSize.ToPoint());
+            Position = new Rectangle(position.ToPoint(), TileSize.ToPoint());
         }
     }
 }

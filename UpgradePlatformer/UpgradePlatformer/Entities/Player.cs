@@ -218,23 +218,15 @@ namespace UpgradePlatformer.Entities
         {
             base.ApplyGravity();
 
-            if (position.Y > Sprite.graphics.PreferredBackBufferHeight - hitbox.Height + 9)
-            {
-                position.Y = Sprite.graphics.PreferredBackBufferHeight - hitbox.Height + 9;
-                velocity.Y = 0;
-            }
-
-            if (position.X > Sprite.graphics.PreferredBackBufferWidth) {
+            if (position.X > 630) {
                 EventManager.Instance.Push(new Event("LEVEL_SHOW", (uint)LevelManager.Instance.ActiveLevelNum() + 1, new Point()));
                 position.X = 0 + hitbox.Width;
             }
 
             if (position.X < 0) {
                 EventManager.Instance.Push(new Event("LEVEL_SHOW", (uint)LevelManager.Instance.ActiveLevelNum() - 1, new Point()));
-                position.X = Sprite.graphics.PreferredBackBufferWidth - hitbox.Width;
+                position.X = 630 - hitbox.Width;
             }
-
-            if (position.Y >= Sprite.graphics.PreferredBackBufferHeight - hitbox.Height) jumpsLeft = 2;
         }
 
         /// <summary>

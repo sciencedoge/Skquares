@@ -74,6 +74,9 @@ namespace UpgradePlatformer.UI
         /// <returns>true if the click is used</returns>
         public bool ProcessClick(Point position, uint button)
         {
+            position -= Sprite.GetOrigin();
+            position.X = (int)(position.X / Sprite.GetScale());
+            position.Y = (int)(position.Y / Sprite.GetScale());
             if (button != 0) return false;
             foreach (UIElement e in UIElements)
             {
@@ -87,6 +90,9 @@ namespace UpgradePlatformer.UI
         }
         public void MouseMove(Point position)
         {
+            position -= Sprite.GetOrigin();
+            position.X = (int) (position.X / Sprite.GetScale());
+            position.Y = (int) (position.Y / Sprite.GetScale());
             foreach (UIElement e in UIElements)
             {
                 if (e.Bounds.Contains(position) && e.IsActive)
@@ -246,6 +252,13 @@ namespace UpgradePlatformer.UI
         public void Draw(SpriteBatch spriteBatch, Rectangle renderRect, float rotation)
         {
             Rectangle tmp;
+
+            renderRect.X = (int)(Sprite.GetScale() * renderRect.X);
+            renderRect.Y = (int)(Sprite.GetScale() * renderRect.Y);
+            renderRect.Location += Sprite.GetOrigin();
+            renderRect.Width = (int)(Sprite.GetScale() * renderRect.Width);
+            renderRect.Height = (int)(Sprite.GetScale() * renderRect.Height);
+
             renderRect.Width -= (renderRect.Width - renderSections[0, 0].Width - renderSections[2, 0].Width) % Center.Width;
             renderRect.Height -= (renderRect.Height - renderSections[0, 0].Height - renderSections[0, 2].Height) % Center.Height;
             // draw sections Excluding A C G and I (the corners)

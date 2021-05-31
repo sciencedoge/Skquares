@@ -28,7 +28,7 @@ namespace UpgradePlatformer.Graphics
             Sprite[,] AllSprites = new Sprite[20, 20];
             for (int i = 0; i < 20; i++)
                 for (int j = 0; j < 20; j++)
-                    AllSprites[j, i] = new Sprite(new Rectangle(16 * i, 13 + 16 * j, 16, 16), new Vector2(8, 8), Color.White);
+                    AllSprites[j, i] = new Sprite(new Rectangle(16 * i, 13 + 16 * j, 16, 16), new Vector2(0), Color.White);
             animations = new List<AnimationFSM>();
             AddPlayerFSM(AllSprites);
             AddEnemyFSM(AllSprites);

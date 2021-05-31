@@ -220,6 +220,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public virtual void ApplyGravity()
         {
+            // fixes different speeds on different window sizes
             position += velocity;
             velocity += gravity;
 

@@ -62,6 +62,10 @@ namespace UpgradePlatformer.Graphics
         /// <param name="Size">the size to render the sprite</param>
         public void Draw(SpriteBatch spriteBatch, Point renderPosition, float rotation, Vector2 Size)
         {
+            renderPosition.X = (int)(GetScale() * renderPosition.X);
+            renderPosition.Y = (int)(GetScale() * renderPosition.Y);
+            Size.X = (int)(GetScale() * (Size.X + 1));
+            Size.Y = (int)(GetScale() * (Size.Y + 1));
             Color c = TintColor;
             if (Dim && Light)
             {
@@ -70,9 +74,55 @@ namespace UpgradePlatformer.Graphics
                 c.B /= 2;
             }
             Rectangle renderRect = Position;
-            renderRect.Location = renderPosition + new Point(0, 40) + (Origin / 2).ToPoint();
+            renderRect.Location = renderPosition + new Point(0, 40) + (Origin / 2).ToPoint() + GetOrigin();
             renderRect.Size = Size.ToPoint();
             spriteBatch.Draw(texture, renderRect, Position, c, rotation, Origin, effects, 0f);
+        }
+
+        /// <summary>
+        /// gets the origin of the window render area
+        /// </summary>
+        /// <returns></returns>
+        public static Point GetOrigin()
+        {
+            Point Size = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            if (Size.X > Size.Y)
+            {
+                return new Point((Size.X - Size.Y) / 2, 0);
+            }
+            else
+            {
+                return new Point(0, (Size.Y - Size.X) / 2);
+            }
+        }
+
+        /// <summary>
+        /// returns a rect of the render positions
+        /// </summary>
+        /// <returns></returns>
+        public static Rectangle GetRect()
+        {
+            Rectangle result = new Rectangle();
+            Point Size = new Point(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            if (Size.X > Size.Y)
+            {
+                //result.Location = new Point((Size.X - Size.Y) / 2, 0);
+            }
+            else
+            {
+                //result.Location = new Point(0, (Size.Y - Size.X) / 2);
+            }
+            result.Size = new Point((int)MathF.Min(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight - 40));
+            return result;
+        }
+
+        /// <summary>
+        /// gets the scale of the window
+        /// </summary>
+        /// <returns>the size of one unit in the window</returns>
+        public static float GetScale()
+        {
+            return MathF.Min(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight - 40) / 630f;
         }
 
         /// <summary>
