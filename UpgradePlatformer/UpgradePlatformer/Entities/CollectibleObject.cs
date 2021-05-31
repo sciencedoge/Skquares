@@ -22,7 +22,6 @@ namespace UpgradePlatformer.Entities
         protected Rectangle SpriteBounds;
         protected int value;
         protected Graphics.Sprite sprite;
-        protected Rectangle hitbox;
         protected Point spriteSize;
 
         protected Tile tile;

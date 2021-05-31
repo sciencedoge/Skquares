@@ -41,8 +41,6 @@ namespace UpgradePlatformer.Entities
         //sprite info
         public AnimationFSM animation;
 
-        protected Rectangle hitbox;
-
         //properties
 
         /// <summary>

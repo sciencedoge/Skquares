@@ -505,7 +505,7 @@ namespace UpgradePlatformer
                 _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, null, null, null, null);
 
                 LevelManager.Instance.DrawLightMap(_spriteBatch);
-                EntityManager.Instance.Player().DrawLightMap(_spriteBatch);
+                EntityManager.Instance.DrawLightMap(_spriteBatch);
 
                 _spriteBatch.End();
             }
