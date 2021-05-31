@@ -13,8 +13,10 @@ namespace UpgradePlatformer.Upgrade_Stuff
     static class UpgradeStructure
     {
         public static UIPanel panel;
-        public static void InitStructure() {
+        public static void InitStructure()
+        {
             UpgradeManager.Instance.Add(1, UpgradeType.EXTRA_JUMP, 10);
+            UpgradeManager.Instance.Add(1, UpgradeType.EXTRA_JUMP, 0);
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 10);
             UpgradeManager.Instance.Add(1, UpgradeType.WEAPON, 20);
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 30);
