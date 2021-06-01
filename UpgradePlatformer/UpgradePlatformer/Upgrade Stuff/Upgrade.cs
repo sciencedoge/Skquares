@@ -14,6 +14,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
     /// <summary>
     /// Dictates which type this upgrade is.
     /// </summary>
+    [Serializable]
     public enum UpgradeType
     {
         NONE,
@@ -32,7 +33,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         private bool isLearned;
         private int cost;
 
-        private UpgradeType type;
+        public UpgradeType type;
 
         private Upgrade left;
         private Upgrade right;
