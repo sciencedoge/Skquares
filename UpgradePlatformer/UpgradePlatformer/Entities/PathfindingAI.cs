@@ -100,11 +100,12 @@ namespace UpgradePlatformer.Entities
                     if (relationships[i, 0].Y > 20
                         && player.Y < Enemies[i].Y)
                     {
-                        Enemies[i].JumpsLeft = 1;
 
                         if(random.Next(1, 21) == 20)
                         {
-                            while(Enemies[i].Velocity.Y > -4f)
+
+                            while (Enemies[i].Velocity.Y > -4f
+                                && Enemies[i].JumpsLeft > 0)
                             {
                                 AIJump(Enemies[i]);
                             }
@@ -131,7 +132,19 @@ namespace UpgradePlatformer.Entities
                     if (!Enemies[i].Colliding)
                     {
                         Enemies[i].X += goombaAINum;
-                    }                
+                    }
+
+                    if (random.Next(1, 21) == 20)
+                    {
+
+                        while (Enemies[i].Velocity.Y > -4f
+                            && Enemies[i].JumpsLeft > 0)
+                        {
+                            AIJump(Enemies[i]);
+                        }
+
+                        Enemies[i].JumpsLeft -= 1;
+                    }
                 }
             }
         }
