@@ -144,6 +144,7 @@ namespace UpgradePlatformer
                     foreach (World w in LevelManager.Instance.Worlds)
                         foreach (Level l in w.Levels)
                             l.Collected = new List<LevelCollectedEntity>();
+                    UpgradeStructure.InitStructure();
                     EntityManager.Instance.PlayerMoney = 0;
                     EventManager.Instance.Push(new Event("WORLD_SHOW", 1, new Point(0, 0)));
                     SoundManager.Instance.PlaySFX("button");
