@@ -101,6 +101,7 @@ namespace UpgradePlatformer.Entities
         {
             if (IsActive)
             {
+                damage = UpgradeManager.Instance.GetAmmnt(UpgradeType.WEAPON);
                 CheckForInput();
 
                 if (this.damage > 0 && weapon.IsActive == false)
@@ -288,7 +289,7 @@ namespace UpgradePlatformer.Entities
             }
             if (jev != null) {
                 EventManager.Instance.Push(jev);
-                Joystick = jev.MousePosition.ToVector2() / 5;
+                Joystick = jev.MousePosition.ToVector2() / 10;
             }
         }
 
