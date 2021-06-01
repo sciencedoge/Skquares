@@ -429,6 +429,7 @@ namespace UpgradePlatformer
                 SoundManager.Instance.Muted = Save.Data.muted;
                 EntityManager.Instance.PlayerMoney = Save.Data.money;
                 _graphics.IsFullScreen = Save.Data.fullscreen;
+                _graphics.ApplyChanges();
                 if (Save.Data.upgrades != null)
                     UpgradeManager.Instance.Root = Save.Data.upgrades;
                 return true;
