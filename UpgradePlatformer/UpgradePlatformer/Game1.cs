@@ -233,9 +233,14 @@ namespace UpgradePlatformer
             });
             fullscreenToggle.toggled = SoundManager.Instance.Muted;
 
-            UIText TitleText = new UIText(_font, new Rectangle(0, 100, DEF_SIZE, 0), 2, Color.Black)
+            float space = Sprite.GetScale() * 50;
+
+            UIPanel TitlePanel = new UIPanel(_font, new Rectangle((int)space, (int)space, DEF_SIZE - (int)(space * 2), (int)(space * 2)));
+            TitlePanel.show(-1);
+
+            UIText TitleText = new UIText(_font, new Rectangle(0, 100, DEF_SIZE, 0), 4, Color.White)
             {
-                Text = "platformergamething",
+                Text = "SKUARES",
                 Centered = true
             };
 
@@ -288,7 +293,7 @@ namespace UpgradePlatformer
             // initialize uiGroups
             Rectangle bounds = new Rectangle(0, 0, DEF_SIZE, DEF_SIZE);
 
-            mainMenu = new UIGroup(new List<UIElement>{ TitleText, playButton, newButton, closeButton, OptionsButton}, bounds);
+            mainMenu = new UIGroup(new List<UIElement>{ TitlePanel, TitleText, playButton, newButton, closeButton, OptionsButton}, bounds);
             pauseMenu = new UIGroup(new List<UIElement> { PauseText, continueButton, menuButton, OptionsButton, closeButton}, bounds);
             deathMenu = new UIGroup(new List<UIElement> { playButton, menuButton, closeButton}, bounds);
             options = new UIGroup(new List<UIElement> { backButton, muteToggle, fullscreenToggle }, bounds);
