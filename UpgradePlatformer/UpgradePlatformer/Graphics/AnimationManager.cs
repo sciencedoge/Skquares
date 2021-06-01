@@ -45,27 +45,42 @@ namespace UpgradePlatformer.Graphics
             Flag LeftSMove = new Flag(2, 3);
             Flag LeftMLookRight = new Flag(1, 2);
             Flag LeftMStop = new Flag(3, 1);
+            Flag LeftIMove = new Flag(2, 0);
+            Flag LeftIDone = new Flag(5, 3);
+            Flag LeftSIdle = new Flag(4, 5);
+            Flag LeftILookRight = new Flag(1, 5);
             Flag RightSLookLeft = new Flag(0, 1);
             Flag RightSMove = new Flag(2, 2);
             Flag RightMLookLeft = new Flag(0, 3);
             Flag RightMStop = new Flag(3, 0);
+            Flag RightIMove = new Flag(2, 0);
+            Flag RightIDone = new Flag(5, 2);
+            Flag RightSIdle = new Flag(4, 4);
+            Flag RightILookLeft = new Flag(0, 4);
 
             // states
-            StateMachineState LeftS = new StateMachineState(new List<Flag> { LeftSLookRight, LeftSMove });
+            StateMachineState LeftS = new StateMachineState(new List<Flag> { LeftSLookRight, LeftSMove, LeftSIdle });
             Animation AniLeftS = new Animation(new List<Sprite> { AllSprites[0, 1].Copy() }, 2);
             StateMachineState LeftM = new StateMachineState(new List<Flag> { LeftMLookRight, LeftMStop });
             Animation AniLeftM = new Animation(new List<Sprite> { AllSprites[0, 1].Copy(), AllSprites[0, 3].Copy() }, 2);
-            StateMachineState RightS = new StateMachineState(new List<Flag> { RightSLookLeft, RightSMove });
+            StateMachineState LeftI = new StateMachineState(new List<Flag> { LeftIMove, LeftMLookRight, LeftIDone });
+            Animation AniLeftI = new Animation(new List<Sprite> { AllSprites[0, 1].Copy(), AllSprites[4, 0].Copy(), AllSprites[4, 1].Copy() }, 30);
+            StateMachineState RightS = new StateMachineState(new List<Flag> { RightSLookLeft, RightSMove, RightSIdle });
             Animation AniRightS = new Animation(new List<Sprite> { AllSprites[0, 1].Copy() }, 2);
             AniRightS.sprites[0].effects = SpriteEffects.FlipHorizontally;
             StateMachineState RightM = new StateMachineState(new List<Flag> { RightMLookLeft, RightMStop });
             Animation AniRightM = new Animation(new List<Sprite> { AllSprites[0, 1].Copy(), AllSprites[0, 3].Copy() }, 2);
             AniRightM.sprites[0].effects = SpriteEffects.FlipHorizontally;
             AniRightM.sprites[1].effects = SpriteEffects.FlipHorizontally;
+            StateMachineState RightI = new StateMachineState(new List<Flag> { RightIMove, RightILookLeft, RightIDone});
+            Animation AniRightI = new Animation(new List<Sprite> { AllSprites[0, 1].Copy(), AllSprites[4, 0].Copy(), AllSprites[4, 1].Copy() }, 30);
+            AniRightI.sprites[0].effects = SpriteEffects.FlipHorizontally;
+            AniRightI.sprites[1].effects = SpriteEffects.FlipHorizontally;
+            AniRightI.sprites[2].effects = SpriteEffects.FlipHorizontally;
 
             // init
-            FiniteStateMachine playerFSM = new FiniteStateMachine(new List<StateMachineState> { RightS, LeftS, RightM, LeftM });
-            animations.Add(new AnimationFSM(playerFSM, new List<Animation> { AniRightS, AniLeftS, AniRightM, AniLeftM }));
+            FiniteStateMachine playerFSM = new FiniteStateMachine(new List<StateMachineState> { RightS, LeftS, RightM, LeftM, RightI, LeftI });
+            animations.Add(new AnimationFSM(playerFSM, new List<Animation> { AniRightS, AniLeftS, AniRightM, AniLeftM, AniRightI, AniLeftI }));
         }
 
         public void AddEnemyFSM(Sprite[,] AllSprites)

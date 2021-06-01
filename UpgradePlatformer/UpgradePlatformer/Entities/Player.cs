@@ -25,12 +25,10 @@ namespace UpgradePlatformer.Entities
         private bool keyUp, keyDown, keyLeft, keyRight;
         private Vector2 Joystick;
         private bool ducking;
-
         public Weapon.Weapon weapon;
         private static int MaxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.EXTRA_JUMP) + 1;
-
         private bool landed;
-
+        private int idleTimer;
         private int sameVelocityFrames;
 
         /// <summary>
@@ -119,6 +117,16 @@ namespace UpgradePlatformer.Entities
                 cooldown--;
                 cooldown = Math.Max(cooldown, 0);
 
+                if (Joystick.X == 0) {
+                    idleTimer++;
+                    if (idleTimer % 600 == 0) {
+                        animation.SetFlag(4);
+                    } else if (idleTimer % 600 == 90) {
+                        animation.SetFlag(5);
+                    }
+                } else {
+                    idleTimer = 0;
+                }
 
                 if (keyDown || Joystick.Y < -.5)
                 {
