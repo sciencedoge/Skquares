@@ -39,7 +39,7 @@ namespace UpgradePlatformer.FSM
                     if ((States[i].Conds[j]).Id == id)
                         (States[i].Conds[j]).Value = true;
             }
-            while (States[currentState].CheckConds()) currentState = States[currentState].CheckCondsNext();
+            if (States[currentState].CheckConds()) currentState = States[currentState].CheckCondsNext();
             for (int i = 0; i < States.Count; i++)
                 for (int j = 0; j < States[i].Conds.Count; j++)
                         (States[i].Conds[j]).Value = false;
