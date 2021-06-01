@@ -143,7 +143,7 @@ namespace UpgradePlatformer.Levels
                     if (q) continue;
                     EntityObject o = null;
                     if (t.SpawnerKind == 4) o = (EntityObject)new Torch(0, new Rectangle(t.Position.Location, new Point(15, 15)), t);
-                    else if (t.SpawnerKind == 3 && UpgradeManager.Instance.CanBeLearned(upgrade).Count != 0) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location.X, t.Position.Y - 15, 15, 15), UpgradeManager.Instance.CanBeLearned()[0], t);
+                    else if (t.SpawnerKind == 3 && UpgradeManager.Instance.CanBeLearned(upgrade).Count != 0) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location.X, t.Position.Y - 15, 15, 15), UpgradeManager.Instance.CanBeLearned(upgrade)[0], t);
 #if DEBUG
                     else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(30, 2, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #else
