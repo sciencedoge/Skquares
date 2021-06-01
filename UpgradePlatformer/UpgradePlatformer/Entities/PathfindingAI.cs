@@ -71,8 +71,9 @@ namespace UpgradePlatformer.Entities
                 {
                     Enemies[i].animation.SetFlag(2);
 
-                    if (Enemies[i].X + 1 == player.X
-                        || Enemies[i].X - 1 == player.X
+                    if ((int)Enemies[i].X + 1 == (int)player.X
+                        || (int)Enemies[i].X - 1 == (int)player.X
+                        || (int)Enemies[i].X == (int)player.X
                         && !Enemies[i].Colliding)
                     {
                         Enemies[i].animation.SetFlag(1);
