@@ -231,6 +231,7 @@ namespace UpgradePlatformer.Entities
         /// <param name="o">the object to check</param>
         public void Intersects(EntityObject o)
         {
+
             if (!new List<EntityKind> { EntityKind.PLAYER, EntityKind.ENEMY}.Contains(o.Kind))
                 return;
 
@@ -375,6 +376,7 @@ namespace UpgradePlatformer.Entities
                         }
                        
                     }
+
                     obj2.OnFloorCollide();
                 }
 
@@ -394,7 +396,9 @@ namespace UpgradePlatformer.Entities
                 //moves the player right
                 if (t.Position.Right - intersection.Right == 0)
                 {
-                    temp.X += intersection.Width;
+                    temp.X += intersection.Width + 1;
+                    temp.Y += 2;
+                    
                 }
                 //moves the player left
                 else
@@ -408,11 +412,8 @@ namespace UpgradePlatformer.Entities
                 {
                     e.Colliding = true;
                 }
-
-                obj2.Velocity = new Vector2(0, obj2.Velocity.Y);
-
-            }
-
+            }       
+         
             obj2.X = temp.X;
             obj2.Y = temp.Y;
         }

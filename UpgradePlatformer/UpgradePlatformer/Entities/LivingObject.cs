@@ -139,6 +139,14 @@ namespace UpgradePlatformer.Entities
             get { return jumpsLeft; }
             set { jumpsLeft = value; }
         }
+        
+        /// <summary>
+        /// Returns the x speed of the entity
+        /// </summary>
+        public float SpeedX
+        {
+            get { return speedX; }
+        }
 
         //const
 
