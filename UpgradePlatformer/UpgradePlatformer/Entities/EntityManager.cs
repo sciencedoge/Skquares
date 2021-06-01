@@ -271,7 +271,7 @@ namespace UpgradePlatformer.Entities
                             EventManager.Instance.Push(new Event("WORLD_SHOW", (uint)LevelManager.Instance.ActiveWorldNum() + 1, new Point(0)));
                         break;
                     case 104:
-                        if(obj is Enemy)
+                        if (obj is Enemy)
                         {
                             RegularCollision(intersection, temp, obj, t);
                         }
@@ -300,6 +300,10 @@ namespace UpgradePlatformer.Entities
                                 obj.Y = temp.Y;
                             }
                         }                       
+                        break;
+                    case 105:
+                        if (obj is Enemy)
+                            RegularCollision(intersection, temp, obj, t);
                         break;
                 }
             }
