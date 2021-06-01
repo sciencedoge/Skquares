@@ -108,6 +108,7 @@ namespace UpgradePlatformer.Entities
                                 && Enemies[i].JumpsLeft > 0)
                             {
                                 AIJump(Enemies[i]);
+
                             }
 
                             Enemies[i].JumpsLeft -= 1;
