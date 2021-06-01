@@ -21,7 +21,7 @@ namespace UpgradePlatformer.Entities
     {
 
         //Fields
-        private const int NORMAL_HITBOX_WIDTH = 25, NORMAL_HITBOX_HEIGHT = 25, DUCK_HITBOX_HEIGHT = 15, DUCK_HITBOX_WIDTH = 27;
+        private const int NORMAL_HITBOX_WIDTH = 26, NORMAL_HITBOX_HEIGHT = 26, DUCK_HITBOX_HEIGHT = 15, DUCK_HITBOX_WIDTH = 27;
         private bool keyUp, keyDown, keyLeft, keyRight;
         private Vector2 Joystick;
         private bool ducking;
@@ -39,6 +39,7 @@ namespace UpgradePlatformer.Entities
             get { return landed; }
             set { landed = value; }
         }
+
 
         /// <summary>
         /// returns whether or not the player is ducking
@@ -63,6 +64,7 @@ namespace UpgradePlatformer.Entities
                 this.Y - hitbox.Height));
 
             sameVelocityFrames = 0;
+
         }
 
         //Methods

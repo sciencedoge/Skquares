@@ -86,11 +86,11 @@ namespace UpgradePlatformer.Entities
                 this.Colliding = false;            
             }
 
-          //// locks enemy in room
+            //// locks enemy in room
             if (position.X > Sprite.graphics.PreferredBackBufferWidth - hitbox.Width)
-                position.X = Sprite.graphics.PreferredBackBufferWidth - hitbox.Width;
+                Colliding = true;
             else if (position.X < 0 + hitbox.Width)
-                position.X = 0 + hitbox.Width;
+                Colliding = true;
         }
         
         /// <summary>

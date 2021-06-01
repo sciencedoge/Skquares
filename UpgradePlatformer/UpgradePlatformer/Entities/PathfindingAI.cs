@@ -70,7 +70,15 @@ namespace UpgradePlatformer.Entities
                 if (relationships[i, 0].X < 150)
                 {
                     Enemies[i].animation.SetFlag(2);
-                    if (Enemies[i].X > player.X
+
+                    if ((int)Enemies[i].X + 1 == (int)player.X
+                        || (int)Enemies[i].X - 1 == (int)player.X
+                        || (int)Enemies[i].X == (int)player.X
+                        && !Enemies[i].Colliding)
+                    {
+                        Enemies[i].animation.SetFlag(1);
+                    }
+                    else if (Enemies[i].X > player.X
                         && !Enemies[i].Colliding)
                     {
                         Enemies[i].animation.SetFlag(0);
@@ -92,9 +100,18 @@ namespace UpgradePlatformer.Entities
                     if (relationships[i, 0].Y > 20
                         && player.Y < Enemies[i].Y)
                     {
+
                         if(random.Next(1, 21) == 20)
                         {
-                            AIJump(Enemies[i]);
+
+                            while (Enemies[i].Velocity.Y > -4f
+                                && Enemies[i].JumpsLeft > 0)
+                            {
+                                AIJump(Enemies[i]);
+
+                            }
+
+                            Enemies[i].JumpsLeft -= 1;
                         }                                           
                     }
                 }
@@ -116,7 +133,19 @@ namespace UpgradePlatformer.Entities
                     if (!Enemies[i].Colliding)
                     {
                         Enemies[i].X += goombaAINum;
-                    }                
+                    }
+
+                    if (random.Next(1, 21) == 20)
+                    {
+
+                        while (Enemies[i].Velocity.Y > -4f
+                            && Enemies[i].JumpsLeft > 0)
+                        {
+                            AIJump(Enemies[i]);
+                        }
+
+                        Enemies[i].JumpsLeft -= 1;
+                    }
                 }
             }
         }
@@ -131,10 +160,6 @@ namespace UpgradePlatformer.Entities
             if (e.JumpsLeft > 0 && e.Velocity.Y >= -4f)
             {
                 e.Velocity = new Vector2(e.Velocity.X, e.Velocity.Y + e.JumpVelocity.Y);
-            }
-            else if (!(e.Velocity.Y >= -4f))
-            {
-                e.JumpsLeft -= 1;
             }
         }
 
