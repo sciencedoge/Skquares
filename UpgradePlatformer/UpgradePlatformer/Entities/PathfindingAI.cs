@@ -70,7 +70,14 @@ namespace UpgradePlatformer.Entities
                 if (relationships[i, 0].X < 150)
                 {
                     Enemies[i].animation.SetFlag(2);
-                    if (Enemies[i].X > player.X
+
+                    if (Enemies[i].X + 1 == player.X
+                        || Enemies[i].X - 1 == player.X
+                        && !Enemies[i].Colliding)
+                    {
+                        Enemies[i].animation.SetFlag(1);
+                    }
+                    else if (Enemies[i].X > player.X
                         && !Enemies[i].Colliding)
                     {
                         Enemies[i].animation.SetFlag(0);
