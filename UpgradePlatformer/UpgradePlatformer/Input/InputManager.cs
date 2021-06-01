@@ -42,8 +42,8 @@ namespace UpgradePlatformer.Input
 
             if (thing++ % 3 == 0)
             {
-                EventManager.Instance.Push(new Event("GAME_PAD_JOYSTICK", 0, (padState.ThumbSticks.Left * 5).ToPoint()));
-                EventManager.Instance.Push(new Event("RGAME_PAD_JOYSTICK", 0, (padState.ThumbSticks.Right * 5).ToPoint()));
+                EventManager.Instance.Push(new Event("GAME_PAD_JOYSTICK", 0, (padState.ThumbSticks.Left * 10).ToPoint()));
+                EventManager.Instance.Push(new Event("RGAME_PAD_JOYSTICK", 0, (padState.ThumbSticks.Right * 10).ToPoint()));
             }
 
             if (prevPadState.Buttons.A != padState.Buttons.A)
