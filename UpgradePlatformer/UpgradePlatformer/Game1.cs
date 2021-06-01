@@ -429,6 +429,7 @@ namespace UpgradePlatformer
                 SoundManager.Instance.Muted = Save.Data.muted;
                 EntityManager.Instance.PlayerMoney = Save.Data.money;
                 _graphics.IsFullScreen = Save.Data.fullscreen;
+                _graphics.ApplyChanges();
                 if (Save.Data.upgrades != null)
                     UpgradeManager.Instance.Root = Save.Data.upgrades;
                 return true;
@@ -563,7 +564,7 @@ namespace UpgradePlatformer
             
             UIManager.Instance.Draw(gameTime, _spriteBatch);
 
-            if (!(IsMouseVisible =  EntityManager.Instance.Player() == null))
+            if (!(IsMouseVisible = _stateMachine.currentState != 1 || EntityManager.Instance.Player() == null))
                 mouseSprite.Draw(_spriteBatch, new Point(EntityManager.Instance.Player().weapon.MousePos.X - 2, EntityManager.Instance.Player().weapon.MousePos.Y - 40), 0);
 
             _spriteBatch.End();
