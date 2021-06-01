@@ -92,9 +92,16 @@ namespace UpgradePlatformer.Entities
                     if (relationships[i, 0].Y > 20
                         && player.Y < Enemies[i].Y)
                     {
+                        Enemies[i].JumpsLeft = 1;
+
                         if(random.Next(1, 21) == 20)
                         {
-                            AIJump(Enemies[i]);
+                            while(Enemies[i].Velocity.Y > -4f)
+                            {
+                                AIJump(Enemies[i]);
+                            }
+
+                            Enemies[i].JumpsLeft -= 1;
                         }                                           
                     }
                 }
@@ -131,10 +138,6 @@ namespace UpgradePlatformer.Entities
             if (e.JumpsLeft > 0 && e.Velocity.Y >= -4f)
             {
                 e.Velocity = new Vector2(e.Velocity.X, e.Velocity.Y + e.JumpVelocity.Y);
-            }
-            else if (!(e.Velocity.Y >= -4f))
-            {
-                e.JumpsLeft -= 1;
             }
         }
 
