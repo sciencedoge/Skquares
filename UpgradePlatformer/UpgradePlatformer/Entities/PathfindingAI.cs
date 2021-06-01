@@ -23,6 +23,8 @@ namespace UpgradePlatformer.Entities
         private float goombaAINum;
         private Vector2[,] relationships;
 
+        private Random random;
+
 
         //Constructor
 
@@ -36,6 +38,8 @@ namespace UpgradePlatformer.Entities
             speed = 3f;
             goombaAINum = speed;
             relationships = new Vector2[enemies.Count, 1];
+
+            random = new Random();
         }
 
         //Methods
@@ -88,10 +92,12 @@ namespace UpgradePlatformer.Entities
                     if (relationships[i, 0].Y > 20
                         && player.Y < Enemies[i].Y)
                     {
-                        AIJump(Enemies[i]);                       
+                        if(random.Next(1, 21) == 20)
+                        {
+                            AIJump(Enemies[i]);
+                        }                                           
                     }
                 }
-
                 else
                 {
                     Enemies[i].animation.SetFlag(3);
