@@ -57,7 +57,11 @@ namespace UpgradePlatformer.Levels
         public void Draw(SpriteBatch spriteBatch, bool background)
         {
             if (background)
-                spriteBatch.Draw(BackDrops[activeWorld], Sprite.GetRect(), Color.White);
+            {
+                Rectangle r = Sprite.GetRect();
+                r.Location += new Vector2(0, 40 * Sprite.GetScale()).ToPoint();
+                spriteBatch.Draw(BackDrops[activeWorld], r, Color.White);
+            }
             Worlds[activeWorld].Draw(spriteBatch, background);
         }
 
