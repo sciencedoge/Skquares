@@ -190,7 +190,7 @@ namespace UpgradePlatformer.Entities
         /// <returns></returns>
         public bool Raycast(Enemy enemy)
         {
-            raycastHitbox = new Rectangle((int)enemy.Position.X, (int)enemy.Position.Y, 25, 25);
+            raycastHitbox = new Rectangle((int)enemy.Position.X, (int)enemy.Position.Y, 15, 15);
             rayCastSpeed = (player.Position - enemy.Position) / 20;
 
             while (!raycastHitbox.Intersects(player.Hitbox))
