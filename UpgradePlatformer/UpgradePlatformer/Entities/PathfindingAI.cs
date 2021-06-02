@@ -176,20 +176,6 @@ namespace UpgradePlatformer.Entities
         }
 
         /// <summary>
-        /// processes enemy intersections
-        /// </summary>
-        public void EnemyIntersection()
-        {
-            foreach(Enemy e in Enemies)
-            {
-                foreach(Enemy e2 in Enemies)
-                {
-                    
-                }
-            }
-        }
-
-        /// <summary>
         /// updates the entitys
         /// </summary>
         public void Update() {
