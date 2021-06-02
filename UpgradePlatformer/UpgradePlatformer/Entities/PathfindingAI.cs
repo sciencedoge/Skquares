@@ -197,6 +197,11 @@ namespace UpgradePlatformer.Entities
             player = EntityManager.Instance.Player();
         }
 
+        /// <summary>
+        /// Performs a raycast calc on the enemy and player
+        /// </summary>
+        /// <param name="enemy"></param>
+        /// <returns></returns>
         public bool Raycast(Enemy enemy)
         {
             raycastHitbox = new Rectangle((int)enemy.Position.X, (int)enemy.Position.Y, 25, 25);
