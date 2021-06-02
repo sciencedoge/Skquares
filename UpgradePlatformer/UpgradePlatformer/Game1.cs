@@ -37,7 +37,7 @@ namespace UpgradePlatformer
         //Mouse cursor
         private Rectangle MOUSE_SPRITE_BOUNDS = new Rectangle(25, 7, 5, 5);
         private Sprite mouseSprite;
-
+        private int CleanupTimer;
 
 #if DEBUG
         double frameRate = 0.0;
@@ -510,9 +510,18 @@ namespace UpgradePlatformer
             frameCounter = 0;
             frameCounter = 0;
 #endif
+            if (CleanupTimer ++ % 300 == 0)
+            {
+                Cleanup(gameTime);
+            }
             base.Update(gameTime);
         }
 
+        protected void Cleanup(GameTime gameTime)
+        {
+            EntityManager.Instance.Cleanup(gameTime);
+            EventManager.Instance.Cleanup(gameTime);
+        }
 
         protected override void Draw(GameTime gameTime)
         {

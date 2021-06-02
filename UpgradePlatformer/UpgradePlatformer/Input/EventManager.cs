@@ -29,6 +29,11 @@ namespace UpgradePlatformer.Input
             Listeners = new List<EventListener>();
         }
 
+        public void Cleanup(GameTime gameTime)
+        {
+            Events.Clear();
+        }
+
         /// <summary>
         /// adds a listener to an event
         /// </summary>
