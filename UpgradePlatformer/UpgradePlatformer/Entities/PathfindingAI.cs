@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Graphics;
+using UpgradePlatformer.Levels;
 
 namespace UpgradePlatformer.Entities
 {
@@ -25,6 +26,9 @@ namespace UpgradePlatformer.Entities
 
         private Random random;
 
+        private Rectangle raycastHitbox;
+        private Vector2 rayCastSpeed;
+
 
         //Constructor
 
@@ -40,7 +44,9 @@ namespace UpgradePlatformer.Entities
             relationships = new Vector2[enemies.Count, 1];
 
             random = new Random();
+            
         }
+
 
         //Methods
 
@@ -51,11 +57,14 @@ namespace UpgradePlatformer.Entities
         {
             if (player == null)
                 return;
+
             for (int i = 0; i < Enemies.Count; i++)
             {
                 float distX = Math.Abs(Enemies[i].Position.X - player.Position.X);
                 float distY = Math.Abs(Enemies[i].Position.Y - player.Position.Y);
                 relationships[i, 0] = new Vector2(distX, distY);
+
+                rayCastSpeed = new Vector2(distX / 5, distY / 5);
             }
         }
 
@@ -101,16 +110,19 @@ namespace UpgradePlatformer.Entities
                         && player.Y < Enemies[i].Y)
                     {
 
-                        if(random.Next(1, 21) == 20)
+                        if(random.Next(1, 11) == 10)
                         {
 
-                            while (Enemies[i].Velocity.Y > -4f
-                                && Enemies[i].JumpsLeft > 0)
+                            if (Raycast(Enemies[i]))
                             {
-                                AIJump(Enemies[i]);
+                                while (Enemies[i].Velocity.Y > -4f
+                                && Enemies[i].JumpsLeft > 0)
+                                {
 
+                                    AIJump(Enemies[i]);
+                                }
                             }
-
+                                
                             Enemies[i].JumpsLeft -= 1;
                         }                                           
                     }
@@ -137,7 +149,7 @@ namespace UpgradePlatformer.Entities
 
                     if (random.Next(1, 21) == 20)
                     {
-
+                        
                         while (Enemies[i].Velocity.Y > -4f
                             && Enemies[i].JumpsLeft > 0)
                         {
@@ -164,25 +176,46 @@ namespace UpgradePlatformer.Entities
         }
 
         /// <summary>
-        /// processes enemy intersections
-        /// </summary>
-        public void EnemyIntersection()
-        {
-            foreach(Enemy e in Enemies)
-            {
-                foreach(Enemy e2 in Enemies)
-                {
-                    
-                }
-            }
-        }
-
-        /// <summary>
         /// updates the entitys
         /// </summary>
         public void Update() {
             Enemies = EntityManager.Instance.Enemies();
             player = EntityManager.Instance.Player();
+        }
+
+        /// <summary>
+        /// Performs a raycast calc on the enemy and player
+        /// </summary>
+        /// <param name="enemy">The enemy being examined</param>
+        /// <returns></returns>
+        public bool Raycast(Enemy enemy)
+        {
+            raycastHitbox = new Rectangle((int)enemy.Position.X, (int)enemy.Position.Y, 15, 15);
+            rayCastSpeed = (player.Position - enemy.Position) / 20;
+
+            while (!raycastHitbox.Intersects(player.Hitbox))
+            {
+                raycastHitbox.X += (int)rayCastSpeed.X;
+                raycastHitbox.Y += (int)rayCastSpeed.Y;
+
+                foreach(Tile t in LevelManager.Instance.ActiveLevel().Tiles)
+                {
+                    if(t.CollisionKind != 9)
+                    {
+                        if (raycastHitbox.Intersects(t.Position))
+                        {
+                            return false;
+                        }
+                        else if (raycastHitbox.X < 0 || raycastHitbox.X > Sprite.graphics.PreferredBackBufferWidth
+                            || raycastHitbox.Y < 0 || raycastHitbox.Y > Sprite.graphics.PreferredBackBufferHeight)
+                        {
+                            return false;
+                        }
+                    }                   
+                }              
+            }
+
+            return true;
         }
     }
 }
