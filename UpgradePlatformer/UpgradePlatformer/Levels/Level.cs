@@ -45,7 +45,7 @@ namespace UpgradePlatformer.Levels
 
             TileMap = new Tile[TileWidth, TileHeight];
 
-            Tile empty = new Tile(9, 0, 0, 9, new Vector2(1), null);
+            Tile empty = new Tile(34, 0, 0, 9, new Vector2(1), null);
 
             Tile[,] around = new Tile[3, 3];
 
