@@ -52,7 +52,7 @@ namespace UpgradePlatformer.Music
             clouds = content.Load <Song>("Music/clouds");
             cave = content.Load<Song>("Music/cave");
             gameOver = content.Load<Song>("Music/game over");
-            desert = content.Load<Song>("Music/desert");
+            //desert = content.Load<Song>("Music/desert");
         }
 
         /// <summary>
