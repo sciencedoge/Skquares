@@ -29,7 +29,7 @@ namespace UpgradePlatformer.Music
         private SoundEffect land;
         private SoundEffect coinGrab;
 
-        private Song fart;
+        private Song menu;
         private Song star;
         private Song amogus;
 
@@ -42,7 +42,7 @@ namespace UpgradePlatformer.Music
             jump = content.Load<SoundEffect>("Music/jump");
             land = content.Load<SoundEffect>("Music/jumpland");
             coinGrab = content.Load<SoundEffect>("Music/coin");
-            fart = content.Load<Song>("Music/fart");
+            menu = content.Load<Song>("Music/menu");
             star = content.Load<Song>("Music/allstar");
             amogus = content.Load<Song>("Music/AMOGUS");
         }
@@ -86,14 +86,15 @@ namespace UpgradePlatformer.Music
                     MediaPlayer.Pause();
                     break;
                 case "menu":
-                    MediaPlayer.Stop();
-                    MediaPlayer.Play(fart);
+                    MediaPlayer.Stop();                  
+                    MediaPlayer.Play(menu);
+                    MediaPlayer.Volume = 0.25f;
                     MediaPlayer.IsRepeating = true;
                     break;
                 case "game":
-                    MediaPlayer.Stop();
-                    MediaPlayer.Volume = 0.25f;
+                    MediaPlayer.Stop();                   
                     MediaPlayer.Play(star);
+                    MediaPlayer.Volume = 0.25f;
                     MediaPlayer.IsRepeating = true;
                     break;
                 case "gameover":
