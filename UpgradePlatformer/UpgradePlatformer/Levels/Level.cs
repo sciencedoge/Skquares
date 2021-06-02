@@ -47,12 +47,34 @@ namespace UpgradePlatformer.Levels
 
             Tile empty = new Tile(9, 0, 0, 9, new Vector2(1), null);
 
-            for (int y = 0; y < TileHeight; y++)
-                TileMap[0, y] = new Tile(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize, empty);
-            
-            for (int x = 1; x < TileWidth; x++)
+            Tile[,] around = new Tile[3, 3];
+
+            for (int x = 0; x < TileWidth; x++)
+            {
                 for (int y = 0; y < TileHeight; y++)
-                    TileMap[x, y] = new Tile(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize, TileMap[x - 1, y]);
+                {
+                    for (int i = -1; i < 2; i++)
+                        for (int j = -1; j < 2; j++)
+                            around[i + 1, j + 1] = empty;
+                    for (int i = Math.Max(-1, x); i < (x == TileWidth ? 1 : 2); i++)
+                        for (int j = Math.Max(-1, y); j < (y == TileHeight ? 1 : 2); j++)
+                            around[i + 1, j + 1] = TileMap[x + i, y + j];
+                    TileMap[x, y] = new Tile(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize, around);
+                }
+            }
+            for (int x = 0; x < TileWidth; x++)
+            {
+                for (int y = 0; y < TileHeight; y++)
+                {
+                    for (int i = -1; i < 2; i++)
+                        for (int j = -1; j < 2; j++)
+                            around[i + 1, j + 1] = empty;
+                    for (int i = (x == 0 ? 0 : -1); i < (x == (TileWidth - 1) ? 1 : 2); i++)
+                        for (int j = (y == 0 ? 0 : -1); j < (y == (TileHeight - 1) ? 1 : 2); j++)
+                            around[i + 1, j + 1] = TileMap[x + i, y + j];
+                    TileMap[x, y].Setup(around);
+                }
+            }
             reader.Close();
             stream.Close();
         }

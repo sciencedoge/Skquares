@@ -22,6 +22,7 @@ namespace UpgradePlatformer.Levels
         public static LevelManager Instance { get { return lazy.Value; } }
 
         public List<World> Worlds;
+        public List<Texture2D> BackDrops;
         int activeWorld;
         int _activeWorld;
         
@@ -55,6 +56,8 @@ namespace UpgradePlatformer.Levels
         /// <param name="spriteBatch">the SpriteBatch object</param>
         public void Draw(SpriteBatch spriteBatch, bool background)
         {
+            if (background)
+                spriteBatch.Draw(BackDrops[activeWorld], Sprite.GetRect(), Color.White);
             Worlds[activeWorld].Draw(spriteBatch, background);
         }
 

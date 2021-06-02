@@ -456,6 +456,12 @@ namespace UpgradePlatformer
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
+            LevelManager.Instance.BackDrops = new List<Texture2D> {
+                Content.Load<Texture2D>("Backdrops/Sky"),
+                Content.Load<Texture2D>("Backdrops/Sky"),
+                Content.Load<Texture2D>("Backdrops/Cave")
+            };
+            _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
             _font = Content.Load<SpriteFont>("Fonts/Poland");
             Sprite.Shaders = new List<Effect>();
             Sprite.Shaders.Add(Content.Load<Effect>("Shaders/ShaderLava"));
@@ -538,12 +544,10 @@ namespace UpgradePlatformer
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 
             LevelManager.Instance.Draw(_spriteBatch, true);
-
             
             _spriteBatch.End();
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 
-            //if (_stateMachine.currentState != 0 && _stateMachine.currentState != 4)
             EntityManager.Instance.Draw(gameTime, _spriteBatch);
             LevelManager.Instance.Draw(_spriteBatch, false);
 
