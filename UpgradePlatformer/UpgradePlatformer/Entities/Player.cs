@@ -30,6 +30,8 @@ namespace UpgradePlatformer.Entities
         private bool landed;
         private int idleTimer;
         private int sameVelocityFrames;
+        public bool Demo;
+        private int DemoCounter;
 
         /// <summary>
         /// Gets or sets whether the player is landed
@@ -39,7 +41,6 @@ namespace UpgradePlatformer.Entities
             get { return landed; }
             set { landed = value; }
         }
-
 
         /// <summary>
         /// returns whether or not the player is ducking
@@ -64,7 +65,6 @@ namespace UpgradePlatformer.Entities
                 this.Y - hitbox.Height));
 
             sameVelocityFrames = 0;
-
         }
 
         //Methods
@@ -101,7 +101,6 @@ namespace UpgradePlatformer.Entities
         {
             if (IsActive)
             {
-                damage = UpgradeManager.Instance.GetAmmnt(UpgradeType.WEAPON);
                 CheckForInput();
 
                 if (this.damage > 0 && weapon.IsActive == false)
@@ -161,8 +160,9 @@ namespace UpgradePlatformer.Entities
                         
                         this.landed = false;
                         if(jumpsLeft > 0)
-                        {                            
-                            SoundManager.Instance.PlaySFX("jump");
+                        {             
+                            if (!Demo)               
+                                SoundManager.Instance.PlaySFX("jump");
                         }                       
                         //check for ground collision
                         if (jumpsLeft > 0 && velocity.Y >= -4f)
@@ -267,6 +267,14 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public void CheckForInput()
         {
+            if (Demo) {
+                Joystick.X = 1;
+                DemoCounter ++;
+                if (DemoCounter % 600 <= 100) {
+                    keyUp = true;
+                }
+                return;
+            }
             InputManager.Instance.Update();
             Event dev = EventManager.Instance.Pop("KEY_DOWN");
             Event uev = EventManager.Instance.Pop("KEY_UP");
@@ -289,7 +297,7 @@ namespace UpgradePlatformer.Entities
             }
             if (jev != null) {
                 EventManager.Instance.Push(jev);
-                Joystick = jev.MousePosition.ToVector2() / 10;
+                Joystick = jev.MousePosition.ToVector2() / 5;
             }
         }
 

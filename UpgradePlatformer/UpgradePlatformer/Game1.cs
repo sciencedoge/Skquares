@@ -479,12 +479,13 @@ namespace UpgradePlatformer
             joycooldown = Math.Max(0, joycooldown);
             // update managers
             InputManager.Instance.Update();
-            if (_stateMachine.currentState == 1) 
+            if (_stateMachine.currentState <= 1)
                 EntityManager.Instance.Update(gameTime);
             UIManager.Instance.Update(gameTime);
             LevelManager.Instance.Update();
 
             // StateMachine related Updates
+            EntityManager.Instance.Player().Demo = _stateMachine.currentState == 0;
             mainMenu.IsActive  = _stateMachine.currentState == 0;
             topHud.IsActive    = _stateMachine.currentState == 1;
             pauseMenu.IsActive = _stateMachine.currentState == 2;
