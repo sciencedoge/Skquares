@@ -508,7 +508,6 @@ namespace UpgradePlatformer
                 frameRate = (double)frameCounter / gameTime.ElapsedGameTime.TotalSeconds;
             }
             frameCounter = 0;
-            frameCounter = 0;
 #endif
             if (CleanupTimer ++ % 300 == 0)
             {
