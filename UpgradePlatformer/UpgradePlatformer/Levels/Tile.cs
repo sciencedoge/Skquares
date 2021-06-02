@@ -49,7 +49,7 @@ namespace UpgradePlatformer.Levels
         public void Setup(Tile[,] around)
         {
 
-            Sprite = AllSprites[0, 0].Copy();
+            Sprite = AllSprites[0, 6].Copy();
             if (around == null)
             {
                 Sprite.TintColor = COLORS[Kind - 1];
@@ -65,6 +65,7 @@ namespace UpgradePlatformer.Levels
             if (around[0, 1].Kind != 9)
                 pos.Y += 2;
             if (Kind == 7) Sprite = AllSprites[0 + pos.Y, 7 + pos.X].Copy();
+            if (Kind == 8) Sprite = AllSprites[1 + pos.Y, 2].Copy();
             if (Kind == 4) Sprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
             if (Kind == 5) Sprite = AllSprites[0, 2].Copy();
             Sprite.TintColor = COLORS[Kind - 1];

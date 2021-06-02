@@ -60,20 +60,20 @@ namespace UpgradePlatformer.Graphics
 
             // states
             StateMachineState LeftS = new StateMachineState(new List<Flag> { LeftSLookRight, LeftSMove, LeftSIdle });
-            Animation AniLeftS = new Animation(new List<Sprite> { AllSprites[0, 1].Copy() }, 2);
+            Animation AniLeftS = new Animation(new List<Sprite> { AllSprites[1, 0].Copy() }, 2);
             StateMachineState LeftM = new StateMachineState(new List<Flag> { LeftMLookRight, LeftMStop });
-            Animation AniLeftM = new Animation(new List<Sprite> { AllSprites[0, 1].Copy(), AllSprites[0, 3].Copy() }, 2);
+            Animation AniLeftM = new Animation(new List<Sprite> { AllSprites[1, 0].Copy(), AllSprites[2, 0].Copy() }, 2);
             StateMachineState LeftI = new StateMachineState(new List<Flag> { LeftIMove, LeftMLookRight, LeftIDone });
-            Animation AniLeftI = new Animation(new List<Sprite> { AllSprites[0, 1].Copy(), AllSprites[4, 0].Copy(), AllSprites[4, 1].Copy() }, 30);
+            Animation AniLeftI = new Animation(new List<Sprite> { AllSprites[1, 0].Copy(), AllSprites[3, 0].Copy(), AllSprites[4, 0].Copy() }, 30);
             StateMachineState RightS = new StateMachineState(new List<Flag> { RightSLookLeft, RightSMove, RightSIdle });
-            Animation AniRightS = new Animation(new List<Sprite> { AllSprites[0, 1].Copy() }, 2);
+            Animation AniRightS = new Animation(new List<Sprite> { AllSprites[1, 0].Copy() }, 2);
             AniRightS.sprites[0].effects = SpriteEffects.FlipHorizontally;
             StateMachineState RightM = new StateMachineState(new List<Flag> { RightMLookLeft, RightMStop });
-            Animation AniRightM = new Animation(new List<Sprite> { AllSprites[0, 1].Copy(), AllSprites[0, 3].Copy() }, 2);
+            Animation AniRightM = new Animation(new List<Sprite> { AllSprites[1, 0].Copy(), AllSprites[2, 0].Copy() }, 2);
             AniRightM.sprites[0].effects = SpriteEffects.FlipHorizontally;
             AniRightM.sprites[1].effects = SpriteEffects.FlipHorizontally;
             StateMachineState RightI = new StateMachineState(new List<Flag> { RightIMove, RightILookLeft, RightIDone});
-            Animation AniRightI = new Animation(new List<Sprite> { AllSprites[0, 1].Copy(), AllSprites[4, 0].Copy(), AllSprites[4, 1].Copy() }, 30);
+            Animation AniRightI = new Animation(new List<Sprite> { AllSprites[1, 0].Copy(), AllSprites[3, 0].Copy(), AllSprites[4, 0].Copy() }, 30);
             AniRightI.sprites[0].effects = SpriteEffects.FlipHorizontally;
             AniRightI.sprites[1].effects = SpriteEffects.FlipHorizontally;
             AniRightI.sprites[2].effects = SpriteEffects.FlipHorizontally;
@@ -101,14 +101,14 @@ namespace UpgradePlatformer.Graphics
 
             // states
             StateMachineState LeftS = new StateMachineState(new List<Flag> { LeftSLock, LeftSRight });
-            Animation AniLeftS = new Animation(new List<Sprite> { AllSprites[1, 0].Copy() }, 2);
+            Animation AniLeftS = new Animation(new List<Sprite> { AllSprites[1, 1].Copy() }, 2);
             StateMachineState LeftL = new StateMachineState(new List<Flag> { LeftLLose, LeftLRight });
-            Animation AniLeftL = new Animation(new List<Sprite> { AllSprites[0, 4].Copy() }, 2);
+            Animation AniLeftL = new Animation(new List<Sprite> { AllSprites[2, 1].Copy() }, 2);
             StateMachineState RightS = new StateMachineState(new List<Flag> { RightSLeft, RightSLock });
-            Animation AniRightS = new Animation(new List<Sprite> { AllSprites[1, 0].Copy() }, 2);
+            Animation AniRightS = new Animation(new List<Sprite> { AllSprites[1, 1].Copy() }, 2);
             AniRightS.sprites[0].effects = SpriteEffects.FlipHorizontally;
             StateMachineState RightL = new StateMachineState(new List<Flag> { RightLLeft, RightLLose });
-            Animation AniRightL = new Animation(new List<Sprite> { AllSprites[0, 4].Copy() }, 2);
+            Animation AniRightL = new Animation(new List<Sprite> { AllSprites[2, 1].Copy() }, 2);
             AniRightL.sprites[0].effects = SpriteEffects.FlipHorizontally;
 
             // init
@@ -128,9 +128,9 @@ namespace UpgradePlatformer.Graphics
 
             // states
             StateMachineState Shoot = new StateMachineState(new List<Flag> { ShootLook });
-            Animation AniShoot = new Animation(new List<Sprite> { AllSprites[3, 1].Copy() }, 2);
+            Animation AniShoot = new Animation(new List<Sprite> { AllSprites[5, 0].Copy() }, 2);
             StateMachineState Look = new StateMachineState(new List<Flag> { LookShoot });
-            Animation AniLook = new Animation(new List<Sprite> { AllSprites[3, 1].Copy() }, 2);
+            Animation AniLook = new Animation(new List<Sprite> { AllSprites[6, 0].Copy() }, 2);
 
             // init
             FiniteStateMachine diamondFSM = new FiniteStateMachine(new List<StateMachineState> { Shoot, Look });
