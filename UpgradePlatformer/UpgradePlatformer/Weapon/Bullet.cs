@@ -110,14 +110,11 @@ namespace UpgradePlatformer.Weapon
                 this.hitbox = new Rectangle(location.ToPoint(), new Point(10, 10));
                 Intersects();
                 
-                foreach(Tile t in LevelManager.Instance.ActiveLevel().Tiles)
+                foreach(Tile t in LevelManager.Instance.GetCollisions(hitbox))
                 {
                     if (t.CollisionKind == 9 || t.CollisionKind == 104 || t.CollisionKind == 105)
                         continue;
-                    if (hitbox.Intersects(t.Position))
-                    {
-                        isActive = false;
-                    }                   
+                    isActive = false;
                 }
 
                 if(location.X > Sprite.graphics.PreferredBackBufferWidth 
