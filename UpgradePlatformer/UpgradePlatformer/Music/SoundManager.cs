@@ -28,10 +28,15 @@ namespace UpgradePlatformer.Music
         private SoundEffect jump;
         private SoundEffect land;
         private SoundEffect coinGrab;
+        private SoundEffect shoot;
+        private SoundEffect hit;
 
         private Song menu;
-        private Song star;
-        private Song amogus;
+        private Song clouds;
+        private Song cave;
+        private Song desert;
+        private Song gameOver;
+
 
         /// <summary>
         /// Loads SFX and music
@@ -43,8 +48,8 @@ namespace UpgradePlatformer.Music
             land = content.Load<SoundEffect>("Music/jumpland");
             coinGrab = content.Load<SoundEffect>("Music/coin");
             menu = content.Load<Song>("Music/menu");
-            star = content.Load<Song>("Music/allstar");
-            amogus = content.Load<Song>("Music/AMOGUS");
+
+            shoot = content.Load<SoundEffect>("Music/shooting");
         }
 
         /// <summary>
@@ -93,13 +98,11 @@ namespace UpgradePlatformer.Music
                     break;
                 case "game":
                     MediaPlayer.Stop();                   
-                    MediaPlayer.Play(star);
                     MediaPlayer.Volume = 0.25f;
                     MediaPlayer.IsRepeating = true;
                     break;
                 case "gameover":
                     MediaPlayer.Stop();
-                    MediaPlayer.Play(amogus);
                     MediaPlayer.IsRepeating = true;
                     break;
 
