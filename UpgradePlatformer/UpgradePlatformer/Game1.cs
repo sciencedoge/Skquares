@@ -491,7 +491,8 @@ namespace UpgradePlatformer
             LevelManager.Instance.Update();
 
             // StateMachine related Updates
-            EntityManager.Instance.Player().Demo = _stateMachine.currentState == 0;
+            if (EntityManager.Instance.Player() != null)
+                EntityManager.Instance.Player().Demo = _stateMachine.currentState == 0;
             mainMenu.IsActive  = _stateMachine.currentState == 0;
             topHud.IsActive    = _stateMachine.currentState == 1;
             pauseMenu.IsActive = _stateMachine.currentState == 2;
