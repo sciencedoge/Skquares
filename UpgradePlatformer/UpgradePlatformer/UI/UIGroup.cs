@@ -73,15 +73,16 @@ namespace UpgradePlatformer.UI
         /// processes a mouse click event
         /// </summary>
         /// <param name="position">where the mouse was</param>
-        public override void WhenClicked(Point position)
+        public override bool WhenClicked(Point position)
         {
             foreach (UIElement e in UIElements)
             {
                 if (e.Bounds.Contains(position) && e.IsActive)
                 {
-                    e.WhenClicked(position - e.Bounds.Location);
+                    return e.WhenClicked(position - e.Bounds.Location);
                 }
             }
+            return false;
         }
 
         /// <summary>

@@ -485,9 +485,9 @@ namespace UpgradePlatformer
             joycooldown = Math.Max(0, joycooldown);
             // update managers
             InputManager.Instance.Update();
+            UIManager.Instance.Update(gameTime);
             if (_stateMachine.currentState <= 1)
                 EntityManager.Instance.Update(gameTime);
-            UIManager.Instance.Update(gameTime);
             LevelManager.Instance.Update();
 
             // StateMachine related Updates

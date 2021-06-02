@@ -166,7 +166,7 @@ namespace UpgradePlatformer.Weapon
                 if (Vector2.Distance(rjev.MousePosition.ToVector2(), new Vector2()) > 2)
                 {
                     rjev.MousePosition.Y *= -1;
-                    MousePos = rjev.MousePosition * new Point(15) + Position.ToPoint() + new Point(0, (int)(40f * Sprite.GetScale()));
+                    MousePos = rjev.MousePosition * new Point(15) + EntityManager.Instance.Player().hitbox.Center + new Point(0, (int)(40f * Sprite.GetScale()));
                 }
             }
             Event jev = EventManager.Instance.Pop("GAME_PAD_JOYSTICK");
@@ -175,14 +175,14 @@ namespace UpgradePlatformer.Weapon
                 if (Vector2.Distance(jev.MousePosition.ToVector2(), new Vector2()) > 2)
                 {
                     jev.MousePosition.Y *= -1;
-                    MousePos = jev.MousePosition * new Point(15) + Position.ToPoint() + new Point(0, (int)(40f * Sprite.GetScale()));
+                    MousePos = jev.MousePosition * new Point(15) + EntityManager.Instance.Player().hitbox.Center + new Point(0, (int)(40f * Sprite.GetScale()));
                 }
             }
             Event dev = EventManager.Instance.Pop("MOUSE_DOWN");
 
             if (dev != null && dev.Data == 0)
             {
-                EventManager.Instance.Push(dev);
+                //EventManager.Instance.Push(dev);
                 Click = true;
                 animation.SetFlag(1);
             }
