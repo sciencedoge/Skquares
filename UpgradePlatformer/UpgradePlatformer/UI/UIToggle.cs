@@ -61,13 +61,14 @@ namespace UpgradePlatformer.UI
         /// Calls the onclick function if Disabled is false
         /// </summary>
         /// <param name="at">where the button UIElement was clicked 0,0 being the top corner</param>
-        public override void WhenClicked(Point at)
+        public override bool WhenClicked(Point at)
         {
-            if (!IsActive || Disabled) return;
+            if (!IsActive || Disabled) return false ;
 
             toggled = !toggled;
             if (toggled) onClick(1);
             else onClick(0);
+            return true;
         }
 
         /// <summary>

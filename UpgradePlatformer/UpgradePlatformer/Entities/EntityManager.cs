@@ -47,7 +47,7 @@ namespace UpgradePlatformer.Entities
 
             foreach (EntityObject obj in objects)
             {
-                if (obj == null || !obj.IsActive) continue;
+                if (obj == null) continue;
                 result++;
             }
 
@@ -217,12 +217,23 @@ namespace UpgradePlatformer.Entities
         /// removes all entity objects
         /// </summary>
         /// <param name="player">wether the player should be removed</param>
-        public void Clean(bool player) {
+        public void Clean(bool player)
+        {
             EntityObject plyr = (EntityObject)this.Player();
             objects = new List<EntityObject>();
-            
+
             if (!player)
                 objects.Add(plyr);
+        }
+
+        /// <summary>
+        /// cleans null and dead entities
+        /// </summary>
+        /// <param name="player"></param>
+        public void Cleanup(GameTime gametime)
+        {
+            objects.RemoveAll((o) => o == null);
+            objects.RemoveAll((o) => !o.IsActive);
         }
 
         /// <summary>

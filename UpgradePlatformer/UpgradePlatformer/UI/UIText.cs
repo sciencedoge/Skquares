@@ -65,7 +65,7 @@ namespace UpgradePlatformer.UI
                 spriteBatch.DrawString(Font, Text, bounds.Location.ToVector2(), color, 0f, new Vector2(0, 0), Scale * Sprite.GetScale(), SpriteEffects.None, 0f);
         }
 
-        public override void WhenClicked(Point at) { }
+        public override bool WhenClicked(Point at) { return false; }
         public override UIElement GetActive() { return null; }
         public override UISprite CurrentSprite() { return null; }
     }

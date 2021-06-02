@@ -14,6 +14,7 @@ namespace UpgradePlatformer.Levels
         private static Sprite[,] AllSprites = new Sprite[20, 20];
         private static Color[] COLORS = { Color.White, Color.Green, Color.LightGray, Color.White, Color.White, Color.White, Color.White, Color.Orange, Color.White, Color.White };
         private Sprite Sprite;
+        private Sprite BGSprite;
         private Vector2 TileCenter;
         public Vector2 TileSize;
         public int Kind;
@@ -50,19 +51,17 @@ namespace UpgradePlatformer.Levels
         {
 
             Sprite = AllSprites[0, 6].Copy();
+            BGSprite = AllSprites[0, 0].Copy();
             if (around == null)
-            {
-                Sprite.TintColor = COLORS[Kind - 1];
                 return;
-            }
             Point pos = new Point();
-            if (around[1, 2].Kind != 9 && around[1, 2].Kind != 5)
+            if (TestAround(around[1, 2], true))
                 pos.X += 1;
-            if (around[1, 0].Kind != 9 && around[1, 0].Kind != 5)
+            if (TestAround(around[1, 0], true))
                 pos.X += 2;
-            if (around[2, 1].Kind != 9)
+            if (TestAround(around[2, 1], false))
                 pos.Y += 1;
-            if (around[0, 1].Kind != 9)
+            if (TestAround(around[0, 1], false))
                 pos.Y += 2;
             if (Kind == 1 || Kind == 2) Sprite = AllSprites[5, 3 + pos.X].Copy();
             else if (Kind == 3) Sprite = AllSprites[4 + pos.Y, 7 + pos.X].Copy();
@@ -70,7 +69,35 @@ namespace UpgradePlatformer.Levels
             else if (Kind == 5) Sprite = AllSprites[0, 2].Copy();
             else if (Kind == 7) Sprite = AllSprites[0 + pos.Y, 7 + pos.X].Copy();
             else if (Kind == 8) Sprite = AllSprites[1 + pos.Y, 2].Copy();
+
+            if (Kind == 2) BGSprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
+            
+            if (CollisionKind == 9)
+            {
+                BGSprite = Sprite;
+                Sprite = AllSprites[0, 0].Copy();
+            }
             Sprite.TintColor = COLORS[Kind - 1];
+        }
+
+        /// <summary>
+        /// tests wether a tile should connect
+        /// </summary>
+        /// <param name="t">the tile</param>
+        /// <param name="row">wether its in the same row</param>
+        /// <returns></returns>
+        private bool TestAround(Tile t, bool row)
+        {
+            if (t.Kind == 34)
+                return true;
+            if (t.Kind == Kind && t.CollisionKind == CollisionKind)
+                return true;
+            if (t.Kind == 2 && CollisionKind == 9)
+                return true;
+            if (t.CollisionKind == 9 && Kind == 2)
+                return true;
+
+            return false;
         }
 
         public Tile() { }
@@ -82,17 +109,16 @@ namespace UpgradePlatformer.Levels
         /// <param name="position">the position of the tile on the map</param>
         public void Draw(SpriteBatch spriteBatch, Vector2 position, bool background)
         {
-            if (background && Kind == 2)
-            {
-                Sprite s = AllSprites[3, 14].Copy();
-                s.TintColor = Color.Gray;
-                UpdatePos(position);
-                s.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
-
-            }
-            if (background != (CollisionKind == 9) || Kind == 9)
+            if (Kind == 9)
                 return;
-            Sprite.TintColor = !background ? Color.White : Color.Gray;
+            if (background)
+            {
+                BGSprite.TintColor = Color.Gray;
+                UpdatePos(position);
+                BGSprite.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
+                return;
+            }
+            Sprite.TintColor = Color.White;
             UpdatePos(position);
             Sprite.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
         }

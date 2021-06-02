@@ -41,8 +41,8 @@ namespace UpgradePlatformer.UI
 
             if (ev != null)
             {
-                //EventManager.Instance.Push(ev);
-                ProcessClick(ev.MousePosition, ev.Data);
+                if (!ProcessClick(ev.MousePosition, ev.Data))
+                    EventManager.Instance.Push(ev);
             }
 
             foreach (UIElement e in UIElements)
@@ -82,8 +82,7 @@ namespace UpgradePlatformer.UI
             {
                 if (e.Bounds.Contains(position) && e.IsActive)
                 {
-                    e.WhenClicked(position - e.Bounds.Location);
-                    return true;
+                    return e.WhenClicked(position - e.Bounds.Location);
                 }
             }
             return false;

@@ -38,6 +38,7 @@ namespace UpgradePlatformer.Entities
         private static Rectangle TILE_EMPTY = new Rectangle(49, 30, 60, 60);
         public void DrawLightMap(SpriteBatch spriteBatch)
         {
+            if (!IsActive) return;
             Sprite s = new Sprite(TILE_EMPTY, new Vector2(30), Color.White);
             s.Draw(spriteBatch, hitbox.Location, 0, hitbox.Size.ToVector2() * 5);
         }
