@@ -12,7 +12,7 @@ namespace UpgradePlatformer.Levels
     {
         private static Rectangle TILE_EMPTY = new Rectangle(49, 30, 60, 60);
         private static Sprite[,] AllSprites = new Sprite[20, 20];
-        private static Color[] COLORS = { Color.Green, Color.Green, Color.LightGray, Color.White, Color.White, Color.White, Color.White, Color.Orange, Color.White, Color.White };
+        private static Color[] COLORS = { Color.White, Color.Green, Color.LightGray, Color.White, Color.White, Color.White, Color.White, Color.Orange, Color.White, Color.White };
         private Sprite Sprite;
         private Vector2 TileCenter;
         public Vector2 TileSize;
@@ -64,10 +64,12 @@ namespace UpgradePlatformer.Levels
                 pos.Y += 1;
             if (around[0, 1].Kind != 9)
                 pos.Y += 2;
-            if (Kind == 7) Sprite = AllSprites[0 + pos.Y, 7 + pos.X].Copy();
-            if (Kind == 8) Sprite = AllSprites[1 + pos.Y, 2].Copy();
-            if (Kind == 4) Sprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
-            if (Kind == 5) Sprite = AllSprites[0, 2].Copy();
+            if (Kind == 1 || Kind == 2) Sprite = AllSprites[5, 3 + pos.X].Copy();
+            else if (Kind == 3) Sprite = AllSprites[4 + pos.Y, 7 + pos.X].Copy();
+            else if (Kind == 4) Sprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
+            else if (Kind == 5) Sprite = AllSprites[0, 2].Copy();
+            else if (Kind == 7) Sprite = AllSprites[0 + pos.Y, 7 + pos.X].Copy();
+            else if (Kind == 8) Sprite = AllSprites[1 + pos.Y, 2].Copy();
             Sprite.TintColor = COLORS[Kind - 1];
         }
 
@@ -80,8 +82,17 @@ namespace UpgradePlatformer.Levels
         /// <param name="position">the position of the tile on the map</param>
         public void Draw(SpriteBatch spriteBatch, Vector2 position, bool background)
         {
+            if (background && Kind == 2)
+            {
+                Sprite s = AllSprites[3, 14].Copy();
+                s.TintColor = Color.Gray;
+                UpdatePos(position);
+                s.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
+
+            }
             if (background != (CollisionKind == 9) || Kind == 9)
                 return;
+            Sprite.TintColor = !background ? Color.White : Color.Gray;
             UpdatePos(position);
             Sprite.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
         }
@@ -99,7 +110,7 @@ namespace UpgradePlatformer.Levels
                 Sprite sp = new Sprite(TILE_EMPTY, new Vector2(32), Color.Orange);
                 sp.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2() * 4);
             }
-            if (Kind < 9 || !(CollisionKind == 9))
+            if (Kind < 9 && !(CollisionKind == 9))
                 return;
             UpdatePos(position);
             Sprite s = new Sprite(TILE_EMPTY, new Vector2(32), Color.White);

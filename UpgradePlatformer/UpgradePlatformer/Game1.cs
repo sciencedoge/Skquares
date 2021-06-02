@@ -544,7 +544,7 @@ namespace UpgradePlatformer
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 
             LevelManager.Instance.Draw(_spriteBatch, true);
-            
+
             _spriteBatch.End();
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 

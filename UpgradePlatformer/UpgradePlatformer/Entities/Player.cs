@@ -298,7 +298,7 @@ namespace UpgradePlatformer.Entities
             }
             if (jev != null) {
                 EventManager.Instance.Push(jev);
-                Joystick = jev.MousePosition.ToVector2() / 5;
+                Joystick = jev.MousePosition.ToVector2() / 10;
             }
         }
 

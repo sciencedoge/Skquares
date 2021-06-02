@@ -74,7 +74,7 @@ namespace UpgradePlatformer.Weapon
         public Vector2 FindDistance()
         {
             float distX = position.X - MousePos.X;
-            float distY = position.Y - MousePos.Y;
+            float distY = position.Y - (MousePos.Y - (40 * Sprite.GetScale()));
 
             return new Vector2(distX, distY);
         }
@@ -142,7 +142,7 @@ namespace UpgradePlatformer.Weapon
 
             if (Click)
             {
-                Bullet bullet = new Bullet(path, new Vector2(Position.X + 25, Position.Y - 31));
+                Bullet bullet = new Bullet(path, new Vector2(position.X - 7, position.Y - 7), rotation);
                   
                 Click = false;
                 bullets.Add(bullet);

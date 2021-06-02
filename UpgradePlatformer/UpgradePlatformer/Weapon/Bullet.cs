@@ -28,6 +28,7 @@ namespace UpgradePlatformer.Weapon
         private Rectangle hitbox;
 
         private Rectangle spriteBounds;
+        private float rotation;
 
         public Vector2 Location
         {
@@ -41,11 +42,12 @@ namespace UpgradePlatformer.Weapon
         /// </summary>
         /// <param name="path"></param>
         /// <param name="location"></param>
-        public Bullet(Vector2 path, Vector2 location)
+        public Bullet(Vector2 path, Vector2 location, float rotation)
         {
             spriteBounds = new Rectangle(20, 7, 5, 5);
             this.path = path;
             this.location = location;
+            this.rotation = rotation;
 
             this.speed = path / Vector2.Distance(path, new Vector2(0, 0)) * 2;
 
@@ -53,12 +55,11 @@ namespace UpgradePlatformer.Weapon
 
             this.sprite = new Sprite(
                spriteBounds,
-               new Vector2(spriteBounds.X - (spriteBounds.Width / 2),
-               spriteBounds.Y - (spriteBounds.Height / 2)),
+               new Vector2(2.5f, 2.5f),
                Color.White);
 
             isActive = true;
-            this.hitbox = new Rectangle(location.ToPoint(), new Point(10, 10));
+            this.hitbox = new Rectangle(location.ToPoint(), new Point(7, 7));
         }
 
         //Methods
@@ -71,7 +72,7 @@ namespace UpgradePlatformer.Weapon
         {
             if (isActive)
             {
-                sprite.Draw(sb, location.ToPoint(), 0f, new Vector2(10));
+                sprite.Draw(sb, (location).ToPoint(), rotation, this.hitbox.Size.ToVector2());
             }
         }
 
@@ -109,15 +110,11 @@ namespace UpgradePlatformer.Weapon
                 this.hitbox = new Rectangle(location.ToPoint(), new Point(10, 10));
                 Intersects();
                 
-                foreach(Tile t in LevelManager.Instance.ActiveLevel().Tiles)
+                foreach(Tile t in LevelManager.Instance.GetCollisions(hitbox))
                 {
-                    if(t.CollisionKind != 9)
-                    {
-                        if (hitbox.Intersects(t.Position))
-                        {
-                            isActive = false;
-                        }
-                    }                   
+                    if (t.CollisionKind == 9 || t.CollisionKind == 104 || t.CollisionKind == 105)
+                        continue;
+                    isActive = false;
                 }
 
                 if(location.X > Sprite.graphics.PreferredBackBufferWidth 
