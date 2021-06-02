@@ -53,10 +53,7 @@ namespace UpgradePlatformer.Levels
             Sprite = AllSprites[0, 6].Copy();
             BGSprite = AllSprites[0, 0].Copy();
             if (around == null)
-            {
-                Sprite.TintColor = COLORS[Kind - 1];
                 return;
-            }
             Point pos = new Point();
             if (TestAround(around[1, 2], true))
                 pos.X += 1;
@@ -83,9 +80,17 @@ namespace UpgradePlatformer.Levels
             Sprite.TintColor = COLORS[Kind - 1];
         }
 
+        /// <summary>
+        /// tests wether a tile should connect
+        /// </summary>
+        /// <param name="t">the tile</param>
+        /// <param name="row">wether its in the same row</param>
+        /// <returns></returns>
         private bool TestAround(Tile t, bool row)
         {
-            if (t.Kind != 9 && t.CollisionKind == CollisionKind && (!row || (t.Kind != 5)))
+            if (t.Kind == 34)
+                return true;
+            if (t.Kind == Kind && t.CollisionKind == CollisionKind)
                 return true;
             if (t.Kind == 2 && CollisionKind == 9)
                 return true;
