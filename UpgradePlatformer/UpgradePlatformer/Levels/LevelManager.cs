@@ -44,7 +44,7 @@ namespace UpgradePlatformer.Levels
         {
             Worlds = new List<World>();
             _activeWorld = 0;
-            Worlds.Add(new World(new List<string>{"DEATH_MENU"}, 0, false, new List<UpgradeType> { UpgradeType.NONE}));
+            Worlds.Add(new World(new List<string>{"menu1", "menu2"}, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE}));
             Worlds.Add(new World(new List<string>{"clouds2", "clouds1Fix", "clouds3"}, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
             Worlds.Add(new World(new List<string>{"cave1", "cave2", "cave3", "cave4"}, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
         }

@@ -44,8 +44,11 @@
 #begin Levels/coinHeaven.level_Finished
 /copy:Levels/coinHeaven.level_Finished
 
-#begin Levels/DEATH_MENU.level_Finished
-/copy:Levels/DEATH_MENU.level_Finished
+#begin Levels/menu1.level_Finished
+/copy:Levels/menu1.level_Finished
+
+#begin Levels/menu2.level_Finished
+/copy:Levels/menu2.level_Finished
 
 #begin Music/allstar.mp3
 /importer:Mp3Importer

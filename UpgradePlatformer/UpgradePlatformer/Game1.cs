@@ -445,6 +445,7 @@ namespace UpgradePlatformer
             _lightTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             _mainTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             EventManager.Instance.Push(new Event("LOAD", 0, new Point(0, 0)));
+            LevelManager.Instance.ActiveWorld().LoadEntities(true);
         }
         Texture2D _rectangle;
         protected override void LoadContent()
@@ -541,7 +542,8 @@ namespace UpgradePlatformer
             _spriteBatch.End();
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
 
-            if (_stateMachine.currentState != 0 && _stateMachine.currentState != 4) EntityManager.Instance.Draw(gameTime, _spriteBatch);
+            //if (_stateMachine.currentState != 0 && _stateMachine.currentState != 4)
+            EntityManager.Instance.Draw(gameTime, _spriteBatch);
             LevelManager.Instance.Draw(_spriteBatch, false);
 
             _spriteBatch.End();
