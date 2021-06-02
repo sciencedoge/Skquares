@@ -49,7 +49,10 @@ namespace UpgradePlatformer.Music
             coinGrab = content.Load<SoundEffect>("Music/coin");
             menu = content.Load<Song>("Music/menu");
 
-            shoot = content.Load<SoundEffect>("Music/shooting");
+            clouds = content.Load <Song>("Music/clouds");
+            cave = content.Load<Song>("Music/cave");
+            gameOver = content.Load<Song>("Music/game over");
+            desert = content.Load<Song>("Music/desert");
         }
 
         /// <summary>
@@ -96,13 +99,27 @@ namespace UpgradePlatformer.Music
                     MediaPlayer.Volume = 0.25f;
                     MediaPlayer.IsRepeating = true;
                     break;
-                case "game":
-                    MediaPlayer.Stop();                   
+                case "clouds":
+                    MediaPlayer.Stop();
+                    MediaPlayer.Play(clouds);
+                    MediaPlayer.Volume = 0.25f;
+                    MediaPlayer.IsRepeating = true;
+                    break;
+                case "desert":
+                    MediaPlayer.Stop();
+                    MediaPlayer.Play(desert);
+                    MediaPlayer.Volume = 0.25f;
+                    MediaPlayer.IsRepeating = true;
+                    break;
+                case "cave":
+                    MediaPlayer.Stop();
+                    MediaPlayer.Play(cave);
                     MediaPlayer.Volume = 0.25f;
                     MediaPlayer.IsRepeating = true;
                     break;
                 case "gameover":
                     MediaPlayer.Stop();
+                    MediaPlayer.Play(gameOver);
                     MediaPlayer.IsRepeating = true;
                     break;
 
