@@ -7,6 +7,7 @@ using UpgradePlatformer.Entities;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Upgrade_Stuff;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Levels
 {
@@ -84,6 +85,16 @@ namespace UpgradePlatformer.Levels
             }
             else
             _activeWorld = id % (Worlds.Count);
+
+            switch (_activeWorld)
+            {
+                case 1:
+                    SoundManager.Instance.PlayMusic("clouds");
+                    break;
+                case 2:
+                    SoundManager.Instance.PlayMusic("cave");
+                    break;
+            }
         }
 
         /// <summary>

@@ -98,6 +98,18 @@
 /processorParam:Quality=Best
 /build:Music/button.wav
 
+#begin Music/cave.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/cave.mp3
+
+#begin Music/clouds.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/clouds.mp3
+
 #begin Music/coin.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -110,6 +122,12 @@
 /processorParam:Quality=Best
 /build:Music/fart.mp3
 
+#begin Music/game over.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/game over.mp3
+
 #begin Music/jump.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -121,6 +139,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Music/jumpland.wav
+
+#begin Music/menu.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/menu.mp3
 
 #begin Music/Sigh.mp3
 /importer:Mp3Importer

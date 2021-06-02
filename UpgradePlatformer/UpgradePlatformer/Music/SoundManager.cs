@@ -28,10 +28,15 @@ namespace UpgradePlatformer.Music
         private SoundEffect jump;
         private SoundEffect land;
         private SoundEffect coinGrab;
+        private SoundEffect shoot;
+        private SoundEffect hit;
 
-        private Song fart;
-        private Song star;
-        private Song amogus;
+        private Song menu;
+        private Song clouds;
+        private Song cave;
+        private Song desert;
+        private Song gameOver;
+
 
         /// <summary>
         /// Loads SFX and music
@@ -42,9 +47,12 @@ namespace UpgradePlatformer.Music
             jump = content.Load<SoundEffect>("Music/jump");
             land = content.Load<SoundEffect>("Music/jumpland");
             coinGrab = content.Load<SoundEffect>("Music/coin");
-            fart = content.Load<Song>("Music/fart");
-            star = content.Load<Song>("Music/allstar");
-            amogus = content.Load<Song>("Music/AMOGUS");
+            menu = content.Load<Song>("Music/menu");
+
+            clouds = content.Load <Song>("Music/clouds");
+            cave = content.Load<Song>("Music/cave");
+            gameOver = content.Load<Song>("Music/game over");
+            //desert = content.Load<Song>("Music/desert");
         }
 
         /// <summary>
@@ -86,19 +94,32 @@ namespace UpgradePlatformer.Music
                     MediaPlayer.Pause();
                     break;
                 case "menu":
-                    MediaPlayer.Stop();
-                    MediaPlayer.Play(fart);
+                    MediaPlayer.Stop();                  
+                    MediaPlayer.Play(menu);
+                    MediaPlayer.Volume = 0.25f;
                     MediaPlayer.IsRepeating = true;
                     break;
-                case "game":
+                case "clouds":
                     MediaPlayer.Stop();
+                    MediaPlayer.Play(clouds);
                     MediaPlayer.Volume = 0.25f;
-                    MediaPlayer.Play(star);
+                    MediaPlayer.IsRepeating = true;
+                    break;
+                case "desert":
+                    MediaPlayer.Stop();
+                    MediaPlayer.Play(desert);
+                    MediaPlayer.Volume = 0.25f;
+                    MediaPlayer.IsRepeating = true;
+                    break;
+                case "cave":
+                    MediaPlayer.Stop();
+                    MediaPlayer.Play(cave);
+                    MediaPlayer.Volume = 0.25f;
                     MediaPlayer.IsRepeating = true;
                     break;
                 case "gameover":
                     MediaPlayer.Stop();
-                    MediaPlayer.Play(amogus);
+                    MediaPlayer.Play(gameOver);
                     MediaPlayer.IsRepeating = true;
                     break;
 
