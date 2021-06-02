@@ -64,11 +64,12 @@ namespace UpgradePlatformer.Levels
                 pos.Y += 1;
             if (around[0, 1].Kind != 9)
                 pos.Y += 2;
-            if (Kind == 7) Sprite = AllSprites[0 + pos.Y, 7 + pos.X].Copy();
-            if (Kind == 8) Sprite = AllSprites[1 + pos.Y, 2].Copy();
-            if (Kind == 4) Sprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
-            if (Kind == 5) Sprite = AllSprites[0, 2].Copy();
             if (Kind == 1 || Kind == 2) Sprite = AllSprites[5, 3 + pos.X].Copy();
+            else if (Kind == 3) Sprite = AllSprites[4 + pos.Y, 7 + pos.X].Copy();
+            else if (Kind == 4) Sprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
+            else if (Kind == 5) Sprite = AllSprites[0, 2].Copy();
+            else if (Kind == 7) Sprite = AllSprites[0 + pos.Y, 7 + pos.X].Copy();
+            else if (Kind == 8) Sprite = AllSprites[1 + pos.Y, 2].Copy();
             Sprite.TintColor = COLORS[Kind - 1];
         }
 
