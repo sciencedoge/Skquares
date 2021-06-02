@@ -57,6 +57,7 @@ namespace UpgradePlatformer.Entities
         {
             if (player == null)
                 return;
+
             for (int i = 0; i < Enemies.Count; i++)
             {
                 float distX = Math.Abs(Enemies[i].Position.X - player.Position.X);
