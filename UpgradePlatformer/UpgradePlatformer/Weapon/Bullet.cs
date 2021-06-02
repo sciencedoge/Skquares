@@ -112,7 +112,7 @@ namespace UpgradePlatformer.Weapon
                 
                 foreach(Tile t in LevelManager.Instance.ActiveLevel().Tiles)
                 {
-                    if (t.CollisionKind == 9 || t.CollisionKind == 101 || t.CollisionKind == 102 || t.CollisionKind == 105)
+                    if (t.CollisionKind == 9 || t.CollisionKind == 104 || t.CollisionKind == 105)
                         continue;
                     if (hitbox.Intersects(t.Position))
                     {
