@@ -200,7 +200,7 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Performs a raycast calc on the enemy and player
         /// </summary>
-        /// <param name="enemy"></param>
+        /// <param name="enemy">The enemy being examined</param>
         /// <returns></returns>
         public bool Raycast(Enemy enemy)
         {
