@@ -23,6 +23,7 @@ namespace UpgradePlatformer.Entities
             SpriteBounds = new Rectangle(80, 13, 16, 16);
             UpdateSprite();
             Bob = 0;
+            this.hitbox = t.Position;
         }
 
         /// <summary>

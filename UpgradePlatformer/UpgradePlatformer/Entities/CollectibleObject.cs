@@ -65,8 +65,7 @@ namespace UpgradePlatformer.Entities
         public void UpdateSprite() {
             this.sprite = new Sprite(
                 SpriteBounds,
-                new Vector2(SpriteBounds.X - (SpriteBounds.Width / 2),
-                SpriteBounds.Y - (SpriteBounds.Height / 2)),
+                new Vector2(0, 0),
                 Color.White);
         }
 
@@ -81,7 +80,7 @@ namespace UpgradePlatformer.Entities
             if (IsActive)
             {
                 Vector2 frameBob = new Vector2(0, Bob * (float)Math.Cos(gt.TotalGameTime.TotalMilliseconds / 100));
-                sprite.Draw(sb, hitbox.Location + frameBob.ToPoint() - new Point(hitbox.Width, hitbox.Height / 2), 0, spriteSize.ToVector2());
+                sprite.Draw(sb, hitbox.Location + frameBob.ToPoint(), 0, spriteSize.ToVector2());
             }
         }
 
