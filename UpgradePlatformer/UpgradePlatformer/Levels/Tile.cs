@@ -44,36 +44,6 @@ namespace UpgradePlatformer.Levels
                 SpawnerKind = spawner - 1000;
             }
             TileCenter = new Vector2(0, 0);
-            //if (Kind == 9)
-            //{
-            //    Sprite = new Sprite(TILE_EMPTY, TileCenter, COLORS[kind - 1]);
-            //    if (above != null)
-            //        if (above.Kind == 7)
-            //        {
-            //            Sprite = new Sprite(TILE_SPRITE_CLOUD_BOT, TileCenter, COLORS[6]);
-            //            Kind = 10;
-            //        }
-            //}
-            //else if (Kind == 1)
-            //{
-            //    Sprite = new Sprite(TILE_SPRITE_PLATFORM, TileCenter, COLORS[2]);
-            //}
-            //else if (Kind == 8)
-            //{
-            //    if (above == null) Sprite = new Sprite(TILE_SPRITE_LAVA_TOP, TileCenter, COLORS[6]);
-            //    if (above.Kind != 9 && !above.Spawner) Sprite = new Sprite(TILE_SPRITE_LAVA_BOT, TileCenter, COLORS[6]);
-            //    else Sprite = new Sprite(TILE_SPRITE_LAVA_TOP, TileCenter, COLORS[6]);
-            //}
-            //else if (Kind == 7)
-            //{
-            //    if (above.Kind != 9 && !above.Spawner) Sprite = new Sprite(TILE_SPRITE_CLOUD_MID, TileCenter, COLORS[kind - 1]);
-            //    else Sprite = new Sprite(TILE_SPRITE_CLOUD, TileCenter, COLORS[kind - 1]);
-            //}
-            //else if (Kind == 5) Sprite = new Sprite(TILE_SPRITE_SPIKE, TileCenter, COLORS[kind - 1]);
-            //else if (Kind == 6)
-            //    Sprite = new Sprite(TILE_SPRITE_GOAL, TileCenter, COLORS[kind - 1]);
-            //else
-            //    Sprite = new Sprite(TILE_SPRITE, TileCenter, COLORS[kind - 1]);
             CollisionKind = collision;
         }
         public void Setup(Tile[,] around)
