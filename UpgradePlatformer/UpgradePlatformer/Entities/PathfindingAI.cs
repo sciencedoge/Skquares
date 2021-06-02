@@ -112,15 +112,12 @@ namespace UpgradePlatformer.Entities
 
                         if(random.Next(1, 11) == 10)
                         {
-
-                            if (Raycast(Enemies[i]))
+                            
+                            while (Enemies[i].Velocity.Y > -4f
+                            && Enemies[i].JumpsLeft > 0)
                             {
-                                while (Enemies[i].Velocity.Y > -4f
-                                && Enemies[i].JumpsLeft > 0)
-                                {
 
-                                    AIJump(Enemies[i]);
-                                }
+                                AIJump(Enemies[i]);
                             }
                                 
                             Enemies[i].JumpsLeft -= 1;
