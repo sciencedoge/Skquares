@@ -98,6 +98,12 @@
 /processorParam:Quality=Best
 /build:Music/button.wav
 
+#begin Music/cave.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/cave.mp3
+
 #begin Music/clouds.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
@@ -115,6 +121,12 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Music/fart.mp3
+
+#begin Music/game over.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/game over.mp3
 
 #begin Music/jump.wav
 /importer:WavImporter
