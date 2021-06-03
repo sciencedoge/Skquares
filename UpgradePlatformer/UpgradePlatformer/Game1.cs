@@ -65,8 +65,6 @@ namespace UpgradePlatformer
             _graphics.PreferredBackBufferHeight = 670;
             IsMouseVisible = false;
             Window.AllowUserResizing = true;
-            //_graphics.IsFullScreen = true;
-            //_graphics.HardwareModeSwitch = false;
             _graphics.ApplyChanges();
             
             Sprite.texture = _spriteSheetTexture;
@@ -118,7 +116,6 @@ namespace UpgradePlatformer
                     return _stateMachine.currentState == 1;
                 })
             };
-            //UpgradeStructure.panel.Show(0);
             new LevelManager();
             int ButtonWidth = 200;
             UIButton playButton = new UIButton(_font, new Rectangle((DEF_SIZE - ButtonWidth) / 2, 300, ButtonWidth, 40))

@@ -169,11 +169,6 @@ namespace UpgradePlatformer.Entities
             this.hitbox = hitbox;
             this.jumpsLeft = jumpsLeft;
 
-            // this.sprite = new Sprite(
-            //     SpriteBounds, 
-            //     new Vector2(SpriteBounds.X - (SpriteBounds.Width / 2),
-            //     SpriteBounds.Y - (SpriteBounds.Height / 2)),
-            //     Color.White);
             spriteSize = SpriteBounds.Size;
             this.animation = AnimationManager.Instance.animations[0];
             this.spawn = hitbox.Location;

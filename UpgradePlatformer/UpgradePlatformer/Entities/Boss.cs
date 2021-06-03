@@ -75,14 +75,6 @@ namespace UpgradePlatformer.Entities
         public override void ApplyGravity()
         {
             base.ApplyGravity();
-            //if (position.Y > Sprite.graphics.PreferredBackBufferHeight - hitbox.Height + 9)
-            //{
-            //    position.Y = Sprite.graphics.PreferredBackBufferHeight - hitbox.Height + 9;
-            //    velocity.Y = 0;
-            //
-            //    jumpsLeft = 1;
-            //    this.Colliding = false;
-            //}
 
             // locks enemy in room
             if (position.X > Sprite.graphics.PreferredBackBufferWidth - hitbox.Width)
