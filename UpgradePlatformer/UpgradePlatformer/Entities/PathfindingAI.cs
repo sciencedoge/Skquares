@@ -78,33 +78,42 @@ namespace UpgradePlatformer.Entities
             {
                 if (relationships[i, 0].X < 150)
                 {
-                    Enemies[i].animation.SetFlag(2);
+                    if (Raycast(Enemies[i]))
+                    {
+                        Enemies[i].animation.SetFlag(2);
 
-                    if ((int)Enemies[i].X + 1 == (int)player.X
-                        || (int)Enemies[i].X - 1 == (int)player.X
-                        || (int)Enemies[i].X == (int)player.X
-                        && !Enemies[i].Colliding)
-                    {
-                        Enemies[i].animation.SetFlag(1);
-                    }
-                    else if (Enemies[i].X > player.X
-                        && !Enemies[i].Colliding)
-                    {
-                        Enemies[i].animation.SetFlag(0);
-                        Enemies[i].X -= speed;
-                        Enemies[i].Flip = false;
-                    }
-                    else if(Enemies[i].X < player.X
-                        && !Enemies[i].Colliding)
-                    {
-                        Enemies[i].animation.SetFlag(1);
-                        Enemies[i].X += speed;
-                        Enemies[i].Flip = true;
+                        if ((int)Enemies[i].X + 1 == (int)player.X
+                            || (int)Enemies[i].X - 1 == (int)player.X
+                            || (int)Enemies[i].X == (int)player.X
+                            && !Enemies[i].Colliding)
+                        {
+                            Enemies[i].animation.SetFlag(1);
+                        }
+                        else if (Enemies[i].X > player.X
+                            && !Enemies[i].Colliding)
+                        {
+                            Enemies[i].animation.SetFlag(0);
+                            Enemies[i].X -= speed;
+                            Enemies[i].Flip = false;
+                        }
+                        else if (Enemies[i].X < player.X
+                            && !Enemies[i].Colliding)
+                        {
+                            Enemies[i].animation.SetFlag(1);
+                            Enemies[i].X += speed;
+                            Enemies[i].Flip = true;
+                        }
+                        else
+                        {
+                            Enemies[i].Colliding = false;
+                        }
                     }
                     else
                     {
-                        Enemies[i].Colliding = false;
+                        Enemies[i].animation.SetFlag(3);
+                        GoombaAI(Enemies[i]);
                     }
+                    
 
                     if (relationships[i, 0].Y > 20
                         && player.Y < Enemies[i].Y)
@@ -129,35 +138,7 @@ namespace UpgradePlatformer.Entities
                 }
                 else
                 {
-                    Enemies[i].animation.SetFlag(3);
-                    Enemies[i].Flip = goombaAINum > 0;
-                    if(Enemies[i].Colliding)
-                    {
-                        if (goombaAINum > 0)
-                            Enemies[i].animation.SetFlag(1);
-                        else
-                            Enemies[i].animation.SetFlag(0);
-                        goombaAINum *= -1;
-                        Enemies[i].X += goombaAINum;
-                        Enemies[i].Colliding = false;
-                    }
-
-                    if (!Enemies[i].Colliding)
-                    {
-                        Enemies[i].X += goombaAINum;
-                    }
-
-                    if (random.Next(1, 21) == 20)
-                    {
-                        
-                        while (Enemies[i].Velocity.Y > -4f
-                            && Enemies[i].JumpsLeft > 0)
-                        {
-                            AIJump(Enemies[i]);
-                        }
-
-                        Enemies[i].JumpsLeft -= 1;
-                    }
+                    GoombaAI(Enemies[i]);
                 }
             }
         }
@@ -193,7 +174,8 @@ namespace UpgradePlatformer.Entities
             raycastHitbox = new Rectangle((int)enemy.Position.X, (int)enemy.Position.Y, 15, 15);
             rayCastSpeed = (player.Position - enemy.Position) / 20;
 
-            while (!raycastHitbox.Intersects(player.Hitbox))
+            while (!raycastHitbox.Intersects(player.Hitbox)
+                && !player.Hitbox.Intersects(enemy.Hitbox))
             {
                 raycastHitbox.X += (int)rayCastSpeed.X;
                 raycastHitbox.Y += (int)rayCastSpeed.Y;
@@ -216,6 +198,48 @@ namespace UpgradePlatformer.Entities
             }
 
             return true;
+        }
+
+        public void GoombaAI(Enemy enemy)
+        {
+            enemy.animation.SetFlag(3);
+            enemy.Flip = goombaAINum > 0;
+            if (enemy.Colliding)
+            {
+                if (goombaAINum > 0)
+                    enemy.animation.SetFlag(1);
+                else
+                    enemy.animation.SetFlag(0);
+                goombaAINum *= -1;
+                enemy.X += goombaAINum;
+                enemy.Colliding = false;
+            }
+
+            if (!enemy.Colliding)
+            {
+                enemy.X += goombaAINum;
+            }
+
+            if (random.Next(1, 21) == 20)
+            {
+
+                while (enemy.Velocity.Y > -4f
+                    && (enemy.JumpsLeft > 0))
+                {
+                    AIJump(enemy);
+                }
+
+                enemy.JumpsLeft -= 1;
+            }
+        }
+
+        /// <summary>
+        /// Causes the enemies to idle
+        /// </summary>
+        /// <param name="gt"></param>
+        public void Idle(GameTime gt)
+        {
+
         }
     }
 }
