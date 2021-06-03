@@ -135,7 +135,7 @@ namespace UpgradePlatformer.Entities
 
             pathfind.Update();
             pathfind.UpdateCosts();
-            pathfind.MoveToPlayer();
+            pathfind.MoveToPlayer(gameTime);
             // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++)
             {

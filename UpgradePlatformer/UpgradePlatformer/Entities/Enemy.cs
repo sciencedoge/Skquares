@@ -21,7 +21,7 @@ namespace UpgradePlatformer.Entities
         private Point spawnPoint;
         private bool currentlyColliding;
 
-        private TimeSpan idleTime;
+        private int idleTime;
         private bool currentlyIdling;
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Determines how long the enemy has idled for
         /// </summary>
-        public TimeSpan TimeSinceIdle 
+        public int TimeSinceIdle 
         {
             get { return idleTime; }
             set { idleTime = value; }      
@@ -81,7 +81,7 @@ namespace UpgradePlatformer.Entities
             currentlyColliding = false;
             this.animation = new AnimationFSM(AnimationManager.Instance.animations[1]);
 
-            idleTime = TimeSpan.Zero;
+            idleTime = 0;
         }
 
         /// <summary>

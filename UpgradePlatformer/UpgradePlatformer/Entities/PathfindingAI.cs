@@ -71,11 +71,16 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// moves the enemy to the player
         /// </summary>
-        public void MoveToPlayer()
+        public void MoveToPlayer(GameTime gameTime)
         {
             if (player == null) return;
             for(int i = 0; i < Enemies.Count; i++)
             {
+                if (Enemies[i].Idle)
+                {
+                    Idle(Enemies[i]);
+                    continue;
+                }
                 if (relationships[i, 0].X < 150)
                 {
                     if (Raycast(Enemies[i]))
@@ -208,6 +213,11 @@ namespace UpgradePlatformer.Entities
             return true;
         }
 
+
+        /// <summary>
+        /// Goomba AI algo
+        /// </summary>
+        /// <param name="enemy"></param>
         public void GoombaAI(Enemy enemy)
         {
             enemy.animation.SetFlag(3);
@@ -241,9 +251,19 @@ namespace UpgradePlatformer.Entities
             }
         }
 
-        public void Idle(Enemy e)
+        /// <summary>
+        /// Idles the enemy
+        /// </summary>
+        /// <param name="e"></param>
+        /// <param name="gameTime"></param>
+        public void Idle(Enemy e, GameTime gameTime)
         {
+            e.TimeSinceIdle += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
 
+            if(e.TimeSinceIdle > 3000)
+            {
+                e.Idle = false;
+            }
         }
     }
 }
