@@ -40,7 +40,7 @@ namespace UpgradePlatformer.Input
             prevPadState = padState;
             padState = GamePad.GetState(0);
 
-            if (thing++ % 3 == 0)
+            if (thing++ % 4 == 0)
             {
                 EventManager.Instance.Push(new Event("GAME_PAD_JOYSTICK", 0, (padState.ThumbSticks.Left * 10).ToPoint()));
                 EventManager.Instance.Push(new Event("RGAME_PAD_JOYSTICK", 0, (padState.ThumbSticks.Right * 10).ToPoint()));

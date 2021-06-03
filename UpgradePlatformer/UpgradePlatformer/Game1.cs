@@ -488,10 +488,10 @@ namespace UpgradePlatformer
                 _invTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
                 _graphics.ApplyChanges();
             }
+            InputManager.Instance.Update();
             joycooldown--;
             joycooldown = Math.Max(0, joycooldown);
             // update managers
-            InputManager.Instance.Update();
             UIManager.Instance.Update(gameTime);
             if (_stateMachine.currentState <= 1)
                 EntityManager.Instance.Update(gameTime);

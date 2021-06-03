@@ -299,7 +299,8 @@ namespace UpgradePlatformer.Entities
                 else if (up == Keys.D) keyRight = false;
             }
             if (jev != null) {
-                EventManager.Instance.Push(jev);
+                if (damage != 0)
+                    EventManager.Instance.Push(jev);
                 if (Vector2.Distance(jev.MousePosition.ToVector2(), new Vector2(0)) > 4)
                     Joystick = jev.MousePosition.ToVector2() / 10;
                 else
