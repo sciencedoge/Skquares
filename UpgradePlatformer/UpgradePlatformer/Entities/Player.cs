@@ -111,8 +111,9 @@ namespace UpgradePlatformer.Entities
 
                 if (weapon.IsActive)
                 {
-                    weapon.Position = new Vector2(this.X +  hitbox.Width,
-                this.Y -  hitbox.Height);
+                    float frameBobX = 15 * (float)Math.Cos(gt.TotalGameTime.TotalMilliseconds / 300);
+                    float frameBobY = 10 * (float)Math.Cos(gt.TotalGameTime.TotalMilliseconds / 250);
+                    weapon.Position = new Vector2(frameBobX + hitbox.Center.X, frameBobY + Hitbox.Top);
 
                     weapon.Update();
                 }
@@ -215,6 +216,8 @@ namespace UpgradePlatformer.Entities
         /// <param name="gt"></param>
         public override void Draw(SpriteBatch sb, GameTime gt)
         {
+            if (!IsActive) return;
+
             base.Draw(sb, gt);
 
             if (weapon.IsActive)
@@ -276,7 +279,6 @@ namespace UpgradePlatformer.Entities
                 }
                 return;
             }
-            InputManager.Instance.Update();
             Event dev = EventManager.Instance.Pop("KEY_DOWN");
             Event uev = EventManager.Instance.Pop("KEY_UP");
             Event jev = EventManager.Instance.Pop("GAME_PAD_JOYSTICK");
@@ -284,9 +286,9 @@ namespace UpgradePlatformer.Entities
             {
                 Keys down = (Keys)dev.Data;
                 if (down == Keys.W) keyUp = true;
-                else if (down == Keys.A) { keyLeft = true;  }
+                else if (down == Keys.A) keyLeft = true;
                 else if (down == Keys.S) keyDown = true;
-                else if (down == Keys.D) { keyRight = true;  }
+                else if (down == Keys.D) keyRight = true;
             }
             if (uev != null)
             {
@@ -297,8 +299,9 @@ namespace UpgradePlatformer.Entities
                 else if (up == Keys.D) keyRight = false;
             }
             if (jev != null) {
-                EventManager.Instance.Push(jev);
-                if (Vector2.Distance(jev.MousePosition.ToVector2(), new Vector2(0)) > 2)
+                if (damage != 0)
+                    EventManager.Instance.Push(jev);
+                if (Vector2.Distance(jev.MousePosition.ToVector2(), new Vector2(0)) > 4)
                     Joystick = jev.MousePosition.ToVector2() / 10;
                 else
                     Joystick = new Vector2(0, 0);

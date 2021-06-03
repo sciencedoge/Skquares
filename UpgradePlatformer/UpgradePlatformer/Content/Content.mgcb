@@ -74,17 +74,23 @@
 #begin Levels/menu2.level_Finished
 /copy:Levels/menu2.level_Finished
 
-#begin Music/allstar.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/allstar.mp3
-
 #begin Music/AMOGUS.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Music/AMOGUS.mp3
+
+#begin Music/Sigh.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Sigh.mp3
+
+#begin Music/allstar.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/allstar.mp3
 
 #begin Music/boss.mp3
 /importer:Mp3Importer
@@ -146,11 +152,11 @@
 /processorParam:Quality=Best
 /build:Music/menu.mp3
 
-#begin Music/Sigh.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/Sigh.mp3
+#begin Shaders/ShaderInvert.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/ShaderInvert.fx
 
 #begin Shaders/ShaderLava.fx
 /importer:EffectImporter

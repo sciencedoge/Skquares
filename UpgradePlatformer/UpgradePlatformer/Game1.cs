@@ -32,7 +32,7 @@ namespace UpgradePlatformer
         private FiniteStateMachine _stateMachine;
         private UIGroup mainMenu, pauseMenu, deathMenu, topHud, options;
         private SaveManager Save;
-        private RenderTarget2D _lightTarget, _mainTarget;
+        private RenderTarget2D _lightTarget, _mainTarget, _invTarget, _mainInvTarget;
 
         //Mouse cursor
         private Rectangle MOUSE_SPRITE_BOUNDS = new Rectangle(25, 7, 5, 5);
@@ -65,8 +65,6 @@ namespace UpgradePlatformer
             _graphics.PreferredBackBufferHeight = 670;
             IsMouseVisible = false;
             Window.AllowUserResizing = true;
-            //_graphics.IsFullScreen = true;
-            //_graphics.HardwareModeSwitch = false;
             _graphics.ApplyChanges();
             
             Sprite.texture = _spriteSheetTexture;
@@ -118,7 +116,6 @@ namespace UpgradePlatformer
                     return _stateMachine.currentState == 1;
                 })
             };
-            //UpgradeStructure.panel.Show(0);
             new LevelManager();
             int ButtonWidth = 200;
             UIButton playButton = new UIButton(_font, new Rectangle((DEF_SIZE - ButtonWidth) / 2, 300, ButtonWidth, 40))
@@ -131,6 +128,8 @@ namespace UpgradePlatformer
                     SoundManager.Instance.PlaySFX("button");
                     SoundManager.Instance.PlayMusic("game");
                     EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
+                    if (EntityManager.Instance.Player() != null)
+                        EntityManager.Instance.Player().Demo = false;
                     EntityManager.Instance.RespawnPlayer();
                 })
             };
@@ -219,7 +218,6 @@ namespace UpgradePlatformer
             });
             muteToggle.toggled = SoundManager.Instance.Muted;
 
-            // TODO: Add Fullscreen
             UIToggle fullscreenToggle = new UIToggle(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40));
             fullscreenToggle.onClick = new UIAction((i) =>
             {
@@ -444,6 +442,8 @@ namespace UpgradePlatformer
             UIManager.Instance.focused = playButton;
             _lightTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             _mainTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+            _mainInvTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+            _invTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
             EventManager.Instance.Push(new Event("LOAD", 0, new Point(0, 0)));
             LevelManager.Instance.ActiveWorld().LoadEntities(true);
         }
@@ -465,6 +465,7 @@ namespace UpgradePlatformer
             _font = Content.Load<SpriteFont>("Fonts/Poland");
             Sprite.Shaders = new List<Effect>();
             Sprite.Shaders.Add(Content.Load<Effect>("Shaders/ShaderLava"));
+            Sprite.Shaders.Add(Content.Load<Effect>("Shaders/ShaderInvert"));
             //Filled
 
             _rectangle = new Texture2D(GraphicsDevice, 1, 1);
@@ -479,12 +480,14 @@ namespace UpgradePlatformer
                 _graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
                 _lightTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
                 _mainTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+                _mainInvTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+                _invTarget = new RenderTarget2D(GraphicsDevice, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
                 _graphics.ApplyChanges();
             }
+            InputManager.Instance.Update();
             joycooldown--;
             joycooldown = Math.Max(0, joycooldown);
             // update managers
-            InputManager.Instance.Update();
             UIManager.Instance.Update(gameTime);
             if (_stateMachine.currentState <= 1)
                 EntityManager.Instance.Update(gameTime);
@@ -520,7 +523,7 @@ namespace UpgradePlatformer
         protected void Cleanup(GameTime gameTime)
         {
             EntityManager.Instance.Cleanup(gameTime);
-            //EventManager.Instance.Cleanup(gameTime);
+            EventManager.Instance.Cleanup(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -562,10 +565,21 @@ namespace UpgradePlatformer
 
             _spriteBatch.End();
 
-            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.SetRenderTarget(_invTarget);
+            GraphicsDevice.Clear(Color.Black);
+
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, null);
+
+            if (!(IsMouseVisible = _stateMachine.currentState != 1 || EntityManager.Instance.Player() == null))
+                mouseSprite.Draw(_spriteBatch, new Point(EntityManager.Instance.Player().weapon.MousePos.X - 2, EntityManager.Instance.Player().weapon.MousePos.Y - 40), 0);
+
+            _spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(_mainInvTarget);
 
             Sprite.Shaders[0].Parameters["MaskTexture"].SetValue(_lightTarget);
-            
+            Sprite.Shaders[1].Parameters["MaskTexture"].SetValue(_invTarget);
+
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, Sprite.Shaders[0], null);
             
             _spriteBatch.Draw(_mainTarget, Vector2.Zero, Color.White);
@@ -578,15 +592,19 @@ namespace UpgradePlatformer
             _spriteBatch.Draw(_rectangle, new Rectangle(Bounds.Right, 0, _graphics.PreferredBackBufferWidth - Bounds.Right, _graphics.PreferredBackBufferHeight), Color.Black);
             _spriteBatch.Draw(_rectangle, new Rectangle(0, Bounds.Bottom, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight - Bounds.Bottom), Color.Black);
 
+            _spriteBatch.End();
+            
+            GraphicsDevice.SetRenderTarget(null);
+
+            _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, Sprite.Shaders[1], null);
+
+            _spriteBatch.Draw(_mainInvTarget, Vector2.Zero, Color.White);
 
             _spriteBatch.End();
             
             _spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);
             
             UIManager.Instance.Draw(gameTime, _spriteBatch);
-
-            if (!(IsMouseVisible = _stateMachine.currentState != 1 || EntityManager.Instance.Player() == null))
-                mouseSprite.Draw(_spriteBatch, new Point(EntityManager.Instance.Player().weapon.MousePos.X - 2, EntityManager.Instance.Player().weapon.MousePos.Y - 40), 0);
 
             _spriteBatch.End();
             

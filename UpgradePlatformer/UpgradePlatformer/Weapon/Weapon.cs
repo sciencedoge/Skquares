@@ -182,7 +182,6 @@ namespace UpgradePlatformer.Weapon
 
             if (dev != null && dev.Data == 0)
             {
-                //EventManager.Instance.Push(dev);
                 Click = true;
                 animation.SetFlag(1);
             }

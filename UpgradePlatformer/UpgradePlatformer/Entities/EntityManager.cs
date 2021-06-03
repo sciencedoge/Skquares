@@ -121,7 +121,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public EntityManager()
         {
-            this.objects = new List<EntityObject>();
+            objects = new List<EntityObject>();
             pathfind = new PathfindingAI(Enemies(), Player());
         }
 
@@ -142,7 +142,7 @@ namespace UpgradePlatformer.Entities
                 foreach (EntityObject obj in objects)
                 {
                     if (obj == null) continue;
-                    if (obj.IsActive == false) continue;                   
+                    if (obj.IsActive == false) continue;
                     if(obj is Enemy)
                     {
                         obj.Update(gameTime);               
@@ -233,7 +233,7 @@ namespace UpgradePlatformer.Entities
         public void Cleanup(GameTime gametime)
         {
             objects.RemoveAll((o) => o == null);
-            objects.RemoveAll((o) => !o.IsActive);
+            objects.RemoveAll((o) => !o.IsActive && !(o is Player));
         }
 
         /// <summary>
@@ -288,10 +288,10 @@ namespace UpgradePlatformer.Entities
                         }
                         else
                         {
-                            if (obj.Y < t.Position.Y) //&& !Player().Ducking) // this worked for allowing to go down platforms but it ruind controlls on a controller
+                            if (obj.Y < t.Position.Y) 
                             {
                                 //checks conditions to move the player up or down
-                                if (intersection.Width > intersection.Height - 20)
+                                if (intersection.Width > intersection.Height)
                                 {
                                     //short wide rectangle
                                     //moves player up
