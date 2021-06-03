@@ -63,7 +63,7 @@ namespace UpgradePlatformer.Graphics
             Animation AniLeftS = new Animation(new List<Sprite> { AllSprites[1, 0].Copy() }, 2);
             StateMachineState LeftM = new StateMachineState(new List<Flag> { LeftMLookRight, LeftMStop });
             Animation AniLeftM = new Animation(new List<Sprite> { AllSprites[1, 0].Copy(), AllSprites[2, 0].Copy() }, 2);
-            StateMachineState LeftI = new StateMachineState(new List<Flag> { LeftIMove, LeftMLookRight, LeftIDone });
+            StateMachineState LeftI = new StateMachineState(new List<Flag> { LeftIMove, LeftILookRight, LeftIDone });
             Animation AniLeftI = new Animation(new List<Sprite> { AllSprites[1, 0].Copy(), AllSprites[3, 0].Copy(), AllSprites[4, 0].Copy() }, 30);
             StateMachineState RightS = new StateMachineState(new List<Flag> { RightSLookLeft, RightSMove, RightSIdle });
             Animation AniRightS = new Animation(new List<Sprite> { AllSprites[1, 0].Copy() }, 2);
@@ -94,26 +94,37 @@ namespace UpgradePlatformer.Graphics
             Flag LeftSRight = new Flag(1, 2);
             Flag LeftLLose = new Flag(3, 0);
             Flag LeftLRight = new Flag(1, 3);
+            Flag LeftIDone = new Flag(5, 0);
+            Flag LeftSIdle = new Flag(4, 5);
             Flag RightSLock = new Flag(2, 3);
             Flag RightSLeft = new Flag(0, 0);
             Flag RightLLose = new Flag(3, 2);
             Flag RightLLeft = new Flag(0, 1);
+            Flag RightIDone = new Flag(5, 2);
+            Flag RightSIdle = new Flag(4, 4);
 
             // states
-            StateMachineState LeftS = new StateMachineState(new List<Flag> { LeftSLock, LeftSRight });
+            StateMachineState LeftS = new StateMachineState(new List<Flag> { LeftSLock, LeftSRight, LeftSIdle });
             Animation AniLeftS = new Animation(new List<Sprite> { AllSprites[1, 1].Copy() }, 2);
             StateMachineState LeftL = new StateMachineState(new List<Flag> { LeftLLose, LeftLRight });
             Animation AniLeftL = new Animation(new List<Sprite> { AllSprites[2, 1].Copy() }, 2);
-            StateMachineState RightS = new StateMachineState(new List<Flag> { RightSLeft, RightSLock });
+            StateMachineState LeftI = new StateMachineState(new List<Flag> { LeftIDone });
+            Animation AniLeftI = new Animation(new List<Sprite> { AllSprites[1, 1].Copy(), AllSprites[3, 1].Copy(), AllSprites[4, 1].Copy() }, 30);
+            StateMachineState RightS = new StateMachineState(new List<Flag> { RightSLeft, RightSLock, RightSIdle });
             Animation AniRightS = new Animation(new List<Sprite> { AllSprites[1, 1].Copy() }, 2);
             AniRightS.sprites[0].effects = SpriteEffects.FlipHorizontally;
             StateMachineState RightL = new StateMachineState(new List<Flag> { RightLLeft, RightLLose });
             Animation AniRightL = new Animation(new List<Sprite> { AllSprites[2, 1].Copy() }, 2);
             AniRightL.sprites[0].effects = SpriteEffects.FlipHorizontally;
+            StateMachineState RightI = new StateMachineState(new List<Flag> { RightIDone });
+            Animation AniRightI = new Animation(new List<Sprite> { AllSprites[1, 1].Copy(), AllSprites[3, 1].Copy(), AllSprites[4, 1].Copy() }, 30);
+            AniRightI.sprites[0].effects = SpriteEffects.FlipHorizontally;
+            AniRightI.sprites[1].effects = SpriteEffects.FlipHorizontally;
+            AniRightI.sprites[2].effects = SpriteEffects.FlipHorizontally;
 
             // init
-            FiniteStateMachine enemyFSM = new FiniteStateMachine(new List<StateMachineState> { LeftS, LeftL, RightS, RightL });
-            animations.Add(new AnimationFSM(enemyFSM, new List<Animation> { AniLeftS, AniLeftL, AniRightS, AniRightL, }));
+            FiniteStateMachine enemyFSM = new FiniteStateMachine(new List<StateMachineState> { LeftS, LeftL, RightS, RightL, RightI, LeftI });
+            animations.Add(new AnimationFSM(enemyFSM, new List<Animation> { AniLeftS, AniLeftL, AniRightS, AniRightL, AniRightI, AniLeftI }));
         }
 
         public void AddDiamondFSM(Sprite[,] AllSprites)

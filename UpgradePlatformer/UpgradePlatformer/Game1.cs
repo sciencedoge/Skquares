@@ -576,11 +576,11 @@ namespace UpgradePlatformer
 
             _spriteBatch.End();
 
-            GraphicsDevice.SetRenderTarget(_mainInvTarget);
 
             Sprite.Shaders[0].Parameters["MaskTexture"].SetValue(_lightTarget);
             Sprite.Shaders[1].Parameters["MaskTexture"].SetValue(_invTarget);
-
+            
+            GraphicsDevice.SetRenderTarget(_mainInvTarget);
             _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, Sprite.Shaders[0], null);
             
             _spriteBatch.Draw(_mainTarget, Vector2.Zero, Color.White);

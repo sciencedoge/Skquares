@@ -224,11 +224,16 @@ namespace UpgradePlatformer.Entities
 
             if (enemy.Idle)
             {
+                enemy.animation.SetFlag(4);
                 Idle(enemy, gameTime);
                 return;
+            } else
+            {
+                enemy.animation.SetFlag(5);
             }
 
             enemy.animation.SetFlag(3);
+
             enemy.Flip = goombaAINum > 0;
             if (enemy.Colliding)
             {
@@ -266,7 +271,6 @@ namespace UpgradePlatformer.Entities
         /// <param name="gameTime"></param>
         public void Idle(Enemy e, GameTime gameTime)
         {
-            e.animation.SetFlag(0);
             e.TimeSinceIdle += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if(e.TimeSinceIdle > 3000)
