@@ -173,6 +173,7 @@ namespace UpgradePlatformer.Entities
         {
             raycastHitbox = new Rectangle((int)enemy.Position.X, (int)enemy.Position.Y, 15, 15);
             rayCastSpeed = (player.Position - enemy.Position) / 20;
+            int iterations = 0;
 
             while (!raycastHitbox.Intersects(player.Hitbox)
                 && !player.Hitbox.Intersects(enemy.Hitbox))
@@ -194,7 +195,14 @@ namespace UpgradePlatformer.Entities
                             return false;
                         }
                     }                   
-                }              
+                }
+
+                iterations++;
+
+                if(iterations > 100)
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -231,15 +239,6 @@ namespace UpgradePlatformer.Entities
 
                 enemy.JumpsLeft -= 1;
             }
-        }
-
-        /// <summary>
-        /// Causes the enemies to idle
-        /// </summary>
-        /// <param name="gt"></param>
-        public void Idle(GameTime gt)
-        {
-
         }
     }
 }
