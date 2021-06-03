@@ -22,6 +22,7 @@ namespace UpgradePlatformer.Entities
         private bool currentlyColliding;
 
         private TimeSpan idleTime;
+        private bool currentlyIdling;
 
         /// <summary>
         /// returns or sets the
@@ -43,10 +44,23 @@ namespace UpgradePlatformer.Entities
             set { currentlyColliding = value; }
         }
 
+        /// <summary>
+        /// Determines how long the enemy has idled for
+        /// </summary>
         public TimeSpan TimeSinceIdle 
         {
             get { return idleTime; }
             set { idleTime = value; }      
+        }
+        
+        /// <summary>
+        /// gets or sets whether the enemy is currently idling
+        /// 
+        /// </summary>
+        public bool Idle
+        {
+            get { return currentlyIdling; }
+            set { currentlyIdling = value; }
         }
 
         public bool Flip;
