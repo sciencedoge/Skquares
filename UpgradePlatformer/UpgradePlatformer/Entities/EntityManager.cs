@@ -34,6 +34,8 @@ namespace UpgradePlatformer.Entities
         private Level currentLevel;
         private readonly PathfindingAI pathfind;
 
+        private Boss boss;
+
         //methods
 
         /// <summary>
@@ -121,8 +123,10 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public EntityManager()
         {
+            boss = new Boss(100, 5, new Rectangle(300, 300, 25, 25), 1);
+
             objects = new List<EntityObject>();
-            pathfind = new PathfindingAI(Enemies(), Player());
+            pathfind = new PathfindingAI(Enemies(), Player(), boss);
         }
 
         /// <summary>
