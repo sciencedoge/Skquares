@@ -105,7 +105,7 @@ namespace LevelEditor
 
 
                     //BACKGROUND LAYER
-                    editor.LoadColors(reader, rotationValues, rotationsLoaded);
+                    editor.LoadColors(reader, rotationValues, false);
 
                     
                     //loads the picture boxes and matches the colors
@@ -265,12 +265,15 @@ namespace LevelEditor
 
                             int objectType = int.Parse(reader.ReadString());
 
+                            string metadata = reader.ReadString();
+
                             //writes the altered picture path and rotation value
                             //to a new file
                             writer.Write(tileType);
                             writer.Write(rotationValue);
                             writer.Write(tileCollision);
                             writer.Write(objectType);
+                            writer.Write(metadata);
                         }
                     }
                 }
@@ -291,6 +294,92 @@ namespace LevelEditor
                         writer.Close();     
                     }
                 }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Order -
+            //Width, Height, Color ARGB Values
+
+            //Opens file explorer for the user, allows
+            //them to choose a file
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Title = "Open a level file";
+            dialog.Filter = "Level Files|*.level";
+            DialogResult r = dialog.ShowDialog();
+
+            FileStream stream = null;
+            BinaryReader reader = null;
+            levelEditor editor = null;
+
+            //User chooses OK in the file explorer
+            if (r == DialogResult.OK)
+            {
+
+                try
+                {
+                    //Reads from the file
+                    stream = new FileStream(dialog.FileName, FileMode.Open);
+
+                    reader = new BinaryReader(stream);
+
+                    //Width and height obtained
+                    width = reader.ReadInt32();
+                    height = reader.ReadInt32();
+
+                    //establishes the level editor with the given information
+                    editor = new levelEditor(width, height);
+
+
+                    colors = new string[width, height];
+                    collisionColors = new string[width, height];
+                    objectColors = new string[width, height];
+
+                    editor.Colors = colors;
+                    editor.CollisionColors = collisionColors;
+                    editor.ObjectColors = objectColors;
+
+                    rotationValues = new int[width, height];
+                    collisionRotation = new int[width, height];
+                    objectRotation = new int[width, height];
+
+
+                    editor.RotationValues = rotationValues;
+                    editor.CollisionValues = collisionRotation;
+                    editor.ObjectValues = objectRotation;
+
+
+
+                    //BACKGROUND LAYER
+                    editor.LoadColors(reader, rotationValues, true);
+
+
+                    //loads the picture boxes and matches the colors
+                    editor.LoadBoxes(colors, collisionColors, objectColors);
+
+                    //Properly sizes the form
+                    editor.ResizeForm();
+
+                    //Prompts the user that it was sucessful!
+                    editor.Text = $"Level editor - { dialog.FileName.Remove(0, dialog.FileName.LastIndexOf('\\') + 1)}";
+                    MessageBox.Show("Successfully loaded the file!", ":)");
+                    stream.Close();
+                    editor.ShowDialog();
+                }
+
+                catch (Exception ex)
+                {
+                    //Something was wrong with the file
+                    MessageBox.Show("Error reading file! " + ex.Message, ":(");
+                    stream.Close();
+                }
+            }
+
+            //User exited out of the file explorer...
+            else
+            {
+                return;
             }
         }
     }

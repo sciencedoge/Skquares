@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using MsgBox;
 
 //Name: Sami Chamberlain
 //Date: 2/13/2021
@@ -28,6 +29,7 @@ namespace LevelEditor
         private PictureBox[,] boxes;
         private PictureBox[,] collisions;
         private PictureBox[,] objects;
+        private String[,] metadataStorage;
         private List<Button> buttons;
         private FileStream stream;
         private string[,] colors;
@@ -36,8 +38,7 @@ namespace LevelEditor
         private bool isSaved;
         private int rotationSaveX;
         private int rotationSaveY;
-        private bool rotationsLoaded;
-
+        private String metadata;
 
         private Color currentColor;
 
@@ -107,21 +108,6 @@ namespace LevelEditor
             set { objectRotations = value; }
         }
 
-
-        /// <summary>
-        /// Returns whether or not 
-        /// the rotations are loaded, or
-        /// changes the variable to delcare
-        /// whether or not the rotations are loaded
-        /// </summary>
-        public bool RotationsLoaded
-        {
-            get { return rotationsLoaded; }
-            set { rotationsLoaded = value; }
-        }
-
-
-
         /// <summary>
         /// Creates the level editor form
         /// </summary>
@@ -137,11 +123,11 @@ namespace LevelEditor
             boxes = new PictureBox[height, width];
             collisions = new PictureBox[height, width];
             objects = new PictureBox[height, width];
+            metadataStorage = new String[height, width];
             rotationValues = new int[height, width];
             collisionRotations = new int[height, width];
             objectRotations = new int[height, width];  
             isSaved = true;
-            rotationsLoaded = false;
             numLayersSaved = 0;
 
             buttons = new List<Button>();
@@ -226,15 +212,18 @@ namespace LevelEditor
                 {
                     //Disposes image that existed before
                     //clicking on the box
-                    if(p.Image != null)
+                    if (p.Image != null)
                     {
                         p.Image.Dispose();
                     }
-                    
+
+                    metadataStorage[heightLoc, widthLoc] = metadata;
                     //Resize image
                     p.SizeMode = PictureBoxSizeMode.Zoom;
                     //Load image
                     p.Load(path);
+                    if (metadata == "")
+                        p.Load(path.Replace(".png", "Dim.png"));
                     p.BackColor = Color.Transparent;
                     Rotate(p);
 
@@ -264,7 +253,8 @@ namespace LevelEditor
                     p.Image = null;
 
                     p.BackColor = currentColor;
-                                                          
+
+                    metadataStorage[heightLoc, widthLoc] = "";
                     if (this.Text.IndexOf("*") == -1)
                     {
                         //Puts an asterisk if there are unsaved changes
@@ -342,7 +332,7 @@ namespace LevelEditor
                 }
             }            
         }
-        
+
         /// <summary>
         /// Activates when the user clicks the 
         /// load button.
@@ -373,7 +363,7 @@ namespace LevelEditor
                     stream = new FileStream(dialog.FileName, FileMode.Open);
 
                     reader = new BinaryReader(stream);
-                    
+
                     //Reads width, height
                     width = reader.ReadInt32();
                     height = reader.ReadInt32();
@@ -388,17 +378,17 @@ namespace LevelEditor
                     rotationValues = new int[height, width];
                     collisionRotations = new int[height, width];
 
-                    LoadColors(reader, rotationValues, rotationsLoaded);
+                    LoadColors(reader, rotationValues, false);
 
                     LoadBoxes(colors, collisionColors, objectColors);
                 }
 
                 //User cancels decision
-                else if(r == DialogResult.Cancel)
+                else if (r == DialogResult.Cancel)
                 {
                     return;
                 }
-                
+
                 //Displays the data on the map
 
                 //Resizes the form accordingly
@@ -413,7 +403,7 @@ namespace LevelEditor
                 collisionsButton.BackColor = Color.LavenderBlush;
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //Error occurred...
                 MessageBox.Show("Error Reading File! " + ex.Message, ":(");
@@ -429,7 +419,7 @@ namespace LevelEditor
                     Rotate(texturePic);
                     texturePic.Refresh();
                 }
-            }                 
+            }
         }
 
         /// <summary>
@@ -508,6 +498,7 @@ namespace LevelEditor
                     boxes[i, j] = box;
                     collisions[i, j] = collisionBox;
                     objects[i, j] = objectBox;
+                    metadataStorage[i, j] = "";
                 }
             }
 
@@ -537,8 +528,7 @@ namespace LevelEditor
             //comments
             boxes = new PictureBox[height, width];
 
-            LoadPictureBoxLists(boxes, Width, Height, colors, rotationValues);
-            rotationsLoaded = false;
+            LoadPictureBoxLists(boxes, Width, Height, colors, rotationValues, true);
             LoadPictureBoxLists(collisions, Width, Height, collisionColors, collisionRotations);
             LoadPictureBoxLists(objects, Width, Height, objectColors, objectRotations);
         }
@@ -870,7 +860,7 @@ namespace LevelEditor
         /// <param name="height">height of the box</param>
         /// <param name="codeList">list of image paths</param>
         private void LoadPictureBoxLists(PictureBox[,] boxes,
-            int width, int height, string[,] codeList, int[,] rotationValues)
+            int width, int height, string[,] codeList, int[,] rotationValues, bool Dim = false)
         {
             for (int i = 0; i < height; i++)
             {
@@ -913,6 +903,8 @@ namespace LevelEditor
                     {
                         //loads the img
                         box.Load(codeList[i, j]);
+                        if (metadataStorage[i, j] == "" && Dim)
+                            box.Load(codeList[i, j].Replace(".png", "Dim.png"));
                         //resizes the image
                         box.SizeMode = PictureBoxSizeMode.Zoom;
 
@@ -938,8 +930,9 @@ namespace LevelEditor
         /// <param name="codeList">array of data</param>
         /// <param name="reader">reads in data</param>
         public void LoadColors(BinaryReader reader,
-            int[,] rotationValues, bool rotationsLoaded)
+            int[,] rotationValues, bool old)
         {
+            byte version = (byte)reader.PeekChar();
             //Fills the array with the colors of the loaded data
             //(Vector2/Begin tile/track)
             for (int i = 0; i < colors.GetLength(0); i++)
@@ -957,6 +950,11 @@ namespace LevelEditor
 
                     string currentObject = "../../../Default size/" + reader.ReadString() + ".png";
                     objectColors[i, j] = currentObject;
+                    if (!old)
+                    {
+                        string currentMetadata = reader.ReadString().Remove(0);
+                        metadataStorage[i, j] = currentMetadata;
+                    }
                 }
             }
         }
@@ -998,7 +996,7 @@ namespace LevelEditor
             rotationSaveX = 0;
             rotationSaveY = 0;
 
-            for(int i = 0; i < boxes.GetLength(0); i++)
+            for (int i = 0; i < boxes.GetLength(0); i++)
             {
                 for(int j = 0; j < boxes.GetLength(1); j++)
                 {
@@ -1009,7 +1007,8 @@ namespace LevelEditor
                             boxes[i, j].ImageLocation.Substring(
                                 boxes[i, j].ImageLocation.LastIndexOf('/') + 1,
                                 boxes[i, j].ImageLocation.LastIndexOf('.') - 
-                                boxes[i, j].ImageLocation.LastIndexOf('/') - 1));
+                                boxes[i, j].ImageLocation.LastIndexOf('/') - 1)
+                            .Replace("Dim", ""));
                     }
                     else
                     {
@@ -1051,7 +1050,10 @@ namespace LevelEditor
                     {
                         writer.Write("9");
                     }
-                }            
+
+                    //writes the location of the image
+                    writer.Write("m" + metadataStorage[i, j]);
+                }
             }
         }
 
@@ -1130,6 +1132,8 @@ namespace LevelEditor
                         }
                         //Replaces the image
                         p.Load(path);
+                        if (metadata == "" && boxes[0, 0].Enabled == true)
+                            p.Load(path.Replace(".png", "Dim.png"));
                         p.SizeMode = PictureBoxSizeMode.Zoom;
                         Rotate(p);
                         p.Update();
@@ -1152,7 +1156,95 @@ namespace LevelEditor
 
         private void Metadata_Click(object sender, EventArgs e)
         {
+            InputBox.SetLanguage(InputBox.Language.English);
 
+            DialogResult res = InputBox.ShowDialog("Insert the metadata of the tile below:", "Metadata");
+
+            if (res == System.Windows.Forms.DialogResult.OK || res == System.Windows.Forms.DialogResult.Yes)
+                metadata = InputBox.ResultValue;
+            Metadata.Text = $"Metadata: \"{metadata}\"";
+        }
+
+        private void oldLoadButton_Click(object sender, EventArgs e)
+        {
+            //File order - 
+            //Width, height, ARGB colors (all int32)
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            BinaryReader reader = null;
+            FileStream stream = null;
+
+            dialog.Filter = "Level Files|*.level";
+            dialog.Title = "Load a level";
+
+            DialogResult r = dialog.ShowDialog();
+
+
+            try
+            {
+                if (r == DialogResult.OK)
+                {
+                    //Loads the data from an external file
+                    stream = new FileStream(dialog.FileName, FileMode.Open);
+
+                    reader = new BinaryReader(stream);
+
+                    //Reads width, height
+                    width = reader.ReadInt32();
+                    height = reader.ReadInt32();
+
+                    //creates a new array that is able to store colors
+                    colors = new string[height, width];
+                    collisionColors = new string[height, width];
+                    objectColors = new string[height, width];
+
+                    //Background
+
+                    rotationValues = new int[height, width];
+                    collisionRotations = new int[height, width];
+
+                    LoadColors(reader, rotationValues, true);
+
+                    LoadBoxes(colors, collisionColors, objectColors);
+                }
+
+                //User cancels decision
+                else if (r == DialogResult.Cancel)
+                {
+                    return;
+                }
+
+                //Displays the data on the map
+
+                //Resizes the form accordingly
+                ResizeForm();
+
+                //formats the file name
+                this.Text = $"Level editor - {dialog.FileName.Remove(0, dialog.FileName.LastIndexOf('\\') + 1)}";
+                //prompts the user that the operation was successful
+                MessageBox.Show("Successfully loaded the file!", ":)");
+
+                backgroundButton.BackColor = Color.Green;
+                collisionsButton.BackColor = Color.LavenderBlush;
+            }
+
+            catch (Exception ex)
+            {
+                //Error occurred...
+                MessageBox.Show("Error Reading File! " + ex.Message, ":(");
+            }
+
+            finally
+            {
+                //Closes the stream
+                if (stream != null)
+                {
+                    reader.Close();
+                    rotation = 0;
+                    Rotate(texturePic);
+                    texturePic.Refresh();
+                }
+            }
         }
     }   
 }
