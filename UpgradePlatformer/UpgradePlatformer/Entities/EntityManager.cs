@@ -233,7 +233,7 @@ namespace UpgradePlatformer.Entities
         public void Cleanup(GameTime gametime)
         {
             objects.RemoveAll((o) => o == null);
-            objects.RemoveAll((o) => !o.IsActive);
+            objects.RemoveAll((o) => !o.IsActive && !(o is Player));
         }
 
         /// <summary>

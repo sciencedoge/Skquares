@@ -131,6 +131,8 @@ namespace UpgradePlatformer
                     SoundManager.Instance.PlaySFX("button");
                     SoundManager.Instance.PlayMusic("game");
                     EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
+                    if (EntityManager.Instance.Player() != null)
+                        EntityManager.Instance.Player().Demo = false;
                     EntityManager.Instance.RespawnPlayer();
                 })
             };

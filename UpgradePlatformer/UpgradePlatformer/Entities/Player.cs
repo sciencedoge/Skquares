@@ -215,6 +215,8 @@ namespace UpgradePlatformer.Entities
         /// <param name="gt"></param>
         public override void Draw(SpriteBatch sb, GameTime gt)
         {
+            if (!IsActive) return;
+
             base.Draw(sb, gt);
 
             if (weapon.IsActive)
@@ -276,7 +278,6 @@ namespace UpgradePlatformer.Entities
                 }
                 return;
             }
-            InputManager.Instance.Update();
             Event dev = EventManager.Instance.Pop("KEY_DOWN");
             Event uev = EventManager.Instance.Pop("KEY_UP");
             Event jev = EventManager.Instance.Pop("GAME_PAD_JOYSTICK");
@@ -298,7 +299,7 @@ namespace UpgradePlatformer.Entities
             }
             if (jev != null) {
                 EventManager.Instance.Push(jev);
-                if (Vector2.Distance(jev.MousePosition.ToVector2(), new Vector2(0)) > 2)
+                if (Vector2.Distance(jev.MousePosition.ToVector2(), new Vector2(0)) > 4)
                     Joystick = jev.MousePosition.ToVector2() / 10;
                 else
                     Joystick = new Vector2(0, 0);
