@@ -76,12 +76,7 @@ namespace UpgradePlatformer.Entities
             if (player == null) return;
             for(int i = 0; i < Enemies.Count; i++)
             {
-                if (Enemies[i].Idle)
-                {
-                    Idle(Enemies[i], gameTime);
-                    continue;
-                }
-
+                
                 if (relationships[i, 0].X < 150)
                 {
                     if (Raycast(Enemies[i]))
@@ -117,7 +112,7 @@ namespace UpgradePlatformer.Entities
                     else
                     {
                         Enemies[i].animation.SetFlag(3);
-                        GoombaAI(Enemies[i]);
+                        GoombaAI(Enemies[i], gameTime);
                     }
                     
 
@@ -144,7 +139,7 @@ namespace UpgradePlatformer.Entities
                 }
                 else
                 {
-                    GoombaAI(Enemies[i]);
+                    GoombaAI(Enemies[i], gameTime);
                 }
             }
         }
@@ -219,8 +214,20 @@ namespace UpgradePlatformer.Entities
         /// Goomba AI algo
         /// </summary>
         /// <param name="enemy"></param>
-        public void GoombaAI(Enemy enemy)
+        public void GoombaAI(Enemy enemy, GameTime gameTime)
         {
+            //Tries to randomly idle an enemy
+            if (random.Next(0, 100) == 99 && !enemy.Idle)
+            {
+                enemy.Idle = true;
+            }
+
+            if (enemy.Idle)
+            {
+                Idle(enemy, gameTime);
+                return;
+            }
+
             enemy.animation.SetFlag(3);
             enemy.Flip = goombaAINum > 0;
             if (enemy.Colliding)
@@ -264,6 +271,7 @@ namespace UpgradePlatformer.Entities
             if(e.TimeSinceIdle > 3000)
             {
                 e.Idle = false;
+                e.TimeSinceIdle = 0;
             }
         }
     }
