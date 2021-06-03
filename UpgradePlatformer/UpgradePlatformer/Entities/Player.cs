@@ -286,9 +286,9 @@ namespace UpgradePlatformer.Entities
             {
                 Keys down = (Keys)dev.Data;
                 if (down == Keys.W) keyUp = true;
-                else if (down == Keys.A) { keyLeft = true;  }
+                else if (down == Keys.A) keyLeft = true;
                 else if (down == Keys.S) keyDown = true;
-                else if (down == Keys.D) { keyRight = true;  }
+                else if (down == Keys.D) keyRight = true;
             }
             if (uev != null)
             {
