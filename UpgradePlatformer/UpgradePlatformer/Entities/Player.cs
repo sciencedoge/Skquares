@@ -111,8 +111,9 @@ namespace UpgradePlatformer.Entities
 
                 if (weapon.IsActive)
                 {
-                    weapon.Position = new Vector2(this.X +  hitbox.Width,
-                this.Y -  hitbox.Height);
+                    float frameBobX = 15 * (float)Math.Cos(gt.TotalGameTime.TotalMilliseconds / 300);
+                    float frameBobY = 10 * (float)Math.Cos(gt.TotalGameTime.TotalMilliseconds / 250);
+                    weapon.Position = new Vector2(frameBobX + hitbox.Center.X, frameBobY + Hitbox.Top);
 
                     weapon.Update();
                 }
