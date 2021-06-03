@@ -291,7 +291,7 @@ namespace UpgradePlatformer.Entities
                             if (obj.Y < t.Position.Y) //&& !Player().Ducking) // this worked for allowing to go down platforms but it ruind controlls on a controller
                             {
                                 //checks conditions to move the player up or down
-                                if (intersection.Width > intersection.Height - 20)
+                                if (intersection.Width > intersection.Height)
                                 {
                                     //short wide rectangle
                                     //moves player up
