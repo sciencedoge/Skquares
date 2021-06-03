@@ -78,9 +78,10 @@ namespace UpgradePlatformer.Entities
             {
                 if (Enemies[i].Idle)
                 {
-                    Idle(Enemies[i]);
+                    Idle(Enemies[i], gameTime);
                     continue;
                 }
+
                 if (relationships[i, 0].X < 150)
                 {
                     if (Raycast(Enemies[i]))
@@ -225,9 +226,9 @@ namespace UpgradePlatformer.Entities
             if (enemy.Colliding)
             {
                 if (goombaAINum > 0)
-                    enemy.animation.SetFlag(1);
-                else
                     enemy.animation.SetFlag(0);
+                else
+                    enemy.animation.SetFlag(1);
                 goombaAINum *= -1;
                 enemy.X += goombaAINum;
                 enemy.Colliding = false;
