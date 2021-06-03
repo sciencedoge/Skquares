@@ -121,7 +121,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public EntityManager()
         {
-            this.objects = new List<EntityObject>();
+            objects = new List<EntityObject>();
             pathfind = new PathfindingAI(Enemies(), Player());
         }
 
@@ -141,8 +141,8 @@ namespace UpgradePlatformer.Entities
             {
                 foreach (EntityObject obj in objects)
                 {
-                    if (obj.IsActive == false) continue;
                     if (obj == null) continue;
+                    if (obj.IsActive == false) continue;
                     if(obj is Enemy)
                     {
                         obj.Update(gameTime);               

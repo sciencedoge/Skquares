@@ -520,7 +520,7 @@ namespace UpgradePlatformer
         protected void Cleanup(GameTime gameTime)
         {
             EntityManager.Instance.Cleanup(gameTime);
-            //EventManager.Instance.Cleanup(gameTime);
+            EventManager.Instance.Cleanup(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
