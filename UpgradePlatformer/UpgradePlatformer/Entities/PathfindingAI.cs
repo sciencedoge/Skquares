@@ -240,5 +240,10 @@ namespace UpgradePlatformer.Entities
                 enemy.JumpsLeft -= 1;
             }
         }
+
+        public void Idle(Enemy e)
+        {
+
+        }
     }
 }

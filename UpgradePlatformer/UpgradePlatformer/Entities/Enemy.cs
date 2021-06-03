@@ -21,6 +21,8 @@ namespace UpgradePlatformer.Entities
         private Point spawnPoint;
         private bool currentlyColliding;
 
+        private TimeSpan idleTime;
+
         /// <summary>
         /// returns or sets the
         /// spawn point of the enemy
@@ -40,6 +42,13 @@ namespace UpgradePlatformer.Entities
             get { return currentlyColliding; }
             set { currentlyColliding = value; }
         }
+
+        public TimeSpan TimeSinceIdle 
+        {
+            get { return idleTime; }
+            set { idleTime = value; }      
+        }
+
         public bool Flip;
 
         /// <summary>
@@ -57,6 +66,8 @@ namespace UpgradePlatformer.Entities
             spawnPoint = new Point(hitbox.X, hitbox.Y);
             currentlyColliding = false;
             this.animation = new AnimationFSM(AnimationManager.Instance.animations[1]);
+
+            idleTime = TimeSpan.Zero;
         }
 
         /// <summary>
