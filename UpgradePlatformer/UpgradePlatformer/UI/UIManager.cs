@@ -247,7 +247,6 @@ namespace UpgradePlatformer.UI
         /// <param name="spriteBatch">the Sprite Batch Object</param>
         /// <param name="renderRect">Where the sprite should be rendered</param>
         /// <param name="rotation">should be zero for now</param>
-        /// TODO: Implement rotation?
         public void Draw(SpriteBatch spriteBatch, Rectangle renderRect, float rotation)
         {
             Rectangle tmp;

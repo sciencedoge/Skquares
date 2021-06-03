@@ -221,7 +221,6 @@ namespace UpgradePlatformer
             });
             muteToggle.toggled = SoundManager.Instance.Muted;
 
-            // TODO: Add Fullscreen
             UIToggle fullscreenToggle = new UIToggle(_font, new Rectangle((_graphics.PreferredBackBufferWidth - ButtonWidth) / 2, 350, ButtonWidth, 40));
             fullscreenToggle.onClick = new UIAction((i) =>
             {
