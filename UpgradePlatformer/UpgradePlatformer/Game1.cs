@@ -63,6 +63,7 @@ namespace UpgradePlatformer
             // setup resolution
             _graphics.PreferredBackBufferWidth = 630;
             _graphics.PreferredBackBufferHeight = 670;
+            Window.Title = "Skquares";
             IsMouseVisible = false;
             Window.AllowUserResizing = true;
             _graphics.ApplyChanges();
