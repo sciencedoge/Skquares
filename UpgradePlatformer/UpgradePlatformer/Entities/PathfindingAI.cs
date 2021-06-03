@@ -266,6 +266,7 @@ namespace UpgradePlatformer.Entities
         /// <param name="gameTime"></param>
         public void Idle(Enemy e, GameTime gameTime)
         {
+            e.animation.SetFlag(0);
             e.TimeSinceIdle += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if(e.TimeSinceIdle > 3000)
