@@ -427,9 +427,12 @@ namespace UpgradePlatformer
                 foreach (World w in LevelManager.Instance.Worlds)
                     foreach (Level l in w.Levels)
                         l.Collected = new List<LevelCollectedEntity>();
+
+                try {
                 if (Save.Data.collectedEntities != null)
                     foreach (LevelCollectedEntity obj in Save.Data.collectedEntities)
                         LevelManager.Instance.Worlds[obj.World].Levels[obj.Level].Collected.Add(obj);
+                } catch { }
                 SoundManager.Instance.Muted = Save.Data.muted;
                 EntityManager.Instance.PlayerMoney = Save.Data.money;
                 _graphics.IsFullScreen = Save.Data.fullscreen;

@@ -61,6 +61,7 @@ namespace UpgradePlatformer.Levels
                         for (int j = Math.Max(-1, y); j < (y == TileHeight ? 1 : 2); j++)
                             around[i + 1, j + 1] = TileMap[x + i, y + j];
                     TileMap[x, y] = new Tile(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize, around);
+                    reader.ReadString();
                 }
             }
             for (int x = 0; x < TileWidth; x++)
