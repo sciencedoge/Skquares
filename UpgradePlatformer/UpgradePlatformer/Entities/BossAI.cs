@@ -59,7 +59,7 @@ namespace UpgradePlatformer.Entities
                 fireballChance = 10;
             }
 
-            ShootFireball();tally 
+            ShootFireball();
 
             for (int i = fireballs.Count - 1; i > 0; i--)
             {
