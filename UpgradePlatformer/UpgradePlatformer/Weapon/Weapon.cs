@@ -23,11 +23,8 @@ namespace UpgradePlatformer.Weapon
         private bool isActive;
         private float rotation;
         private Vector2 position;
-
         private List<Bullet> bullets;
-
         private Rectangle spriteBounds;
-
         public Point MousePos; //using this for now (not very familiar with current input system)
         private bool Click;
 
