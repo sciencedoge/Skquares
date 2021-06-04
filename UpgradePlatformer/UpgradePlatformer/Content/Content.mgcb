@@ -56,8 +56,10 @@
 #begin Levels/cave4.level_Finished
 /copy:Levels/cave4.level_Finished
 
-#begin Levels/clouds1Fix.level_Finished
-/copy:Levels/clouds1Fix.level_Finished
+#begin Levels/clouds1.level_Finished
+/importer:
+/processor:
+/build:Levels/clouds1.level_Finished
 
 #begin Levels/clouds2.level_Finished
 /copy:Levels/clouds2.level_Finished
