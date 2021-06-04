@@ -59,9 +59,31 @@ namespace UpgradePlatformer.Entities
                 fireballChance = 10;
             }
 
+            for (int i = fireballs.Count - 1; i > 0; i--)
+            {
+                if (fireballs[i].isActive)
+                {
+                    fireballs[i].Update();
+                }
+                else
+                {
+                    fireballs.Remove(fireballs[i]);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draws fireballs to the screen
+        /// </summary>
+        /// <param name="sb"></param>
+        public void Draw(SpriteBatch sb)
+        {
             foreach(Fireball b in fireballs)
             {
-                b.Update();
+                if (b.isActive)
+                {
+                    b.Draw(sb);
+                }               
             }
         }
 

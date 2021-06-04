@@ -33,6 +33,7 @@ namespace UpgradePlatformer.Entities
         private int playerMoney;
         private Level currentLevel;
         private readonly PathfindingAI pathfind;
+        private readonly BossAI bossAI;
 
         private Boss boss;
 
@@ -127,6 +128,7 @@ namespace UpgradePlatformer.Entities
 
             objects = new List<EntityObject>();
             pathfind = new PathfindingAI(Enemies(), Player());
+            bossAI = new BossAI(Player(), boss);
         }
 
         /// <summary>
