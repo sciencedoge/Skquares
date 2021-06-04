@@ -164,6 +164,9 @@ namespace UpgradePlatformer.Entities
                         playerMoney += gainedMoney;
                     }
                 }
+                if (LevelManager.Instance.UpdateCheck()) {
+                    return;
+                }
                 if (Player() != null)
                     if (Player().CurrentHP <= 0)
                     {
