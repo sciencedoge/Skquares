@@ -123,7 +123,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public EntityManager()
         {
-            boss = new Boss(100, 5, new Rectangle(300, 300, 25, 25), 1);
+            boss = new Boss(100, 5, new Rectangle(300, 300, 100, 100), 1);
 
             objects = new List<EntityObject>();
             pathfind = new PathfindingAI(Enemies(), Player(), boss);
@@ -143,6 +143,10 @@ namespace UpgradePlatformer.Entities
             // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++)
             {
+                if(boss != null && boss.IsActive)
+                {
+                    boss.Update(gameTime);
+                }
                 foreach (EntityObject obj in objects)
                 {
                     if (obj == null) continue;
@@ -164,6 +168,9 @@ namespace UpgradePlatformer.Entities
                         playerMoney += gainedMoney;
                     }
                 }
+
+                Intersects(boss);
+
                 if (LevelManager.Instance.UpdateCheck()) {
                     return;
                 }
@@ -188,6 +195,10 @@ namespace UpgradePlatformer.Entities
             {
                 if (obj == null) continue;
                 obj.Draw(spriteBatch, gameTime);
+            }
+            if(boss != null)
+            {
+                boss.Draw(spriteBatch, gameTime);
             }
         }
 
@@ -243,7 +254,7 @@ namespace UpgradePlatformer.Entities
         public void Intersects(EntityObject o)
         {
 
-            if (!new List<EntityKind> { EntityKind.PLAYER, EntityKind.ENEMY}.Contains(o.Kind))
+            if (!new List<EntityKind> { EntityKind.PLAYER, EntityKind.ENEMY, EntityKind.BOSS}.Contains(o.Kind))
                 return;
 
             LivingObject obj = (LivingObject)o;
