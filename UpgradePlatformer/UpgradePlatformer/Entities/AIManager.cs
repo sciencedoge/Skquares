@@ -9,7 +9,19 @@ namespace UpgradePlatformer.Entities
     //Date: 6/4/2021
     //Purpose: Manages all AI in the game
     //==========================================
-    class AIManager
+    abstract class AIManager
     {
+        //Fields
+
+        /// <summary>
+        /// Creates an AIManager object
+        /// </summary>
+        public AIManager()
+        {
+
+        }
+
+
+
     }
 }
