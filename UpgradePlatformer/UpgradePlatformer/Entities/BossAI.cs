@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Weapon;
+using UpgradePlatformer.Graphics;
 
 namespace UpgradePlatformer.Entities
 {
@@ -13,21 +14,115 @@ namespace UpgradePlatformer.Entities
     //Date: 6/3/2021
     //PUrpose: Creates the AI for the boss Entity
     //=================================================
-    class BossAI : PathfindingAI
+    class BossAI
     {
         //Fields
         private Boss boss;
+        private Player player;
 
+        private Random random;
+        private int phase;
+
+        private int fireballChance;
+
+        private List<Fireball> fireballs;
+            
         /// <summary>
         /// Creates the BossAI object
         /// </summary>
-        public BossAI(List<Enemy> enemies, Player player, Boss boss)
-            : base(enemies, player) { }
+        public BossAI(Player player, Boss boss)
+        {
+            this.boss = boss;
+            this.player = player;
+
+            random = new Random();
+            fireballs = new List<Fireball>();
+
+            fireballChance = 500;
+            phase = 0;
+        }
+
+        /// <summary>
+        /// Determines the phases and random chance of summoning fireballs
+        /// </summary>
+        public void Update()
+        {
+            boss = EntityManager.Instance.Boss();
+            player = EntityManager.Instance.Player();
+            if(!boss.IsActive && fireballs.Count > 0)
+            {
+                fireballs.Clear();
+            }
+
+            if (boss.IsActive)
+            {
+                if (boss.CurrentHP <= 50
+                && phase == 0)
+                {
+                    phase = 1;
+                    fireballChance = 100;
+                }
+                else if (boss.CurrentHP <= 10
+                    && phase == 1)
+                {
+                    phase = 2;
+                    fireballChance = 10;
+                }
+
+                ShootFireball();
+
+                for (int i = fireballs.Count - 1; i > 0; i--)
+                {
+                    if (fireballs[i].isActive)
+                    {
+                        fireballs[i].Update();
+                    }
+                    else
+                    {
+                        fireballs.Remove(fireballs[i]);
+                    }
+                }
+            }           
+        }
+
+        /// <summary>
+        /// Draws fireballs to the screen
+        /// </summary>
+        /// <param name="sb"></param>
+        public void Draw(SpriteBatch sb)
+        {
+            foreach(Fireball b in fireballs)
+            {
+                if (b.isActive)
+                {
+                    b.Draw(sb);
+                }               
+            }
+        }
 
         //Methods
+        /// <summary>
+        /// Allows the boss to shoot a fireball
+        /// </summary>
         public void ShootFireball()
         {
+            if(random.Next(0, fireballChance) == fireballChance - 1)
+            {
+                Vector2 bulletPos = new Vector2(boss.Position.X + (boss.Hitbox.Width / 2),
+                                                boss.Position.Y + (boss.Hitbox.Height / 2));
 
+                Vector2 distance = FindDistance();
+
+                fireballs.Add(new Fireball(distance, bulletPos, 0));
+            }
+        }
+
+        public Vector2 FindDistance()
+        {
+            float distX = boss.Position.X - player.Position.X;
+            float distY = boss.Position.Y - (player.Position.Y - (40 * Sprite.GetScale()));
+
+            return new Vector2(distX, distY);
         }
 
     }

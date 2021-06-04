@@ -33,6 +33,7 @@ namespace UpgradePlatformer.Entities
         private int playerMoney;
         private Level currentLevel;
         private readonly PathfindingAI pathfind;
+        private readonly BossAI bossAI;
 
         //methods
 
@@ -107,6 +108,11 @@ namespace UpgradePlatformer.Entities
             return null;
         }
 
+        public Boss Boss()
+        {
+            return boss;
+        }
+
         /// <summary>
         /// returns player's current money
         /// </summary>
@@ -123,6 +129,8 @@ namespace UpgradePlatformer.Entities
         {
             objects = new List<EntityObject>();
             pathfind = new PathfindingAI(Enemies(), Player());
+            bossAI = new BossAI(Player(), boss);
+
         }
 
         /// <summary>
@@ -133,6 +141,7 @@ namespace UpgradePlatformer.Entities
         {
             currentLevel = LevelManager.Instance.ActiveLevel();
 
+            bossAI.Update();
             pathfind.Update();
             pathfind.UpdateCosts();
             pathfind.MoveToPlayer(gameTime);
@@ -186,6 +195,8 @@ namespace UpgradePlatformer.Entities
                 if (obj == null) continue;
                 obj.Draw(spriteBatch, gameTime);
             }
+            if (boss() != null)
+                bossAI.Draw(spriteBatch);
         }
 
         /// <summary>
