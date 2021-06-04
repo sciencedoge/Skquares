@@ -48,6 +48,7 @@ namespace UpgradePlatformer.Entities
         public void Update()
         {
             boss = EntityManager.Instance.Boss();
+            if (boss == null) return;
             player = EntityManager.Instance.Player();
             if(!boss.IsActive && fireballs.Count > 0)
             {

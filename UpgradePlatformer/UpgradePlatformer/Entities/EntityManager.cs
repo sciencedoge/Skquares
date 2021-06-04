@@ -110,7 +110,14 @@ namespace UpgradePlatformer.Entities
 
         public Boss Boss()
         {
-            return boss;
+            foreach (EntityObject obj in objects)
+            {
+                if (obj == null) continue;
+
+                if (obj.Kind == EntityKind.BOSS)
+                    return (Boss)obj;
+            }
+            return null;
         }
 
         /// <summary>
@@ -129,7 +136,7 @@ namespace UpgradePlatformer.Entities
         {
             objects = new List<EntityObject>();
             pathfind = new PathfindingAI(Enemies(), Player());
-            bossAI = new BossAI(Player(), boss);
+            bossAI = new BossAI(Player(), Boss());
 
         }
 
@@ -140,7 +147,6 @@ namespace UpgradePlatformer.Entities
         public void Update(GameTime gameTime)
         {
             currentLevel = LevelManager.Instance.ActiveLevel();
-
             bossAI.Update();
             pathfind.Update();
             pathfind.UpdateCosts();
@@ -195,7 +201,7 @@ namespace UpgradePlatformer.Entities
                 if (obj == null) continue;
                 obj.Draw(spriteBatch, gameTime);
             }
-            if (boss() != null)
+            if (Boss() != null)
                 bossAI.Draw(spriteBatch);
         }
 
