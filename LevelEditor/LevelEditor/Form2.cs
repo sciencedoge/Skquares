@@ -222,7 +222,7 @@ namespace LevelEditor
                     p.SizeMode = PictureBoxSizeMode.Zoom;
                     //Load image
                     p.Load(path);
-                    if (metadata == "")
+                    if (metadata == "" && boxes[0, 0].Enabled == true)
                         p.Load(path.Replace(".png", "Dim.png"));
                     p.BackColor = Color.Transparent;
                     Rotate(p);

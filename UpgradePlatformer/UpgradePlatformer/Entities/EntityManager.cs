@@ -35,8 +35,6 @@ namespace UpgradePlatformer.Entities
         private readonly PathfindingAI pathfind;
         private readonly BossAI bossAI;
 
-        private Boss boss;
-
         //methods
 
         /// <summary>
@@ -112,7 +110,14 @@ namespace UpgradePlatformer.Entities
 
         public Boss Boss()
         {
-            return boss;
+            foreach (EntityObject obj in objects)
+            {
+                if (obj == null) continue;
+
+                if (obj.Kind == EntityKind.BOSS)
+                    return (Boss)obj;
+            }
+            return null;
         }
 
         /// <summary>
@@ -129,11 +134,9 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public EntityManager()
         {
-            boss = new Boss(100, 5, new Rectangle(300, 300, 100, 100), 1);
-
             objects = new List<EntityObject>();
             pathfind = new PathfindingAI(Enemies(), Player());
-            bossAI = new BossAI(Player(), boss);
+            bossAI = new BossAI(Player(), Boss());
 
         }
 
@@ -144,7 +147,6 @@ namespace UpgradePlatformer.Entities
         public void Update(GameTime gameTime)
         {
             currentLevel = LevelManager.Instance.ActiveLevel();
-
             bossAI.Update();
             pathfind.Update();
             pathfind.UpdateCosts();
@@ -152,10 +154,6 @@ namespace UpgradePlatformer.Entities
             // IMPORTANT: Subframes are calculated here
             for (int i = 0; i < 5; i ++)
             {
-                if(boss != null && boss.IsActive)
-                {
-                    boss.Update(gameTime);
-                }
                 foreach (EntityObject obj in objects)
                 {
                     if (obj == null) continue;
@@ -177,8 +175,6 @@ namespace UpgradePlatformer.Entities
                         playerMoney += gainedMoney;
                     }
                 }
-
-                Intersects(boss);
 
                 if (LevelManager.Instance.UpdateCheck()) {
                     return;
@@ -205,11 +201,8 @@ namespace UpgradePlatformer.Entities
                 if (obj == null) continue;
                 obj.Draw(spriteBatch, gameTime);
             }
-            if(boss != null)
-            {
-                boss.Draw(spriteBatch, gameTime);
+            if (Boss() != null)
                 bossAI.Draw(spriteBatch);
-            }
         }
 
         /// <summary>

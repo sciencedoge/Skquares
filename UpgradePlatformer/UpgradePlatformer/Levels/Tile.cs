@@ -22,7 +22,9 @@ namespace UpgradePlatformer.Levels
         public int CollisionKind;
         public Rectangle Position;
         public bool Spawner;
+        private bool decorbg;
         public int SpawnerKind;
+        public bool LightOverride;
 
         /// <summary>
         /// creates a tile object
@@ -91,7 +93,15 @@ namespace UpgradePlatformer.Levels
                             Metadata = Metadata.Substring(3);
                         else
                             Metadata = "";
+                        decorbg = decor % 8 < 4;
                         DecorSprite = AllSprites[6 + decor / 4, 3 + decor % 4].Copy();
+                        break;
+                    case 'l':
+                        LightOverride = true;
+                        if (Metadata.Length > 1)
+                            Metadata = Metadata.Substring(1);
+                        else
+                            Metadata = "";
                         break;
                     default:
                         loop = false;
@@ -136,12 +146,15 @@ namespace UpgradePlatformer.Levels
                 BGSprite.TintColor = Color.Gray;
                 UpdatePos(position);
                 BGSprite.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
-                DecorSprite.Draw(spriteBatch, Position.Location - (Position.Size.ToVector2() * new Vector2(0, 1)).ToPoint(), 0, Position.Size.ToVector2());
+                if (decorbg)
+                    DecorSprite.Draw(spriteBatch, Position.Location - (Position.Size.ToVector2() * new Vector2(0, 1)).ToPoint(), 0, Position.Size.ToVector2());
                 return;
             }
             Sprite.TintColor = Color.White;
             UpdatePos(position);
             Sprite.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
+            if (!decorbg)
+                DecorSprite.Draw(spriteBatch, Position.Location - (Position.Size.ToVector2() * new Vector2(0, 1)).ToPoint(), 0, Position.Size.ToVector2());
         }
 
         /// <summary>
@@ -157,7 +170,7 @@ namespace UpgradePlatformer.Levels
                 Sprite sp = new Sprite(TILE_EMPTY, new Vector2(32), Color.Orange);
                 sp.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2() * 4);
             }
-            if (Kind < 9 && !(CollisionKind == 9))
+            if ((Kind < 9 && !(CollisionKind == 9)) && !LightOverride)
                 return;
             UpdatePos(position);
             Sprite s = new Sprite(TILE_EMPTY, new Vector2(32), Color.White);

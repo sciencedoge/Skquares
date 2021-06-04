@@ -48,7 +48,8 @@ namespace UpgradePlatformer.Weapon
             }
 
             Boss b = EntityManager.Instance.Boss();
-
+            if (b == null)
+                return;
             if (hitbox.Intersects(b.Hitbox))
             {
                 if (b.IsActive)
