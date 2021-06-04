@@ -113,7 +113,7 @@ namespace UpgradePlatformer.Entities
                     }
                     else
                     {
-                        Enemies[i].animation.SetFlag(3);
+                        //Enemies[i].animation.SetFlag(3);
                         GoombaAI(Enemies[i], gameTime);
                     }
                     
@@ -226,12 +226,8 @@ namespace UpgradePlatformer.Entities
 
             if (enemy.Idle)
             {
-                enemy.animation.SetFlag(4);
                 Idle(enemy, gameTime);
                 return;
-            } else
-            {
-                enemy.animation.SetFlag(5);
             }
 
             enemy.animation.SetFlag(3);
@@ -274,9 +270,16 @@ namespace UpgradePlatformer.Entities
         public void Idle(Enemy e, GameTime gameTime)
         {
             e.TimeSinceIdle += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+            for (int i = 0; i < 3000; i+= 600) {
+                if (e.TimeSinceIdle > i)
+                    e.animation.SetFlag(4);
+                if (e.TimeSinceIdle > i + 150)
+                    e.animation.SetFlag(5);
+            }
 
             if(e.TimeSinceIdle > 3000)
             {
+                e.animation.SetFlag(5);
                 e.Idle = false;
                 e.TimeSinceIdle = 0;
             }

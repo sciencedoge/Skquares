@@ -30,7 +30,9 @@ namespace UpgradePlatformer.Graphics
         public AnimationFSM(AnimationFSM Copy)
         {
             finiteStateMachine = Copy.finiteStateMachine.Copy();
-            animations = Copy.animations;
+            animations = new List<Animation>();
+            foreach (Animation a in Copy.animations)
+                animations.Add(new Animation(a));
         }
         
         /// <summary>
@@ -69,6 +71,7 @@ namespace UpgradePlatformer.Graphics
 
     class Animation
     {
+        static Random rand;
         public List<Sprite> sprites;
         private int sprite, counter;
         private readonly int framesPerSprite;
@@ -81,6 +84,19 @@ namespace UpgradePlatformer.Graphics
         public Animation(List<Sprite> Sprites, int FramesPerSprite) {
             sprites = Sprites;
             framesPerSprite = FramesPerSprite;
+        }
+
+        /// <summary>
+        /// creates an animation
+        /// </summary>
+        /// <param name="Sprites">the sprites in the animation</param>
+        /// <param name="FramesPerSprite">the ammount of frames to spend on the sprite</param>
+        public Animation(Animation Copy)
+        {
+            if (rand == null) rand = new Random();
+            sprites = Copy.sprites;
+            framesPerSprite = Copy.framesPerSprite;
+            counter += rand.Next(1,1000);
         }
 
         /// <summary>
