@@ -33,12 +33,9 @@ namespace UpgradePlatformer.FSM
         /// <param name="id">the flag to set off</param>
         public void SetFlag(int id)
         {
-            for (int i = 0; i < States.Count; i++)
-            {
-                for (int j = 0; j < States[i].Conds.Count; j++)
-                    if ((States[i].Conds[j]).Id == id)
-                        (States[i].Conds[j]).Value = true;
-            }
+            for (int j = 0; j < States[currentState].Conds.Count; j++)
+                if ((States[currentState].Conds[j]).Id == id)
+                    (States[currentState].Conds[j]).Value = true;
             if (States[currentState].CheckConds()) currentState = States[currentState].CheckCondsNext();
             for (int i = 0; i < States.Count; i++)
                 for (int j = 0; j < States[i].Conds.Count; j++)
