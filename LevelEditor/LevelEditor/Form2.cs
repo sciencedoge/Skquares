@@ -952,8 +952,10 @@ namespace LevelEditor
                     objectColors[i, j] = currentObject;
                     if (!old)
                     {
-                        string currentMetadata = reader.ReadString().Remove(0);
+                        string currentMetadata = reader.ReadString().TrimStart('m');
                         metadataStorage[i, j] = currentMetadata;
+                    } else {
+                        metadataStorage[i, j] = "";
                     }
                 }
             }

@@ -265,7 +265,7 @@ namespace LevelEditor
 
                             int objectType = int.Parse(reader.ReadString().Replace("Dim", ""));
 
-                            string metadata = reader.ReadString().Remove(0);
+                            string metadata = reader.ReadString().TrimStart('m');
 
                             //writes the altered picture path and rotation value
                             //to a new file
