@@ -110,6 +110,11 @@ namespace UpgradePlatformer.Entities
             return null;
         }
 
+        public Boss Boss()
+        {
+            return boss;
+        }
+
         /// <summary>
         /// returns player's current money
         /// </summary>

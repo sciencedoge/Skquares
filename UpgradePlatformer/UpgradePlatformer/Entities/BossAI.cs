@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Weapon;
+using UpgradePlatformer.Graphics;
 
 namespace UpgradePlatformer.Entities
 {
@@ -37,7 +38,7 @@ namespace UpgradePlatformer.Entities
             random = new Random();
             fireballs = new List<Fireball>();
 
-            fireballChance = 1000;
+            fireballChance = 500;
             phase = 0;
         }
 
@@ -46,7 +47,10 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public void Update()
         {
-            if(boss.CurrentHP <= 50
+            boss = EntityManager.Instance.Boss();
+            player = EntityManager.Instance.Player();
+
+            if (boss.CurrentHP <= 50
                 && phase == 0)
             {
                 phase = 1;
@@ -97,8 +101,21 @@ namespace UpgradePlatformer.Entities
         {
             if(random.Next(0, fireballChance) == fireballChance - 1)
             {
-                fireballs.Add(new Fireball(player.Position, boss.Position, 0));
+                Vector2 bulletPos = new Vector2(boss.Position.X + (boss.Hitbox.Width / 2),
+                                                boss.Position.Y + (boss.Hitbox.Height / 2));
+
+                Vector2 distance = FindDistance();
+
+                fireballs.Add(new Fireball(distance, bulletPos, 0));
             }
+        }
+
+        public Vector2 FindDistance()
+        {
+            float distX = boss.Position.X - player.Position.X;
+            float distY = boss.Position.Y - (player.Position.Y - (40 * Sprite.GetScale()));
+
+            return new Vector2(distX, distY);
         }
 
     }
