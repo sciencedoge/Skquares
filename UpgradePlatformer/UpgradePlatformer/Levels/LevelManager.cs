@@ -121,6 +121,8 @@ namespace UpgradePlatformer.Levels
             ActiveLevel().Collected.Add(new LevelCollectedEntity(t));
         }
 
+        public bool UpdateCheck() => _activeWorld != activeWorld || ActiveWorld().CheckUpdate();
+
         /// <summary>
         /// sets the active level
         /// </summary>

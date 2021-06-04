@@ -576,7 +576,6 @@ namespace UpgradePlatformer
 
             _spriteBatch.End();
 
-
             Sprite.Shaders[0].Parameters["MaskTexture"].SetValue(_lightTarget);
             Sprite.Shaders[1].Parameters["MaskTexture"].SetValue(_invTarget);
             

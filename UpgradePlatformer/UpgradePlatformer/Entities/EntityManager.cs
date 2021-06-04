@@ -147,16 +147,9 @@ namespace UpgradePlatformer.Entities
                 {
                     if (obj == null) continue;
                     if (obj.IsActive == false) continue;
-                    if(obj is Enemy)
-                    {
-                        obj.Update(gameTime);               
-                    }
-                    else
-                    {
-                        obj.Update(gameTime);
-                        if (obj is LivingObject @object)
-                            @object.animation.Update(gameTime);
-                    }
+                    obj.Update(gameTime);
+                    if (obj is LivingObject @object)
+                        @object.animation.Update(gameTime);
 
                     Intersects(obj);
 
@@ -170,6 +163,9 @@ namespace UpgradePlatformer.Entities
                     {
                         playerMoney += gainedMoney;
                     }
+                }
+                if (LevelManager.Instance.UpdateCheck()) {
+                    return;
                 }
                 if (Player() != null)
                     if (Player().CurrentHP <= 0)

@@ -15,6 +15,7 @@ namespace UpgradePlatformer.Levels
         int activeLevel;
         int _activeLevel;
         bool Light = false;
+        public bool CheckUpdate() => _activeLevel != activeLevel;
         
         /// <summary>
         /// updates the level if needed
