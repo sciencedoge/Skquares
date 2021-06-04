@@ -140,6 +140,7 @@ namespace UpgradePlatformer.Entities
         {
             currentLevel = LevelManager.Instance.ActiveLevel();
 
+            bossAI.Update();
             pathfind.Update();
             pathfind.UpdateCosts();
             pathfind.MoveToPlayer(gameTime);
@@ -202,6 +203,7 @@ namespace UpgradePlatformer.Entities
             if(boss != null)
             {
                 boss.Draw(spriteBatch, gameTime);
+                bossAI.Draw(spriteBatch);
             }
         }
 
