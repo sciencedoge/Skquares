@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace UpgradePlatformer.Entities
 {
@@ -9,7 +12,22 @@ namespace UpgradePlatformer.Entities
     //Date: 6/3/2021
     //PUrpose: Creates the AI for the boss Entity
     //=================================================
-    class BossAI
+    class BossAI : PathfindingAI
     {
+        //Fields
+        private Boss boss;
+
+        /// <summary>
+        /// Creates the BossAI object
+        /// </summary>
+        public BossAI(List<Enemy> enemies, Player player, Boss boss)
+            : base(enemies, player) { }
+
+        //Methods
+        public void ShootFireball()
+        {
+
+        }
+
     }
 }

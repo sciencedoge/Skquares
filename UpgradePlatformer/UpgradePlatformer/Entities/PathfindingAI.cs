@@ -20,7 +20,7 @@ namespace UpgradePlatformer.Entities
         private readonly float speed;
         public Player player;
         public List<Enemy> _enemies;
-        public Boss boss;
+
         public List<Enemy> Enemies { get => _enemies; set { _enemies = value; relationships = new Vector2[Enemies.Count, 1];} }
         private float goombaAINum;
         private Vector2[,] relationships;
@@ -36,11 +36,10 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Creates a new PathFindingAI object
         /// </summary>
-        public PathfindingAI(List<Enemy> enemies, Player player, Boss boss)
+        public PathfindingAI(List<Enemy> enemies, Player player)
         {
             this.Enemies = enemies;
             this.player = player;
-            this.boss = boss;
             speed = 3f;
             goombaAINum = speed;
             relationships = new Vector2[enemies.Count, 1];
