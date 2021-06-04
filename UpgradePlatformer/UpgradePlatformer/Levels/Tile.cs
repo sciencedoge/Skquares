@@ -23,6 +23,7 @@ namespace UpgradePlatformer.Levels
         public Rectangle Position;
         public bool Spawner;
         public int SpawnerKind;
+        public bool LightOverride;
 
         /// <summary>
         /// creates a tile object
@@ -93,6 +94,13 @@ namespace UpgradePlatformer.Levels
                             Metadata = "";
                         DecorSprite = AllSprites[6 + decor / 4, 3 + decor % 4].Copy();
                         break;
+                    case 'l':
+                        LightOverride = true;
+                        if (Metadata.Length > 1)
+                            Metadata = Metadata.Substring(1);
+                        else
+                            Metadata = "";
+                        break;
                     default:
                         loop = false;
                         break;
@@ -157,7 +165,7 @@ namespace UpgradePlatformer.Levels
                 Sprite sp = new Sprite(TILE_EMPTY, new Vector2(32), Color.Orange);
                 sp.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2() * 4);
             }
-            if (Kind < 9 && !(CollisionKind == 9))
+            if ((Kind < 9 && !(CollisionKind == 9)) && !LightOverride)
                 return;
             UpdatePos(position);
             Sprite s = new Sprite(TILE_EMPTY, new Vector2(32), Color.White);
