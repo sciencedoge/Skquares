@@ -15,7 +15,8 @@ namespace UpgradePlatformer.Levels
         private static Color[] COLORS = { Color.White, Color.Green, Color.LightGray, Color.White, Color.White, Color.White, Color.White, Color.Orange, Color.White, Color.White };
         private Sprite Sprite;
         private Sprite BGSprite;
-        private Vector2 TileCenter;
+        private Sprite DecorSprite;
+        private String Metadata;
         public Vector2 TileSize;
         public int Kind;
         public int CollisionKind;
@@ -32,7 +33,7 @@ namespace UpgradePlatformer.Levels
         /// <param name="spawner">the spawner id of the tile</param>
         /// <param name="tileSize">the size of the tile</param>
         /// <param name="above">the tile above this one</param>
-        public Tile(int kind, int rotation, int collision, int spawner, Vector2 tileSize, Tile[,] around)
+        public Tile(int kind, int rotation, int collision, int spawner, Vector2 tileSize, Tile[,] around, string md)
         {
             if (AllSprites[0, 0] == null)
                 for (int i = 0; i < 20; i++)
@@ -44,14 +45,15 @@ namespace UpgradePlatformer.Levels
                 Spawner = true;
                 SpawnerKind = spawner - 1000;
             }
-            TileCenter = new Vector2(0, 0);
+            Metadata = md;
             CollisionKind = collision;
         }
+
         public void Setup(Tile[,] around)
         {
-
             Sprite = AllSprites[0, 6].Copy();
             BGSprite = AllSprites[0, 0].Copy();
+            DecorSprite = AllSprites[0, 0].Copy();
             if (around == null)
                 return;
             Point pos = new Point();
@@ -71,13 +73,31 @@ namespace UpgradePlatformer.Levels
             else if (Kind == 8) Sprite = AllSprites[1 + pos.Y, 2].Copy();
 
             if (Kind == 2) BGSprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
-            
+
             if (CollisionKind == 9)
             {
                 BGSprite = Sprite;
                 Sprite = AllSprites[0, 0].Copy();
             }
             Sprite.TintColor = COLORS[Kind - 1];
+            bool loop = true;
+            while (loop) {
+                if (Metadata == "") break;
+                switch (Metadata[0])
+                {
+                    case 'd':
+                        int decor = int.Parse(Metadata.Substring(1, 2));
+                        if (Metadata.Length > 4)
+                            Metadata = Metadata.Substring(3);
+                        else
+                            Metadata = "";
+                        DecorSprite = AllSprites[6 + decor / 4, 3 + decor % 4].Copy();
+                        break;
+                    default:
+                        loop = false;
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -104,7 +124,7 @@ namespace UpgradePlatformer.Levels
 
         /// <summary>
         /// draws a tile
-        /// </summary>
+        /// </summary?>
         /// <param name="spriteBatch">the Sprite Batch object</param>
         /// <param name="position">the position of the tile on the map</param>
         public void Draw(SpriteBatch spriteBatch, Vector2 position, bool background)
@@ -116,6 +136,7 @@ namespace UpgradePlatformer.Levels
                 BGSprite.TintColor = Color.Gray;
                 UpdatePos(position);
                 BGSprite.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
+                DecorSprite.Draw(spriteBatch, Position.Location - (Position.Size.ToVector2() * new Vector2(0, 1)).ToPoint(), 0, Position.Size.ToVector2());
                 return;
             }
             Sprite.TintColor = Color.White;

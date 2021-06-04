@@ -46,7 +46,7 @@ namespace UpgradePlatformer.Levels
 
             TileMap = new Tile[TileWidth, TileHeight];
 
-            Tile empty = new Tile(34, 0, 0, 9, new Vector2(1), null);
+            Tile empty = new Tile(34, 0, 0, 9, new Vector2(1), null, "");
 
             Tile[,] around = new Tile[3, 3];
 
@@ -60,8 +60,7 @@ namespace UpgradePlatformer.Levels
                     for (int i = Math.Max(-1, x); i < (x == TileWidth ? 1 : 2); i++)
                         for (int j = Math.Max(-1, y); j < (y == TileHeight ? 1 : 2); j++)
                             around[i + 1, j + 1] = TileMap[x + i, y + j];
-                    TileMap[x, y] = new Tile(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize, around);
-                    reader.ReadString();
+                    TileMap[x, y] = new Tile(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), tileSize, around, reader.ReadString());
                 }
             }
             for (int x = 0; x < TileWidth; x++)
@@ -166,7 +165,8 @@ namespace UpgradePlatformer.Levels
                     }
                     if (q) continue;
                     EntityObject o = null;
-                    if (t.SpawnerKind == 4) o = (EntityObject)new Torch(0, new Rectangle(t.Position.Location, new Point(15, 15)), t);
+                    if (t.SpawnerKind == 5) o = (EntityObject)new Boss(30, 1, new Rectangle(t.Position.Location, new Point(100, 100)), 0);
+                    else if (t.SpawnerKind == 4) o = (EntityObject)new Torch(0, new Rectangle(t.Position.Location, new Point(15, 15)), t);
                     else if (t.SpawnerKind == 3 && UpgradeManager.Instance.CanBeLearned(upgrade).Count != 0) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location.X, t.Position.Y - 15, 15, 15), UpgradeManager.Instance.CanBeLearned(upgrade)[0], t);
 #if DEBUG
                     else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(30, 0, new Rectangle(t.Position.Location, new Point(25, 24)), 2);
