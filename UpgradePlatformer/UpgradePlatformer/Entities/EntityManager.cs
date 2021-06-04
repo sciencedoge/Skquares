@@ -129,6 +129,7 @@ namespace UpgradePlatformer.Entities
             objects = new List<EntityObject>();
             pathfind = new PathfindingAI(Enemies(), Player());
             bossAI = new BossAI(Player(), boss);
+
         }
 
         /// <summary>
