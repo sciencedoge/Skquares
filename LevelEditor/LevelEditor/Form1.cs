@@ -256,16 +256,16 @@ namespace LevelEditor
                         for (int j = 0; j < height; j++)
                         {
                             //gets the path
-                            int tileType = int.Parse(reader.ReadString());
+                            int tileType = int.Parse(reader.ReadString().Replace("Dim", ""));
 
                             //gets the rotation value stored next to it
                             int rotationValue = reader.ReadInt32();
 
-                            int tileCollision = int.Parse(reader.ReadString());
+                            int tileCollision = int.Parse(reader.ReadString().Replace("Dim", ""));
 
-                            int objectType = int.Parse(reader.ReadString());
+                            int objectType = int.Parse(reader.ReadString().Replace("Dim", ""));
 
-                            string metadata = reader.ReadString();
+                            string metadata = reader.ReadString().Remove(0);
 
                             //writes the altered picture path and rotation value
                             //to a new file
