@@ -49,33 +49,40 @@ namespace UpgradePlatformer.Entities
         {
             boss = EntityManager.Instance.Boss();
             player = EntityManager.Instance.Player();
+            if(!boss.IsActive && fireballs.Count > 0)
+            {
+                fireballs.Clear();
+            }
 
-            if (boss.CurrentHP <= 50
+            if (boss.IsActive)
+            {
+                if (boss.CurrentHP <= 50
                 && phase == 0)
-            {
-                phase = 1;
-                fireballChance = 100;
-            }
-            else if(boss.CurrentHP <= 10
-                && phase == 1)
-            {
-                phase = 2;
-                fireballChance = 10;
-            }
-
-            ShootFireball();
-
-            for (int i = fireballs.Count - 1; i > 0; i--)
-            {
-                if (fireballs[i].isActive)
                 {
-                    fireballs[i].Update();
+                    phase = 1;
+                    fireballChance = 100;
                 }
-                else
+                else if (boss.CurrentHP <= 10
+                    && phase == 1)
                 {
-                    fireballs.Remove(fireballs[i]);
+                    phase = 2;
+                    fireballChance = 10;
                 }
-            }
+
+                ShootFireball();
+
+                for (int i = fireballs.Count - 1; i > 0; i--)
+                {
+                    if (fireballs[i].isActive)
+                    {
+                        fireballs[i].Update();
+                    }
+                    else
+                    {
+                        fireballs.Remove(fireballs[i]);
+                    }
+                }
+            }           
         }
 
         /// <summary>
