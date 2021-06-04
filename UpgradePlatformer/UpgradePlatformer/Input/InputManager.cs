@@ -102,7 +102,7 @@ namespace UpgradePlatformer.Input
         /// <param name="up">the up event name</param>
         /// <param name="down">the down event name</param>
         /// <returns></returns>
-        public String CheckChangeType(ButtonState prev, String up, String down)
+        public static String CheckChangeType(ButtonState prev, String up, String down)
         {
             if (prev == ButtonState.Pressed)
             {
