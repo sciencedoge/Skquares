@@ -13,7 +13,7 @@ namespace UpgradePlatformer.Weapon
     //Date: 6/4/2021
     //Purpose: Creates the fireball boss projectile
     //=================================================
-    class Fireball : Bullet
+    class Fireball : Projectile
     {
         /// <summary>
         /// Creates a fireball object
