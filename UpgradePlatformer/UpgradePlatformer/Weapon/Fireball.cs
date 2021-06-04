@@ -23,31 +23,5 @@ namespace UpgradePlatformer.Weapon
         {
             spriteBounds = new Rectangle(20, 7, 5, 5);
         }
-
-        //Methods
-
-        /// <summary>
-        /// Checks for intersections with fireballs
-        /// </summary>
-        public override void Intersects()
-        {
-            foreach (Enemy e in EntityManager.Instance.Enemies())
-            {
-                if (hitbox.Intersects(e.Hitbox))
-                {
-                    if (e.IsActive)
-                    {
-                        e.CurrentHP -= EntityManager.Instance.Player().Damage;
-
-                        isActive = false;
-                        if (e.CurrentHP <= 0)
-                        {
-                            e.IsActive = false;
-                        }
-                        return;
-                    }
-                }
-            }
-        }
     }
 }

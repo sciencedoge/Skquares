@@ -13,16 +13,20 @@ namespace UpgradePlatformer.Entities
     //Date: 6/3/2021
     //PUrpose: Creates the AI for the boss Entity
     //=================================================
-    class BossAI : PathfindingAI
+    class BossAI
     {
         //Fields
         private Boss boss;
+        private Player player;
 
         /// <summary>
         /// Creates the BossAI object
         /// </summary>
-        public BossAI(List<Enemy> enemies, Player player, Boss boss)
-            : base(enemies, player) { }
+        public BossAI(Player player, Boss boss)
+        {
+            this.boss = boss;
+            this.player = player;
+        }
 
         //Methods
         public void ShootFireball()
