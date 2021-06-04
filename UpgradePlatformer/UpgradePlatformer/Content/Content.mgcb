@@ -56,10 +56,11 @@
 #begin Levels/cave4.level_Finished
 /copy:Levels/cave4.level_Finished
 
+#begin Levels/clouds1Fix.level_Finished
+/copy:Levels/clouds1Fix.level_Finished
+
 #begin Levels/clouds1.level_Finished
-/importer:
-/processor:
-/build:Levels/clouds1.level_Finished
+/copy:Levels/clouds1.level_Finished
 
 #begin Levels/clouds2.level_Finished
 /copy:Levels/clouds2.level_Finished
@@ -76,23 +77,17 @@
 #begin Levels/menu2.level_Finished
 /copy:Levels/menu2.level_Finished
 
-#begin Music/AMOGUS.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/AMOGUS.mp3
-
-#begin Music/Sigh.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/Sigh.mp3
-
 #begin Music/allstar.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Music/allstar.mp3
+
+#begin Music/AMOGUS.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/AMOGUS.mp3
 
 #begin Music/boss.mp3
 /importer:Mp3Importer
@@ -153,6 +148,12 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Music/menu.mp3
+
+#begin Music/Sigh.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Sigh.mp3
 
 #begin Shaders/ShaderInvert.fx
 /importer:EffectImporter
