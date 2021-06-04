@@ -80,7 +80,7 @@ namespace UpgradePlatformer.Weapon
         /// <summary>
         /// Checks for intersections
         /// </summary>
-        private void Intersects()
+        public virtual void Intersects()
         {
             foreach (Enemy e in EntityManager.Instance.Enemies())
             {

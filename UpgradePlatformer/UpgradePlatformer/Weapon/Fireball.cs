@@ -23,5 +23,28 @@ namespace UpgradePlatformer.Weapon
         {
             spriteBounds = new Rectangle(20, 7, 5, 5);
         }
+
+        /// <summary>
+        /// Checks for intersections
+        /// </summary>
+        public override void Intersects()
+        {
+            Player p = EntityManager.Instance.Player();
+
+            if (hitbox.Intersects(p.Hitbox))
+            {
+                if (p.IsActive)
+                {
+                    p.CurrentHP -= 5;
+
+                    isActive = false;
+                    if (p.CurrentHP <= 0)
+                    {
+                        p.IsActive = false;
+                    }
+                    return;
+                }
+            }
+        }
     }
 }
