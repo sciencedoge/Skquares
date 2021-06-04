@@ -38,7 +38,7 @@ namespace UpgradePlatformer.Entities
             random = new Random();
             fireballs = new List<Fireball>();
 
-            fireballChance = 500;
+            fireballChance = 200;
             phase = 0;
         }
 
@@ -60,7 +60,7 @@ namespace UpgradePlatformer.Entities
                 && phase == 0)
                 {
                     phase = 1;
-                    fireballChance = 100;
+                    fireballChance = 50;
                 }
                 else if (boss.CurrentHP <= 10
                     && phase == 1)
