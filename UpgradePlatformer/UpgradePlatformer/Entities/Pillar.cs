@@ -35,7 +35,7 @@ namespace UpgradePlatformer.Entities
                 upgradeSprites = new List<Sprite>();
                 upgradeSprites.Add(new Sprite(new Rectangle(5, 7, 5, 5), new Vector2(0, 0), Color.LimeGreen));
                 upgradeSprites.Add(new Sprite(new Rectangle(10, 7, 5, 5), new Vector2(0, 0), Color.Red));
-                upgradeSprites.Add(new Sprite(new Rectangle(15, 7, 5, 5), new Vector2(0, 0), Color.Blue));
+                upgradeSprites.Add(new Sprite(new Rectangle(15, 7, 5, 5), new Vector2(0, 0), Color.Orange));
                 upgradeSprites.Add(new Sprite(new Rectangle(5, 7, 5, 5), new Vector2(0, 0), Color.White));
                 upgradeSprites.Add(new Sprite(new Rectangle(10, 7, 5, 5), new Vector2(0, 0), Color.White));
                 upgradeSprites.Add(new Sprite(new Rectangle(15, 7, 5, 5), new Vector2(0, 0), Color.White));
