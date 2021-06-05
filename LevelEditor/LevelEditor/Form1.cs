@@ -223,76 +223,82 @@ namespace LevelEditor
             dialog.Filter = "Level Files|*.level";
             DialogResult r = dialog.ShowDialog();
 
+            if (r != DialogResult.OK) return;
+
+            SaveFileDialog saveMenu = new SaveFileDialog();
+
+            saveMenu.Filter = "Finished Level Data Files|*.fld";
+            saveMenu.Title = $"Select output file to write {dialog.SafeFileName} to";
+            DialogResult sr = saveMenu.ShowDialog();
+
+            if (sr != DialogResult.OK) return;
+
             FileStream stream = null;
             FileStream writeStream = null;
             BinaryReader reader = null;
             BinaryWriter writer = null;
 
             //User chooses OK in the file explorer
-            if (r == DialogResult.OK)
+            try
             {
+                //Reads AND writes from the file
+                stream = new FileStream(dialog.FileName, FileMode.Open);
+                string fileName =
+                    dialog.SafeFileName;
 
-                try
+                writeStream = new FileStream(saveMenu.FileName, FileMode.Create);
+                reader = new BinaryReader(stream);
+                writer = new BinaryWriter(writeStream);
+
+                //Width and height obtained
+                width = reader.ReadInt32();
+                writer.Write(width);
+                height = reader.ReadInt32();
+                writer.Write(height);
+
+                //Handles the background layer, along with it's rotation
+                //values
+                for (int i = 0; i < width; i++)
                 {
-                    //Reads AND writes from the file
-                    stream = new FileStream(dialog.FileName, FileMode.Open);
-                    string fileName =
-                        dialog.SafeFileName;
-
-                    writeStream = new FileStream("../../../FinishedLevels/" + fileName + "_Finished", FileMode.Create);
-                    reader = new BinaryReader(stream);
-                    writer = new BinaryWriter(writeStream);
-
-                    //Width and height obtained
-                    width = reader.ReadInt32();
-                    writer.Write(width);
-                    height = reader.ReadInt32();
-                    writer.Write(height);
-
-                    //Handles the background layer, along with it's rotation
-                    //values
-                    for (int i = 0; i < width; i++)
+                    for (int j = 0; j < height; j++)
                     {
-                        for (int j = 0; j < height; j++)
-                        {
-                            //gets the path
-                            int tileType = int.Parse(reader.ReadString().Replace("Dim", ""));
+                        //gets the path
+                        int tileType = int.Parse(reader.ReadString().Replace("Dim", ""));
 
-                            //gets the rotation value stored next to it
-                            int rotationValue = reader.ReadInt32();
+                        //gets the rotation value stored next to it
+                        int rotationValue = reader.ReadInt32();
 
-                            int tileCollision = int.Parse(reader.ReadString().Replace("Dim", ""));
+                        int tileCollision = int.Parse(reader.ReadString().Replace("Dim", ""));
 
-                            int objectType = int.Parse(reader.ReadString().Replace("Dim", ""));
+                        int objectType = int.Parse(reader.ReadString().Replace("Dim", ""));
 
-                            string metadata = reader.ReadString().TrimStart('m');
+                        string metadata = reader.ReadString().TrimStart('m');
 
-                            //writes the altered picture path and rotation value
-                            //to a new file
-                            writer.Write(tileType);
-                            writer.Write(rotationValue);
-                            writer.Write(tileCollision);
-                            writer.Write(objectType);
-                            writer.Write(metadata);
-                        }
+                        //writes the altered picture path and rotation value
+                        //to a new file
+                        writer.Write(tileType);
+                        writer.Write(rotationValue);
+                        writer.Write(tileCollision);
+                        writer.Write(objectType);
+                        writer.Write(metadata);
                     }
                 }
+            }
 
-                catch (Exception ex)
-                {
-                    //Something was wrong with the file
-                    MessageBox.Show("Error reading file! " + ex.Message, ":(");
-                }
+            catch (Exception ex)
+            {
+                //Something was wrong with the file
+                MessageBox.Show("Error reading file! " + ex.Message, ":(");
+            }
 
-                finally
+            finally
+            {
+                //File was successfully appended!
+                if (stream != null)
                 {
-                    //File was successfully appended!
-                    if (stream != null)
-                    {
-                        MessageBox.Show("Successfully appended the file!", ":o");
-                        reader.Close();
-                        writer.Close();     
-                    }
+                    MessageBox.Show("Successfully appended the file!", ":o");
+                    reader.Close();
+                    writer.Close();     
                 }
             }
         }
