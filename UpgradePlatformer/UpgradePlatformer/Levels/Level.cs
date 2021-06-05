@@ -36,7 +36,7 @@ namespace UpgradePlatformer.Levels
         {
             Light = light;
             Name = name;
-            FileStream stream = new FileStream("Content/Levels/" + name + ".level_Finished", FileMode.Open);
+            FileStream stream = new FileStream("Content/Levels/" + name + ".fld", FileMode.Open);
             BinaryReader reader = new BinaryReader(stream);
 
             TileWidth = reader.ReadInt32();

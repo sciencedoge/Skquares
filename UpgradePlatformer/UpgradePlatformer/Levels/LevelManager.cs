@@ -46,9 +46,9 @@ namespace UpgradePlatformer.Levels
         {
             Worlds = new List<World>();
             _activeWorld = 0;
-            Worlds.Add(new World(new List<string>{"menu1", "menu2"}, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE}));
-            Worlds.Add(new World(new List<string>{"clouds2", "clouds1", "clouds3"}, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
-            Worlds.Add(new World(new List<string>{"cave1", "cave2", "cave3", "cave4"}, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(0, 2, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE }));
+            Worlds.Add(new World(1, 3, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(2, 3, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
         }
 
         /// <summary>
@@ -120,9 +120,9 @@ namespace UpgradePlatformer.Levels
         {
             Worlds = new List<World>();
             _activeWorld = 0;
-            Worlds.Add(new World(new List<string> { "menu1", "menu2" }, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE }));
-            Worlds.Add(new World(new List<string> { "clouds2", "clouds1", "clouds3" }, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
-            Worlds.Add(new World(new List<string> { "cave1", "cave2", "cave3", "cave4" }, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(new List<string> { "0_1", "0_2" }, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE }));
+            Worlds.Add(new World(new List<string> { "1_1", "1_2", "1_3" }, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(new List<string> { "2_1", "2_2", "2_3", "2_4" }, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
         }
 
         /// <summary>
