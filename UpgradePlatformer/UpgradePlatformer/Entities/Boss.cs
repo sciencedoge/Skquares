@@ -93,7 +93,9 @@ namespace UpgradePlatformer.Entities
             {
                 hitbox.Location = position.ToPoint();
                 spriteSize = hitbox.Size;
-                ApplyGravity();
+
+                //Removing this for now to customize how gravity affects the boss
+                //ApplyGravity(gameTime);
             }
         }
 

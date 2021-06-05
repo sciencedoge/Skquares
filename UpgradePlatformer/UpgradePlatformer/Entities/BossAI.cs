@@ -53,7 +53,7 @@ namespace UpgradePlatformer.Entities
             if (boss == null) return;
             player = EntityManager.Instance.Player();
 
-            JumpAttack();
+            JumpAttack(gt);
             if(!boss.IsActive && fireballs.Count > 0)
             {
                 fireballs.Clear();
@@ -137,7 +137,7 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Performs the boss' jump attack on the player
         /// </summary>
-        public void JumpAttack()
+        public void JumpAttack(GameTime gt)
         {
             //check for ground collision
             while(boss.Velocity.Y > -12f && boss.JumpsLeft > 0)
@@ -159,7 +159,7 @@ namespace UpgradePlatformer.Entities
             }
            
 
-            boss.ApplyGravity();
+            boss.ApplyGravity(gt);
         }
 
     }

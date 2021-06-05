@@ -179,7 +179,7 @@ namespace UpgradePlatformer.Entities
                                 sameVelocityFrames = 0;
                             }
 
-                            if(sameVelocityFrames >= 1)
+                            if(sameVelocityFrames >= 5)
                             {
                                 sameVelocityFrames = 0;
                                 jumpsLeft = 0;
