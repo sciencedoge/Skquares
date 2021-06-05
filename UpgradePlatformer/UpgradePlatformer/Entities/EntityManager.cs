@@ -279,8 +279,10 @@ namespace UpgradePlatformer.Entities
 
             Rectangle temp = GetTempHitbox(obj);
 
+
             foreach (Tile t in currentLevel.GetCollisions(temp, 4))
             {
+                temp = GetTempHitbox(obj);
                 //Gets a rectangle that represents the intersection
                 Rectangle intersection = Rectangle.Intersect(t.Position, temp);
                 
@@ -424,7 +426,7 @@ namespace UpgradePlatformer.Entities
                 //moves player down
                 else if (t.Position.Top - intersection.Top != 0)
                 {
-                    temp.Y += intersection.Height;
+                    temp.Y += intersection.Height + 1;
                 }
                 obj2.Velocity = new Vector2(obj2.Velocity.X, 0);
             }
@@ -438,7 +440,7 @@ namespace UpgradePlatformer.Entities
                 if (t.Position.Right - intersection.Right == 0)
                 {
                     temp.X += intersection.Width + 1;
-                    temp.Y += 2;
+                    temp.Y += 3;
                 }
                 //moves the player left
                 else
@@ -456,6 +458,8 @@ namespace UpgradePlatformer.Entities
          
             obj2.X = temp.X;
             obj2.Y = temp.Y;
+
+            obj.hitbox = new Rectangle((int)obj2.X, (int)obj2.Y, obj2.hitbox.Width, obj2.hitbox.Height);
         }
     }
 }
