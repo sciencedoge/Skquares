@@ -40,14 +40,14 @@ namespace UpgradePlatformer.Levels
         /// </summary>
         /// <param name="levels">the levels in the world</param>
         /// <param name="defaultLevel">the default level</param>
-        public World(List<String> levels, int defaultLevel, bool light, List<UpgradeType> Upgrades)
+        public World(int world_num, int levels, int defaultLevel, bool light, List<UpgradeType> Upgrades)
         {
             upgrades = Upgrades;
             Light = light;
             Levels = new List<Level>();
             _activeLevel = defaultLevel;
-            foreach (string level in levels)
-                Load(level);
+            for (int i = 1; i <= levels; i++)
+                Load($"{world_num}_{i}");
         }
         
         /// <summary>

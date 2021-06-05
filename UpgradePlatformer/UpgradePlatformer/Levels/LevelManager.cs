@@ -46,9 +46,9 @@ namespace UpgradePlatformer.Levels
         {
             Worlds = new List<World>();
             _activeWorld = 0;
-            Worlds.Add(new World(new List<string>{"menu1", "menu2"}, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE}));
-            Worlds.Add(new World(new List<string>{"clouds2", "clouds1", "clouds3"}, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
-            Worlds.Add(new World(new List<string>{"cave1", "cave2", "cave3", "cave4"}, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(0, 2, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE }));
+            Worlds.Add(new World(1, 3, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(2, 4, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
         }
 
         /// <summary>
@@ -113,6 +113,18 @@ namespace UpgradePlatformer.Levels
             SetWorld(activeWorld - 1);
         }
         
+        /// <summary>
+        /// 
+        /// </summary>
+        public void Reset()
+        {
+            Worlds = new List<World>();
+            _activeWorld = 0;
+            Worlds.Add(new World(0, 2, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE }));
+            Worlds.Add(new World(1, 3, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(2, 4, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
+        }
+
         /// <summary>
         /// adds a tile to the list of collected tiles
         /// </summary>

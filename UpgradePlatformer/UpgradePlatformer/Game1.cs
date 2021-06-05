@@ -23,7 +23,6 @@ namespace UpgradePlatformer
     //===============================================================
     public class Game1 : Game
     {
-        
         private const string ASSET_NAME_SPRITESHEET = "SpriteSheet";
 
         private readonly GraphicsDeviceManager _graphics;
@@ -104,7 +103,7 @@ namespace UpgradePlatformer
             SoundManager.Instance.PlayMusic("menu");
             #endregion
 
-            #region  UIELEMENTS
+#region  UIELEMENTS
             // define a const with the default screen dims only for ui stuff dont change
             const int DEF_SIZE = 630;
 
@@ -141,6 +140,7 @@ namespace UpgradePlatformer
             {
                 onClick = new UIAction((i) =>
                 {
+                    LevelManager.Instance.Reset();
                     foreach (World w in LevelManager.Instance.Worlds)
                         foreach (Level l in w.Levels)
                             l.Collected = new List<LevelCollectedEntity>();
@@ -269,7 +269,7 @@ namespace UpgradePlatformer
                             if (cap++ > 10) break;
                         }
 #if DEBUG
-                        end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count();
+                        end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count() + "\nP: " + EntityManager.Instance.CountProj();
 #endif
                         return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}\n{end}";
                     }
@@ -281,7 +281,7 @@ namespace UpgradePlatformer
                     }
 
 #if DEBUG
-                    end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count();
+                    end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count() + "\nP: " + EntityManager.Instance.CountProj();
 #endif
                     return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}\n{end}";
                 })

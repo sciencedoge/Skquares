@@ -49,6 +49,8 @@ namespace UpgradePlatformer.Weapon
             set { position = value; }
         }
 
+        public int Count => bullets.Count;
+
         //Ctor
 
         /// <summary>
@@ -155,7 +157,7 @@ namespace UpgradePlatformer.Weapon
             Event mev = EventManager.Instance.Pop("MOUSE_MOVE");
             if (mev != null)
             {
-                MousePos = mev.MousePosition;
+                MousePos = mev.MousePosition - Sprite.GetOrigin();
             }
             Event rjev = EventManager.Instance.Pop("RGAME_PAD_JOYSTICK");
             if (rjev != null)

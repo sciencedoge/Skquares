@@ -44,35 +44,32 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Poland.spritefont
 
-#begin Levels/cave1.level_Finished
-/copy:Levels/cave1.level_Finished
+#begin Levels/0_1.fld
+/copy:Levels/0_1.fld
 
-#begin Levels/cave2.level_Finished
-/copy:Levels/cave2.level_Finished
+#begin Levels/0_2.fld
+/copy:Levels/0_2.fld
 
-#begin Levels/cave3.level_Finished
-/copy:Levels/cave3.level_Finished
+#begin Levels/1_1.fld
+/copy:Levels/1_1.fld
 
-#begin Levels/cave4.level_Finished
-/copy:Levels/cave4.level_Finished
+#begin Levels/1_2.fld
+/copy:Levels/1_2.fld
 
-#begin Levels/clouds1.level_Finished
-/copy:Levels/clouds1.level_Finished
+#begin Levels/1_3.fld
+/copy:Levels/1_3.fld
 
-#begin Levels/clouds2.level_Finished
-/copy:Levels/clouds2.level_Finished
+#begin Levels/2_1.fld
+/copy:Levels/2_1.fld
 
-#begin Levels/clouds3.level_Finished
-/copy:Levels/clouds3.level_Finished
+#begin Levels/2_2.fld
+/copy:Levels/2_2.fld
 
-#begin Levels/coinHeaven.level_Finished
-/copy:Levels/coinHeaven.level_Finished
+#begin Levels/2_3.fld
+/copy:Levels/2_3.fld
 
-#begin Levels/menu1.level_Finished
-/copy:Levels/menu1.level_Finished
-
-#begin Levels/menu2.level_Finished
-/copy:Levels/menu2.level_Finished
+#begin Levels/2_4.fld
+/copy:Levels/2_4.fld
 
 #begin Music/allstar.mp3
 /importer:Mp3Importer

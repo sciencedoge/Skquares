@@ -80,7 +80,7 @@ namespace UpgradePlatformer.Entities
             if (IsActive)
             {
                 Vector2 frameBob = new Vector2(0, Bob * (float)Math.Cos(gt.TotalGameTime.TotalMilliseconds / 100));
-                sprite.Draw(sb, hitbox.Location + frameBob.ToPoint(), 0, spriteSize.ToVector2());
+                sprite.Draw(sb, hitbox.Location + frameBob.ToPoint(), 0, hitbox.Size.ToVector2());
             }
         }
 

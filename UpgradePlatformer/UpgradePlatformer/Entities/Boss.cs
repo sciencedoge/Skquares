@@ -58,7 +58,7 @@ namespace UpgradePlatformer.Entities
 
             spawnPoint = new Point(hitbox.X, hitbox.Y);
             currentlyColliding = false;
-            this.animation = new AnimationFSM(AnimationManager.Instance.animations[1]);
+            this.animation = new AnimationFSM(AnimationManager.Instance.animations[3]);
         }
 
         /// <summary>
@@ -103,5 +103,11 @@ namespace UpgradePlatformer.Entities
         /// <param name="objects"></param>
         /// <returns></returns>
         public override int Intersects(List<EntityObject> objects) {return 0; }
+
+        /// <summary>
+        /// removes light for the boss to make it look better
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        public override void DrawLightMap(SpriteBatch spriteBatch) { }
     }
 }

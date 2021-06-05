@@ -36,7 +36,7 @@ namespace UpgradePlatformer.Levels
         {
             Light = light;
             Name = name;
-            FileStream stream = new FileStream("Content/Levels/" + name + ".level_Finished", FileMode.Open);
+            FileStream stream = new FileStream("Content/Levels/" + name + ".fld", FileMode.Open);
             BinaryReader reader = new BinaryReader(stream);
 
             TileWidth = reader.ReadInt32();
@@ -169,9 +169,9 @@ namespace UpgradePlatformer.Levels
                     else if (t.SpawnerKind == 4) o = (EntityObject)new Torch(0, new Rectangle(t.Position.Location, new Point(15, 15)), t);
                     else if (t.SpawnerKind == 3 && UpgradeManager.Instance.CanBeLearned(upgrade).Count != 0) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location.X, t.Position.Y - 15, 15, 15), UpgradeManager.Instance.CanBeLearned(upgrade)[0], t);
 #if DEBUG
-                    else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(30, 0, new Rectangle(t.Position.Location, new Point(25, 24)), 2);
+                    else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(int.MaxValue, 0, new Rectangle(t.Position.Location, new Point(25, 24)), 2);
 #else
-                    else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(3, 0, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
+                    else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(15, 0, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #endif
                     else if (t.SpawnerKind == 1) o = (EntityObject)new Enemy(1, 1, new Rectangle(t.Position.Location, new Point(25, 25)), 1);
                     else if (t.SpawnerKind == 0) o = (EntityObject)new Coin(1, new Rectangle(t.Position.Location, new Point(15, 15 + 2)), t);

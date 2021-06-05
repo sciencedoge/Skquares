@@ -33,6 +33,7 @@ namespace UpgradePlatformer.Graphics
             AddPlayerFSM(AllSprites);
             AddEnemyFSM(AllSprites);
             AddDiamondFSM(AllSprites);
+            AddBossFSM(AllSprites);
         }
         public void AddPlayerFSM(Sprite[,] AllSprites)
         {
@@ -67,13 +68,14 @@ namespace UpgradePlatformer.Graphics
             Animation AniLeftI = new Animation(new List<Sprite> { AllSprites[1, 0].Copy(), AllSprites[3, 0].Copy(), AllSprites[4, 0].Copy() }, 30);
             StateMachineState RightS = new StateMachineState(new List<Flag> { RightSLookLeft, RightSMove, RightSIdle });
             Animation AniRightS = new Animation(new List<Sprite> { AllSprites[1, 0].Copy() }, 2);
-            AniRightS.sprites[0].effects = SpriteEffects.FlipHorizontally;
             StateMachineState RightM = new StateMachineState(new List<Flag> { RightMLookLeft, RightMStop });
             Animation AniRightM = new Animation(new List<Sprite> { AllSprites[1, 0].Copy(), AllSprites[2, 0].Copy() }, 2);
-            AniRightM.sprites[0].effects = SpriteEffects.FlipHorizontally;
-            AniRightM.sprites[1].effects = SpriteEffects.FlipHorizontally;
             StateMachineState RightI = new StateMachineState(new List<Flag> { RightIMove, RightILookLeft, RightIDone});
             Animation AniRightI = new Animation(new List<Sprite> { AllSprites[1, 0].Copy(), AllSprites[3, 0].Copy(), AllSprites[4, 0].Copy() }, 30);
+
+            AniRightS.sprites[0].effects = SpriteEffects.FlipHorizontally;
+            AniRightM.sprites[0].effects = SpriteEffects.FlipHorizontally;
+            AniRightM.sprites[1].effects = SpriteEffects.FlipHorizontally;
             AniRightI.sprites[0].effects = SpriteEffects.FlipHorizontally;
             AniRightI.sprites[1].effects = SpriteEffects.FlipHorizontally;
             AniRightI.sprites[2].effects = SpriteEffects.FlipHorizontally;
@@ -112,12 +114,13 @@ namespace UpgradePlatformer.Graphics
             Animation AniLeftI = new Animation(new List<Sprite> { AllSprites[1, 1].Copy(), AllSprites[3, 1].Copy(), AllSprites[4, 1].Copy() }, 60);
             StateMachineState RightS = new StateMachineState(new List<Flag> { RightSLeft, RightSLock, RightSIdle });
             Animation AniRightS = new Animation(new List<Sprite> { AllSprites[1, 1].Copy() }, 2);
-            AniRightS.sprites[0].effects = SpriteEffects.FlipHorizontally;
             StateMachineState RightL = new StateMachineState(new List<Flag> { RightLLeft, RightLLose });
             Animation AniRightL = new Animation(new List<Sprite> { AllSprites[2, 1].Copy() }, 2);
-            AniRightL.sprites[0].effects = SpriteEffects.FlipHorizontally;
             StateMachineState RightI = new StateMachineState(new List<Flag> { RightIDone });
             Animation AniRightI = new Animation(new List<Sprite> { AllSprites[1, 1].Copy(), AllSprites[3, 1].Copy(), AllSprites[4, 1].Copy() }, 60);
+
+            AniRightS.sprites[0].effects = SpriteEffects.FlipHorizontally;
+            AniRightL.sprites[0].effects = SpriteEffects.FlipHorizontally;
             AniRightI.sprites[0].effects = SpriteEffects.FlipHorizontally;
             AniRightI.sprites[1].effects = SpriteEffects.FlipHorizontally;
             AniRightI.sprites[2].effects = SpriteEffects.FlipHorizontally;
@@ -131,7 +134,7 @@ namespace UpgradePlatformer.Graphics
         {
 
             // ==========
-            // enemyr fsm
+            // diamond fsm
             // ==========
             // flags
             Flag LookShoot = new Flag(0, 0);
@@ -145,7 +148,40 @@ namespace UpgradePlatformer.Graphics
 
             // init
             FiniteStateMachine diamondFSM = new FiniteStateMachine(new List<StateMachineState> { Shoot, Look });
-            animations.Add(new AnimationFSM(diamondFSM, new List<Animation> { AniShoot, AniLook}));
+            animations.Add(new AnimationFSM(diamondFSM, new List<Animation> { AniShoot, AniLook }));
+        }
+        public void AddBossFSM(Sprite[,] AllSprites)
+        {
+
+            // ==========
+            // boss fsm
+            // ==========
+            // flags
+            Flag LeftShootIdle = new Flag(3, 2);
+            Flag LeftShootLookRight = new Flag(1, 1);
+            Flag RightShootIdle = new Flag(3, 3);
+            Flag RightShootLookLeft = new Flag(0, 0);
+            Flag LeftIdleShoot = new Flag(2, 0);
+            Flag LeftIdleLookRight = new Flag(1, 3);
+            Flag RightIdleShoot = new Flag(2, 1);
+            Flag RightIdleLookLeft = new Flag(0, 2);
+
+            // states
+            StateMachineState LeftShoot = new StateMachineState(new List<Flag> { LeftShootIdle, LeftShootLookRight });
+            Animation AniLeftShoot = new Animation(new List<Sprite> { AllSprites[6, 1].Copy() }, 2);
+            StateMachineState RightShoot = new StateMachineState(new List<Flag> { RightShootIdle, RightShootLookLeft });
+            Animation AniRightShoot = new Animation(new List<Sprite> { AllSprites[6, 1].Copy() }, 2);
+            StateMachineState LeftIdle = new StateMachineState(new List<Flag> { LeftIdleShoot, LeftIdleLookRight });
+            Animation AniLeftIdle = new Animation(new List<Sprite> { AllSprites[5, 1].Copy() }, 2);
+            StateMachineState RightIdle = new StateMachineState(new List<Flag> { RightIdleShoot, RightIdleLookLeft });
+            Animation AniRightIdle = new Animation(new List<Sprite> { AllSprites[5, 1].Copy() }, 2);
+
+            AniRightShoot.sprites[0].effects = SpriteEffects.FlipHorizontally;
+            AniRightIdle.sprites[0].effects = SpriteEffects.FlipHorizontally;
+
+            // init
+            FiniteStateMachine bossFSM = new FiniteStateMachine(new List<StateMachineState> { LeftShoot, RightShoot, LeftIdle, RightIdle });
+            animations.Add(new AnimationFSM(bossFSM, new List<Animation> { AniLeftShoot, AniRightShoot, AniLeftIdle, AniRightIdle }));
         }
     }
 }
