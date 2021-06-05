@@ -101,6 +101,7 @@ namespace UpgradePlatformer.Entities
         {
             if (IsActive)
             {
+
                 this.damage = UpgradeManager.Instance.GetAmmnt(UpgradeType.WEAPON);
                 CheckForInput(gt);
 
