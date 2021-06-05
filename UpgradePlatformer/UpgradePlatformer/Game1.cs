@@ -23,7 +23,6 @@ namespace UpgradePlatformer
     //===============================================================
     public class Game1 : Game
     {
-        
         private const string ASSET_NAME_SPRITESHEET = "SpriteSheet";
 
         private readonly GraphicsDeviceManager _graphics;
