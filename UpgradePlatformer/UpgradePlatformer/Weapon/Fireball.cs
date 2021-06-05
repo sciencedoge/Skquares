@@ -36,7 +36,7 @@ namespace UpgradePlatformer.Weapon
             {
                 if (p.IsActive)
                 {
-                    p.CurrentHP -= 5;
+                    p.CurrentHP -= 2;
 
                     isActive = false;
                     if (p.CurrentHP <= 0)
