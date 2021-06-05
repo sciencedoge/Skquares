@@ -40,6 +40,7 @@ namespace UpgradePlatformer
 
 #if DEBUG
         double frameRate = 0.0;
+        double secondTimer = 0.0f;
         int frameCounter;
 #endif
 
@@ -512,11 +513,14 @@ namespace UpgradePlatformer
                               || _stateMachine.currentState == 5;
 
 #if DEBUG
-            if (gameTime.ElapsedGameTime.TotalSeconds > 0.0)
+            secondTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            if (secondTimer > 1.0)
             {
-                frameRate = (double)frameCounter / gameTime.ElapsedGameTime.TotalSeconds;
+                frameRate = (double)frameCounter / secondTimer;
+                secondTimer = 0;
+                frameCounter = 0;
             }
-            frameCounter = 0;
+            frameCounter ++;
 #endif
             if (CleanupTimer ++ % 300 == 0)
             {
