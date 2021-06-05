@@ -143,6 +143,7 @@ namespace UpgradePlatformer.Levels
             for (int x = Math.Max(centerTile.X - RedundancySize, 0); x < Math.Min(centerTile.X + RedundancySize, TileWidth); x++)
                 for (int y = Math.Max(centerTile.Y - RedundancySize, 0); y < Math.Min(centerTile.Y + RedundancySize, TileHeight); y++)
                     if (TileMap[y, x].Position.Intersects(r)) Tiles.Add(TileMap[y, x]);
+            Tiles.Reverse();
             return Tiles;
         }
 
@@ -171,7 +172,7 @@ namespace UpgradePlatformer.Levels
 #if DEBUG
                     else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(int.MaxValue, 0, new Rectangle(t.Position.Location, new Point(25, 24)), 2);
 #else
-                    else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(15, 0, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
+                    else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(r, 0, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #endif
                     else if (t.SpawnerKind == 1) o = (EntityObject)new Enemy(1, 1, new Rectangle(t.Position.Location, new Point(25, 25)), 1);
                     else if (t.SpawnerKind == 0) o = (EntityObject)new Coin(1, new Rectangle(t.Position.Location, new Point(15, 15 + 2)), t);
