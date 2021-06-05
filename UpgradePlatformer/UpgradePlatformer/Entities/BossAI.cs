@@ -140,9 +140,9 @@ namespace UpgradePlatformer.Entities
         public void JumpAttack(GameTime gt)
         {
             //check for ground collision
-            while(boss.Velocity.Y > -12f && boss.JumpsLeft > 0)
+            while(boss.Velocity.Y > -16f && boss.JumpsLeft > 0)
             {
-                if (boss.JumpsLeft > 0 && boss.Velocity.Y >= -12f)
+                if (boss.JumpsLeft > 0 && boss.Velocity.Y >= -16f)
                 {
                     boss.Velocity = new Vector2(boss.Velocity.X, boss.Velocity.Y + boss.JumpVelocity.Y);
                 }
@@ -155,7 +155,7 @@ namespace UpgradePlatformer.Entities
 
             if(boss.Colliding == false)
             {
-                boss.X -= plrDistance.X / 3;
+                boss.X -= (plrDistance.X / 3) + player.Hitbox.Width / 2;
             }
            
 

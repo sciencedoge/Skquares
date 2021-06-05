@@ -426,7 +426,7 @@ namespace UpgradePlatformer.Entities
                 //moves player down
                 else if (t.Position.Top - intersection.Top != 0)
                 {
-                    temp.Y += intersection.Height + 1;
+                    temp.Y += intersection.Height;
                 }
                 obj2.Velocity = new Vector2(obj2.Velocity.X, 0);
             }
@@ -440,7 +440,7 @@ namespace UpgradePlatformer.Entities
                 if (t.Position.Right - intersection.Right == 0)
                 {
                     temp.X += intersection.Width + 1;
-                    temp.Y += 3;
+                    temp.Y += 2;
                 }
                 //moves the player left
                 else
