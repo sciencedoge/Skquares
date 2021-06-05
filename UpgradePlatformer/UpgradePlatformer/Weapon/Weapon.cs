@@ -49,6 +49,8 @@ namespace UpgradePlatformer.Weapon
             set { position = value; }
         }
 
+        public int Count => bullets.Count;
+
         //Ctor
 
         /// <summary>

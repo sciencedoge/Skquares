@@ -26,6 +26,8 @@ namespace UpgradePlatformer.Entities
         private int fireballChance;
 
         private List<Fireball> fireballs;
+
+        public int Count => fireballs.Count;
             
         /// <summary>
         /// Creates the BossAI object

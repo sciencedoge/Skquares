@@ -36,7 +36,7 @@ namespace UpgradePlatformer.Entities
         /// draws the light map for the entity
         /// </summary>
         private static Rectangle TILE_EMPTY = new Rectangle(49, 30, 60, 60);
-        public void DrawLightMap(SpriteBatch spriteBatch)
+        public virtual void DrawLightMap(SpriteBatch spriteBatch)
         {
             if (!IsActive) return;
             Sprite s = new Sprite(TILE_EMPTY, new Vector2(30), Color.White);

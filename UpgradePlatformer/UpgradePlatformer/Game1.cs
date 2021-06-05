@@ -270,7 +270,7 @@ namespace UpgradePlatformer
                             if (cap++ > 10) break;
                         }
 #if DEBUG
-                        end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count();
+                        end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count() + "\nP: " + EntityManager.Instance.CountProj();
 #endif
                         return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}\n{end}";
                     }
@@ -282,7 +282,7 @@ namespace UpgradePlatformer
                     }
 
 #if DEBUG
-                    end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count();
+                    end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count() + "\nP: " + EntityManager.Instance.CountProj();
 #endif
                     return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}\n{end}";
                 })

@@ -54,6 +54,17 @@ namespace UpgradePlatformer.Entities
 
             return result;
         }
+        /// <summary>
+        /// gets total number of entities
+        /// </summary>
+        /// <returns></returns>
+        public int CountProj()
+        {
+            int result = 0;
+            result += Player() == null ? Player().weapon.Count : 0;
+            result += Boss() == null ? bossAI.Count : 0;
+            return result;
+        }
 
         /// <summary>
         /// gets all the enemys in the manager
