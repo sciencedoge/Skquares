@@ -118,12 +118,24 @@ namespace UpgradePlatformer.Entities
             }
         }
 
+        /// <summary>
+        /// Finds the distance between the boss and the player
+        /// </summary>
+        /// <returns></returns>
         public Vector2 FindDistance()
         {
             float distX = boss.Position.X - player.Position.X;
             float distY = boss.Position.Y - (player.Position.Y - (40 * Sprite.GetScale()));
 
             return new Vector2(distX, distY);
+        }
+
+        /// <summary>
+        /// Performs the boss' jump attack on the player
+        /// </summary>
+        public void JumpAttack()
+        {
+
         }
 
     }
