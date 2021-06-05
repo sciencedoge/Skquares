@@ -129,7 +129,7 @@ namespace UpgradePlatformer.Entities
         public Vector2 FindDistance()
         {
             float distX = boss.Position.X - player.Position.X;
-            float distY = boss.Position.Y - (player.Position.Y - (40 * Sprite.GetScale()));
+            float distY = boss.Position.Y - player.Position.Y;
 
             return new Vector2(distX, distY);
         }
