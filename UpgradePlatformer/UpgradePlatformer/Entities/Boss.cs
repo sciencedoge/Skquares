@@ -53,7 +53,7 @@ namespace UpgradePlatformer.Entities
             :base(maxHp, damage, hitbox, jumpsLeft, EntityKind.BOSS)
         {
             gravity = new Vector2(0, 0.8f);
-            jumpVelocity = new Vector2(0, -10f);
+            jumpVelocity = new Vector2(0, -22f);
             this.jumpsLeft = jumpsLeft;
 
             spawnPoint = new Point(hitbox.X, hitbox.Y);
@@ -93,7 +93,7 @@ namespace UpgradePlatformer.Entities
             {
                 hitbox.Location = position.ToPoint();
                 spriteSize = hitbox.Size;
-                ApplyGravity();
+                //ApplyGravity();
             }
         }
 
