@@ -48,7 +48,7 @@ namespace UpgradePlatformer.Levels
             _activeWorld = 0;
             Worlds.Add(new World(0, 2, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE }));
             Worlds.Add(new World(1, 3, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
-            Worlds.Add(new World(2, 3, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(2, 4, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace UpgradePlatformer.Levels
             _activeWorld = 0;
             Worlds.Add(new World(0, 2, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE }));
             Worlds.Add(new World(1, 3, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
-            Worlds.Add(new World(2, 3, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(2, 4, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
         }
 
         /// <summary>
