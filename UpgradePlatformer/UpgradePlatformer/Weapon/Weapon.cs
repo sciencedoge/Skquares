@@ -119,7 +119,7 @@ namespace UpgradePlatformer.Weapon
         /// <summary>
         /// Updates the weapon
         /// </summary>
-        public void Update()
+        public void Update(GameTime gt)
         {
             CheckForInput();
 
@@ -127,7 +127,7 @@ namespace UpgradePlatformer.Weapon
             {
                 if (bullets[i].isActive)
                 {
-                    bullets[i].Update();
+                    bullets[i].Update(gt);
                 }
                 else
                 {

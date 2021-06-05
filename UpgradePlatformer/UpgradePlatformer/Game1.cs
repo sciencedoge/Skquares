@@ -474,6 +474,7 @@ namespace UpgradePlatformer
 
             _rectangle = new Texture2D(GraphicsDevice, 1, 1);
             _rectangle.SetData(new Color[] { Color.Black });
+            TargetElapsedTime = TimeSpan.FromSeconds( 1f / 90f);
         }
 
         protected override void Update(GameTime gameTime)
@@ -527,7 +528,7 @@ namespace UpgradePlatformer
         protected void Cleanup(GameTime gameTime)
         {
             EntityManager.Instance.Cleanup(gameTime);
-            EventManager.Instance.Cleanup(gameTime);
+            //EventManager.Instance.Cleanup(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)

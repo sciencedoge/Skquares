@@ -31,7 +31,7 @@ namespace UpgradePlatformer.Entities
         private int idleTimer;
         private int sameVelocityFrames;
         public bool Demo;
-        private int DemoCounter;
+        private float DemoTimer;
 
         /// <summary>
         /// Gets or sets whether the player is landed
@@ -102,7 +102,7 @@ namespace UpgradePlatformer.Entities
             if (IsActive)
             {
                 this.damage = UpgradeManager.Instance.GetAmmnt(UpgradeType.WEAPON);
-                CheckForInput();
+                CheckForInput(gt);
 
                 if (this.damage > 0 && weapon.IsActive == false)
                 {
@@ -115,7 +115,7 @@ namespace UpgradePlatformer.Entities
                     float frameBobY = 10 * (float)Math.Cos(gt.TotalGameTime.TotalMilliseconds / 250);
                     weapon.Position = new Vector2(frameBobX + hitbox.Center.X, frameBobY + Hitbox.Top);
 
-                    weapon.Update();
+                    weapon.Update(gt);
                 }
 
                 cooldown--;
@@ -179,8 +179,9 @@ namespace UpgradePlatformer.Entities
                                 sameVelocityFrames = 0;
                             }
 
-                            if(sameVelocityFrames >= 10)
+                            if(sameVelocityFrames >= 1)
                             {
+                                sameVelocityFrames = 0;
                                 jumpsLeft = 0;
                                 keyUp = false;
                             }
@@ -193,7 +194,7 @@ namespace UpgradePlatformer.Entities
                         }
                     }
                 }
-                ApplyGravity();
+                ApplyGravity(gt);
 
                 if(Velocity.Y > 1 && landed)
                 {
@@ -229,9 +230,9 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Applies gravity to the player
         /// </summary>
-        public override void ApplyGravity()
+        public override void ApplyGravity(GameTime gt)
         {
-            base.ApplyGravity();
+            base.ApplyGravity(gt);
 
             if (position.X >= 630) {
                 EventManager.Instance.Push(new Event("LEVEL_SHOW", (uint)LevelManager.Instance.ActiveLevelNum() + 1, new Point()));
@@ -269,12 +270,19 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// processes input events
         /// </summary>
-        public void CheckForInput()
+        public void CheckForInput(GameTime gt)
         {
             if (Demo) {
                 Joystick.X = 1;
-                DemoCounter ++;
-                if (DemoCounter % 600 <= 100) {
+                DemoTimer += ((float)gt.ElapsedGameTime.TotalSeconds * 60f);
+                if (DemoTimer > 600)
+                {
+                    DemoTimer = 0;
+                    keyUp = false;
+                }
+                if (DemoTimer > 700)
+                {
+                    DemoTimer = 0;
                     keyUp = true;
                 }
                 return;
