@@ -169,6 +169,7 @@ namespace UpgradePlatformer.Entities
                 {
                     if (obj == null) continue;
                     if (obj.IsActive == false) continue;
+                    Intersects(obj);
                     obj.Update(gameTime);
                     if (obj is LivingObject @object)
                         @object.animation.Update(gameTime);
