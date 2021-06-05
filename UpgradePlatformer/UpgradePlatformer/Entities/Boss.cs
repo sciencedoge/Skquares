@@ -74,7 +74,10 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public override void ApplyGravity(GameTime gt)
         {
-            base.ApplyGravity(gt);
+            // fixes different speeds on different window sizes
+            position += velocity * ((float)gt.ElapsedGameTime.TotalSeconds * 60f);
+            velocity += gravity * ((float)gt.ElapsedGameTime.TotalSeconds * 60f);
+            velocity.X *= 0.70f;
 
             // locks enemy in room
             if (position.X > Sprite.graphics.PreferredBackBufferWidth - hitbox.Width)
@@ -98,6 +101,10 @@ namespace UpgradePlatformer.Entities
                 //ApplyGravity(gameTime);
             }
         }
+
+        
+
+        
 
         /// <summary>
         /// processes intersections for an enemy, does nothing
