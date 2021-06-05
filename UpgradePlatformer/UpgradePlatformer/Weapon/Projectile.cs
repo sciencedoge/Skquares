@@ -46,6 +46,7 @@ namespace UpgradePlatformer.Weapon
         public Projectile(Vector2 path, Vector2 location, float rotation)
         {
             spriteBounds = new Rectangle(20, 7, 5, 5);
+            UpdateSprite();
             this.path = path;
             this.location = location;
             this.rotation = rotation;
@@ -54,13 +55,16 @@ namespace UpgradePlatformer.Weapon
 
             //this.speed = new Vector2(path.X / 60, path.Y / 60);
 
+            isActive = true;
+            this.hitbox = new Rectangle(location.ToPoint(), new Point(7, 7));
+        }
+
+        public void UpdateSprite()
+        {
             this.sprite = new Sprite(
                spriteBounds,
                new Vector2(2.5f, 2.5f),
                Color.White);
-
-            isActive = true;
-            this.hitbox = new Rectangle(location.ToPoint(), new Point(7, 7));
         }
 
         //Methods
