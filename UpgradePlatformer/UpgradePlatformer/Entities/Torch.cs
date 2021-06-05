@@ -31,14 +31,14 @@ namespace UpgradePlatformer.Entities
             ps = new ParticleSystem();
             props = new ParticleProps()
             {
-                Position = new Vector2(hitbox.Center.X, hitbox.Location.Y),
+                Position = new Vector2(hitbox.Center.X + 2, hitbox.Location.Y),
                 Velocity = new Vector2(0, -5f),
-                VelocityVariation = new Vector2(0.5f, 0.5f),
+                VelocityVariation = new Vector2(1.5f, 1.5f),
                 StartColor = Color.Orange,
-                EndColor = Color.Blue,
+                EndColor = Color.Black,
                 SizeStart = 5.0f,
                 SizeEnd = 1.0f,
-                LifeTime = 3.0f
+                LifeTime = 5.0f
             };
         }
 
@@ -54,9 +54,9 @@ namespace UpgradePlatformer.Entities
 
             t += gt.ElapsedGameTime.TotalMilliseconds;
 
-            while ( t > 500 )
+            while ( t > 1000 )
             {
-                t -= 500;
+                t -= 1000;
                 ps.Emit(props);
             }
         }
