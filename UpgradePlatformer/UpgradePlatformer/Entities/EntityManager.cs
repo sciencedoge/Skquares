@@ -158,7 +158,7 @@ namespace UpgradePlatformer.Entities
         public void Update(GameTime gameTime)
         {
             currentLevel = LevelManager.Instance.ActiveLevel();
-            bossAI.Update();
+            bossAI.Update(gameTime);
             pathfind.Update();
             pathfind.UpdateCosts();
             pathfind.MoveToPlayer(gameTime);
@@ -438,7 +438,6 @@ namespace UpgradePlatformer.Entities
                 {
                     temp.X += intersection.Width + 1;
                     temp.Y += 2;
-                    
                 }
                 //moves the player left
                 else

@@ -73,7 +73,8 @@ namespace UpgradePlatformer.Graphics
     {
         static Random rand;
         public List<Sprite> sprites;
-        private int sprite, counter;
+        private int sprite;
+        private float counter;
         private readonly int framesPerSprite;
         
         /// <summary>
@@ -104,7 +105,8 @@ namespace UpgradePlatformer.Graphics
         /// </summary>
         /// <param name="gameTime">a GameTime object</param>
         public void Update(GameTime gameTime) {
-            if ((counter ++ % framesPerSprite) == 0) sprite ++;
+            counter += (float)(gameTime.ElapsedGameTime.TotalSeconds * 60);
+            while (counter > framesPerSprite) { sprite++;  counter -= framesPerSprite; }
             sprite %= (sprites.Count);
         }
 

@@ -21,7 +21,7 @@ namespace UpgradePlatformer.Entities
         private Point spawnPoint;
         private bool currentlyColliding;
 
-        private int idleTime;
+        private float idleTime;
         private bool currentlyIdling;
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Determines how long the enemy has idled for
         /// </summary>
-        public int TimeSinceIdle 
+        public float TimeSinceIdle 
         {
             get { return idleTime; }
             set { idleTime = value; }      
@@ -95,9 +95,9 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// processes gravity for the enemy
         /// </summary>
-        public override void ApplyGravity()
+        public override void ApplyGravity(GameTime gt)
         {
-            base.ApplyGravity();
+            base.ApplyGravity(gt);
             
             if (position.Y > Sprite.graphics.PreferredBackBufferHeight - hitbox.Height + 9)           
             {
@@ -128,7 +128,7 @@ namespace UpgradePlatformer.Entities
             {
                 hitbox.Location = position.ToPoint();
                 spriteSize = hitbox.Size;
-                ApplyGravity();
+                ApplyGravity(gameTime);
             }
         }
 

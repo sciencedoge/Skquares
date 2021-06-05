@@ -95,14 +95,14 @@ namespace UpgradePlatformer.Entities
                             && !Enemies[i].Colliding)
                         {
                             Enemies[i].animation.SetFlag(0);
-                            Enemies[i].X -= speed;
+                            Enemies[i].X -= speed * (float)(gameTime.ElapsedGameTime.TotalSeconds * 60);
                             Enemies[i].Flip = false;
                         }
                         else if (Enemies[i].X < player.X
                             && !Enemies[i].Colliding)
                         {
                             Enemies[i].animation.SetFlag(1);
-                            Enemies[i].X += speed;
+                            Enemies[i].X += speed * (float)(gameTime.ElapsedGameTime.TotalSeconds * 60);
                             Enemies[i].Flip = true;
                         }
                         else
@@ -239,13 +239,13 @@ namespace UpgradePlatformer.Entities
                 else
                     enemy.animation.SetFlag(1);
                 goombaAINum *= -1;
-                enemy.X += goombaAINum;
+                enemy.X += goombaAINum * (float)(gameTime.ElapsedGameTime.TotalSeconds * 60);
                 enemy.Colliding = false;
             }
 
             if (!enemy.Colliding)
             {
-                enemy.X += goombaAINum;
+                enemy.X += goombaAINum * (float)(gameTime.ElapsedGameTime.TotalSeconds * 60);
             }
 
             if (random.Next(1, 21) == 20)

@@ -73,7 +73,7 @@ namespace UpgradePlatformer.Weapon
         /// draws bullet to the screen
         /// </summary>
         /// <param name="sb"></param>
-        public void Draw(SpriteBatch sb)
+        public virtual void Draw(SpriteBatch sb)
         {
             if (isActive)
             {
@@ -108,11 +108,11 @@ namespace UpgradePlatformer.Weapon
         /// <summary>
         ///updates the location of the bullet
         /// </summary>
-        public void Update()
+        public virtual void Update(GameTime gt)
         {
             if (isActive)
             {
-                location -= speed;
+                location -= speed * (float)(gt.ElapsedGameTime.TotalSeconds * 60);
                 this.hitbox = new Rectangle(location.ToPoint(), new Point(10, 10));
                 Intersects();
 

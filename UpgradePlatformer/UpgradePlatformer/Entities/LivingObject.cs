@@ -219,13 +219,12 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// applys gravity to the entity
         /// </summary>
-        public virtual void ApplyGravity()
+        public virtual void ApplyGravity(GameTime gt)
         {
             // fixes different speeds on different window sizes
-            position += velocity;
-            velocity += gravity;
-
-            velocity.X *= 0.70f;            
+            position += velocity * ((float)gt.ElapsedGameTime.TotalSeconds * 60f);
+            velocity += gravity * ((float)gt.ElapsedGameTime.TotalSeconds * 60f);
+            velocity.X *= 0.70f;        
         }
         
         /// <summary>

@@ -47,7 +47,7 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// Determines the phases and random chance of summoning fireballs
         /// </summary>
-        public void Update()
+        public void Update(GameTime gt)
         {
             boss = EntityManager.Instance.Boss();
             if (boss == null) return;
@@ -78,7 +78,7 @@ namespace UpgradePlatformer.Entities
                 {
                     if (fireballs[i].isActive)
                     {
-                        fireballs[i].Update();
+                        fireballs[i].Update(gt);
                     }
                     else
                     {

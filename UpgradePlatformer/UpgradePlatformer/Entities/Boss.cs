@@ -72,9 +72,9 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// processes gravity for the enemy
         /// </summary>
-        public override void ApplyGravity()
+        public override void ApplyGravity(GameTime gt)
         {
-            base.ApplyGravity();
+            base.ApplyGravity(gt);
 
             // locks enemy in room
             if (position.X > Sprite.graphics.PreferredBackBufferWidth - hitbox.Width)
@@ -93,7 +93,7 @@ namespace UpgradePlatformer.Entities
             {
                 hitbox.Location = position.ToPoint();
                 spriteSize = hitbox.Size;
-                ApplyGravity();
+                ApplyGravity(gameTime);
             }
         }
 
