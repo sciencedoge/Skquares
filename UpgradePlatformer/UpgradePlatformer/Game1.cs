@@ -104,7 +104,7 @@ namespace UpgradePlatformer
             SoundManager.Instance.PlayMusic("menu");
             #endregion
 
-            #region  UIELEMENTS
+#region  UIELEMENTS
             // define a const with the default screen dims only for ui stuff dont change
             const int DEF_SIZE = 630;
 
@@ -141,6 +141,7 @@ namespace UpgradePlatformer
             {
                 onClick = new UIAction((i) =>
                 {
+                    LevelManager.Instance.Reset();
                     foreach (World w in LevelManager.Instance.Worlds)
                         foreach (Level l in w.Levels)
                             l.Collected = new List<LevelCollectedEntity>();
