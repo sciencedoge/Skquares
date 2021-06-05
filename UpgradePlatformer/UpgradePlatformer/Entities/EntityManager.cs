@@ -61,8 +61,8 @@ namespace UpgradePlatformer.Entities
         public int CountProj()
         {
             int result = 0;
-            result += Player() == null ? Player().weapon.Count : 0;
-            result += Boss() == null ? bossAI.Count : 0;
+            result += Player() != null ? Player().weapon.Count : 0;
+            result += Boss() != null ? bossAI.Count : 0;
             return result;
         }
 
