@@ -464,7 +464,8 @@ namespace UpgradePlatformer
             LevelManager.Instance.BackDrops = new List<Texture2D> {
                 Content.Load<Texture2D>("Backdrops/Sky"),
                 Content.Load<Texture2D>("Backdrops/Sky"),
-                Content.Load<Texture2D>("Backdrops/Cave")
+                Content.Load<Texture2D>("Backdrops/Cave"),
+                Content.Load<Texture2D>("Backdrops/Sky"),
             };
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
             _font = Content.Load<SpriteFont>("Fonts/Poland");
