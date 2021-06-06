@@ -16,7 +16,7 @@ namespace UpgradePlatformer.Entities
     //Date: 5/22/2021
     //Purpose: Creates functionality for enemies
     //===========================================
-    class Enemy : LivingObject
+    public class Enemy : LivingObject
     {
         private Point spawnPoint;
         private bool currentlyColliding;
@@ -98,18 +98,6 @@ namespace UpgradePlatformer.Entities
         public override void ApplyGravity(GameTime gt)
         {
             base.ApplyGravity(gt);
-            
-            if (position.Y > Sprite.graphics.PreferredBackBufferHeight - hitbox.Height + 9)           
-            {
-            
-                position.Y = Sprite.graphics.PreferredBackBufferHeight - hitbox.Height + 9;
-            
-                velocity.Y = 0;
-                
-                jumpsLeft = 1;
-            
-                this.Colliding = false;            
-            }
 
             //// locks enemy in room
             if (position.X > Sprite.graphics.PreferredBackBufferWidth - hitbox.Width)

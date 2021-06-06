@@ -158,6 +158,8 @@ namespace UpgradePlatformer.Levels
                 {
                     Tiles[x, y].UpdatePos(new Vector2((y) * TileMap[0, 0].TileSize.X, (x) * TileMap[0, 0].TileSize.Y));
                     Tile t = Tiles[x, y];
+                    if (t.sound != 0)
+                        EntityManager.Instance.Spawn(new MusicTile(t.sound, t.Position, t));
                     if (!t.Spawner)
                         continue;
                     bool q = false;
@@ -172,7 +174,7 @@ namespace UpgradePlatformer.Levels
 #if DEBUG
                     else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(int.MaxValue, 0, new Rectangle(t.Position.Location, new Point(25, 24)), 2);
 #else
-                    else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(r, 0, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
+                    else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(10, 0, new Rectangle(t.Position.Location, new Point(25, 25)), 2);
 #endif
                     else if (t.SpawnerKind == 1) o = (EntityObject)new Enemy(1, 1, new Rectangle(t.Position.Location, new Point(25, 25)), 1);
                     else if (t.SpawnerKind == 0) o = (EntityObject)new Coin(1, new Rectangle(t.Position.Location, new Point(15, 15 + 2)), t);
