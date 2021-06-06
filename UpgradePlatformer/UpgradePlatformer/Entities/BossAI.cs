@@ -195,7 +195,6 @@ namespace UpgradePlatformer.Entities
 
             }
 
-            Vector2 plrDistance = FindDistance();
         }
 
         /// <summary>
