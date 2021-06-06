@@ -79,12 +79,11 @@ namespace UpgradePlatformer.Entities
 
             if (secondsSinceJump > 2000)
             {
-                int value = 0;
-
+                int value = 10;
                 while(secondsSinceJump > 0)
                 {
-                    Descend(value);
-                    value += 10;
+                    boss.Y += value;
+                    secondsSinceJump -= 250;                    
                 }
                 secondsSinceJump = 0;
             }
@@ -187,16 +186,6 @@ namespace UpgradePlatformer.Entities
 
             Vector2 plrDistance = FindDistance();          
  
-        }
-
-        /// <summary>
-        /// Descends the boss onto the player
-        /// </summary>
-        /// <param name="value"></param>
-        public void Descend(int value)
-        {
-            boss.Y += value;
-            secondsSinceJump -= 250;
         }
     }
 }
