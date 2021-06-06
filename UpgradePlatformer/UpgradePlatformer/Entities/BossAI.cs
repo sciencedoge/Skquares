@@ -28,6 +28,8 @@ namespace UpgradePlatformer.Entities
 
         private List<Fireball> fireballs;
 
+        private double secondsSinceJump;
+
         public int Count => fireballs.Count;
             
         /// <summary>
@@ -43,6 +45,8 @@ namespace UpgradePlatformer.Entities
 
             fireballChance = 200;
             phase = 0;
+
+            secondsSinceJump = 0;
         }
 
         /// <summary>
@@ -54,7 +58,36 @@ namespace UpgradePlatformer.Entities
             if (boss == null) return;
             if (boss.CurrentHP == boss.MaxHP) return;
             player = EntityManager.Instance.Player();
-            JumpAttack(gt);
+
+            if (boss.Hitbox.Y + 350 > player.Hitbox.Y)
+            {
+                boss.ApplyGravity(gt);
+            }
+            else
+            {
+                boss.X *= 20;
+                boss.X += player.X - player.Hitbox.Width;
+                boss.X /= 21;
+                secondsSinceJump += gt.ElapsedGameTime.TotalMilliseconds;
+            }
+
+            if (random.Next(1, 101) == 100)
+            {
+                JumpAttack(gt);
+            }
+
+            if (secondsSinceJump > 2000)
+            {
+                int value = 0;
+
+                while(secondsSinceJump > 0)
+                {
+                    Descend(value);
+                    value += 10;
+                }
+                secondsSinceJump = 0;
+            }
+            
             if(!boss.IsActive && fireballs.Count > 0)
             {
                 fireballs.Clear();
@@ -151,17 +184,18 @@ namespace UpgradePlatformer.Entities
 
             }
 
-            Vector2 plrDistance = FindDistance();
+            Vector2 plrDistance = FindDistance();          
+ 
+        }
 
-            if (boss.Colliding == false)
-            {
-                boss.X *= 20;
-                boss.X += player.X;
-                boss.X /= 21;
-            }
-           
-
-            boss.ApplyGravity(gt);
+        /// <summary>
+        /// Descends the boss onto the player
+        /// </summary>
+        /// <param name="value"></param>
+        public void Descend(int value)
+        {
+            boss.Y += value;
+            secondsSinceJump -= 0.5;
         }
     }
 }
