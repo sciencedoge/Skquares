@@ -29,6 +29,7 @@ namespace UpgradePlatformer.Entities
         private List<Fireball> fireballs;
 
         private double secondsSinceJump;
+        private bool initiated;
 
         public int Count => fireballs.Count;
             
@@ -47,6 +48,8 @@ namespace UpgradePlatformer.Entities
             phase = 0;
 
             secondsSinceJump = 0;
+
+            initiated = false;
         }
 
         /// <summary>
@@ -56,8 +59,17 @@ namespace UpgradePlatformer.Entities
         {
             boss = EntityManager.Instance.Boss();
             if (boss == null) return;
-            if (boss.CurrentHP == boss.MaxHP) return;
+            
             player = EntityManager.Instance.Player();
+
+            if (player == null) return;
+
+            Vector2 distance = FindDistance();
+
+            if (distance.X > 150 && initiated == false) return;
+            else { initiated = true; }
+
+            Intersects();
 
             if (boss.Hitbox.Y + 350 > player.Hitbox.Y)
             {
@@ -183,8 +195,18 @@ namespace UpgradePlatformer.Entities
 
             }
 
-            Vector2 plrDistance = FindDistance();          
- 
+            Vector2 plrDistance = FindDistance();
+        }
+
+        /// <summary>
+        /// checks for boss intersections
+        /// </summary>
+        public void Intersects()
+        {
+            if (boss.Hitbox.Intersects(player.Hitbox))
+            {
+                player.CurrentHP -= 2;
+            }
         }
     }
 }
