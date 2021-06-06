@@ -225,7 +225,7 @@ namespace UpgradePlatformer
             {
                 _graphics.IsFullScreen = i == 1;
                 _graphics.ApplyChanges();
-                Save.Save();
+                EventManager.Instance.Push(new Event("SAVE", 0, new Point(0, 0)));
             });
             fullscreenToggle.Text.update = new UITextUpdate(() =>
             {
@@ -284,7 +284,7 @@ namespace UpgradePlatformer
 #if DEBUG
                     end = "F: " + frameRate.ToString("F2") + "\nE: " + EntityManager.Instance.Count() + "\nP: " + EntityManager.Instance.CountProj();
 #endif
-                    return $"{result}]X1 ${EntityManager.Instance.PlayerMoney}\n{end}";
+                    return $"{result}] ${EntityManager.Instance.PlayerMoney}\n{end}";
                 })
             };
 #endregion
@@ -464,7 +464,8 @@ namespace UpgradePlatformer
             LevelManager.Instance.BackDrops = new List<Texture2D> {
                 Content.Load<Texture2D>("Backdrops/Sky"),
                 Content.Load<Texture2D>("Backdrops/Sky"),
-                Content.Load<Texture2D>("Backdrops/Cave")
+                Content.Load<Texture2D>("Backdrops/Cave"),
+                Content.Load<Texture2D>("Backdrops/Sky"),
             };
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
             _font = Content.Load<SpriteFont>("Fonts/Poland");

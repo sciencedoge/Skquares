@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
 using UpgradePlatformer.Input;
 using UpgradePlatformer.Entities;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Weapon
 {
@@ -145,6 +146,7 @@ namespace UpgradePlatformer.Weapon
                   
                 Click = false;
                 bullets.Add(bullet);
+                SoundManager.Instance.PlaySFX("shoot");
                 animation.SetFlag(1);
             }
         }
