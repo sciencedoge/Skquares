@@ -82,6 +82,12 @@ namespace UpgradePlatformer.Entities
                 {
                     if (Raycast(Enemies[i]))
                     {
+                        //Enemy no longer idling
+                        if (Enemies[i].Idle)
+                        {
+                            Enemies[i].Idle = false; 
+                        }
+
                         Enemies[i].animation.SetFlag(2);
 
                         if ((int)Enemies[i].X + 1 == (int)player.X
