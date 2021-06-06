@@ -76,6 +76,7 @@ namespace UpgradePlatformer.Entities
                 JumpAttack(gt);
             }
 
+
             if (secondsSinceJump > 2000)
             {
                 int value = 0;
