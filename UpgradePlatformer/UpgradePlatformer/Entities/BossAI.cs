@@ -196,7 +196,7 @@ namespace UpgradePlatformer.Entities
         public void Descend(int value)
         {
             boss.Y += value;
-            secondsSinceJump -= 0.5;
+            secondsSinceJump -= 500;
         }
     }
 }
