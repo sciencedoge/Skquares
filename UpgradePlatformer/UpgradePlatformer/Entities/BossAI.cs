@@ -16,6 +16,7 @@ namespace UpgradePlatformer.Entities
     //=================================================
     class BossAI
     {
+
         //Fields
         private Boss boss;
         private Player player;
@@ -52,13 +53,11 @@ namespace UpgradePlatformer.Entities
             boss = EntityManager.Instance.Boss();
             if (boss == null) return;
             player = EntityManager.Instance.Player();
-
             JumpAttack(gt);
             if(!boss.IsActive && fireballs.Count > 0)
             {
                 fireballs.Clear();
             }
-
             if (boss.IsActive)
             {
                 if (boss.CurrentHP <= 50
@@ -128,8 +127,8 @@ namespace UpgradePlatformer.Entities
         /// <returns></returns>
         public Vector2 FindDistance()
         {
-            float distX = boss.Position.X - player.Position.X;
-            float distY = boss.Position.Y - player.Position.Y;
+            float distX = boss.hitbox.Center.X - player.hitbox.Center.X;
+            float distY = boss.hitbox.Center.Y - player.hitbox.Center.Y;
 
             return new Vector2(distX, distY);
         }
@@ -153,7 +152,7 @@ namespace UpgradePlatformer.Entities
 
             Vector2 plrDistance = FindDistance();
 
-            if(boss.Colliding == false)
+            if (boss.Colliding == false)
             {
                 boss.X -= (plrDistance.X / 3) + player.Hitbox.Width / 2;
             }
@@ -161,6 +160,5 @@ namespace UpgradePlatformer.Entities
 
             boss.ApplyGravity(gt);
         }
-
     }
 }
