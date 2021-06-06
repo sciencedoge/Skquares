@@ -66,8 +66,12 @@ namespace UpgradePlatformer.Entities
 
             Vector2 distance = FindDistance();
 
+            if (boss.MaxHP != boss.CurrentHP) { initiated = true; }
+
             if (distance.X > 150 && initiated == false) return;
             else { initiated = true; }
+
+            
 
             Intersects();
 
