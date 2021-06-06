@@ -18,6 +18,10 @@ namespace UpgradePlatformer.Entities
     //===========================================
     class Boss : LivingObject
     {
+        // particle stuffs
+        private ParticleSystem ps;
+        private ParticleProps props;
+
         private Point spawnPoint;
         private bool currentlyColliding;
 
@@ -59,6 +63,7 @@ namespace UpgradePlatformer.Entities
             spawnPoint = new Point(hitbox.X, hitbox.Y);
             currentlyColliding = false;
             this.animation = new AnimationFSM(AnimationManager.Instance.animations[3]);
+            ps = new ParticleSystem();
         }
 
         /// <summary>
@@ -67,6 +72,10 @@ namespace UpgradePlatformer.Entities
         public override void OnFloorCollide()
         {   
             this.jumpsLeft = 1;
+            for (int i = 0; i < 30; i++)
+            {
+                ps.Emit(props);
+            }
         }
 
         /// <summary>
@@ -85,7 +94,13 @@ namespace UpgradePlatformer.Entities
             else if (position.X < 0 + hitbox.Width)
                 position.X = 0 + hitbox.Width;
         }
-        
+
+        public override void Draw(SpriteBatch sb, GameTime gt)
+        {
+            base.Draw(sb, gt);
+            ps.Draw(sb);
+        }
+
         /// <summary>
         /// processes a frame of movement for an enemy
         /// </summary>
@@ -96,6 +111,19 @@ namespace UpgradePlatformer.Entities
             {
                 hitbox.Location = position.ToPoint();
                 spriteSize = hitbox.Size;
+
+                props = new ParticleProps()
+                {
+                    Position = new Vector2(hitbox.Center.X, hitbox.Bottom),
+                    Velocity = new Vector2(0, .5f),
+                    VelocityVariation = new Vector2(30f, 0f),
+                    StartColor = Color.Gray,
+                    EndColor = Color.Black,
+                    SizeStart = 7.0f,
+                    SizeEnd = 1.0f,
+                    LifeTime = 3f
+                };
+                ps.Update(gameTime);
 
                 //Removing this for now to customize how gravity affects the boss
                 //ApplyGravity(gameTime);
