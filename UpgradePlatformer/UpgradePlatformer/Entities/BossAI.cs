@@ -52,6 +52,7 @@ namespace UpgradePlatformer.Entities
         {
             boss = EntityManager.Instance.Boss();
             if (boss == null) return;
+            if (boss.CurrentHP == boss.MaxHP) return;
             player = EntityManager.Instance.Player();
             JumpAttack(gt);
             if(!boss.IsActive && fireballs.Count > 0)
@@ -154,7 +155,9 @@ namespace UpgradePlatformer.Entities
 
             if (boss.Colliding == false)
             {
-                boss.X -= (plrDistance.X / 3) + player.Hitbox.Width / 2;
+                boss.X *= 20;
+                boss.X += player.X;
+                boss.X /= 21;
             }
            
 
