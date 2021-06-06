@@ -31,7 +31,7 @@ namespace UpgradePlatformer.Entities
             ps = new ParticleSystem();
             props = new ParticleProps()
             {
-                Position = new Vector2(hitbox.Center.X + 2, hitbox.Location.Y),
+                Position = new Vector2(hitbox.Center.X + 3, hitbox.Location.Y),
                 Velocity = new Vector2(0, -5f),
                 VelocityVariation = new Vector2(1.5f, 1.5f),
                 StartColor = Color.Orange,
