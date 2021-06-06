@@ -28,6 +28,9 @@ namespace UpgradePlatformer.Entities
 
         private List<Fireball> fireballs;
 
+        private double secondsSinceJump;
+        private bool initiated;
+
         public int Count => fireballs.Count;
             
         /// <summary>
@@ -43,6 +46,10 @@ namespace UpgradePlatformer.Entities
 
             fireballChance = 200;
             phase = 0;
+
+            secondsSinceJump = 0;
+
+            initiated = false;
         }
 
         /// <summary>
@@ -52,9 +59,46 @@ namespace UpgradePlatformer.Entities
         {
             boss = EntityManager.Instance.Boss();
             if (boss == null) return;
-            if (boss.CurrentHP == boss.MaxHP) return;
+            
             player = EntityManager.Instance.Player();
-            JumpAttack(gt);
+
+            if (player == null) return;
+
+            Vector2 distance = FindDistance();
+
+            if (distance.X > 150 && initiated == false) return;
+            else { initiated = true; }
+
+            Intersects();
+
+            if (boss.Hitbox.Y + 350 > player.Hitbox.Y)
+            {
+                boss.ApplyGravity(gt);
+            }
+            else
+            {
+                boss.X *= 20;
+                boss.X += player.X - player.Hitbox.Width;
+                boss.X /= 21;
+                secondsSinceJump += gt.ElapsedGameTime.TotalMilliseconds;
+            }
+
+            if (random.Next(1, 101) == 100)
+            {
+                JumpAttack(gt);
+            }
+
+            //alters the y position slightly to allow for the boss to fall
+            if (secondsSinceJump > 2000)
+            {
+                while(secondsSinceJump > 0)
+                {
+                    boss.Y++;
+                    secondsSinceJump -= 100;                   
+                }
+                secondsSinceJump = 0;
+            }
+            
             if(!boss.IsActive && fireballs.Count > 0)
             {
                 fireballs.Clear();
@@ -151,17 +195,17 @@ namespace UpgradePlatformer.Entities
 
             }
 
-            Vector2 plrDistance = FindDistance();
+        }
 
-            if (boss.Colliding == false)
+        /// <summary>
+        /// checks for boss intersections
+        /// </summary>
+        public void Intersects()
+        {
+            if (boss.Hitbox.Intersects(player.Hitbox))
             {
-                boss.X *= 20;
-                boss.X += player.X;
-                boss.X /= 21;
+                player.CurrentHP -= 2;
             }
-           
-
-            boss.ApplyGravity(gt);
         }
     }
 }
