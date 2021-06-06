@@ -88,7 +88,7 @@ namespace UpgradePlatformer.Entities
                 JumpAttack(gt);
             }
 
-
+            //alters the y position slightly to allow for the boss to fall
             if (secondsSinceJump > 2000)
             {
                 while(secondsSinceJump > 0)
