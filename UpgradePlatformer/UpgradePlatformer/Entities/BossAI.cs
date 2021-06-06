@@ -79,11 +79,10 @@ namespace UpgradePlatformer.Entities
 
             if (secondsSinceJump > 2000)
             {
-                int value = 10;
                 while(secondsSinceJump > 0)
                 {
-                    boss.Y += value;
-                    secondsSinceJump -= 250;                    
+                    boss.Y++;
+                    secondsSinceJump -= 100;                   
                 }
                 secondsSinceJump = 0;
             }
