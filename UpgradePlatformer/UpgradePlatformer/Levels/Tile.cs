@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UpgradePlatformer.Entities;
 using UpgradePlatformer.Graphics;
 
 namespace UpgradePlatformer.Levels
@@ -25,6 +26,7 @@ namespace UpgradePlatformer.Levels
         private bool decorbg;
         public int SpawnerKind;
         public bool LightOverride;
+        public int sound;
 
         /// <summary>
         /// creates a tile object
@@ -95,6 +97,13 @@ namespace UpgradePlatformer.Levels
                             Metadata = "";
                         decorbg = decor % 8 < 4;
                         DecorSprite = AllSprites[6 + decor / 4, 3 + decor % 4].Copy();
+                        break;
+                    case 's':
+                        sound = int.Parse(Metadata.Substring(1, 2)) + 1;
+                        if (Metadata.Length > 4)
+                            Metadata = Metadata.Substring(3);
+                        else
+                            Metadata = "";
                         break;
                     case 'l':
                         LightOverride = true;

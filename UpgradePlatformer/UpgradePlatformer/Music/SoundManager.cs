@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using UpgradePlatformer.Levels;
 
 namespace UpgradePlatformer.Music
 {
@@ -36,7 +37,9 @@ namespace UpgradePlatformer.Music
         private Song cave;
         private Song desert;
         private Song gameOver;
+        private Song boss;
 
+        private String playing;
 
         /// <summary>
         /// Loads SFX and music
@@ -53,6 +56,7 @@ namespace UpgradePlatformer.Music
             cave = content.Load<Song>("Music/cave");
             gameOver = content.Load<Song>("Music/game over");
             //desert = content.Load<Song>("Music/desert");
+            boss = content.Load<Song>("Music/boss");
         }
 
         /// <summary>
@@ -78,6 +82,18 @@ namespace UpgradePlatformer.Music
                     break;
             }
         }
+        public void PlayMusic(int section)
+        {
+            switch (section)
+            {
+                case 0:
+                    PlayMusic(LevelManager.Instance.ActiveWorld().Music);
+                    break;
+                case 1:
+                    PlayMusic("boss");
+                    break;
+            }
+        }
 
         /// <summary>
         /// plays music in the game
@@ -85,6 +101,8 @@ namespace UpgradePlatformer.Music
         /// <param name="section"></param>
         public void PlayMusic(string section)
         {
+            if (section == playing) return;
+            playing = section;
             switch(section.ToLower().Trim())
             {
                 case "continue":
@@ -99,6 +117,9 @@ namespace UpgradePlatformer.Music
                     MediaPlayer.Volume = 0.25f;
                     MediaPlayer.IsRepeating = true;
                     break;
+                case "game":
+                    PlayMusic(0);
+                    break;
                 case "clouds":
                     MediaPlayer.Stop();
                     MediaPlayer.Play(clouds);
@@ -111,10 +132,16 @@ namespace UpgradePlatformer.Music
                     MediaPlayer.Volume = 0.25f;
                     MediaPlayer.IsRepeating = true;
                     break;
-                case "cave":
+                case "caves":
                     MediaPlayer.Stop();
                     MediaPlayer.Play(cave);
                     MediaPlayer.Volume = 0.25f;
+                    MediaPlayer.IsRepeating = true;
+                    break;
+                case "boss":
+                    MediaPlayer.Stop();
+                    MediaPlayer.Play(boss);
+                    MediaPlayer.Volume = 0.35f;
                     MediaPlayer.IsRepeating = true;
                     break;
                 case "gameover":

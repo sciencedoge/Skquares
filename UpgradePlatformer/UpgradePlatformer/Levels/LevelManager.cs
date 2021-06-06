@@ -35,6 +35,7 @@ namespace UpgradePlatformer.Levels
                 activeWorld = _activeWorld;
                 EntityManager.Instance.Clean(true);
                 Worlds[activeWorld].LoadEntities(true);
+                SoundManager.Instance.PlayMusic(0);
             }
             ActiveWorld().Update();
         }
@@ -46,9 +47,9 @@ namespace UpgradePlatformer.Levels
         {
             Worlds = new List<World>();
             _activeWorld = 0;
-            Worlds.Add(new World(0, 2, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE }));
-            Worlds.Add(new World(1, 3, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
-            Worlds.Add(new World(2, 4, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(0, 2, 0, "menu", false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE }));
+            Worlds.Add(new World(1, 3, 0, "clouds", false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(2, 4, 0, "caves", true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
         }
 
         /// <summary>
@@ -85,16 +86,6 @@ namespace UpgradePlatformer.Levels
             }
             else
             _activeWorld = id % (Worlds.Count);
-
-            switch (_activeWorld)
-            {
-                case 1:
-                    SoundManager.Instance.PlayMusic("clouds");
-                    break;
-                case 2:
-                    SoundManager.Instance.PlayMusic("cave");
-                    break;
-            }
         }
 
         /// <summary>
@@ -120,9 +111,9 @@ namespace UpgradePlatformer.Levels
         {
             Worlds = new List<World>();
             _activeWorld = 0;
-            Worlds.Add(new World(0, 2, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE }));
-            Worlds.Add(new World(1, 3, 0, false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
-            Worlds.Add(new World(2, 4, 0, true, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(0, 2, 0, "menu", false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE }));
+            Worlds.Add(new World(1, 3, 0, "clouds", false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(2, 4, 0, "caves", true , new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
         }
 
         /// <summary>
