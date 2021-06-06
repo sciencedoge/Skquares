@@ -225,7 +225,7 @@ namespace UpgradePlatformer
             {
                 _graphics.IsFullScreen = i == 1;
                 _graphics.ApplyChanges();
-                Save.Save();
+                EventManager.Instance.Push(new Event("SAVE", 0, new Point(0, 0)));
             });
             fullscreenToggle.Text.update = new UITextUpdate(() =>
             {
