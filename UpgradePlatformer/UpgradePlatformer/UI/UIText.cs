@@ -8,7 +8,7 @@ using UpgradePlatformer.Graphics;
 namespace UpgradePlatformer.UI
 {
     public delegate string UITextUpdate();
-    class UIText : UIElement
+    public class UIText : UIElement
     {
         public String Text;
         public SpriteFont Font;

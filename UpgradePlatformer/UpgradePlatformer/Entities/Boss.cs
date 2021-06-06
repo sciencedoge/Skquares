@@ -107,6 +107,8 @@ namespace UpgradePlatformer.Entities
         /// <param name="gameTime">a GameTime object</param>
         public override void Update(GameTime gameTime)
         {
+            cooldown -= gameTime.ElapsedGameTime.Milliseconds;
+            cooldown = Math.Max(cooldown, 0);
             if (IsActive)
             {
                 hitbox.Location = position.ToPoint();

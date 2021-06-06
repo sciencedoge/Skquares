@@ -6,8 +6,8 @@ using System.Text;
 
 namespace UpgradePlatformer.UI
 {
-    delegate bool ShowCond();
-    class UIPanel : UIElement
+    public delegate bool ShowCond();
+    public class UIPanel : UIElement
     {
         // Setup constants for sprites
         private static Rectangle PANEL_NORMAL_SPRITE = new Rectangle(0, 0, 7, 7);

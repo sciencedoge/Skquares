@@ -16,9 +16,9 @@ namespace UpgradePlatformer.Entities
     //Purpose: Provides the basis for all living entities in
     //the game
     //======================================================
-    abstract class LivingObject : EntityObject, Interfaces.IDamageable, Interfaces.IHostile
+    public abstract class LivingObject : EntityObject, Interfaces.IDamageable, Interfaces.IHostile
     {
-        private const int cooldownTime = 120;
+        private const int cooldownTime = 2500;
         private Rectangle SpriteBounds = new Rectangle(17, 14, 14, 14);
 
         //fields
@@ -27,7 +27,7 @@ namespace UpgradePlatformer.Entities
         protected int damage;
 
         protected int jumpsLeft;
-        protected int cooldown;
+        public double cooldown;
 
         //Gravity and movement
         protected Vector2 gravity;
@@ -188,7 +188,7 @@ namespace UpgradePlatformer.Entities
         /// <param name="amount">amount of damage dealt</param>
         public void TakeDamage(int amount)
         {
-            if (cooldown != 0)
+            if (cooldown > 0)
                 return;
             this.currentHp -= amount;
             if (CurrentHP <= 0)
@@ -205,7 +205,7 @@ namespace UpgradePlatformer.Entities
         /// <param name="gt">gameTime</param>
         public override void Draw(SpriteBatch sb, GameTime gt)
         {
-            if (IsActive)
+            if (IsActive && cooldown % 6 != 1)
             {          
                 animation.Draw(sb, hitbox.Location, 0, spriteSize.ToVector2());
             }

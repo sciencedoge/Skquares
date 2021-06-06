@@ -4,7 +4,7 @@ using System.Text;
 
 namespace UpgradePlatformer.FSM
 {
-    class FiniteStateMachine
+    public class FiniteStateMachine
     {
         public List<StateMachineState> States;
         public StateMachineState State => States[currentState];

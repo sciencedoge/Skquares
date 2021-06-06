@@ -6,7 +6,7 @@ using System.Text;
 
 namespace UpgradePlatformer.UI
 {
-    abstract class UIElement
+    public abstract class UIElement
     {
         public UIElement nextFocus, prevFocus;
         public bool Focused = false;

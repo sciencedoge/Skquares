@@ -10,7 +10,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
     //Date: 5/26/2021
     //Purpose: establishes the upgrade tree
     //===============================================
-    static class UpgradeStructure
+    public static class UpgradeStructure
     {
         public static UIPanel panel;
         public static void InitStructure()

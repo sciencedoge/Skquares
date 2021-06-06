@@ -15,7 +15,7 @@ namespace UpgradePlatformer.Weapon
     //Date: 5/30/2021
     //Purpose: Gives functionality for the player's weapon
     //=========================================================
-    class Weapon
+    public class Weapon
     {
 
         //Fields

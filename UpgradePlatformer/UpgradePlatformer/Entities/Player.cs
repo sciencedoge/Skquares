@@ -17,7 +17,7 @@ namespace UpgradePlatformer.Entities
     //Date: 5/22/2021
     //Purpose: Creates functionality for players
     //===========================================
-    class Player : LivingObject
+    public class Player : LivingObject
     {
 
         //Fields
@@ -101,6 +101,8 @@ namespace UpgradePlatformer.Entities
         {
             if (IsActive)
             {
+                cooldown -= gt.ElapsedGameTime.TotalMilliseconds;
+                cooldown = Math.Max(cooldown, 0);
 
                 this.damage = UpgradeManager.Instance.GetAmmnt(UpgradeType.WEAPON);
                 CheckForInput(gt);
@@ -119,8 +121,6 @@ namespace UpgradePlatformer.Entities
                     weapon.Update(gt);
                 }
 
-                cooldown--;
-                cooldown = Math.Max(cooldown, 0);
 
                 if (Joystick.X == 0) {
                     idleTimer++;
@@ -218,8 +218,6 @@ namespace UpgradePlatformer.Entities
         /// <param name="gt"></param>
         public override void Draw(SpriteBatch sb, GameTime gt)
         {
-            if (!IsActive) return;
-
             base.Draw(sb, gt);
 
             if (weapon.IsActive)

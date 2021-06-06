@@ -92,7 +92,7 @@ namespace UpgradePlatformer.Weapon
                 {
                     if (e.IsActive)
                     {
-                        e.CurrentHP -= EntityManager.Instance.Player().Damage;
+                        e.TakeDamage(EntityManager.Instance.Player().Damage);
 
                         isActive = false;
                         if (e.CurrentHP <= 0)

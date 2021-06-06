@@ -9,7 +9,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
     //Date: 5/26/2021
     //Purpose: Manages upgrades
     //============================================
-    class UpgradeManager
+    public class UpgradeManager
     {
         private static readonly Lazy<UpgradeManager>
             lazy =
@@ -110,6 +110,8 @@ namespace UpgradePlatformer.Upgrade_Stuff
                 upgrade = Root;
             //LRC Data pattern
             int result = 0;
+
+            if (upgrade == null) return 0;
 
             if (upgrade.IsLearned)
             {

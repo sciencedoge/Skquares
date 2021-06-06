@@ -7,7 +7,7 @@ using UpgradePlatformer.FSM;
 
 namespace UpgradePlatformer.Graphics
 {
-    class AnimationFSM
+    public class AnimationFSM
     {
         public FiniteStateMachine finiteStateMachine;
         public List<Animation> animations;
@@ -69,7 +69,7 @@ namespace UpgradePlatformer.Graphics
         }
     }
 
-    class Animation
+    public class Animation
     {
         static Random rand;
         public List<Sprite> sprites;

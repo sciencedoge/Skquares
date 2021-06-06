@@ -74,7 +74,7 @@ namespace UpgradePlatformer.Weapon
             {
                 if (p.IsActive)
                 {
-                    p.CurrentHP -= 2;
+                    p.TakeDamage(2);
 
                     isActive = false;
                     if (p.CurrentHP <= 0)

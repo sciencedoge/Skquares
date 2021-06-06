@@ -11,7 +11,7 @@ using UpgradePlatformer.Graphics;
 
 namespace UpgradePlatformer.Entities
 {
-    abstract class EntityObject
+    public abstract class EntityObject
     {
 
         public bool IsActive;
@@ -44,7 +44,7 @@ namespace UpgradePlatformer.Entities
         }
 
     }
-    enum EntityKind {
+    public enum EntityKind {
         PLAYER,
         ENEMY,
         BOSS,

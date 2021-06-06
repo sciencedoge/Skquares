@@ -5,6 +5,11 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpgradePlatformer", "UpgradePlatformer\UpgradePlatformer.csproj", "{41D984A5-9444-4338-92C0-577987E9EC47}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpgradePlatformerTests", "UpgradePlatformerTests\UpgradePlatformerTests.csproj", "{7D93DC80-215B-42B8-BE0C-A1CBA1613ECD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{41D984A5-9444-4338-92C0-577987E9EC47} = {41D984A5-9444-4338-92C0-577987E9EC47}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +20,10 @@ Global
 		{41D984A5-9444-4338-92C0-577987E9EC47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41D984A5-9444-4338-92C0-577987E9EC47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{41D984A5-9444-4338-92C0-577987E9EC47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D93DC80-215B-42B8-BE0C-A1CBA1613ECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D93DC80-215B-42B8-BE0C-A1CBA1613ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D93DC80-215B-42B8-BE0C-A1CBA1613ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D93DC80-215B-42B8-BE0C-A1CBA1613ECD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
