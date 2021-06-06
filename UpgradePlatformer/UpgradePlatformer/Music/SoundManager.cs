@@ -48,6 +48,7 @@ namespace UpgradePlatformer.Music
         {
             buttonClick = content.Load<SoundEffect>("Music/button");
             jump = content.Load<SoundEffect>("Music/jump");
+            shoot = content.Load<SoundEffect>("Music/shoot");
             land = content.Load<SoundEffect>("Music/jumpland");
             coinGrab = content.Load<SoundEffect>("Music/coin");
             menu = content.Load<Song>("Music/menu");
@@ -79,6 +80,9 @@ namespace UpgradePlatformer.Music
                     break;
                 case "coin":
                     coinGrab.Play(0.75f, 0, 0);
+                    break;
+                case "shoot":
+                    shoot.Play(1.00f, 0, 0);
                     break;
             }
         }
