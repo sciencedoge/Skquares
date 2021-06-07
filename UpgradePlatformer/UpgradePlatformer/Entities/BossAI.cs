@@ -162,6 +162,7 @@ namespace UpgradePlatformer.Entities
             if(random.Next(0, fireballChance) == fireballChance - 1)
             {
                 SoundManager.Instance.PlaySFX("shoot");
+
                 Vector2 bulletPos = new Vector2(boss.Position.X + (boss.Hitbox.Width / 2),
                                                 boss.Position.Y + (boss.Hitbox.Height / 2));
 
