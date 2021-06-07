@@ -44,44 +44,53 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/Poland.spritefont
 
-#begin Levels/0_1.fld
-/copy:Levels/0_1.fld
+#begin Levels/0_1_1.fld
+/copy:Levels/0_1_1.fld
 
-#begin Levels/0_2.fld
-/copy:Levels/0_2.fld
+#begin Levels/0_1_2.fld
+/copy:Levels/0_1_2.fld
 
-#begin Levels/1_1.fld
-/copy:Levels/1_1.fld
+#begin Levels/1_1_1.fld
+/copy:Levels/1_1_1.fld
 
-#begin Levels/1_2.fld
-/copy:Levels/1_2.fld
+#begin Levels/1_1_2.fld
+/copy:Levels/1_1_2.fld
 
-#begin Levels/1_3.fld
-/copy:Levels/1_3.fld
+#begin Levels/1_1_3.fld
+/copy:Levels/1_1_3.fld
 
-#begin Levels/2_1.fld
-/copy:Levels/2_1.fld
+#begin Levels/2_1_1.fld
+/copy:Levels/2_1_1.fld
 
-#begin Levels/2_2.fld
-/copy:Levels/2_2.fld
+#begin Levels/2_1_2.fld
+/copy:Levels/2_1_2.fld
 
-#begin Levels/2_3.fld
-/copy:Levels/2_3.fld
+#begin Levels/2_1_3.fld
+/copy:Levels/2_1_3.fld
 
-#begin Levels/2_4.fld
-/copy:Levels/2_4.fld
+#begin Levels/2_1_4.fld
+/copy:Levels/2_1_4.fld
 
-#begin Music/allstar.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/allstar.mp3
+#begin Levels/3_1_1.fld
+/copy:Levels/3_1_1.fld
 
 #begin Music/AMOGUS.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:Music/AMOGUS.mp3
+
+#begin Music/Sigh.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/Sigh.mp3
+
+#begin Music/allstar.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/allstar.mp3
 
 #begin Music/boss.mp3
 /importer:Mp3Importer
@@ -148,12 +157,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Music/shoot.wav
-
-#begin Music/Sigh.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Music/Sigh.mp3
 
 #begin Shaders/ShaderInvert.fx
 /importer:EffectImporter
