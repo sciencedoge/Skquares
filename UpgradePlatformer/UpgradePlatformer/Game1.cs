@@ -124,6 +124,8 @@ namespace UpgradePlatformer
                 onClick = new UIAction((i) =>
                 {
                     EventManager.Instance.Push(new Event("LOAD", 0, new Point(0, 0)));
+                    if (Save.Data.upgrades != null)
+                        UpgradeManager.Instance.Upgrades = Save.Data.upgrades;
                     EventManager.Instance.Push(new Event("WORLD_SHOW", Save.Data.lastWorld, new Point(0, 0)));
                     LevelManager.Instance.SetLevel(1);
                     SoundManager.Instance.PlaySFX("button");
@@ -439,8 +441,7 @@ namespace UpgradePlatformer
                 EntityManager.Instance.PlayerMoney = Save.Data.money;
                 _graphics.IsFullScreen = Save.Data.fullscreen;
                 _graphics.ApplyChanges();
-                if (Save.Data.upgrades != null)
-                    UpgradeManager.Instance.Upgrades = Save.Data.upgrades;
+                UpgradeManager.Instance.Upgrades = Save.Data.upgrades;
                 return true;
             });
             EventManager.Instance.AddListener(Action_Load, "LOAD");
@@ -459,6 +460,8 @@ namespace UpgradePlatformer
             Save = new IsolatedStorageSaveManager("UpgradePlatformer", "options.dat");
             Save.Load();
 
+            if (Save.Data.upgrades != null)
+                UpgradeManager.Instance.Upgrades = Save.Data.upgrades;
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);

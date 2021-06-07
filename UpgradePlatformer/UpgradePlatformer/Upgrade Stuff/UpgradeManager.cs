@@ -19,12 +19,11 @@ namespace UpgradePlatformer.Upgrade_Stuff
 
         public List<Upgrade> Upgrades;
 
-        private UpgradeManager() {
-            Upgrades = new List<Upgrade>();
-        }
+        private UpgradeManager() { }
 
         public void Add(int value, UpgradeType type, int price) {
             Upgrade ug = new Upgrade(value, type, price);
+            ug.IsLearned = false;
             Upgrades.Add(ug);    
         }
 

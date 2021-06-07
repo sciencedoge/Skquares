@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Upgrade_Stuff;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.Graphics;
+using UpgradePlatformer.Input;
 
 namespace UpgradePlatformer.Entities
 {
@@ -103,6 +104,7 @@ namespace UpgradePlatformer.Entities
                 IsActive = false;
                 UpgradeStructure.ShowMessage(upgrade);
                 upgrade.IsLearned = true;
+                EventManager.Instance.Push(new Event("SAVE", 0, new Point()));
                 return true;
             }
         }
