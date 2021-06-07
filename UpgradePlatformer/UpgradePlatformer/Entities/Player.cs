@@ -76,7 +76,7 @@ namespace UpgradePlatformer.Entities
         /// <returns>0</returns>
         public override int Intersects(List<EntityObject> obj)
         {
-            if (IsActive)
+            if (IsActive && this != null)
             {
                 foreach(EntityObject o in obj)
                 {
@@ -85,7 +85,7 @@ namespace UpgradePlatformer.Entities
                         continue;
                     if (this.hitbox.Intersects(((Enemy)o).Hitbox))
                     {
-                        this.TakeDamage(((Enemy)o).Damage);
+                        this.TakeDamage(((Enemy)o).Damage);                       
                     }
                 }
             }

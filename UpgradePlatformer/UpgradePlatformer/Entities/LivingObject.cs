@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.Input;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Entities
 {
@@ -191,6 +192,8 @@ namespace UpgradePlatformer.Entities
             if (cooldown > 0)
                 return;
             this.currentHp -= amount;
+
+            SoundManager.Instance.PlaySFX("damage");
             if (CurrentHP <= 0)
             {
                 IsActive = false;

@@ -164,6 +164,12 @@
 /processorParam:Quality=Best
 /build:Music/menu.mp3
 
+#begin Music/playerDamage.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Music/playerDamage.wav
+
 #begin Music/shoot.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
