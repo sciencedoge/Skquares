@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UpgradePlatformer.Upgrade_Stuff
+namespace UpgradePlatformer.Shop_Stuff
 {
     //HEADER=======================================
     //Name: Sami Chamberlain, Preston Precourt
