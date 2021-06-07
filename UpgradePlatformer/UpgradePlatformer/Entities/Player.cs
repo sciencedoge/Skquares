@@ -26,7 +26,7 @@ namespace UpgradePlatformer.Entities
         private Vector2 Joystick;
         private bool ducking;
         public Weapon.Weapon weapon;
-        private static int MaxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.EXTRA_JUMP) + 1;
+        private static int MaxJumps => ShopManager.Instance.GetAmmnt(UpgradeType.EXTRA_JUMP) + 1;
         private bool landed;
         private int idleTimer;
         private int sameVelocityFrames;
@@ -104,7 +104,7 @@ namespace UpgradePlatformer.Entities
                 cooldown -= gt.ElapsedGameTime.TotalMilliseconds;
                 cooldown = Math.Max(cooldown, 0);
 
-                this.damage = UpgradeManager.Instance.GetAmmnt(UpgradeType.WEAPON);
+                this.damage = ShopManager.Instance.GetAmmnt(UpgradeType.WEAPON);
                 CheckForInput(gt);
 
                 if (this.damage > 0 && weapon.IsActive == false)
