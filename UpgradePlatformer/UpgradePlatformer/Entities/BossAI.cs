@@ -210,8 +210,7 @@ namespace UpgradePlatformer.Entities
         {
             if (boss.Hitbox.Intersects(player.Hitbox))
             {
-                player.CurrentHP -= 2;
-                SoundManager.Instance.PlaySFX("damage");
+                player.TakeDamage(2);
             }
         }
     }
