@@ -32,6 +32,8 @@ namespace UpgradePlatformer.Music
         private SoundEffect shoot;
         private SoundEffect hit;
 
+        private SoundEffect playerDamage;
+
         private Song menu;
         private Song clouds;
         private Song cave;
@@ -58,6 +60,8 @@ namespace UpgradePlatformer.Music
             gameOver = content.Load<Song>("Music/game over");
             //desert = content.Load<Song>("Music/desert");
             boss = content.Load<Song>("Music/boss");
+
+            playerDamage = content.Load<SoundEffect>("Music/playerDamage");
         }
 
         /// <summary>
@@ -83,6 +87,9 @@ namespace UpgradePlatformer.Music
                     break;
                 case "shoot":
                     shoot.Play(1.00f, 0, 0);
+                    break;
+                case "damage":
+                    playerDamage.Play(0.75f, 0, 0);
                     break;
             }
         }

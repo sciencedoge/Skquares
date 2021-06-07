@@ -86,6 +86,7 @@ namespace UpgradePlatformer.Entities
                     if (this.hitbox.Intersects(((Enemy)o).Hitbox))
                     {
                         this.TakeDamage(((Enemy)o).Damage);
+                        SoundManager.Instance.PlaySFX("damage");
                     }
                 }
             }

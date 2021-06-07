@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Entities;
 using UpgradePlatformer.Graphics;
+using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Weapon
 {
@@ -75,6 +76,7 @@ namespace UpgradePlatformer.Weapon
                 if (p.IsActive)
                 {
                     p.TakeDamage(2);
+                    SoundManager.Instance.PlaySFX("damage");
 
                     isActive = false;
                     if (p.CurrentHP <= 0)

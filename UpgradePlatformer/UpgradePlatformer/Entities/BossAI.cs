@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Weapon;
 using UpgradePlatformer.Graphics;
-
+using UpgradePlatformer.Music;
 namespace UpgradePlatformer.Entities
 {
     //HEADER===========================================
@@ -161,6 +161,7 @@ namespace UpgradePlatformer.Entities
         {
             if(random.Next(0, fireballChance) == fireballChance - 1)
             {
+                SoundManager.Instance.PlaySFX("shoot");
                 Vector2 bulletPos = new Vector2(boss.Position.X + (boss.Hitbox.Width / 2),
                                                 boss.Position.Y + (boss.Hitbox.Height / 2));
 
@@ -209,6 +210,7 @@ namespace UpgradePlatformer.Entities
             if (boss.Hitbox.Intersects(player.Hitbox))
             {
                 player.CurrentHP -= 2;
+                SoundManager.Instance.PlaySFX("damage");
             }
         }
     }
