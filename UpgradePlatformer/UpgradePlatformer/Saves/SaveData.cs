@@ -20,6 +20,6 @@ namespace UpgradePlatformer.Saves
         public uint lastWorld;
         public int money;
         public List<LevelCollectedEntity> collectedEntities;
-        public Upgrade upgrades;
+        public List<Upgrade> upgrades;
     }
 }

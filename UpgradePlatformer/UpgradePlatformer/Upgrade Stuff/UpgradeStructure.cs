@@ -15,7 +15,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         public static UIPanel panel;
         public static void InitStructure()
         {
-            UpgradeManager.Instance.Root = null;
+            UpgradeManager.Instance.Upgrades = new List<Upgrade>();
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 10);
             UpgradeManager.Instance.Add(1, UpgradeType.EXTRA_JUMP, 10);
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 10);
@@ -30,6 +30,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 70);
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 80);
         }
+        
         public static void ShowMessage(Upgrade ug)
         {
             panel.Text.Text = ug.UnlockText;
