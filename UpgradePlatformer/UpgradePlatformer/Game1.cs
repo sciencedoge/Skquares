@@ -425,6 +425,7 @@ namespace UpgradePlatformer
 
             EventAction Action_Load = new EventAction((Event e) =>
             {
+                Save.Load();
                 foreach (World w in LevelManager.Instance.Worlds)
                     foreach (Level l in w.Levels)
                         l.Collected = new List<LevelCollectedEntity>();
