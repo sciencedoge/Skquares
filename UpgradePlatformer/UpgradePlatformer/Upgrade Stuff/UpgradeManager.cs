@@ -31,7 +31,8 @@ namespace UpgradePlatformer.Upgrade_Stuff
         public int GetAmmnt(UpgradeType filter) {
             int result = 0;
             foreach (Upgrade ug in Upgrades)
-                result += ug.IsLearned && ug.Type == filter ? ug.Value : 0;
+                if (ug.IsLearned && ug.Type == filter )
+                    result += ug.Value;
             return result;
         }
     }
