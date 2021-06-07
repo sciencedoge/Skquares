@@ -11,7 +11,7 @@ namespace UpgradePlatformer.Levels
     class World
     {
         public List<Level> Levels;
-        public List<UpgradeType> upgrades;
+        public List<int> upgrades;
         public String Music;
         int activeLevel;
         int _activeLevel;
@@ -41,7 +41,7 @@ namespace UpgradePlatformer.Levels
         /// </summary>
         /// <param name="levels">the levels in the world</param>
         /// <param name="defaultLevel">the default level</param>
-        public World(int world_num, int sub_num, int levels, int defaultLevel, String music, bool light, List<UpgradeType> Upgrades)
+        public World(int world_num, int sub_num, int levels, int defaultLevel, String music, bool light, List<int> Upgrades)
         {
             Music = music;
             upgrades = Upgrades;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UpgradePlatformer.Upgrade_Stuff;
 
 namespace UpgradePlatformer.Shop_Stuff
 {

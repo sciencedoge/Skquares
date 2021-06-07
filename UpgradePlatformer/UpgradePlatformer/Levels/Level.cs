@@ -16,7 +16,7 @@ namespace UpgradePlatformer.Levels
         int TileWidth, TileHeight;
         Tile[,] TileMap;
         public bool Light;
-        private UpgradeType upgrade;
+        private int upgrade;
 
         public List<LevelCollectedEntity> Collected;
         public Tile[,] Tiles
@@ -84,7 +84,7 @@ namespace UpgradePlatformer.Levels
         /// creates a level from a file
         /// </summary>
         /// <param name="name">the name of the file</param>
-        public Level(String name, bool Light, UpgradeType ug)
+        public Level(String name, bool Light, int ug)
         {
             Collected = new List<LevelCollectedEntity>();
             upgrade = ug;
@@ -170,7 +170,7 @@ namespace UpgradePlatformer.Levels
                     EntityObject o = null;
                     if (t.SpawnerKind == 5) o = (EntityObject)new Boss(30, 1, new Rectangle(t.Position.Location - new Point(0, 100), new Point(100, 100)), 0);
                     else if (t.SpawnerKind == 4) o = (EntityObject)new Torch(0, new Rectangle(t.Position.Location, new Point(15, 15)), t);
-                    else if (t.SpawnerKind == 3 && ShopManager.Instance.CanBeLearned(upgrade).Count != 0) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location.X, t.Position.Y - 15, 15, 15), ShopManager.Instance.CanBeLearned(upgrade)[0], t);
+                    else if (t.SpawnerKind == 3 && UpgradeManager.Instance.Upgrades[upgrade].IsLearned == false) o = (EntityObject)new Pillar(10, new Rectangle(t.Position.Location.X, t.Position.Y - 15, 15, 15), UpgradeManager.Instance.Upgrades[upgrade], t);
 #if DEBUG
                     else if (t.SpawnerKind == 2 && player) o = (EntityObject)new Player(int.MaxValue, 0, new Rectangle(t.Position.Location, new Point(25, 24)), 2);
 #else

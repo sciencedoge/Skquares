@@ -118,7 +118,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
 
         private static String GetName(UpgradeType type)
         {
-            int level = ShopManager.Instance.GetAmmnt(type) + 1;
+            int level = UpgradeManager.Instance.GetAmmnt(type) + 1;
             switch (type)
             {
                 case UpgradeType.EXTRA_JUMP:
@@ -133,7 +133,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         }
         private static String GetEffect(UpgradeType type)
         {
-            int level = ShopManager.Instance.GetAmmnt(type) + 1;
+            int level = UpgradeManager.Instance.GetAmmnt(type) + 1;
             switch (type)
             {
                 case UpgradeType.EXTRA_JUMP:

@@ -417,7 +417,7 @@ namespace UpgradePlatformer
                 Save.Data.lastWorld = (uint)LevelManager.Instance.ActiveWorldNum();
                 Save.Data.money = EntityManager.Instance.PlayerMoney;
                 Save.Data.fullscreen = _graphics.IsFullScreen;
-                Save.Data.upgrades = ShopManager.Instance.Root;
+                Save.Data.upgrades = UpgradeManager.Instance.Upgrades;
                 Save.Save();
                 return true;
             });
@@ -439,7 +439,7 @@ namespace UpgradePlatformer
                 _graphics.IsFullScreen = Save.Data.fullscreen;
                 _graphics.ApplyChanges();
                 if (Save.Data.upgrades != null)
-                    ShopManager.Instance.Root = Save.Data.upgrades;
+                    UpgradeManager.Instance.Upgrades = Save.Data.upgrades;
                 return true;
             });
             EventManager.Instance.AddListener(Action_Load, "LOAD");
