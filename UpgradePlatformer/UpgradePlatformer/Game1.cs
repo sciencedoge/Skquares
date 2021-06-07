@@ -417,7 +417,7 @@ namespace UpgradePlatformer
                 Save.Data.lastWorld = (uint)LevelManager.Instance.ActiveWorldNum();
                 Save.Data.money = EntityManager.Instance.PlayerMoney;
                 Save.Data.fullscreen = _graphics.IsFullScreen;
-                Save.Data.upgrades = UpgradeManager.Instance.Root;
+                Save.Data.upgrades = UpgradeManager.Instance.Upgrades;
                 Save.Save();
                 return true;
             });
@@ -439,7 +439,7 @@ namespace UpgradePlatformer
                 _graphics.IsFullScreen = Save.Data.fullscreen;
                 _graphics.ApplyChanges();
                 if (Save.Data.upgrades != null)
-                    UpgradeManager.Instance.Root = Save.Data.upgrades;
+                    UpgradeManager.Instance.Upgrades = Save.Data.upgrades;
                 return true;
             });
             EventManager.Instance.AddListener(Action_Load, "LOAD");
@@ -461,11 +461,9 @@ namespace UpgradePlatformer
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
-            LevelManager.Instance.BackDrops = new List<Texture2D> {
-                Content.Load<Texture2D>("Backdrops/Sky"),
+            LevelManager.BackDrops = new List<Texture2D> {
                 Content.Load<Texture2D>("Backdrops/Sky"),
                 Content.Load<Texture2D>("Backdrops/Cave"),
-                Content.Load<Texture2D>("Backdrops/Sky"),
             };
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
             _font = Content.Load<SpriteFont>("Fonts/Poland");

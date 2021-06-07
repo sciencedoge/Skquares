@@ -11,11 +11,12 @@ namespace UpgradePlatformer.Levels
     class World
     {
         public List<Level> Levels;
-        public List<UpgradeType> upgrades;
+        public List<int> upgrades;
         public String Music;
         int activeLevel;
         int _activeLevel;
         bool Light = false;
+        public Texture2D Backdrop;
         public bool CheckUpdate() => _activeLevel != activeLevel;
         
         /// <summary>
@@ -41,8 +42,9 @@ namespace UpgradePlatformer.Levels
         /// </summary>
         /// <param name="levels">the levels in the world</param>
         /// <param name="defaultLevel">the default level</param>
-        public World(int world_num, int sub_num, int levels, int defaultLevel, String music, bool light, List<UpgradeType> Upgrades)
+        public World(Texture2D backdrop, int world_num, int sub_num, int levels, int defaultLevel, String music, bool light, List<int> Upgrades)
         {
+            Backdrop = backdrop;
             Music = music;
             upgrades = Upgrades;
             Light = light;

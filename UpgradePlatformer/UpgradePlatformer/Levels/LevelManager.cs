@@ -22,8 +22,8 @@ namespace UpgradePlatformer.Levels
                 (() => new LevelManager());
         public static LevelManager Instance { get { return lazy.Value; } }
 
+        public static List<Texture2D> BackDrops;
         public List<World> Worlds;
-        public List<Texture2D> BackDrops;
         int activeWorld;
         int _activeWorld;
         
@@ -58,7 +58,7 @@ namespace UpgradePlatformer.Levels
             {
                 Rectangle r = Sprite.GetRect();
                 r.Location += new Vector2(0, 40 * Sprite.GetScale()).ToPoint();
-                spriteBatch.Draw(BackDrops[activeWorld], r, Color.White);
+                spriteBatch.Draw(ActiveWorld().Backdrop, r, Color.White);
             }
             Worlds[activeWorld].Draw(spriteBatch, background);
         }
@@ -107,13 +107,10 @@ namespace UpgradePlatformer.Levels
         {
             Worlds = new List<World>();
             _activeWorld = 0;
-            Worlds.Add(new World(0, 1, 2, 0, "menu", false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE }));
-            Worlds.Add(new World(0, 2, 6, 0,
-                "tutorial", false, new List<UpgradeType>
-                { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.NONE,
-                    UpgradeType.NONE, UpgradeType.NONE, UpgradeType.HEALTH }));
-            Worlds.Add(new World(1, 1, 3, 0, "clouds", false, new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.EXTRA_JUMP }));
-            Worlds.Add(new World(2, 1, 4, 0, "caves", true , new List<UpgradeType> { UpgradeType.NONE, UpgradeType.NONE, UpgradeType.WEAPON, UpgradeType.EXTRA_JUMP }));
+            Worlds.Add(new World(BackDrops[0], 0, 1, 2, 0, "menu",     false, new List<int> { -1, -1 }));
+            Worlds.Add(new World(BackDrops[0], 0, 2, 6, 0, "tutorial", false, new List<int> { -1, -1, -1, -1, -1, 0 }));
+            Worlds.Add(new World(BackDrops[0], 1, 1, 3, 0, "clouds",   false, new List<int> { -1, -1, 1 }));
+            Worlds.Add(new World(BackDrops[1], 2, 1, 4, 0, "caves",    true , new List<int> { -1, -1, 2, 3 }));
         }
 
         /// <summary>

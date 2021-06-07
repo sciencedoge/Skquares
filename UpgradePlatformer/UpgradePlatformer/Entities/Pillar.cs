@@ -93,10 +93,7 @@ namespace UpgradePlatformer.Entities
         /// <returns></returns>
         private bool ValidIntersection()
         {
-            List<Upgrade> upgrades = UpgradeManager.Instance.CanBeLearned();
-           
-            if (EntityManager.Instance.PlayerMoney - upgrade.Cost < 0
-                || !upgrades.Contains(upgrade))
+            if (EntityManager.Instance.PlayerMoney - upgrade.Cost < 0)
             {
                 return false;
             }

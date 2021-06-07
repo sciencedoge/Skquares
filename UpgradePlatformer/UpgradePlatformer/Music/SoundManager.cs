@@ -125,6 +125,7 @@ namespace UpgradePlatformer.Music
                     PlayMusic(0);
                     break;
                 case "clouds":
+                case "tutorial":
                     MediaPlayer.Stop();
                     MediaPlayer.Play(clouds);
                     MediaPlayer.Volume = 0.25f;
