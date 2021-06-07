@@ -16,6 +16,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         public static void InitStructure()
         {
             UpgradeManager.Instance.Root = null;
+            UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 10);
             UpgradeManager.Instance.Add(1, UpgradeType.EXTRA_JUMP, 10);
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 10);
             UpgradeManager.Instance.Add(1, UpgradeType.WEAPON, 0);
