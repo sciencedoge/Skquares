@@ -42,14 +42,13 @@ namespace UpgradePlatformer.Levels
         /// </summary>
         /// <param name="levels">the levels in the world</param>
         /// <param name="defaultLevel">the default level</param>
-        public World(Texture2D backdrop, int world_num, int sub_num, int levels, int defaultLevel, String music, bool light, List<int> Upgrades)
+        public World(Texture2D backdrop, int world_num, int sub_num, int levels, String music, bool light, List<int> Upgrades)
         {
             Backdrop = backdrop;
             Music = music;
             upgrades = Upgrades;
             Light = light;
             Levels = new List<Level>();
-            _activeLevel = defaultLevel;
             for (int i = 1; i <= levels; i++)
                 Load($"{world_num}_{sub_num}_{i}");
         }
