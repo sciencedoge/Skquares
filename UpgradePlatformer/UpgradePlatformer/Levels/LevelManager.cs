@@ -78,9 +78,8 @@ namespace UpgradePlatformer.Levels
         /// </summary>
         /// <param name="id">the world id</param>
         public void SetWorld(int id) {
-            if (id < 0) {
+            if (id < 0)
                 _activeWorld = Worlds.Count - 1;
-            }
             else
             _activeWorld = id % (Worlds.Count);
         }
