@@ -331,8 +331,15 @@ namespace UpgradePlatformer.Entities
                                     }
                                     obj.Velocity = new Vector2(obj.Velocity.X, 0);
                                 }
-                                obj.OnFloorCollide();
                                 obj.Y = temp.Y;
+                                if (obj is Boss boss) {
+                                    if (!bossAI.Landed) {
+                                        bossAI.Landed = true;
+                                        boss.OnFloorCollide();
+                                    }
+                                }
+                                else 
+                                    obj.OnFloorCollide();
                             }
                         }                       
                         break;
