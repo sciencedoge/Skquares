@@ -320,7 +320,7 @@ namespace UpgradePlatformer.Entities
                             //moves player up
                             if (t.Position.Top - intersection.Top == 0)
                             {
-                                temp.Y -= intersection.Height - 1;
+                                temp.Y -= intersection.Height;
                                 if (obj is Player player)
                                 {
                                     if (!player.Landed && !Player().Ducking)
@@ -330,10 +330,16 @@ namespace UpgradePlatformer.Entities
                                         SoundManager.Instance.PlaySFX("land");
                                     }
                                     obj.Velocity = new Vector2(obj.Velocity.X, 0);
-
                                 }
-                                obj.OnFloorCollide();
                                 obj.Y = temp.Y;
+                                if (obj is Boss boss) {
+                                    if (!bossAI.Landed) {
+                                        bossAI.Landed = true;
+                                        boss.OnFloorCollide();
+                                    }
+                                }
+                                else 
+                                    obj.OnFloorCollide();
                             }
                         }                       
                         break;
@@ -416,8 +422,14 @@ namespace UpgradePlatformer.Entities
                         }
                        
                     }
-
-                    obj2.OnFloorCollide();
+                    if (obj2 is Boss boss) {
+                        if (!bossAI.Landed) {
+                            bossAI.Landed = true;
+                            boss.OnFloorCollide();
+                        }
+                    }
+                    else 
+                        obj2.OnFloorCollide();
                 }
 
                 //moves player down
