@@ -320,7 +320,7 @@ namespace UpgradePlatformer.Entities
                             //moves player up
                             if (t.Position.Top - intersection.Top == 0)
                             {
-                                temp.Y -= intersection.Height;
+                                temp.Y -= intersection.Height - 1;
                                 if (obj is Player player)
                                 {
                                     if (!player.Landed && !Player().Ducking)
@@ -329,7 +329,7 @@ namespace UpgradePlatformer.Entities
 
                                         SoundManager.Instance.PlaySFX("land");
                                     }
-                                    obj.Velocity = new Vector2(obj2.Velocity.X, 0);
+                                    obj.Velocity = new Vector2(obj.Velocity.X, 0);
 
                                 }
                                 obj.OnFloorCollide();
