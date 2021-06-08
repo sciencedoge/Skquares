@@ -77,6 +77,18 @@
 #begin Levels/1_1_3.fld
 /copy:Levels/1_1_3.fld
 
+#begin Levels/1_2_1.fld
+/copy:Levels/1_2_1.fld
+
+#begin Levels/1_2_2.fld
+/copy:Levels/1_2_2.fld
+
+#begin Levels/1_2_3.fld
+/copy:Levels/1_2_3.fld
+
+#begin Levels/1_2_4.fld
+/copy:Levels/1_2_4.fld
+
 #begin Levels/2_1_1.fld
 /copy:Levels/2_1_1.fld
 
