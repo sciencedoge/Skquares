@@ -320,7 +320,7 @@ namespace UpgradePlatformer.Entities
                             //moves player up
                             if (t.Position.Top - intersection.Top == 0)
                             {
-                                temp.Y -= intersection.Height;
+                                temp.Y -= intersection.Height - 1;
                                 if (obj is Player player)
                                 {
                                     if (!player.Landed && !Player().Ducking)
