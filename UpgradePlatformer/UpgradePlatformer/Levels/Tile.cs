@@ -105,6 +105,18 @@ namespace UpgradePlatformer.Levels
                         else
                             Metadata = "";
                         break;
+                    case 'g':
+                        int bg = int.Parse(Metadata.Substring(1, 2));
+                        switch (bg) {
+                            case 1:
+                                BGSprite = AllSprites[3, 10].Copy();
+                            break;
+                        }
+                        if (Metadata.Length > 4)
+                            Metadata = Metadata.Substring(3);
+                        else
+                            Metadata = "";
+                        break;
                     case 'l':
                         LightOverride = true;
                         if (Metadata.Length > 1)
@@ -129,11 +141,14 @@ namespace UpgradePlatformer.Levels
         {
             if (t.Kind == 34)
                 return true;
-            if (t.Kind == Kind && t.CollisionKind == CollisionKind)
+            if (t.Kind == Kind && (t.CollisionKind == CollisionKind))
                 return true;
-            if (t.Kind == 2 && CollisionKind == 9)
+            List<int> lol = new List<int>{CollisionKind, t.CollisionKind};
+            if (t.Kind == Kind && lol.Contains(105) && lol.Contains(9))
                 return true;
-            if (t.CollisionKind == 9 && Kind == 2)
+            if (t.Kind == 2 && (CollisionKind == 9 || CollisionKind == 105))
+                return true;
+            if ((CollisionKind == 9 || CollisionKind == 105) && Kind == 2)
                 return true;
 
             return false;
