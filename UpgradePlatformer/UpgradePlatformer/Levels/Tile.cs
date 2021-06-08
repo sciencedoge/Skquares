@@ -78,7 +78,7 @@ namespace UpgradePlatformer.Levels
 
             if (Kind == 2) BGSprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
 
-            if (CollisionKind == 9)
+            if (CollisionKind == 9 || CollisionKind == 105)
             {
                 BGSprite = Sprite;
                 Sprite = AllSprites[0, 0].Copy();
