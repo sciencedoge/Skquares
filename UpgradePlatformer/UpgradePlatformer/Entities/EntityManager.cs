@@ -316,26 +316,23 @@ namespace UpgradePlatformer.Entities
                         }
                         else
                         {
-                            if (obj.Y < t.Position.Y) 
+                            //short wide rectangle
+                            //moves player up
+                            if (t.Position.Top - intersection.Top == 0)
                             {
-                                //checks conditions to move the player up or down
-                                if (intersection.Width > intersection.Height)
+                                temp.Y -= intersection.Height;
+                                if (obj is Player player)
                                 {
-                                    //short wide rectangle
-                                    //moves player up
-                                    if (t.Position.Top - intersection.Top == 0)
+                                    if (!player.Landed && !Player().Ducking)
                                     {
-                                        temp.Y -= intersection.Height;
-                                        if (!Player().Landed && !Player().Ducking)
-                                        {
-                                            Player().Landed = true;
-                                            SoundManager.Instance.PlaySFX("land");
-                                        }
-                                        obj.OnFloorCollide();
-                                    }
+                                        player.Landed = true;
 
-                                    obj.Velocity = new Vector2(obj.Velocity.X, 0);
+                                        SoundManager.Instance.PlaySFX("land");
+                                    }
+                                    obj2.Velocity = new Vector2(obj2.Velocity.X, 0);
+
                                 }
+                                obj.OnFloorCollide();
                                 obj.Y = temp.Y;
                             }
                         }                       
