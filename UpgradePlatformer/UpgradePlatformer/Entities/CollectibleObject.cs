@@ -124,6 +124,7 @@ namespace UpgradePlatformer.Entities
         /// <returns>the ammount of money earned</returns>
         public override int Intersects(List<EntityObject> objects) {
             foreach (EntityObject o in objects) {
+                if (o == null) continue;
                 if (o.Kind == EntityKind.PLAYER)
                     return Intersects(o);
             }
