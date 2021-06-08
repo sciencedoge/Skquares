@@ -329,7 +329,7 @@ namespace UpgradePlatformer.Entities
 
                                         SoundManager.Instance.PlaySFX("land");
                                     }
-                                    obj2.Velocity = new Vector2(obj2.Velocity.X, 0);
+                                    obj.Velocity = new Vector2(obj2.Velocity.X, 0);
 
                                 }
                                 obj.OnFloorCollide();
