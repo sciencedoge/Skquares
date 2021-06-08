@@ -104,13 +104,7 @@ namespace UpgradePlatformer.Graphics
             p.SizeStart = props.SizeStart;
             p.SizeEnd = props.SizeEnd;
 
-            for (int i = 0; i < Pool.Count; i++)
-            {
-                if (Pool[i].IsActive == false) {
-                    Pool[i] = p;
-                    return;
-                }
-            }
+            Pool.RemoveAll((p) => !p.IsActive);
             Pool.Add(p);
         }
     }

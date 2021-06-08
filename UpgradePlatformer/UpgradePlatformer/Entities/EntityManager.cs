@@ -329,8 +329,7 @@ namespace UpgradePlatformer.Entities
 
                                         SoundManager.Instance.PlaySFX("land");
                                     }
-                                    obj.Velocity = new Vector2(obj2.Velocity.X, 0);
-
+                                    obj.Velocity = new Vector2(obj.Velocity.X, 0);
                                 }
                                 obj.OnFloorCollide();
                                 obj.Y = temp.Y;
@@ -416,8 +415,14 @@ namespace UpgradePlatformer.Entities
                         }
                        
                     }
-
-                    obj2.OnFloorCollide();
+                    if (obj2 is Boss boss) {
+                        if (!bossAI.Landed) {
+                            bossAI.Landed = true;
+                            boss.OnFloorCollide();
+                        }
+                    }
+                    else 
+                        obj2.OnFloorCollide();
                 }
 
                 //moves player down

@@ -32,6 +32,7 @@ namespace UpgradePlatformer.Entities
         private bool initiated;
 
         public int Count => fireballs.Count;
+        public bool Landed;
             
         /// <summary>
         /// Creates the BossAI object
@@ -198,7 +199,7 @@ namespace UpgradePlatformer.Entities
                 }
 
                 boss.JumpsLeft--;
-
+                Landed = false;
             }
 
         }
