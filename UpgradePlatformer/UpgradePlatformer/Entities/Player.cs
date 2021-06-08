@@ -9,6 +9,7 @@ using UpgradePlatformer.Levels;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Music;
 using UpgradePlatformer.Upgrade_Stuff;
+using UpgradePlatformer.Shop_Stuff;
 
 namespace UpgradePlatformer.Entities
 {
@@ -26,6 +27,7 @@ namespace UpgradePlatformer.Entities
         private Vector2 Joystick;
         private bool ducking;
         public Weapon.Weapon weapon;
+        public Hat hat;
         private static int MaxJumps => UpgradeManager.Instance.GetAmmnt(UpgradeType.EXTRA_JUMP) + 1;
         private bool landed;
         private int idleTimer;
@@ -58,6 +60,7 @@ namespace UpgradePlatformer.Entities
         {
             this.animation = new AnimationFSM(AnimationManager.Instance.animations[0]);
             this.jumpsLeft = jumpsLeft;
+            this.hat = new Hat(0, UpgradeType.HEALTH, 10000);
 
             landed = true;
 
@@ -224,6 +227,8 @@ namespace UpgradePlatformer.Entities
             {
                 weapon.Draw(sb);
             }
+            if (hat != null)
+                hat.Draw(sb, gt);
         }
 
         /// <summary>
