@@ -441,7 +441,8 @@ namespace UpgradePlatformer
                 EntityManager.Instance.PlayerMoney = Save.Data.money;
                 _graphics.IsFullScreen = Save.Data.fullscreen;
                 _graphics.ApplyChanges();
-                UpgradeManager.Instance.Upgrades = Save.Data.upgrades;
+                if (Save.Data.upgrades != null)
+                    UpgradeManager.Instance.Upgrades = Save.Data.upgrades;
                 return true;
             });
             EventManager.Instance.AddListener(Action_Load, "LOAD");

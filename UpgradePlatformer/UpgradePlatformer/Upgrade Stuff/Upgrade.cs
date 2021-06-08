@@ -25,21 +25,28 @@ namespace UpgradePlatformer.Upgrade_Stuff
     }
 
     [Serializable]
+    public struct UpgradeBonus
+    {
+        public UpgradeType type;
+        public float value;
+        public bool percent; 
+    }
+
+    [Serializable]
     public class Upgrade
     {
         public Upgrade() { }
         //Fields
-        public int upgradeValue;
         public bool isLearned;
         public int cost;
 
-        public UpgradeType type;
+        public UpgradeBonus bonus;
 
         private Upgrade left;
         private Upgrade right;
         //prop
 
-        public String UnlockText => $"You unlocked the {GetName(type)}\nUpgrade, now you {GetEffect(type)}!";
+        public String UnlockText => $"You unlocked the {GetName(bonus.type)}\nUpgrade, now you {GetEffect(bonus.type)}!";
 
         /// <summary>
         /// Returns or sets the left neighbor
@@ -80,9 +87,9 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// <summary>
         /// Returns the value of an upgrade
         /// </summary>
-        public int Value
+        public float Value
         {
-            get { return upgradeValue; }
+            get { return bonus.value; }
         }
 
         /// <summary>
@@ -98,7 +105,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// </summary>
         public UpgradeType Type
         {
-            get { return type; }
+            get { return bonus.type; }
         }
 
 
@@ -109,10 +116,10 @@ namespace UpgradePlatformer.Upgrade_Stuff
         /// <param name="value">value of the upgrade</param>
         public Upgrade(int value, UpgradeType type, int cost)
         {
-            this.upgradeValue = value;
+            this.bonus.value = value;
             this.isLearned = false;
 
-            this.type = type;
+            this.bonus.type = type;
             this.cost = cost;
         }
 
