@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UpgradePlatformer.Shop_Stuff;
 using UpgradePlatformer.UI;
 
 namespace UpgradePlatformer.Upgrade_Stuff
@@ -21,6 +22,8 @@ namespace UpgradePlatformer.Upgrade_Stuff
             UpgradeManager.Instance.Add(1, UpgradeType.WEAPON, 0);
             UpgradeManager.Instance.Add(1, UpgradeType.EXTRA_JUMP, 0);
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 10);
+
+            // ShopManager.Instance.Add();
         }
         
         public static void ShowMessage(Upgrade ug)
