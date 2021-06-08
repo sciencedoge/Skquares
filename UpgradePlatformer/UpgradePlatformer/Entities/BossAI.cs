@@ -102,8 +102,9 @@ namespace UpgradePlatformer.Entities
                 }
                 secondsSinceJump = 0;
             }
-            
-            if(!boss.IsActive && fireballs.Count > 0)
+
+
+            if (!boss.IsActive && fireballs.Count > 0)
             {
                 fireballs.Clear();
             }
@@ -124,7 +125,7 @@ namespace UpgradePlatformer.Entities
 
                 ShootFireball();
 
-                for (int i = fireballs.Count - 1; i > 0; i--)
+                for (int i = fireballs.Count - 1; i >= 0; i--)
                 {
                     if (fireballs[i].isActive)
                     {
@@ -135,6 +136,8 @@ namespace UpgradePlatformer.Entities
                         fireballs.Remove(fireballs[i]);
                     }
                 }
+
+                
             }           
         }
 
