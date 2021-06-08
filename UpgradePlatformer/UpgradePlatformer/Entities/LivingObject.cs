@@ -235,6 +235,7 @@ namespace UpgradePlatformer.Entities
         /// </summary>
         public void ResetPosition(){
             position = spawn.ToVector2();
+            EventManager.Instance.Push(new Event("LEVEL_SHOW", 0, new Point()));
         }
     }
 }
