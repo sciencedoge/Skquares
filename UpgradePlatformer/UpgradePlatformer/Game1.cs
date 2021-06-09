@@ -138,6 +138,7 @@ namespace UpgradePlatformer
             };
             playButton.Text.Text = "Play";
             playButton.Disabled = !Save.Data.valid;
+            playButton.SetIcon(new Sprite(new Rectangle(49, 0, 7, 7), new Vector2(0, 0), Color.White));
 
             UIButton newButton = new UIButton(_font, new Rectangle((DEF_SIZE - ButtonWidth) / 2, 350, ButtonWidth, 40))
             {

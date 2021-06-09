@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UpgradePlatformer.Graphics;
 
 namespace UpgradePlatformer.UI
 {
@@ -26,6 +27,15 @@ namespace UpgradePlatformer.UI
         private Color NormalTextColor, InvertedTextColor;
         public int ClickTimeout = 5;
         private int ClickTime;
+        public Sprite Icon;
+
+        /// <summary>
+        /// sets the icon for the button
+        /// </summary>
+        /// <param name="icon">a sprite of the icon</param>
+        public void SetIcon(Sprite icon) {
+            Icon = icon;
+        }
 
         /// <summary>
         /// Updates the Button
@@ -59,7 +69,7 @@ namespace UpgradePlatformer.UI
         }
 
         /// <summary>
-        /// Calls the onclick function if Disabled is false
+        /// Calls the onClick function if Disabled is false
         /// </summary>
         /// <param name="at">where the button UIElement was clicked 0,0 being the top corner</param>
         public override bool WhenClicked(Point at)
@@ -90,8 +100,15 @@ namespace UpgradePlatformer.UI
         /// <param name="spriteBatch">the spritebatch object</param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            Text.Bounds = Bounds;
+            Text.Bounds.Inflate(-5, -5);
+            Text.Bounds.X += Icon != null ? Text.Bounds.Height + 5 : 0;
+            Text.Bounds.Width -= Icon != null ? Text.Bounds.Height + 5 : 0;
+
             CurrentSprite().Draw(spriteBatch, Bounds, 0);
             Text.Draw(gameTime, spriteBatch);
+            if (Icon != null)
+                Icon.Draw(spriteBatch, Bounds.Location + new Point(5, 5 - Bounds.Height), 0, new Vector2(Bounds.Height - 10));
         }
     }
 }
