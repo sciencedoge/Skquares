@@ -227,7 +227,9 @@ namespace UpgradePlatformer.Entities
             // fixes different speeds on different window sizes
             position += velocity * ((float)gt.ElapsedGameTime.TotalSeconds * 60f);
             velocity += gravity * ((float)gt.ElapsedGameTime.TotalSeconds * 60f);
-            velocity.X *= 0.70f;        
+            velocity.X *= 0.70f;
+            velocity.X = Math.Min(velocity.X, 6);
+            velocity.Y = Math.Min(velocity.Y, 6);   
         }
         
         /// <summary>

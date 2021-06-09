@@ -90,8 +90,8 @@ namespace UpgradePlatformerTests
             {
                 p.Update(new GameTime(TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500)));
                 e.Update(new GameTime(TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500)));
-                Assert.False(3 < p.Velocity.Y);
-                Assert.False(3 < e.Velocity.Y);
+                Assert.False(6 < p.Velocity.Y);
+                Assert.False(6 < e.Velocity.Y);
             }
         }
     }
