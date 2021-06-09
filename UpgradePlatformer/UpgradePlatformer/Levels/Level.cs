@@ -180,6 +180,7 @@ namespace UpgradePlatformer.Levels
                     else if (t.SpawnerKind == 0) o = (EntityObject)new Coin(1, new Rectangle(t.Position.Location, new Point(15, 15 + 2)), t);
                     if (o != null)
                         EntityManager.Instance.Spawn(o);
+
                 }
             }
         }
