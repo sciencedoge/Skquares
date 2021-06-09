@@ -6,12 +6,17 @@ using System.Text;
 
 namespace UpgradePlatformer.UI
 {
-    class UIGroup : UIElement
+    public class UIGroup : UIElement
     {
         public List<UIElement> UIElements;
         public UIGroup(List<UIElement> elements, Rectangle bounds) {
             UIElements = elements;
             Bounds = bounds;
+        }
+
+        public UIGroup() {
+            UIElements = new List<UIElement>();
+            Bounds = new Rectangle(0, 0, 630, 630);
         }
 
         public override UISprite CurrentSprite() { return null; }
