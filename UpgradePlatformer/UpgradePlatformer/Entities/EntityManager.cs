@@ -288,11 +288,15 @@ namespace UpgradePlatformer.Entities
                 
                 switch (t.CollisionKind) {
                     case 100:
-                        obj.TakeDamage(1);
-                        if (obj == (LivingObject)Player()) {
-                            Player().Velocity = new Vector2(0, -4);
-                            Player().JumpsLeft = 0;
-                        }
+                        if(obj.cooldown > 0)
+                        {
+                            obj.TakeDamage(1);
+                            if (obj == (LivingObject)Player())
+                            {
+                                Player().Velocity = new Vector2(0, -4);
+                                Player().JumpsLeft = 0;
+                            }
+                        }                        
                         break;
                     case 101:
                         if (intersection.Height > 0.5 * t.TileSize.Y)
