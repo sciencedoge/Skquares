@@ -66,7 +66,7 @@ namespace UpgradePlatformer.Entities
 
             weapon = new Weapon.Weapon(new Vector2(this.X + hitbox.Width,
                 this.Y - hitbox.Height),
-                new Weapon.WeaponStats(0.1f));
+                new Weapon.WeaponStats(1f));
 
             sameVelocityFrames = 0;
         }
@@ -222,8 +222,8 @@ namespace UpgradePlatformer.Entities
         /// <param name="gt"></param>
         public override void Draw(SpriteBatch sb, GameTime gt)
         {
+            if (!IsActive) return;
             base.Draw(sb, gt);
-
             if (hat != null)
                 hat.Draw(sb, gt);
             if (weapon.IsActive)
