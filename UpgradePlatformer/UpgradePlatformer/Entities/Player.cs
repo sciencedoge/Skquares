@@ -65,7 +65,8 @@ namespace UpgradePlatformer.Entities
             landed = true;
 
             weapon = new Weapon.Weapon(new Vector2(this.X + hitbox.Width,
-                this.Y - hitbox.Height));
+                this.Y - hitbox.Height),
+                new Weapon.WeaponStats(0.1f));
 
             sameVelocityFrames = 0;
         }

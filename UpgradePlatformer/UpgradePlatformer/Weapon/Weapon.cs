@@ -25,6 +25,7 @@ namespace UpgradePlatformer.Weapon
         private float rotation;
         private Vector2 position;
         private List<Bullet> bullets;
+        private WeaponStats Stats;
         private Rectangle spriteBounds;
         public Point MousePos; //using this for now (not very familiar with current input system)
         private bool Click;
@@ -57,8 +58,9 @@ namespace UpgradePlatformer.Weapon
         /// <summary>
         /// Creates a new Weapon object
         /// </summary>
-        public Weapon(Vector2 position)
+        public Weapon(Vector2 position, WeaponStats stats)
         {
+            Stats = stats;
             this.position = position;
 
             spriteBounds = new Rectangle(17, 14, 14, 14);
@@ -142,6 +144,7 @@ namespace UpgradePlatformer.Weapon
 
             if (Click)
             {
+                EntityManager.Instance.Player().Velocity += path / Vector2.Distance(path, new Vector2(0, 0)) * Stats.knockBack;
                 Bullet bullet = new Bullet(path, new Vector2(position.X - 7, position.Y - 7), rotation);
                   
                 Click = false;
