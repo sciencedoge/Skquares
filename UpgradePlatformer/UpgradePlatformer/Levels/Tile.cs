@@ -69,22 +69,8 @@ namespace UpgradePlatformer.Levels
                 pos.Y += 1;
             if (TestAround(around[0, 1], false))
                 pos.Y += 2;
-            if (Kind == 1 || Kind == 2) Sprite = AllSprites[5, 3 + pos.X].Copy();
-            else if (Kind == 3) Sprite = AllSprites[4 + pos.Y, 7 + pos.X].Copy();
-            else if (Kind == 4) Sprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
-            else if (Kind == 5) Sprite = AllSprites[0, 2].Copy();
-            else if (Kind == 7) Sprite = AllSprites[0 + pos.Y, 7 + pos.X].Copy();
-            else if (Kind == 8) Sprite = AllSprites[1 + pos.Y, 2].Copy();
-
-            if (Kind == 2) BGSprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
-
-            if (CollisionKind == 9 || CollisionKind == 105)
-            {
-                BGSprite = Sprite;
-                Sprite = AllSprites[0, 0].Copy();
-            }
-            Sprite.TintColor = COLORS[Kind - 1];
             bool loop = true;
+            bool bgset = false;
             while (loop) {
                 if (Metadata == "") break;
                 switch (Metadata[0])
@@ -106,6 +92,7 @@ namespace UpgradePlatformer.Levels
                             Metadata = "";
                         break;
                     case 'g':
+                        bgset = true;
                         int bg = int.Parse(Metadata.Substring(1, 2));
                         switch (bg) {
                             case 1:
@@ -124,11 +111,40 @@ namespace UpgradePlatformer.Levels
                         else
                             Metadata = "";
                         break;
+                    case 'x':
+                        pos.X = int.Parse(Metadata.Substring(1, 1));
+                        if (Metadata.Length > 3)
+                            Metadata = Metadata.Substring(2);
+                        else
+                            Metadata = "";
+                        break;
+                    case 'y':
+                        pos.Y = int.Parse(Metadata.Substring(1, 1));
+                        if (Metadata.Length > 3)
+                            Metadata = Metadata.Substring(2);
+                        else
+                            Metadata = "";
+                        break;
                     default:
                         loop = false;
                         break;
                 }
             }
+            if (Kind == 1 || Kind == 2) Sprite = AllSprites[5, 3 + pos.X].Copy();
+            else if (Kind == 3) Sprite = AllSprites[4 + pos.Y, 7 + pos.X].Copy();
+            else if (Kind == 4) Sprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
+            else if (Kind == 5) Sprite = AllSprites[0, 2].Copy();
+            else if (Kind == 7) Sprite = AllSprites[0 + pos.Y, 7 + pos.X].Copy();
+            else if (Kind == 8) Sprite = AllSprites[1 + pos.Y, 2].Copy();
+
+            if (Kind == 2 && !bgset) BGSprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
+
+            if (CollisionKind == 9 || CollisionKind == 105)
+            {
+                BGSprite = Sprite;
+                Sprite = AllSprites[0, 0].Copy();
+            }
+            Sprite.TintColor = COLORS[Kind - 1];
         }
 
         /// <summary>
