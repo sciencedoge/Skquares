@@ -172,7 +172,13 @@ namespace UpgradePlatformer.Entities
 
                 Vector2 distance = FindDistance();
 
-                fireballs.Add(new Fireball(distance, bulletPos, 0));
+                float rot = MathF.Atan(distance.Y/distance.X);
+                if(distance.X < 0)
+                {
+                    rot += MathF.PI;
+                }
+
+                fireballs.Add(new Fireball(distance, bulletPos, rot));
             }
         }
 
