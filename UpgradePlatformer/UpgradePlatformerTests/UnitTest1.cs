@@ -76,5 +76,23 @@ namespace UpgradePlatformerTests
 
             Assert.Equal(0, p.Position.Y - e.Position.Y);
         }
+        
+        [Fact]
+        [TestBeforeAfter]
+        public void TestTerminalVelocity()
+        {
+            Sprite.graphics = new GraphicsDeviceManager(new Game());
+            Player p = new Player(2, 0, new Rectangle(300, 0, 22, 22), 1);
+            p.Demo = false;
+            Enemy e = new Enemy(2, 0, new Rectangle(300, 0, 22, 22), 1);
+
+            for (int i = 0; i < 100; i++)
+            {
+                p.Update(new GameTime(TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500)));
+                e.Update(new GameTime(TimeSpan.FromMilliseconds(500), TimeSpan.FromMilliseconds(500)));
+                Assert.False(3 < p.Velocity.Y);
+                Assert.False(3 < e.Velocity.Y);
+            }
+        }
     }
 }
