@@ -25,8 +25,9 @@ namespace UpgradePlatformer.Weapon
         protected Vector2 location;
         protected Vector2 speed;
         public bool isActive;
-
         protected Rectangle hitbox;
+
+        public Vector2 initialLocation;
 
         protected Rectangle spriteBounds;
         protected float rotation;
@@ -49,6 +50,7 @@ namespace UpgradePlatformer.Weapon
             UpdateSprite();
             this.path = path;
             this.location = location;
+            this.initialLocation = location;
             this.rotation = rotation;
 
             this.speed = path / Vector2.Distance(path, new Vector2(0, 0)) * 2;
@@ -116,6 +118,20 @@ namespace UpgradePlatformer.Weapon
                 this.hitbox = new Rectangle(location.ToPoint(), new Point(10, 10));
                 Intersects();
 
+                Vector2 distance = FindDistance();
+
+                if(distance.X > 300)
+                {
+                    this.isActive = false;
+                    return;
+                }
+
+                if(distance.Y > 300)
+                {
+                    this.isActive = false;
+                    return;
+                }
+
                 foreach (Tile t in LevelManager.Instance.GetCollisions(hitbox))
                 {
                     if (t.CollisionKind == 9 || t.CollisionKind == 104 || t.CollisionKind == 105)
@@ -130,6 +146,18 @@ namespace UpgradePlatformer.Weapon
                     isActive = false;
                 }
             }
+        }
+
+        /// <summary>
+        /// Finds the distance between the bullet's current and
+        /// initial position
+        /// </summary>
+        private Vector2 FindDistance()
+        {
+            float distX = MathF.Abs(location.X - initialLocation.X);
+            float distY = MathF.Abs(location.Y - (initialLocation.Y - (40 * Sprite.GetScale())));
+
+            return new Vector2(distX, distY);
         }
     }
 }
