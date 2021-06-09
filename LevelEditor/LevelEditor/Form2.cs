@@ -1191,6 +1191,7 @@ namespace LevelEditor
                                     p.Image.Dispose();
 
                                 p.Load(path);
+
                                 if (metadata == "" && boxes[0, 0].Enabled == true)
                                     p.Load(path.Replace(".png", "Dim.png"));
                                 p.SizeMode = PictureBoxSizeMode.Zoom;
