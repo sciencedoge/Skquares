@@ -148,7 +148,7 @@ namespace UpgradePlatformer.Levels
         }
 
         /// <summary>
-        /// loads entitys in the current level
+        /// loads entities in the current level
         /// </summary>
         /// <param name="player">wether to add a player</param>
         public void LoadEntities(bool player)

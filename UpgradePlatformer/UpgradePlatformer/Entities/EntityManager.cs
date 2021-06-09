@@ -245,11 +245,11 @@ namespace UpgradePlatformer.Entities
         /// <param name="player">wether the player should be removed</param>
         public void Clean(bool player)
         {
-            EntityObject plyr = (EntityObject)this.Player();
+            EntityObject playerObj = (EntityObject)this.Player();
             objects = new List<EntityObject>();
 
             if (!player)
-                objects.Add(plyr);
+                objects.Add(playerObj);
         }
 
         /// <summary>

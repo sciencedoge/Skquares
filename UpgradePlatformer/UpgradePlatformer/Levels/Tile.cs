@@ -23,7 +23,7 @@ namespace UpgradePlatformer.Levels
         public int CollisionKind;
         public Rectangle Position;
         public bool Spawner;
-        private bool decorbg;
+        private bool decorBg;
         public int SpawnerKind;
         public bool LightOverride;
         public int sound;
@@ -70,7 +70,7 @@ namespace UpgradePlatformer.Levels
             if (TestAround(around[0, 1], false))
                 pos.Y += 2;
             bool loop = true;
-            bool bgset = false;
+            bool bgSet = false;
             while (loop) {
                 if (Metadata == "") break;
                 switch (Metadata[0])
@@ -81,7 +81,7 @@ namespace UpgradePlatformer.Levels
                             Metadata = Metadata.Substring(3);
                         else
                             Metadata = "";
-                        decorbg = decor % 8 < 4;
+                        decorBg = decor % 8 < 4;
                         DecorSprite = AllSprites[6 + decor / 4, 3 + decor % 4].Copy();
                         break;
                     case 's':
@@ -92,7 +92,7 @@ namespace UpgradePlatformer.Levels
                             Metadata = "";
                         break;
                     case 'g':
-                        bgset = true;
+                        bgSet = true;
                         int bg = int.Parse(Metadata.Substring(1, 2));
                         switch (bg) {
                             case 1:
@@ -137,7 +137,7 @@ namespace UpgradePlatformer.Levels
             else if (Kind == 7) Sprite = AllSprites[0 + pos.Y, 7 + pos.X].Copy();
             else if (Kind == 8) Sprite = AllSprites[1 + pos.Y, 2].Copy();
 
-            if (Kind == 2 && !bgset) BGSprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
+            if (Kind == 2 && !bgSet) BGSprite = AllSprites[0 + pos.Y, 11 + pos.X].Copy();
 
             if (CollisionKind == 9 || CollisionKind == 105)
             {
@@ -186,14 +186,14 @@ namespace UpgradePlatformer.Levels
                 BGSprite.TintColor = Color.Gray;
                 UpdatePos(position);
                 BGSprite.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
-                if (decorbg)
+                if (decorBg)
                     DecorSprite.Draw(spriteBatch, Position.Location - (Position.Size.ToVector2() * new Vector2(0, 1)).ToPoint(), 0, Position.Size.ToVector2());
                 return;
             }
             Sprite.TintColor = Color.White;
             UpdatePos(position);
             Sprite.Draw(spriteBatch, Position.Location, 0, Position.Size.ToVector2());
-            if (!decorbg)
+            if (!decorBg)
                 DecorSprite.Draw(spriteBatch, Position.Location - (Position.Size.ToVector2() * new Vector2(0, 1)).ToPoint(), 0, Position.Size.ToVector2());
         }
 
@@ -218,7 +218,7 @@ namespace UpgradePlatformer.Levels
         }
 
         /// <summary>
-        /// sets the positon of the tile for collisions
+        /// sets the position of the tile for collisions
         /// </summary>
         /// <param name="position">the position</param>
         public void UpdatePos(Vector2 position)

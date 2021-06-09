@@ -105,7 +105,7 @@ namespace UpgradePlatformer.Entities
 
         /// <summary>
         /// Gets or sets the velocity of the
-        /// objecf
+        /// object
         /// </summary>
         public Vector2 Velocity
         {
@@ -157,7 +157,7 @@ namespace UpgradePlatformer.Entities
         /// <param name="maxHp">the max hp of the object</param>
         /// <param name="damage">the damage the object deals</param>
         /// <param name="hitbox">the starting hitbox of the object</param>
-        /// <param name="jumpsLeft">the ammount of jumps to start with</param>
+        /// <param name="jumpsLeft">the amount of jumps to start with</param>
         /// <param name="kind">the kind of the object</param>
         public LivingObject(int maxHp, int damage, Rectangle hitbox,
             int jumpsLeft, EntityKind kind) : base(kind)
@@ -220,7 +220,7 @@ namespace UpgradePlatformer.Entities
         public abstract void OnFloorCollide();
 
         /// <summary>
-        /// applys gravity to the entity
+        /// applies gravity to the entity
         /// </summary>
         public virtual void ApplyGravity(GameTime gt)
         {
@@ -233,7 +233,7 @@ namespace UpgradePlatformer.Entities
         }
         
         /// <summary>
-        /// resets the entitys position
+        /// resets the entities position
         /// </summary>
         public void ResetPosition(){
             position = spawn.ToVector2();

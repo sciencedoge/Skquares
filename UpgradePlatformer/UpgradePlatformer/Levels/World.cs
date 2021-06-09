@@ -31,9 +31,9 @@ namespace UpgradePlatformer.Levels
         }
 
         /// <summary>
-        /// loads the entitys in the active level
+        /// loads the entities in the active level
         /// </summary>
-        /// <param name="player">wheter to spawn a player</param>
+        /// <param name="player">whether to spawn a player</param>
         public void LoadEntities(bool player) =>
             Levels[activeLevel].LoadEntities(player);
 
@@ -63,7 +63,7 @@ namespace UpgradePlatformer.Levels
         }
 
         /// <summary>
-        /// dtaws the active levl
+        /// draws the active level
         /// </summary>
         /// <param name="spriteBatch">a SpriteBatch object</param>
         public void Draw(SpriteBatch spriteBatch, bool background)

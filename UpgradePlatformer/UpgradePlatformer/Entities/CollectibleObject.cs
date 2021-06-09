@@ -121,7 +121,7 @@ namespace UpgradePlatformer.Entities
         /// processes intersections with objects
         /// </summary>
         /// <param name="objects">all entity objects</param>
-        /// <returns>the ammount of money earned</returns>
+        /// <returns>the amount of money earned</returns>
         public override int Intersects(List<EntityObject> objects) {
             foreach (EntityObject o in objects) {
                 if (o == null) continue;

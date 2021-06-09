@@ -104,7 +104,7 @@ namespace UpgradePlatformer
             SoundManager.Instance.PlayMusic("menu");
             #endregion
 
-#region  UIELEMENTS
+#region  UI_ELEMENTS
             // define a const with the default screen dims only for ui stuff dont change
             const int DEF_SIZE = 630;
 
@@ -291,7 +291,7 @@ namespace UpgradePlatformer
             };
 #endregion
 
-#region UILAYOUT
+#region UI_LAYOUT
             // initialize uiGroups
             Rectangle bounds = new Rectangle(0, 0, DEF_SIZE, DEF_SIZE);
 

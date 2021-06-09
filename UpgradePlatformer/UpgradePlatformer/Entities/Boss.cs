@@ -49,10 +49,10 @@ namespace UpgradePlatformer.Entities
         /// <summary>
         /// creates an Boss object
         /// </summary>
-        /// <param name="maxHp">the Bosss hp</param>
+        /// <param name="maxHp">the Boss hp</param>
         /// <param name="damage">the damage the Boss deals</param>
         /// <param name="hitbox">the starting hitbox of the Boss</param>
-        /// <param name="jumpsLeft">the ammount of jumps the Boss has</param>
+        /// <param name="jumpsLeft">the amount of jumps the Boss has</param>
         public Boss(int maxHp, int damage, Rectangle hitbox, int jumpsLeft)
             :base(maxHp, damage, hitbox, jumpsLeft, EntityKind.BOSS)
         {
