@@ -19,6 +19,10 @@ namespace UpgradePlatformer.UI
             Bounds = new Rectangle(0, 0, 630, 630);
         }
 
+        public void Add(UIElement e) {
+            UIElements.Add(e);
+        }
+
         public override UISprite CurrentSprite() { return null; }
 
         /// <summary>
