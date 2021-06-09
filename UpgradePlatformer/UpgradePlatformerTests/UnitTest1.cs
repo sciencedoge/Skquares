@@ -3,19 +3,37 @@ using Xunit;
 using UpgradePlatformer.Entities;
 using Microsoft.Xna.Framework;
 using UpgradePlatformer.Graphics;
+using UpgradePlatformer.Music;
+using Xunit.Sdk;
+using System.Reflection;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+using UpgradePlatformer.Levels;
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+public class TestBeforeAfter : BeforeAfterTestAttribute
+{
+    public override void Before(MethodInfo methodUnderTest)
+    {
+            SoundManager.Instance.Muted = true;
+            LevelManager.BackDrops = new List<Texture2D> {
+                null,
+                null
+            };
+            UpgradePlatformer.Upgrade_Stuff.UpgradeStructure.InitStructure();
+    }
+}
 
 namespace UpgradePlatformerTests
 {
     public class UnitTestsHealth
     {
-
         [Fact]
+        [TestBeforeAfter]
         public void TestPlayerDeathDamage()
         {
             Player p = new Player(1, 0, new Rectangle(0, 0, 22, 22), 1);
             p.Demo = false;
-
-            UpgradePlatformer.Upgrade_Stuff.UpgradeStructure.InitStructure();
 
             p.TakeDamage(1);
             Assert.Equal(0, p.CurrentHP);
@@ -23,13 +41,11 @@ namespace UpgradePlatformerTests
         }
 
         [Fact]
+        [TestBeforeAfter]
         public void TestPlayerDamageCoolDown()
         {
-
             Player p = new Player(2, 0, new Rectangle(0, 0, 22, 22), 1);
             p.Demo = false;
-
-            UpgradePlatformer.Upgrade_Stuff.UpgradeStructure.InitStructure();
 
             Assert.Equal(0, p.cooldown);
             p.TakeDamage(1);
@@ -42,6 +58,7 @@ namespace UpgradePlatformerTests
     public class UnitTestsPhysics
     {
         [Fact]
+        [TestBeforeAfter]
         public void TestConstantGravity()
         {
             Sprite.graphics = new GraphicsDeviceManager(new Game());

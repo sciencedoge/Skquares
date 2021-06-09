@@ -8,7 +8,7 @@ using UpgradePlatformer.Upgrade_Stuff;
 
 namespace UpgradePlatformer.Levels
 {
-    class World
+    public class World
     {
         public List<Level> Levels;
         public List<int> upgrades;

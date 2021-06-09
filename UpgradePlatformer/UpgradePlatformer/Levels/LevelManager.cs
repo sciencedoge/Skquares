@@ -11,7 +11,7 @@ using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Levels
 {
-    class LevelManager
+    public class LevelManager
     {
         /// <summary>
         /// Singleton Stuff

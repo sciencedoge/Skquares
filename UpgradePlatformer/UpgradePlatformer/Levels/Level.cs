@@ -10,7 +10,7 @@ using UpgradePlatformer.Upgrade_Stuff;
 
 namespace UpgradePlatformer.Levels
 {
-    class Level
+    public class Level
     {
         public String Name;
         int TileWidth, TileHeight;

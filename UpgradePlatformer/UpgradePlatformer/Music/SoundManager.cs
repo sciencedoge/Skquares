@@ -15,7 +15,7 @@ namespace UpgradePlatformer.Music
     //Date: 5/27/2021
     //Purpose: Manages all of the sound in this project
     //==================================================
-    class SoundManager
+    public class SoundManager
     {
         private static readonly Lazy<SoundManager>
             lazy =
