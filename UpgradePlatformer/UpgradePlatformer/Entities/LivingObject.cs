@@ -192,8 +192,8 @@ namespace UpgradePlatformer.Entities
             if (cooldown > 0)
                 return;
             this.currentHp -= amount;
-
-            SoundManager.Instance.PlaySFX("damage");
+            if (SoundManager.Instance != null)
+                SoundManager.Instance.PlaySFX("damage");
             if (CurrentHP <= 0)
             {
                 IsActive = false;
