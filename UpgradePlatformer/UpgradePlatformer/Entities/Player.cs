@@ -223,12 +223,10 @@ namespace UpgradePlatformer.Entities
         {
             base.Draw(sb, gt);
 
-            if (weapon.IsActive)
-            {
-                weapon.Draw(sb);
-            }
             if (hat != null)
                 hat.Draw(sb, gt);
+            if (weapon.IsActive)
+                weapon.Draw(sb);
         }
 
         /// <summary>
