@@ -47,6 +47,8 @@ namespace LevelEditor
         private int[,] collisionRotations;
         private int[,] objectRotations;
 
+        private int active;
+
         //ROTATION
         private float rotation;
 
@@ -129,6 +131,8 @@ namespace LevelEditor
             objectRotations = new int[height, width];  
             isSaved = true;
             numLayersSaved = 0;
+
+            active = 1;
 
             buttons = new List<Button>();
 
@@ -631,6 +635,7 @@ namespace LevelEditor
         /// <param name="e"></param>
         private void objButton_Click(object sender, EventArgs e)
         {
+            active = 3;
             for (int i = 0; i < objects.GetLength(0); i++)
             {
                 for (int j = 0; j < objects.GetLength(1); j++)
@@ -709,6 +714,7 @@ namespace LevelEditor
         /// <param name="e"></param>
         private void backgroundButton_Click(object sender, EventArgs e)
         {
+            active = 1;
             rotateTexture.Enabled = true;
 
             textures.Text = "Textures";
@@ -776,6 +782,7 @@ namespace LevelEditor
         /// <param name="e">Handles events</param>
         private void collisionsButton_Click(object sender, EventArgs e)
         {
+            active = 2;
             rotateTexture.Enabled = false;
 
             for (int i = 0; i < collisions.GetLength(0); i++)
@@ -802,7 +809,7 @@ namespace LevelEditor
             texturePic.Image.Dispose();
             texturePic.Load(path);
             texturePic.Refresh();
-            paintButton.Enabled = false;
+            paintButton.Enabled = true;
 
             textures.Text = "Collision Types";
 
@@ -1111,49 +1118,103 @@ namespace LevelEditor
         /// <param name="e">handles events</param>
         public void PaintBox(object sender, EventArgs e)
         {
-            if(sender is Button)
+            if (active == 1)
             {
-                //Makes sure the user wants to recolor the
-                //entire background by showing a popup
-                DialogResult rs = 
-                    MessageBox.Show(
-                        "Are you sure you want to recolor the whole background?",
-                        "?",
-                        MessageBoxButtons.YesNo);
-
-                //user wants to recolor the whole background
-                if(rs == DialogResult.Yes)
+                if (sender is Button)
                 {
-                    //goes through all of the pictureBoxes
-                    foreach (PictureBox p in boxes)
+                    //Makes sure the user wants to recolor the
+                    //entire background by showing a popup
+                    DialogResult rs =
+                        MessageBox.Show(
+                            "Are you sure you want to recolor the whole background?",
+                            "?",
+                            MessageBoxButtons.YesNo);
+
+                    //user wants to recolor the whole background
+                    if (rs == DialogResult.Yes)
                     {
-                        //checks if an image is present
-                        if (p.Image != null)
+                        //goes through all of the pictureBoxes
+                        foreach (PictureBox p in boxes)
                         {
-                            p.Image.Dispose();
-                        }
-                        //Replaces the image
-                        p.Load(path);
-                        if (metadata == "" && boxes[0, 0].Enabled == true)
-                            p.Load(path.Replace(".png", "Dim.png"));
-                        p.SizeMode = PictureBoxSizeMode.Zoom;
-                        Rotate(p);
-                        p.Update();
+                            //checks if an image is present
+                            if (p.Image != null)
+                            {
+                                p.Image.Dispose();
+                            }
+                            //Replaces the image
+                            p.Load(path);
+                            if (metadata == "" && boxes[0, 0].Enabled == true)
+                                p.Load(path.Replace(".png", "Dim.png"));
+                            p.SizeMode = PictureBoxSizeMode.Zoom;
+                            Rotate(p);
+                            p.Update();
 
-                        int widthLoc = p.Location.X / p.Width;
-                        int heightLoc = p.Location.Y / p.Height;
+                            int widthLoc = p.Location.X / p.Width;
+                            int heightLoc = p.Location.Y / p.Height;
 
-                        if (boxes[0, 0].Enabled == true)
-                        {
-                            rotationValues[heightLoc, widthLoc] = (int)rotation;
-                        }
-                        else if (collisions[0, 0].Enabled == true)
-                        {
-                            collisionRotations[heightLoc, widthLoc] = (int)rotation;
+                            if (boxes[0, 0].Enabled == true)
+                            {
+                                rotationValues[heightLoc, widthLoc] = (int)rotation;
+                            }
+                            else if (collisions[0, 0].Enabled == true)
+                            {
+                                collisionRotations[heightLoc, widthLoc] = (int)rotation;
+                            }
                         }
                     }
-                }               
-            }           
+                }
+            }
+            else if (active == 2)
+            {
+                if (sender is Button)
+                {
+                    //Makes sure the user wants to recolor the
+                    //entire background by showing a popup
+                    DialogResult rs =
+                        MessageBox.Show(
+                            "Are you sure you want to fill in all collisions?",
+                            "?",
+                            MessageBoxButtons.YesNo);
+
+                    //user wants to recolor the whole background
+                    if (rs == DialogResult.Yes)
+                    {
+                        //goes through all of the pictureBoxes
+                        foreach (PictureBox p in collisions)
+                        {
+                            
+                                
+                            //checks if an image is present
+                            if (p.BackColor == Color.Red)
+                            {
+                                if (p.Image != null)
+                                    p.Image.Dispose();
+
+                                p.Load(path);
+                                if (metadata == "" && boxes[0, 0].Enabled == true)
+                                    p.Load(path.Replace(".png", "Dim.png"));
+                                p.SizeMode = PictureBoxSizeMode.Zoom;
+                                Rotate(p);
+                                p.Update();                              
+                            }
+                            //Replaces the image
+                            
+
+                            int widthLoc = p.Location.X / p.Width;
+                            int heightLoc = p.Location.Y / p.Height;
+
+                            if (boxes[0, 0].Enabled == true)
+                            {
+                                rotationValues[heightLoc, widthLoc] = (int)rotation;
+                            }
+                            else if (collisions[0, 0].Enabled == true)
+                            {
+                                collisionRotations[heightLoc, widthLoc] = (int)rotation;
+                            }
+                        }
+                    }
+                }
+            }         
         }
 
         private void Metadata_Click(object sender, EventArgs e)
