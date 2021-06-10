@@ -89,14 +89,17 @@ namespace UpgradePlatformer
             Flag backPressOptions = new Flag(4, 0);
             Flag backPressOptionsGame = new Flag(4, 2);
             Flag menuPressPause = new Flag(5, 0);
+            Flag openShopGame = new Flag(6, 6);
+            Flag closeShop = new Flag(6, 1);
 
             // create state machine states
             StateMachineState Menu = new StateMachineState(new List<Flag> { playButtonPressMenu, optionsButtonPressMenu });                                     // 0
-            StateMachineState Game = new StateMachineState(new List<Flag> { escapeKeyPressGame, PlayerDeathGame });                                             // 1
+            StateMachineState Game = new StateMachineState(new List<Flag> { escapeKeyPressGame, PlayerDeathGame, openShopGame });                                             // 1
             StateMachineState Escape = new StateMachineState(new List<Flag> { escapeKeyPressEscape, optionsButtonPressGame, backPressEscape, menuPressPause }); // 2
             StateMachineState Respawn = new StateMachineState(new List<Flag> { playButtonPressRespawn, menuPressPause });                                       // 3
             StateMachineState Options = new StateMachineState(new List<Flag> { backPressOptions });                                                             // 4
             StateMachineState OptionsGame = new StateMachineState(new List<Flag> { backPressOptionsGame });                                                     // 5
+            StateMachineState Shop = new StateMachineState(new List<Flag> { closeShop });
 
             // create state machine
             _stateMachine = new FiniteStateMachine(new List<StateMachineState>{Menu, Game, Escape, Respawn, Options, OptionsGame});
@@ -333,6 +336,7 @@ namespace UpgradePlatformer
                 }
                 else if (e.Data == (uint)Keys.Enter && (_stateMachine.currentState != 1)) EventManager.Instance.Push(new Event("STATE_MACHINE", 0, new Point(0, 0)));
 #if DEBUG
+                else if (e.Data == (uint)Keys.R) EventManager.Instance.Push(new Event("STATE_MACHINE", 6, new Point(0, 0)));
                 else if (_stateMachine.currentState == 0) return false;
                 else if (e.Data == (uint)Keys.Q) LevelManager.Instance.Prev();
                 else if (e.Data == (uint)Keys.E) LevelManager.Instance.Next();
@@ -515,6 +519,7 @@ namespace UpgradePlatformer
             deathMenu.IsActive = _stateMachine.currentState == 3;
             options.IsActive   = _stateMachine.currentState == 4
                               || _stateMachine.currentState == 5;
+            UIManager.Instance.UIElements[6] = ShopManager.Instance.ConstructUI(_stateMachine.currentState);
             Sprite.Dim         = _stateMachine.currentState == 2
                               || _stateMachine.currentState == 3
                               || _stateMachine.currentState == 5;

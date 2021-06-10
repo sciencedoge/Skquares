@@ -34,8 +34,6 @@ namespace UpgradePlatformer.Shop_Stuff
         public static SpriteFont font;
         public List<HatNode> Hats;
 
-        public UIGroup HatShop => ConstructUI();
-
         /// <summary>
         /// Creates a new UpgradeManager class
         /// </summary>
@@ -59,8 +57,9 @@ namespace UpgradePlatformer.Shop_Stuff
             Hats.Add(node);
         }
 
-        public UIGroup ConstructUI() {
+        public UIGroup ConstructUI(int state) {
             UIGroup result = new UIGroup();
+            result.IsActive = state == 6;
             int pos = 45;
             foreach (HatNode hatNode in Hats)
             {
