@@ -121,13 +121,13 @@ namespace UpgradePlatformer.Weapon
 
                 Vector2 distance = FindDistance();
 
-                if(distance.X > cap)
+                if(distance.X > cap && cap != -1)
                 {
                     this.isActive = false;
                     return;
                 }
 
-                if(distance.Y > cap)
+                if(distance.Y > cap && cap != -1)
                 {
                     this.isActive = false;
                     return;
