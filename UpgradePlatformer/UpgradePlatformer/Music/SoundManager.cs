@@ -71,27 +71,29 @@ namespace UpgradePlatformer.Music
         public void PlaySFX(string action)
         {
             if (Muted) return;
-            switch (action.ToLower().Trim())
-            {
-                case "button":
-                    buttonClick.Play(1f, 0, 0);
-                    break;
-                case "jump":
-                    jump.Play(0.02f, 0, 0);
-                    break;
-                case "land":
-                    land.Play(0.75f, 0, 0);
-                    break;
-                case "coin":
-                    coinGrab.Play(0.75f, 0, 0);
-                    break;
-                case "shoot":
-                    shoot.Play(1.00f, 0, 0);
-                    break;
-                case "damage":
-                    playerDamage.Play(0.75f, 0, 0);
-                    break;
-            }
+            try {
+                switch (action.ToLower().Trim())
+                {
+                    case "button":
+                        buttonClick.Play(1f, 0, 0);
+                        break;
+                    case "jump":
+                        jump.Play(0.02f, 0, 0);
+                        break;
+                    case "land":
+                        land.Play(0.75f, 0, 0);
+                        break;
+                    case "coin":
+                        coinGrab.Play(0.75f, 0, 0);
+                        break;
+                    case "shoot":
+                        shoot.Play(1.00f, 0, 0);
+                        break;
+                    case "damage":
+                        playerDamage.Play(0.75f, 0, 0);
+                        break;
+                }
+            } catch {}
         }
         public void PlayMusic(int section)
         {
