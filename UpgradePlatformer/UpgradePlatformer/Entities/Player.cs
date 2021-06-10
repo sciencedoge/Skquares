@@ -66,7 +66,7 @@ namespace UpgradePlatformer.Entities
 
             weapon = new Weapon.Weapon(new Vector2(this.X + hitbox.Width,
                 this.Y - hitbox.Height),
-                new Weapon.WeaponStats(1f));
+                new Weapon.WeaponStats(-5f, 100, 50, 5f));
 
             sameVelocityFrames = 0;
         }

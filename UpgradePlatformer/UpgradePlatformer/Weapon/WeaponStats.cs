@@ -19,9 +19,14 @@ namespace UpgradePlatformer.Weapon
     public class WeaponStats
     {
         public float knockBack;
-    
-        public WeaponStats(float knockBack){
+        public int knockBackTime;
+        public int cap;
+        public float projSpeed;
+        public WeaponStats(float knockBack, int cap, int knockBackTime, float projSpeed){
+            this.projSpeed = projSpeed;
             this.knockBack = knockBack;
+            this.knockBackTime = knockBackTime;
+            this.cap = cap;
         }
     }
 }
