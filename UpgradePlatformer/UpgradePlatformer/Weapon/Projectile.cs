@@ -31,7 +31,7 @@ namespace UpgradePlatformer.Weapon
 
         protected Rectangle spriteBounds;
         protected float rotation;
-
+        protected int hitsLeft;
         public Vector2 Location
         {
             get { return location; }
@@ -44,7 +44,7 @@ namespace UpgradePlatformer.Weapon
         /// </summary>
         /// <param name="path"></param>
         /// <param name="location"></param>
-        public Projectile(Vector2 path, Vector2 location, float rotation, int cap)
+        public Projectile(Vector2 path, Vector2 location, float rotation, int cap, int hits)
         {
             spriteBounds = new Rectangle(20, 7, 5, 5);
             UpdateSprite();
@@ -56,7 +56,7 @@ namespace UpgradePlatformer.Weapon
             this.speed = path / Vector2.Distance(path, new Vector2(0, 0)) * 2;
 
             //this.speed = new Vector2(path.X / 60, path.Y / 60);
-
+            hitsLeft = hits;
             isActive = true;
             this.hitbox = new Rectangle(location.ToPoint(), new Point(7, 7));
         }
@@ -95,7 +95,8 @@ namespace UpgradePlatformer.Weapon
                     if (e.IsActive)
                     {
                         e.TakeDamage(EntityManager.Instance.Player().Damage);
-
+                        hitsLeft --;
+                        if (hitsLeft != 0) return;
                         isActive = false;
                         if (e.CurrentHP <= 0)
                         {

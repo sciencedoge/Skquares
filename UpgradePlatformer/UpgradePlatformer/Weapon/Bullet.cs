@@ -20,8 +20,8 @@ namespace UpgradePlatformer.Weapon
         /// <summary>
         /// Creates a bullet object
         /// </summary>
-        public Bullet(Vector2 path, Vector2 location, float rotation, int cap)
-            : base(path, location, rotation, cap) { }
+        public Bullet(Vector2 path, Vector2 location, float rotation, int cap, int hits)
+            : base(path, location, rotation, cap, hits) { }
 
 
         /// <summary>

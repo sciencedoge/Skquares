@@ -145,7 +145,7 @@ namespace UpgradePlatformer.Weapon
             if (Click)
             {
                 Knockback = Stats.knockBackTime;
-                Bullet bullet = new Bullet(path * Stats.projSpeed, new Vector2(position.X - 7, position.Y - 7), rotation, Stats.cap);
+                Bullet bullet = new Bullet(path * Stats.projSpeed, new Vector2(position.X - 7, position.Y - 7), rotation, Stats.cap, Stats.pierce);
                 Click = false;
                 bullets.Add(bullet);
                 SoundManager.Instance.PlaySFX("shoot");
