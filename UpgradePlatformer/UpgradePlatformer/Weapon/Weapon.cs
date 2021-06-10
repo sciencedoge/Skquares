@@ -30,6 +30,7 @@ namespace UpgradePlatformer.Weapon
         public Point MousePos; //using this for now (not very familiar with current input system)
         private bool Click;
         private double Knockback;
+        private Vector2 path;
 
         //Properties
 
@@ -125,8 +126,6 @@ namespace UpgradePlatformer.Weapon
         /// </summary>
         public void Update(GameTime gt)
         {
-            Vector2 path = FindDistance();
-
             bullets.RemoveAll((s) => !s.isActive);
             for (int i = bullets.Count - 1; i > 0; i--)
                 bullets[i].Update(gt);
@@ -137,6 +136,7 @@ namespace UpgradePlatformer.Weapon
                 Knockback -= gt.ElapsedGameTime.TotalSeconds * 60;
                 return;
             }
+            path = FindDistance();
 
             CheckForInput();
 
