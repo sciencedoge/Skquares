@@ -7,5 +7,9 @@
         "Xunit",
         "cond",
         "lces"
-    ]
+    ],
+    "files.exclude": {
+        "**/bin": true,
+        "**/obj": true
+    }
 }
