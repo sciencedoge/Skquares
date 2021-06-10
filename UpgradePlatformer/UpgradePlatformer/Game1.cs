@@ -38,6 +38,7 @@ namespace UpgradePlatformer
         private Rectangle MOUSE_SPRITE_BOUNDS = new Rectangle(25, 7, 5, 5);
         private Sprite mouseSprite;
         private int CleanupTimer;
+        public List<UIElement> UIList;
 
 #if DEBUG
         double frameRate = 0.0;
@@ -102,7 +103,7 @@ namespace UpgradePlatformer
             StateMachineState Shop = new StateMachineState(new List<Flag> { closeShop });
 
             // create state machine
-            _stateMachine = new FiniteStateMachine(new List<StateMachineState>{Menu, Game, Escape, Respawn, Options, OptionsGame});
+            _stateMachine = new FiniteStateMachine(new List<StateMachineState>{Menu, Game, Escape, Respawn, Options, OptionsGame, Shop});
 
             // start menu music
             SoundManager.Instance.PlayMusic("menu");
@@ -313,8 +314,15 @@ namespace UpgradePlatformer
             UIManager.Instance.Add(topHud);
             UIManager.Instance.Add(options);
             UIManager.Instance.Add(UpgradeStructure.panel);
-            UIManager.Instance.Add(ShopManager.Instance.ConstructUI(0));
-            UIManager.SetupFocusLoop(new List<UIElement> { muteToggle, playButton, newButton, fullscreenToggle, continueButton, menuButton, OptionsButton, closeButton, backButton });
+            UIGroup ShopUI = ShopManager.Instance.ConstructUI(0);
+            UIManager.Instance.Add(ShopUI);
+            UIList = new List<UIElement> { muteToggle, playButton, newButton, fullscreenToggle, continueButton, menuButton, OptionsButton, closeButton, backButton };
+            foreach (UIElement element in ShopUI.UIElements)
+            {
+                UIList.Add(element);
+            }
+            UIList = new List<UIElement> { muteToggle, playButton, newButton, fullscreenToggle, continueButton, menuButton, OptionsButton, closeButton, backButton };
+            UIManager.SetupFocusLoop(UIList);
 #endregion
 
 #region EVENTS
@@ -486,7 +494,7 @@ namespace UpgradePlatformer
 
             _rectangle = new Texture2D(GraphicsDevice, 1, 1);
             _rectangle.SetData(new Color[] { Color.Black });
-            TargetElapsedTime = TimeSpan.FromSeconds( 1f / 90f);
+            TargetElapsedTime = TimeSpan.FromSeconds( 1f / 120f);
         }
 
         protected override void Update(GameTime gameTime)
@@ -509,6 +517,15 @@ namespace UpgradePlatformer
             if (_stateMachine.currentState <= 1)
                 EntityManager.Instance.Update(gameTime);
             LevelManager.Instance.Update();
+            List<UIElement> uiList = UIList;
+            UIManager.Instance.UIElements[6] = ShopManager.Instance.ConstructUI(_stateMachine.currentState);
+            if (UIManager.Instance.UIElements[6] is UIGroup group) {
+                foreach (UIElement element in group.UIElements)
+                {
+                    uiList.Add(element);
+                }
+            }
+            UIManager.SetupFocusLoop(uiList);
 
             // StateMachine related Updates
             if (EntityManager.Instance.Player() != null)
@@ -519,7 +536,6 @@ namespace UpgradePlatformer
             deathMenu.IsActive = _stateMachine.currentState == 3;
             options.IsActive   = _stateMachine.currentState == 4
                               || _stateMachine.currentState == 5;
-            UIManager.Instance.UIElements[6] = ShopManager.Instance.ConstructUI(_stateMachine.currentState);
             Sprite.Dim         = _stateMachine.currentState == 2
                               || _stateMachine.currentState == 3
                               || _stateMachine.currentState == 5;
@@ -532,7 +548,7 @@ namespace UpgradePlatformer
                 secondTimer = 0;
                 frameCounter = 0;
             }
-            frameCounter ++;
+            frameCounter++;
 #endif
             if (CleanupTimer ++ % 300 == 0)
             {
@@ -549,9 +565,6 @@ namespace UpgradePlatformer
 
         protected override void Draw(GameTime gameTime)
         {
-#if DEBUG
-            frameCounter++;
-#endif
             GraphicsDevice.SetRenderTarget(_lightTarget);
             GraphicsDevice.Clear(Color.White);
             if (Sprite.Dim)
