@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Content;
 using UpgradePlatformer.Music;
 using UpgradePlatformer.Saves;
 using System;
+using UpgradePlatformer.Shop_Stuff;
 
 namespace UpgradePlatformer
 {
@@ -309,7 +310,7 @@ namespace UpgradePlatformer
             UIManager.Instance.Add(topHud);
             UIManager.Instance.Add(options);
             UIManager.Instance.Add(UpgradeStructure.panel);
-
+            UIManager.Instance.Add(ShopManager.Instance.HatShop);
             UIManager.SetupFocusLoop(new List<UIElement> { muteToggle, playButton, newButton, fullscreenToggle, continueButton, menuButton, OptionsButton, closeButton, backButton });
 #endregion
 
@@ -473,6 +474,7 @@ namespace UpgradePlatformer
             };
             _spriteSheetTexture = Content.Load<Texture2D>(ASSET_NAME_SPRITESHEET);
             _font = Content.Load<SpriteFont>("Fonts/Poland");
+            ShopManager.font = _font;
             Sprite.Shaders = new List<Effect>();
             Sprite.Shaders.Add(Content.Load<Effect>("Shaders/ShaderLava"));
             Sprite.Shaders.Add(Content.Load<Effect>("Shaders/ShaderInvert"));

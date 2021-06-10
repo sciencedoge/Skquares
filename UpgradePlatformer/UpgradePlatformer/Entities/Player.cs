@@ -60,7 +60,7 @@ namespace UpgradePlatformer.Entities
         {
             this.animation = new AnimationFSM(AnimationManager.Instance.animations[0]);
             this.jumpsLeft = jumpsLeft;
-            this.hat = new Hat(0, UpgradeType.HEALTH, 10000);
+            this.hat = new Hat(3, UpgradeType.HEALTH, 10000, "GOD HAT");
 
             landed = true;
 
