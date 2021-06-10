@@ -313,7 +313,7 @@ namespace UpgradePlatformer
             UIManager.Instance.Add(topHud);
             UIManager.Instance.Add(options);
             UIManager.Instance.Add(UpgradeStructure.panel);
-            UIManager.Instance.Add(ShopManager.Instance.HatShop);
+            UIManager.Instance.Add(ShopManager.Instance.ConstructUI(0));
             UIManager.SetupFocusLoop(new List<UIElement> { muteToggle, playButton, newButton, fullscreenToggle, continueButton, menuButton, OptionsButton, closeButton, backButton });
 #endregion
 
