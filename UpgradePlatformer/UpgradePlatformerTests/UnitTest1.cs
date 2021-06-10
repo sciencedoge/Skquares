@@ -32,7 +32,7 @@ namespace UpgradePlatformerTests
         [TestBeforeAfter]
         public void TestPlayerDeathDamage()
         {
-            Player p = new Player(1, 0, new Rectangle(0, 0, 22, 22), 1);
+            Player p = new Player(1, 0, new Rectangle(300, 0, 22, 22), 1);
             p.Demo = false;
 
             p.TakeDamage(1);
@@ -44,9 +44,10 @@ namespace UpgradePlatformerTests
         [TestBeforeAfter]
         public void TestPlayerDamageCoolDown()
         {
-            Player p = new Player(2, 0, new Rectangle(0, 0, 22, 22), 1);
+            Player p = new Player(2, 0, new Rectangle(300, 0, 22, 22), 1);
             p.Demo = false;
 
+            p.Update(new GameTime(TimeSpan.FromMilliseconds(10), TimeSpan.FromMilliseconds(10)));
             Assert.Equal(0, p.cooldown);
             p.TakeDamage(1);
             Assert.Equal(1, p.CurrentHP);
