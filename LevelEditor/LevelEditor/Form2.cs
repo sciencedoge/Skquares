@@ -41,6 +41,7 @@ namespace LevelEditor
         private String metadata;
 
         private string firstFileName;
+        private string firstFilePath;
         private int numSections;
 
         private Color currentColor;
@@ -54,6 +55,14 @@ namespace LevelEditor
 
         //ROTATION
         private float rotation;
+
+        private int originalBoxHeight;
+        private int originalBoxWidth;
+
+        private bool biggerHeight;
+        private bool biggerWidth;
+
+
 
         private int numLayersSaved;
 
@@ -152,6 +161,10 @@ namespace LevelEditor
             rotationSaveX = 0;
             rotationSaveY = 0;
             numSections = 0;
+            originalBoxHeight = 0;
+            originalBoxWidth = 0;
+            biggerHeight = false;
+            biggerWidth = false;
         }
 
         /// <summary>
@@ -323,6 +336,14 @@ namespace LevelEditor
                     
                     //prompts the user that the file was successfully saved.
                     MessageBox.Show("Successfully Saved the file!", ":)");
+
+                    if (firstFileName == null)
+                    {
+                        firstFileName = saveMenu.FileName.Remove(0, saveMenu.FileName.LastIndexOf('\\') + 1);
+                        firstFileName = firstFileName.Substring(0, firstFileName.LastIndexOf('.'));
+                        firstFilePath = saveMenu.FileName.Substring(0, saveMenu.FileName.LastIndexOf('\\'));
+                    }
+
                     this.Text = $"Level Editor - {saveMenu.FileName.Remove(0, saveMenu.FileName.LastIndexOf('\\') + 1)}";
                     isSaved = true;
                 
@@ -337,6 +358,7 @@ namespace LevelEditor
                     //close the stream
                     if(stream != null)
                     {
+                        numSections++;
                         writer.Close();
                     }                    
                 }
@@ -406,6 +428,9 @@ namespace LevelEditor
 
                 //formats the file name
                 this.Text = $"Level editor - {dialog.FileName.Remove(0, dialog.FileName.LastIndexOf('\\') + 1)}";
+
+                
+
                 //prompts the user that the operation was successful
                 MessageBox.Show("Successfully loaded the file!", ":)");
 
@@ -439,6 +464,20 @@ namespace LevelEditor
         /// <param name="color">The color of the boxes</param>
         public void GenerateBoxes(string path)
         {
+
+            if (biggerWidth && biggerHeight)
+            {
+                originalBoxHeight = 0;
+                originalBoxWidth = 0;
+                biggerWidth = false;
+                biggerHeight = false;
+            }
+
+            if (width > height || width == height) biggerWidth = true;
+            else if (height > width) biggerHeight = true;
+
+            
+            mapBox.Controls.Clear();
             //Handles Y axis
             for (int i = 0; i < height; i++)
             {
@@ -453,19 +492,30 @@ namespace LevelEditor
                    
                     //Sizes the boxes to the map width/height
                     //Horizontal is bigger, base off of the width
-                    if (width > height || width == height)
+
+                    if(originalBoxHeight == 0 && originalBoxWidth == 0)
                     {
-                        box.Size = new Size((mapBox.Width) / width, (mapBox.Width) / width);
-                        collisionBox.Size = new Size((mapBox.Width) / width, (mapBox.Width) / width);
-                        objectBox.Size = new Size((mapBox.Width) / width, (mapBox.Width) / width);
+                        if (width > height || width == height)
+                        {
+                            box.Size = new Size((mapBox.Width) / width, (mapBox.Width) / width);
+                            collisionBox.Size = new Size((mapBox.Width) / width, (mapBox.Width) / width);
+                            objectBox.Size = new Size((mapBox.Width) / width, (mapBox.Width) / width);
+                        }
+
+                        //Vertical is bigger, base off of the height
+                        else if (height > width)
+                        {
+                            box.Size = new Size((mapBox.Height - 17) / height, (mapBox.Height - 17) / height);
+                            collisionBox.Size = new Size((mapBox.Height - 17) / height, (mapBox.Height - 17) / height);
+                            objectBox.Size = new Size((mapBox.Height - 17) / height, (mapBox.Height - 17) / height);
+                        }
+
+                        originalBoxWidth = box.Width;
+                        originalBoxHeight = box.Height;
                     }
-                   
-                    //Vertical is bigger, base off of the height
-                    else if (height > width)
+                    else
                     {
-                        box.Size = new Size((mapBox.Height - 17) / height, (mapBox.Height - 17) / height);
-                        collisionBox.Size = new Size((mapBox.Height - 17) / height, (mapBox.Height - 17) / height);
-                        objectBox.Size = new Size((mapBox.Height - 17) / height, (mapBox.Height - 17) / height);
+                        box.Size = new Size(originalBoxWidth, originalBoxHeight);
                     }
                     
                     //Sets the location of the box
@@ -525,10 +575,6 @@ namespace LevelEditor
         {
             //Clears the controls (so we dont 
             //get overlap)
-
-
-            //Resizes the groupBox
-            mapBox.Size = new Size(575, 575);
 
             mapBox.Controls.Clear();
 
@@ -1292,10 +1338,7 @@ namespace LevelEditor
                 //formats the file name
                 this.Text = $"Level editor - {dialog.FileName.Remove(0, dialog.FileName.LastIndexOf('\\') + 1)}";
 
-                if(firstFileName == null)
-                {
-                    firstFileName = dialog.FileName.Remove(0, dialog.FileName.LastIndexOf('\\') + 1);
-                }
+                
                 
                 //prompts the user that the operation was successful
                 MessageBox.Show("Successfully loaded the file!", ":)");
@@ -1343,6 +1386,7 @@ namespace LevelEditor
                 else if (result == DialogResult.Yes)
                 {
                     saveButton_Click(sender, e);
+                    GenerateBoxes("../../../default-min.png");
                 }
                 else return;
             }
@@ -1351,7 +1395,8 @@ namespace LevelEditor
                 BinaryWriter writer = null;
                 try
                 {
-                    stream = new FileStream($"{firstFileName}" + $"{numSections}", FileMode.Create);
+                    stream = new FileStream($"{firstFilePath}\\" 
+                        + $"{firstFileName}" + $"{numSections}" + ".level", FileMode.Create);
 
                     writer = new BinaryWriter(stream);
 
@@ -1367,7 +1412,7 @@ namespace LevelEditor
                     Save(writer, rotationValues);
                     writer.Close();
 
-                    this.Text = $"Level Editor - {firstFileName + $"{numSections}"}";
+                    this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
                     isSaved = true;
 
                 }
@@ -1384,6 +1429,9 @@ namespace LevelEditor
                         writer.Close();
                     }
                 }
+
+                GenerateBoxes("../../../default-min.png");
+                numSections++;
             }
         }
 
@@ -1403,8 +1451,16 @@ namespace LevelEditor
                 BinaryReader reader = null;
                 try
                 {
-                    //Loads the data from an external file
-                    stream = new FileStream($"{firstFileName}" + $"{numSections - 1}", FileMode.Open);
+                    if(numSections - 1 == 0)
+                    {
+                        stream = new FileStream($"{firstFilePath}\\" + $"{firstFileName}" + ".level", FileMode.Open);
+                    }
+                    else
+                    {
+                        //Loads the data from an external file
+                        stream = new FileStream($"{firstFilePath}\\" + $"{firstFileName}" + $"{numSections - 1}" + ".level", FileMode.Open);
+                    }
+                    
 
                     reader = new BinaryReader(stream);
 
@@ -1435,7 +1491,7 @@ namespace LevelEditor
                 finally
                 {
                     //Closes the stream
-                    if (stream != null)
+                    if (stream != null && reader != null)
                     {
                         reader.Close();
                         rotation = 0;
