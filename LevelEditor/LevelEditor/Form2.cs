@@ -40,6 +40,9 @@ namespace LevelEditor
         private int rotationSaveY;
         private String metadata;
 
+        private string firstFileName;
+        private int numSections;
+
         private Color currentColor;
 
         private string path;
@@ -132,6 +135,8 @@ namespace LevelEditor
             isSaved = true;
             numLayersSaved = 0;
 
+            firstFileName = null;
+
             active = 1;
 
             buttons = new List<Button>();
@@ -146,6 +151,7 @@ namespace LevelEditor
             rotation = 0;
             rotationSaveX = 0;
             rotationSaveY = 0;
+            numSections = 0;
         }
 
         /// <summary>
@@ -1285,6 +1291,12 @@ namespace LevelEditor
 
                 //formats the file name
                 this.Text = $"Level editor - {dialog.FileName.Remove(0, dialog.FileName.LastIndexOf('\\') + 1)}";
+
+                if(firstFileName == null)
+                {
+                    firstFileName = dialog.FileName.Remove(0, dialog.FileName.LastIndexOf('\\') + 1);
+                }
+                
                 //prompts the user that the operation was successful
                 MessageBox.Show("Successfully loaded the file!", ":)");
 
@@ -1307,7 +1319,131 @@ namespace LevelEditor
                     rotation = 0;
                     Rotate(texturePic);
                     texturePic.Refresh();
+                    numSections++;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Moves on to the next area of the level
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void nextButton_Click(object sender, EventArgs e)
+        {
+            if (firstFileName == null)
+            {
+                DialogResult result =
+                    MessageBox.Show("Would you like to save this file?",
+                    "Save?",
+                    MessageBoxButtons.YesNo);
+
+
+                if (result == DialogResult.No) return;
+                else if (result == DialogResult.Yes)
+                {
+                    saveButton_Click(sender, e);
+                }
+                else return;
+            }
+            else
+            {
+                BinaryWriter writer = null;
+                try
+                {
+                    stream = new FileStream($"{firstFileName}" + $"{numSections}", FileMode.Create);
+
+                    writer = new BinaryWriter(stream);
+
+                    //Saves the width and height
+                    writer.Write(width);
+                    writer.Write(height);
+
+                    //Background
+
+                    //Saves the ARGB colors of the pictureboxes
+                    rotationSaveX = 0;
+                    rotationSaveY = 0;
+                    Save(writer, rotationValues);
+                    writer.Close();
+
+                    this.Text = $"Level Editor - {firstFileName + $"{numSections}"}";
+                    isSaved = true;
+
+                }
+                catch (Exception ex)
+                {
+                    //Something went wrong...
+                    MessageBox.Show("Error saving file! " + ex.Message, ":(");
+                }
+                finally
+                {
+                    //close the stream
+                    if (stream != null)
+                    {
+                        writer.Close();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Moves onto the previous area of the level
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void prevButton_Click(object sender, EventArgs e)
+        {
+            if(firstFileName == null || numSections - 1 < 0)
+            {
+                return;
+            }
+            else
+            {
+                BinaryReader reader = null;
+                try
+                {
+                    //Loads the data from an external file
+                    stream = new FileStream($"{firstFileName}" + $"{numSections - 1}", FileMode.Open);
+
+                    reader = new BinaryReader(stream);
+
+                    //Reads width, height
+                    width = reader.ReadInt32();
+                    height = reader.ReadInt32();
+
+                    //creates a new array that is able to store colors
+                    colors = new string[height, width];
+                    collisionColors = new string[height, width];
+                    objectColors = new string[height, width];
+
+                    //Background
+
+                    rotationValues = new int[height, width];
+                    collisionRotations = new int[height, width];
+
+                    LoadColors(reader, rotationValues, false);
+
+                    LoadBoxes(colors, collisionColors, objectColors);
+                }
+                catch (Exception ex)
+                {
+                    //Error occurred...
+                    MessageBox.Show("Error Reading File! " + ex.Message, ":(");
+                }
+
+                finally
+                {
+                    //Closes the stream
+                    if (stream != null)
+                    {
+                        reader.Close();
+                        rotation = 0;
+                        Rotate(texturePic);
+                        texturePic.Refresh();
+                    }
+                }
+
             }
         }
     }   
