@@ -29,6 +29,8 @@ namespace UpgradePlatformer.Weapon
         private Rectangle spriteBounds;
         public Point MousePos; //using this for now (not very familiar with current input system)
         private bool Click;
+        private double Knockback;
+        private Vector2 path;
 
         //Properties
 
@@ -124,29 +126,26 @@ namespace UpgradePlatformer.Weapon
         /// </summary>
         public void Update(GameTime gt)
         {
-            CheckForInput();
-
+            bullets.RemoveAll((s) => !s.isActive);
             for (int i = bullets.Count - 1; i > 0; i--)
+                bullets[i].Update(gt);
+            
+            if (Knockback > 0)
             {
-                if (bullets[i].isActive)
-                {
-                    bullets[i].Update(gt);
-                }
-                else
-                {
-                    bullets.Remove(bullets[i]);
-                }
+                EntityManager.Instance.Player().Velocity = path / Vector2.Distance(path, new Vector2(0, 0)) * Stats.knockBack;
+                Knockback -= gt.ElapsedGameTime.TotalSeconds * 60;
+                return;
             }
+            path = FindDistance();
 
-            Vector2 path = FindDistance();
+            CheckForInput();
 
             rotation = FindRotation(path);
 
             if (Click)
             {
-                EntityManager.Instance.Player().Velocity += path / Vector2.Distance(path, new Vector2(0, 0)) * Stats.knockBack;
-                Bullet bullet = new Bullet(path, new Vector2(position.X - 7, position.Y - 7), rotation);
-                  
+                Knockback = Stats.knockBackTime;
+                Bullet bullet = new Bullet(path * Stats.projSpeed, new Vector2(position.X - 7, position.Y - 7), rotation, Stats.cap, Stats.pierce);
                 Click = false;
                 bullets.Add(bullet);
                 SoundManager.Instance.PlaySFX("shoot");

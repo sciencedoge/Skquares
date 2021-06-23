@@ -20,7 +20,7 @@ namespace UpgradePlatformer.Weapon
     {
         //Fields 
         protected Sprite sprite;
-
+        protected int cap;
         protected Vector2 path;
         protected Vector2 location;
         protected Vector2 speed;
@@ -31,7 +31,7 @@ namespace UpgradePlatformer.Weapon
 
         protected Rectangle spriteBounds;
         protected float rotation;
-
+        protected int hitsLeft;
         public Vector2 Location
         {
             get { return location; }
@@ -44,7 +44,7 @@ namespace UpgradePlatformer.Weapon
         /// </summary>
         /// <param name="path"></param>
         /// <param name="location"></param>
-        public Projectile(Vector2 path, Vector2 location, float rotation)
+        public Projectile(Vector2 path, Vector2 location, float rotation, int cap, int hits)
         {
             spriteBounds = new Rectangle(20, 7, 5, 5);
             UpdateSprite();
@@ -52,11 +52,11 @@ namespace UpgradePlatformer.Weapon
             this.location = location;
             this.initialLocation = location;
             this.rotation = rotation;
-
+            this.cap = cap;
             this.speed = path / Vector2.Distance(path, new Vector2(0, 0)) * 2;
 
             //this.speed = new Vector2(path.X / 60, path.Y / 60);
-
+            hitsLeft = hits;
             isActive = true;
             this.hitbox = new Rectangle(location.ToPoint(), new Point(7, 7));
         }
@@ -95,7 +95,8 @@ namespace UpgradePlatformer.Weapon
                     if (e.IsActive)
                     {
                         e.TakeDamage(EntityManager.Instance.Player().Damage);
-
+                        hitsLeft --;
+                        if (hitsLeft != 0) return;
                         isActive = false;
                         if (e.CurrentHP <= 0)
                         {
@@ -120,13 +121,13 @@ namespace UpgradePlatformer.Weapon
 
                 Vector2 distance = FindDistance();
 
-                if(distance.X > 300)
+                if(distance.X > cap && cap != -1)
                 {
                     this.isActive = false;
                     return;
                 }
 
-                if(distance.Y > 300)
+                if(distance.Y > cap && cap != -1)
                 {
                     this.isActive = false;
                     return;

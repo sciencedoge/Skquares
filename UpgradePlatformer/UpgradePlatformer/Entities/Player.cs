@@ -60,13 +60,13 @@ namespace UpgradePlatformer.Entities
         {
             this.animation = new AnimationFSM(AnimationManager.Instance.animations[0]);
             this.jumpsLeft = jumpsLeft;
-            this.hat = new Hat(0, UpgradeType.HEALTH, 10000);
+            this.hat = new Hat(3, UpgradeType.HEALTH, 10000, "GOD HAT");
 
             landed = true;
 
             weapon = new Weapon.Weapon(new Vector2(this.X + hitbox.Width,
                 this.Y - hitbox.Height),
-                new Weapon.WeaponStats(1f));
+                new Weapon.WeaponStats(0f, -1, 0, 5f, 0));
 
             sameVelocityFrames = 0;
         }

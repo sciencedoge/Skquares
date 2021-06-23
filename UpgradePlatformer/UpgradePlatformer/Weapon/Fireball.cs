@@ -25,7 +25,7 @@ namespace UpgradePlatformer.Weapon
         /// Creates a fireball object
         /// </summary>
         public Fireball(Vector2 path, Vector2 location, float rotation)
-            :base(path, location, rotation)
+            :base(path, location, rotation, 10000, 1)
         {
             spriteBounds = new Rectangle(28, 0, 7, 7);
             UpdateSprite();

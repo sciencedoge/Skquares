@@ -18,8 +18,10 @@ namespace UpgradePlatformer.Shop_Stuff
     {
         public UpgradeBonus bonus;
         public Sprite sprite;
+        public string Name;
 
-        public Hat(int texture, UpgradeType boost, float value) {
+        public Hat(int texture, UpgradeType boost, float value, String name) {
+            Name = name;
             bonus = new UpgradeBonus{value = value, type = boost};
             sprite = new Sprite(new Rectangle(35 + 7 * texture, 0, 7, 7), new Vector2(3, 7), Color.White);
         }

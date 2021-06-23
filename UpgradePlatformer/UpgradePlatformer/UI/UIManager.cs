@@ -20,7 +20,7 @@ namespace UpgradePlatformer.UI
                 (() => new UIManager());
         public static UIManager Instance { get { return lazy.Value; } }
         
-        List<UIElement> UIElements;
+        public List<UIElement> UIElements;
         public UIElement focused;
 
         /// <summary>

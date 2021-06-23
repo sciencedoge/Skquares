@@ -1,10 +1,15 @@
 {
     "cSpell.words": [
         "RGAME",
+        "Rectange",
         "Sami",
         "Skquares",
         "Xunit",
         "cond",
         "lces"
-    ]
+    ],
+    "files.exclude": {
+        "**/bin": true,
+        "**/obj": true
+    }
 }

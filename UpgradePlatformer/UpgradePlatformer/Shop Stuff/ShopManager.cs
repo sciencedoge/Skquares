@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using UpgradePlatformer.Graphics;
+using UpgradePlatformer.UI;
 using UpgradePlatformer.Upgrade_Stuff;
 
 namespace UpgradePlatformer.Shop_Stuff
@@ -15,6 +19,7 @@ namespace UpgradePlatformer.Shop_Stuff
     {
         public HatNode parent;
 
+        public bool owned;
         public Hat hat;
     }
 
@@ -26,6 +31,7 @@ namespace UpgradePlatformer.Shop_Stuff
                 (() => new ShopManager());
         public static ShopManager Instance { get { return lazy.Value; } }
 
+        public static SpriteFont font;
         public List<HatNode> Hats;
 
         /// <summary>
@@ -43,8 +49,32 @@ namespace UpgradePlatformer.Shop_Stuff
         /// <param name="parent"></param>
         public void Add(Hat hat, int parent)
         {
-            var node = new HatNode{hat = hat, parent = Hats[parent]};
+            HatNode node;
+            if (parent == -1)
+                node = new HatNode{hat = hat, parent = null};
+            else
+                node = new HatNode{hat = hat, parent = Hats[parent]};
             Hats.Add(node);
+        }
+
+        public UIGroup ConstructUI(int state) {
+            UIGroup result = new UIGroup();
+            result.IsActive = state == 6;
+            int pos = 45;
+            foreach (HatNode hatNode in Hats)
+            {
+                Hat hat = hatNode.hat;                
+                if (hatNode.parent == null || hatNode.parent.owned) {
+                    UIButton button = new UIButton(font, new Rectangle(5, pos, 620, 40));
+                    Sprite s = hat.sprite.Copy();
+                    s.Origin = new Vector2(0, 0);
+                    button.SetIcon(s);
+                    button.Text.Text = hat.Name;
+                    pos += 50;
+                    result.Add(button);
+                }
+            }
+            return result;
         }
     }
 }

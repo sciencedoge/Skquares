@@ -23,7 +23,10 @@ namespace UpgradePlatformer.Upgrade_Stuff
             UpgradeManager.Instance.Add(1, UpgradeType.EXTRA_JUMP, 0);
             UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 10);
 
-            // ShopManager.Instance.Add();
+            ShopManager.Instance.Add(new Hat(0, UpgradeType.HEALTH, 100, "OH LAWD HE COMIN"), -1);
+            ShopManager.Instance.Add(new Hat(1, UpgradeType.HEALTH, 100, "OH LAWD HE COMIN"), -1);
+            ShopManager.Instance.Add(new Hat(2, UpgradeType.HEALTH, 100, "OH LAWD HE COMIN"), -1);
+            ShopManager.Instance.Add(new Hat(3, UpgradeType.HEALTH, 100, "OH LAWD HE COMIN"), -1);
         }
         
         public static void ShowMessage(Upgrade ug)
