@@ -346,7 +346,9 @@ namespace LevelEditor
 
                     this.Text = $"Level Editor - {saveMenu.FileName.Remove(0, saveMenu.FileName.LastIndexOf('\\') + 1)}";
                     isSaved = true;
-                
+
+                    GenerateBoxes("../../../default-min.png");
+
                 }
                 catch(Exception ex)
                 {
@@ -362,7 +364,7 @@ namespace LevelEditor
                         writer.Close();
                     }                    
                 }
-            }            
+            }
         }
 
         /// <summary>
@@ -931,7 +933,7 @@ namespace LevelEditor
                     //sizes the boxes accordingly
                     if (width > height || width == height)
                     {
-                        box.Size = new Size((mapBox.Width) / width, (mapBox.Width) / width);
+                        box.Size = new Size(((mapBox.Width) / width) - 2, ((mapBox.Width) / width) - 2);
                     }
 
                     else if (height > width)
@@ -1385,12 +1387,12 @@ namespace LevelEditor
                 if (result == DialogResult.No) return;
                 else if (result == DialogResult.Yes)
                 {
-                    saveButton_Click(sender, e);
-                    GenerateBoxes("../../../default-min.png");
+                    saveButton_Click(sender, e);                  
                 }
                 else return;
             }
-            else
+            else if (!File.Exists($"{firstFilePath}\\"
+                        + $"{firstFileName}" + $"{numSections}" + ".level"))
             {
                 BinaryWriter writer = null;
                 try
@@ -1433,6 +1435,11 @@ namespace LevelEditor
                 GenerateBoxes("../../../default-min.png");
                 numSections++;
             }
+            else
+            {
+                LoadLevelInEditor();
+                numSections++;
+            }
         }
 
         /// <summary>
@@ -1448,59 +1455,75 @@ namespace LevelEditor
             }
             else
             {
-                BinaryReader reader = null;
-                try
+                LoadLevelInEditor();                
+                numSections--;
+                this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
+
+            }            
+        }
+
+        private void LoadLevelInEditor()
+        {
+            BinaryReader reader = null;
+            try
+            {
+                if(numSections - 1 < 0)
                 {
-                    if(numSections - 1 == 0)
-                    {
-                        stream = new FileStream($"{firstFilePath}\\" + $"{firstFileName}" + ".level", FileMode.Open);
-                    }
-                    else
-                    {
-                        //Loads the data from an external file
-                        stream = new FileStream($"{firstFilePath}\\" + $"{firstFileName}" + $"{numSections - 1}" + ".level", FileMode.Open);
-                    }
-                    
-
-                    reader = new BinaryReader(stream);
-
-                    //Reads width, height
-                    width = reader.ReadInt32();
-                    height = reader.ReadInt32();
-
-                    //creates a new array that is able to store colors
-                    colors = new string[height, width];
-                    collisionColors = new string[height, width];
-                    objectColors = new string[height, width];
-
-                    //Background
-
-                    rotationValues = new int[height, width];
-                    collisionRotations = new int[height, width];
-
-                    LoadColors(reader, rotationValues, false);
-
-                    LoadBoxes(colors, collisionColors, objectColors);
-                }
-                catch (Exception ex)
-                {
-                    //Error occurred...
-                    MessageBox.Show("Error Reading File! " + ex.Message, ":(");
+                    return;
                 }
 
-                finally
+                if (numSections - 1 == 0)
                 {
-                    //Closes the stream
-                    if (stream != null && reader != null)
-                    {
-                        reader.Close();
-                        rotation = 0;
-                        Rotate(texturePic);
-                        texturePic.Refresh();
-                    }
+                    stream = new FileStream($"{firstFilePath}\\" + $"{firstFileName}" + ".level", FileMode.Open);
+                }
+                else
+                {
+                    //Loads the data from an external file
+                    stream = new FileStream($"{firstFilePath}\\" + $"{firstFileName}" + $"{numSections - 1}" + ".level", FileMode.Open);
                 }
 
+
+                reader = new BinaryReader(stream);
+
+                //Reads width, height
+                width = reader.ReadInt32();
+                height = reader.ReadInt32();
+
+                //creates a new array that is able to store colors
+                colors = new string[height, width];
+                collisionColors = new string[height, width];
+                objectColors = new string[height, width];
+
+                //Background
+
+                rotationValues = new int[height, width];
+                collisionRotations = new int[height, width];
+
+                LoadColors(reader, rotationValues, false);
+
+                LoadBoxes(colors, collisionColors, objectColors);
+            }
+            catch (Exception ex)
+            {
+                //Error occurred...
+                MessageBox.Show("Error Reading File! " + ex.Message, ":(");
+            }
+
+            finally
+            {
+                //Closes the stream
+                if (stream != null && reader != null)
+                {
+                    reader.Close();
+                    rotation = 0;
+                    Rotate(texturePic);
+                    texturePic.Refresh();
+
+                }
             }
         }
+
+
+
     }   
 }
