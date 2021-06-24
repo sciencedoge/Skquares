@@ -122,6 +122,11 @@ namespace LevelEditor
             set { objectRotations = value; }
         }
 
+        public int Num
+        {
+            set { numSections = value; }
+        }
+
         /// <summary>
         /// Creates the level editor form
         /// </summary>
@@ -342,9 +347,9 @@ namespace LevelEditor
                         firstFileName = saveMenu.FileName.Remove(0, saveMenu.FileName.LastIndexOf('\\') + 1);
                         firstFileName = firstFileName.Substring(0, firstFileName.LastIndexOf('.'));
                         firstFilePath = saveMenu.FileName.Substring(0, saveMenu.FileName.LastIndexOf('\\'));
+                        this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
                     }
 
-                    this.Text = $"Level Editor - {saveMenu.FileName.Remove(0, saveMenu.FileName.LastIndexOf('\\') + 1)}";
                     isSaved = true;
 
                     GenerateBoxes("../../../default-min.png");
@@ -360,7 +365,6 @@ namespace LevelEditor
                     //close the stream
                     if(stream != null)
                     {
-                        numSections++;
                         writer.Close();
                     }                    
                 }
@@ -1387,12 +1391,14 @@ namespace LevelEditor
                 if (result == DialogResult.No) return;
                 else if (result == DialogResult.Yes)
                 {
-                    saveButton_Click(sender, e);                  
+                    saveButton_Click(sender, e);
+                    numSections++;
+                    this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
                 }
                 else return;
             }
             else if (!File.Exists($"{firstFilePath}\\"
-                        + $"{firstFileName}" + $"{numSections}" + ".level"))
+                        + $"{firstFileName}" + $"{numSections}" + ".level") || numSections == 0)
             {
                 BinaryWriter writer = null;
                 try
@@ -1413,8 +1419,7 @@ namespace LevelEditor
                     rotationSaveY = 0;
                     Save(writer, rotationValues);
                     writer.Close();
-
-                    this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
+                    
                     isSaved = true;
 
                 }
@@ -1428,18 +1433,21 @@ namespace LevelEditor
                     //close the stream
                     if (stream != null)
                     {
+                        numSections++;
+                        this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
                         writer.Close();
                     }
                 }
 
-                GenerateBoxes("../../../default-min.png");
-                numSections++;
+                GenerateBoxes("../../../default-min.png");           
             }
             else
             {
                 LoadLevelInEditor();
                 numSections++;
+                this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
             }
+            
         }
 
         /// <summary>
