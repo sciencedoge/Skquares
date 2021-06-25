@@ -522,6 +522,8 @@ namespace LevelEditor
                     else
                     {
                         box.Size = new Size(originalBoxWidth, originalBoxHeight);
+                        collisionBox.Size = new Size(originalBoxWidth, originalBoxHeight);
+                        objectBox.Size = new Size(originalBoxWidth, originalBoxHeight);
                     }
                     
                     //Sets the location of the box
