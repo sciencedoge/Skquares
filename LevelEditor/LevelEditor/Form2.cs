@@ -1400,7 +1400,7 @@ namespace LevelEditor
                 else return;
             }
             else if (!File.Exists($"{firstFilePath}\\"
-                        + $"{firstFileName}" + $"{numSections}" + ".level") || numSections == 0)
+                        + $"{firstFileName}" + $"{numSections}" + ".level") && numSections != 0)
             {
                 BinaryWriter writer = null;
                 try
@@ -1445,8 +1445,8 @@ namespace LevelEditor
             }
             else
             {
-                LoadLevelInEditor();
                 numSections++;
+                LoadLevelInEditor();               
                 this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
             }
             
@@ -1465,8 +1465,8 @@ namespace LevelEditor
             }
             else
             {
-                LoadLevelInEditor();                
                 numSections--;
+                LoadLevelInEditor();                
                 this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
 
             }            
@@ -1477,19 +1477,19 @@ namespace LevelEditor
             BinaryReader reader = null;
             try
             {
-                if(numSections - 1 < 0)
+                if(numSections < 0)
                 {
                     return;
                 }
 
-                if (numSections - 1 == 0)
+                if (numSections == 0)
                 {
                     stream = new FileStream($"{firstFilePath}\\" + $"{firstFileName}" + ".level", FileMode.Open);
                 }
                 else
                 {
                     //Loads the data from an external file
-                    stream = new FileStream($"{firstFilePath}\\" + $"{firstFileName}" + $"{numSections - 1}" + ".level", FileMode.Open);
+                    stream = new FileStream($"{firstFilePath}\\" + $"{firstFileName}" + $"{numSections}" + ".level", FileMode.Open);
                 }
 
 
