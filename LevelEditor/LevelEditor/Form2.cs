@@ -1465,9 +1465,44 @@ namespace LevelEditor
             }
             else
             {
-                numSections--;
-                LoadLevelInEditor();                
-                this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
+                BinaryWriter writer = null;
+                try
+                {
+                    stream = new FileStream($"{firstFilePath}\\"
+                        + $"{firstFileName}" + $"{numSections}" + ".level", FileMode.Create);
+
+                    writer = new BinaryWriter(stream);
+
+                    //Saves the width and height
+                    writer.Write(width);
+                    writer.Write(height);
+
+                    //Background
+
+                    //Saves the ARGB colors of the pictureboxes
+                    rotationSaveX = 0;
+                    rotationSaveY = 0;
+                    Save(writer, rotationValues);
+                    writer.Close();
+
+                    isSaved = true;
+
+                }
+                catch (Exception ex)
+                {
+                    //Something went wrong...
+                    MessageBox.Show("Error saving file! " + ex.Message, ":(");
+                }
+                finally
+                {
+                    //close the stream
+                    if (stream != null)
+                    {
+                        numSections--;
+                        LoadLevelInEditor();
+                        this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
+                    }
+                }
 
             }            
         }
