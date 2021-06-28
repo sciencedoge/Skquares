@@ -66,6 +66,8 @@ namespace LevelEditor
 
         private int numLayersSaved;
 
+        private bool prevButtonHit;
+
         //Properties
 
         /// <summary>
@@ -170,6 +172,8 @@ namespace LevelEditor
             originalBoxWidth = 0;
             biggerHeight = false;
             biggerWidth = false;
+
+            prevButtonHit = false;
         }
 
         /// <summary>
@@ -1370,7 +1374,6 @@ namespace LevelEditor
                     rotation = 0;
                     Rotate(texturePic);
                     texturePic.Refresh();
-                    numSections++;
                 }
             }
         }
@@ -1400,7 +1403,7 @@ namespace LevelEditor
                 else return;
             }
             else if (!File.Exists($"{firstFilePath}\\"
-                        + $"{firstFileName}" + $"{numSections}" + ".level") && numSections != 0)
+                        + $"{firstFileName}" + $"{numSections + 1}" + ".level") && numSections != 0)
             {
                 BinaryWriter writer = null;
                 try
@@ -1468,25 +1471,28 @@ namespace LevelEditor
                 BinaryWriter writer = null;
                 try
                 {
-                    stream = new FileStream($"{firstFilePath}\\"
+                    if (!isSaved)
+                    {
+                        stream = new FileStream($"{firstFilePath}\\"
                         + $"{firstFileName}" + $"{numSections}" + ".level", FileMode.Create);
 
-                    writer = new BinaryWriter(stream);
+                        writer = new BinaryWriter(stream);
 
-                    //Saves the width and height
-                    writer.Write(width);
-                    writer.Write(height);
+                        //Saves the width and height
+                        writer.Write(width);
+                        writer.Write(height);
 
-                    //Background
+                        //Background
 
-                    //Saves the ARGB colors of the pictureboxes
-                    rotationSaveX = 0;
-                    rotationSaveY = 0;
-                    Save(writer, rotationValues);
-                    writer.Close();
+                        //Saves the ARGB colors of the pictureboxes
+                        rotationSaveX = 0;
+                        rotationSaveY = 0;
+                        Save(writer, rotationValues);
+                        writer.Close();
 
-                    isSaved = true;
-
+                        isSaved = true;
+                    }
+                   
                 }
                 catch (Exception ex)
                 {
@@ -1501,6 +1507,7 @@ namespace LevelEditor
                         numSections--;
                         LoadLevelInEditor();
                         this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
+                        prevButtonHit = true;
                     }
                 }
 
