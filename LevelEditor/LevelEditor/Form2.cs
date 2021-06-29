@@ -327,7 +327,15 @@ namespace LevelEditor
 
                 try
                 {
-                    stream = new FileStream(saveMenu.FileName, FileMode.Create);
+                    if (firstFileName == null)
+                    {
+                        firstFileName = saveMenu.FileName.Remove(0, saveMenu.FileName.LastIndexOf('\\') + 1);
+                        firstFileName = firstFileName.Substring(0, firstFileName.LastIndexOf('.'));
+                        firstFilePath = saveMenu.FileName.Substring(0, saveMenu.FileName.LastIndexOf('\\'));
+                        this.Text = $"Level Editor - {firstFileName + $"_{numSections}" + ".level"}";
+                    }
+
+                    stream = new FileStream($"{firstFilePath}\\" + firstFileName + $"_{numSections}.level", FileMode.Create);
 
                     writer = new BinaryWriter(stream);
 
@@ -346,13 +354,7 @@ namespace LevelEditor
                     //prompts the user that the file was successfully saved.
                     MessageBox.Show("Successfully Saved the file!", ":)");
 
-                    if (firstFileName == null)
-                    {
-                        firstFileName = saveMenu.FileName.Remove(0, saveMenu.FileName.LastIndexOf('\\') + 1);
-                        firstFileName = firstFileName.Substring(0, firstFileName.LastIndexOf('.'));
-                        firstFilePath = saveMenu.FileName.Substring(0, saveMenu.FileName.LastIndexOf('\\'));
-                        this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
-                    }
+                    
 
                     isSaved = true;
 
@@ -1398,18 +1400,19 @@ namespace LevelEditor
                 {
                     saveButton_Click(sender, e);
                     numSections++;
-                    this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
+                    this.Text = $"Level Editor - {firstFileName + $"_{numSections}" + ".level"}";
                 }
                 else return;
             }
             else if (!File.Exists($"{firstFilePath}\\"
-                        + $"{firstFileName}" + $"{numSections + 1}" + ".level") && numSections != 0)
+                        + $"{firstFileName}" + $"_{numSections + 1}" + ".level") && numSections + 1 != 0
+                        || !isSaved)
             {
                 BinaryWriter writer = null;
                 try
                 {
                     stream = new FileStream($"{firstFilePath}\\" 
-                        + $"{firstFileName}" + $"{numSections}" + ".level", FileMode.Create);
+                        + $"{firstFileName}" + $"_{numSections}" + ".level", FileMode.Create);
 
                     writer = new BinaryWriter(stream);
 
@@ -1439,7 +1442,7 @@ namespace LevelEditor
                     if (stream != null)
                     {
                         numSections++;
-                        this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
+                        this.Text = $"Level Editor - {firstFileName + $"_{numSections}" + ".level"}";
                         writer.Close();
                     }
                 }
@@ -1450,9 +1453,10 @@ namespace LevelEditor
             {
                 numSections++;
                 LoadLevelInEditor();               
-                this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
+                this.Text = $"Level Editor - {firstFileName + $"_{numSections}" + ".level"}";
             }
-            
+
+            isSaved = false;
         }
 
         /// <summary>
@@ -1474,7 +1478,7 @@ namespace LevelEditor
                     if (!isSaved)
                     {
                         stream = new FileStream($"{firstFilePath}\\"
-                        + $"{firstFileName}" + $"{numSections}" + ".level", FileMode.Create);
+                        + $"{firstFileName}" + $"_{numSections}" + ".level", FileMode.Create);
 
                         writer = new BinaryWriter(stream);
 
@@ -1506,7 +1510,7 @@ namespace LevelEditor
                     {
                         numSections--;
                         LoadLevelInEditor();
-                        this.Text = $"Level Editor - {firstFileName + $"{numSections}" + ".level"}";
+                        this.Text = $"Level Editor - {firstFileName + $"_{numSections}" + ".level"}";
                         prevButtonHit = true;
                     }
                 }
@@ -1523,15 +1527,10 @@ namespace LevelEditor
                 {
                     return;
                 }
-
-                if (numSections == 0)
-                {
-                    stream = new FileStream($"{firstFilePath}\\" + $"{firstFileName}" + ".level", FileMode.Open);
-                }
                 else
                 {
                     //Loads the data from an external file
-                    stream = new FileStream($"{firstFilePath}\\" + $"{firstFileName}" + $"{numSections}" + ".level", FileMode.Open);
+                    stream = new FileStream($"{firstFilePath}\\" + $"{firstFileName}" + $"_{numSections}" + ".level", FileMode.Open);
                 }
 
 

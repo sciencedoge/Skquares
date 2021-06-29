@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.saveButton = new System.Windows.Forms.Button();
             this.loadButton = new System.Windows.Forms.Button();
             this.mapBox = new System.Windows.Forms.GroupBox();
             this.textureBox = new System.Windows.Forms.GroupBox();
@@ -64,18 +63,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.texture5)).BeginInit();
             this.textures.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // saveButton
-            // 
-            this.saveButton.BackColor = System.Drawing.Color.LavenderBlush;
-            this.saveButton.Location = new System.Drawing.Point(223, 434);
-            this.saveButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.saveButton.Name = "saveButton";
-            this.saveButton.Size = new System.Drawing.Size(91, 80);
-            this.saveButton.TabIndex = 7;
-            this.saveButton.Text = "Save File";
-            this.saveButton.UseVisualStyleBackColor = false;
-            this.saveButton.Click += new System.EventHandler(this.saveButton_Click);
             // 
             // loadButton
             // 
@@ -348,7 +335,6 @@
             this.Controls.Add(this.textureBox);
             this.Controls.Add(this.mapBox);
             this.Controls.Add(this.loadButton);
-            this.Controls.Add(this.saveButton);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "levelEditor";
             this.Text = "Level Editor";
@@ -370,7 +356,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button loadButton;
         private System.Windows.Forms.GroupBox mapBox;
         private System.Windows.Forms.GroupBox textureBox;
