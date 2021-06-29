@@ -1387,13 +1387,14 @@ namespace LevelEditor
         /// <param name="e"></param>
         private void nextButton_Click(object sender, EventArgs e)
         {
+            
+
             if (firstFileName == null)
             {
                 DialogResult result =
                     MessageBox.Show("Would you like to save this file?",
                     "Save?",
-                    MessageBoxButtons.YesNo);
-
+                    MessageBoxButtons.YesNo);             
 
                 if (result == DialogResult.No) return;
                 else if (result == DialogResult.Yes)
@@ -1404,9 +1405,45 @@ namespace LevelEditor
                 }
                 else return;
             }
-            else if (!File.Exists($"{firstFilePath}\\"
-                        + $"{firstFileName}" + $"_{numSections + 1}" + ".level") && numSections + 1 != 0
-                        || !isSaved)
+            
+            if (!isSaved)
+            {
+                BinaryWriter writer = null;
+                try
+                {
+                    stream = new FileStream($"{firstFilePath}\\"
+                        + $"{firstFileName}" + $"_{numSections}" + ".level", FileMode.Create);
+
+                    writer = new BinaryWriter(stream);
+
+                    //Saves the width and height
+                    writer.Write(width);
+                    writer.Write(height);
+
+                    //Background
+
+                    //Saves the ARGB colors of the pictureboxes
+                    rotationSaveX = 0;
+                    rotationSaveY = 0;
+                    Save(writer, rotationValues);
+                    writer.Close();
+
+                    isSaved = true;
+
+                }
+                catch (Exception ex)
+                {
+                    //Something went wrong...
+                    MessageBox.Show("Error saving file! " + ex.Message, ":(");
+                }
+                finally
+                {
+                    stream.Close();
+                }
+            }
+            
+            if (!File.Exists($"{firstFilePath}\\"
+                        + $"{firstFileName}" + $"_{numSections + 1}" + ".level") && numSections + 1 != 0)
             {
                 BinaryWriter writer = null;
                 try
