@@ -124,17 +124,26 @@ namespace LevelEditor
             set { objectRotations = value; }
         }
 
+        /// <summary>
+        /// sets the num sections of the editor
+        /// </summary>
         public int Num
         {
             set { numSections = value; }
         }
 
+        /// <summary>
+        /// sets or gets the first file name
+        /// </summary>
         public string FirstName
         {
             set { firstFileName = value; }
             get { return firstFileName; }
         }
 
+        /// <summary>
+        /// sets the first file path of the editor
+        /// </summary>
         public string FirstPath
         {
             set { firstFilePath = value; }

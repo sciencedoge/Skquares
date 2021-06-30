@@ -102,6 +102,9 @@ namespace LevelEditor
                     editor.CollisionValues = collisionRotation;
                     editor.ObjectValues = objectRotation;
 
+                    //Gets the original name of the file, without the _number label
+                    //as well as the original path.
+
                     editor.FirstName = dialog.FileName.Remove(0, dialog.FileName.LastIndexOf('\\') + 1);
                     editor.FirstName = editor.FirstName.Substring(0, editor.FirstName.LastIndexOf('.'));
                     string number = editor.FirstName[editor.FirstName.Length - 1].ToString();
