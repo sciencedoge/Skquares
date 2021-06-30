@@ -386,6 +386,25 @@ namespace LevelEditor
         /// <param name="e">tracks events</param>
         public void loadButton_Click(object sender, EventArgs e)
         {
+            
+
+            if (!isSaved)
+            {
+                DialogResult result =
+                    MessageBox.Show("Would you like to save this file?",
+                    "Save?",
+                    MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    saveButton_Click(sender, e);
+                }
+                else if(result == DialogResult.Abort)
+                {
+                    return;
+                }
+            }
+
             //File order - 
             //Width, height, ARGB colors (all int32)
             OpenFileDialog dialog = new OpenFileDialog();
@@ -416,6 +435,14 @@ namespace LevelEditor
                     colors = new string[height, width];
                     collisionColors = new string[height, width];
                     objectColors = new string[height, width];
+
+                    firstFileName = dialog.FileName.Remove(0, dialog.FileName.LastIndexOf('\\') + 1);
+                    firstFileName = firstFileName.Substring(0, firstFileName.LastIndexOf('.'));
+                    string number = firstFileName[firstFileName.Length - 1].ToString();
+                    numSections = int.Parse(number);
+                    firstFileName = firstFileName.Substring(0, firstFileName.LastIndexOf('_'));
+                    
+                    firstFilePath = dialog.FileName.Substring(0, dialog.FileName.LastIndexOf('\\'));
 
                     //Background
 
