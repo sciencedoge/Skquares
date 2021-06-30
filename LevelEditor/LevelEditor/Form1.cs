@@ -102,6 +102,14 @@ namespace LevelEditor
                     editor.CollisionValues = collisionRotation;
                     editor.ObjectValues = objectRotation;
 
+                    editor.FirstName = dialog.FileName.Remove(0, dialog.FileName.LastIndexOf('\\') + 1);
+                    editor.FirstName = editor.FirstName.Substring(0, editor.FirstName.LastIndexOf('.'));
+                    string number = editor.FirstName[editor.FirstName.Length - 1].ToString();
+                    editor.Num = int.Parse(number);
+                    editor.FirstName = editor.FirstName.Substring(0, editor.FirstName.LastIndexOf('_'));
+
+                    editor.FirstPath = dialog.FileName.Substring(0, dialog.FileName.LastIndexOf('\\'));
+
 
 
                     //BACKGROUND LAYER

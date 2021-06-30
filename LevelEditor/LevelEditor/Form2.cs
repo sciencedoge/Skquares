@@ -129,6 +129,17 @@ namespace LevelEditor
             set { numSections = value; }
         }
 
+        public string FirstName
+        {
+            set { firstFileName = value; }
+            get { return firstFileName; }
+        }
+
+        public string FirstPath
+        {
+            set { firstFilePath = value; }
+        }
+
         /// <summary>
         /// Creates the level editor form
         /// </summary>
