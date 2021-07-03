@@ -114,6 +114,7 @@ namespace UpgradePlatformer.Levels
             Worlds.Add(new World(BackDrops[0], 1, 3, 1, "t1",       false, new List<int> { -1}));
             Worlds.Add(new World(BackDrops[0], 1, 4, 1, "t2",       false, new List<int> { -1}));
             Worlds.Add(new World(BackDrops[0], 1, 5, 1, "t3",       false, new List<int> { -1}));
+            Worlds.Add(new World(BackDrops[1], 2, 2, 2, "preCaves", false, new List<int> { -1, -1 }));
             Worlds.Add(new World(BackDrops[1], 2, 1, 4, "caves",    true , new List<int> { -1, -1, 2, 3 }));
         }
 

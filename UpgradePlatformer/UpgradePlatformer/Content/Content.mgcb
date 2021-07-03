@@ -110,6 +110,12 @@
 #begin Levels/2_1_4.fld
 /copy:Levels/2_1_4.fld
 
+#begin Levels/2_2_1.fld
+/copy:Levels/2_2_1.fld
+
+#begin Levels/2_2_2.fld
+/copy:Levels/2_2_2.fld
+
 #begin Levels/3_1_1.fld
 /copy:Levels/3_1_1.fld
 
