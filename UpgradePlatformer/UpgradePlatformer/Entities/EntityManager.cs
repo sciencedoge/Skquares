@@ -341,10 +341,13 @@ namespace UpgradePlatformer.Entities
                                         boss.OnFloorCollide();
                                     }
                                 }
-                                else 
-                                    obj.OnFloorCollide();
+                            }
+                            else
+                            {
+                                
                             }
 
+                            obj.OnFloorCollide();
                             obj.Y = temp.Y;
                         }                       
                         break;
