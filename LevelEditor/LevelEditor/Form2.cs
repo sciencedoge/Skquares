@@ -989,15 +989,25 @@ namespace LevelEditor
                     //creates a new picture box
                     PictureBox box = new PictureBox();
 
-                    //sizes the boxes accordingly
-                    if (width > height || width == height)
+                    if (originalBoxHeight == 0 && originalBoxWidth == 0)
                     {
-                        box.Size = new Size(((mapBox.Width) / width) - 2, ((mapBox.Width) / width) - 2);
-                    }
+                        if (width > height || width == height)
+                        {
+                            box.Size = new Size((mapBox.Width) / width, (mapBox.Width) / width);
+                        }
 
-                    else if (height > width)
+                        //Vertical is bigger, base off of the height
+                        else if (height > width)
+                        {
+                            box.Size = new Size((mapBox.Height - 17) / height, (mapBox.Height - 17) / height);
+                        }
+
+                        originalBoxWidth = box.Width;
+                        originalBoxHeight = box.Height;
+                    }
+                    else
                     {
-                        box.Size = new Size((mapBox.Height - 17) / height, (mapBox.Height - 17) / height);
+                        box.Size = new Size(originalBoxWidth, originalBoxHeight);
                     }
 
                     //Puts a location to the box
