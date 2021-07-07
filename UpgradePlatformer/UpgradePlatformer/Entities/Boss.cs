@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using UpgradePlatformer.Graphics;
-using UpgradePlatformer.Levels;
-using UpgradePlatformer.Input;
-using UpgradePlatformer.Music;
 
 namespace UpgradePlatformer.Entities
 {
@@ -44,7 +39,6 @@ namespace UpgradePlatformer.Entities
       get { return currentlyColliding; }
       set { currentlyColliding = value; }
     }
-    public bool Flip;
 
     /// <summary>
     /// creates an Boss object

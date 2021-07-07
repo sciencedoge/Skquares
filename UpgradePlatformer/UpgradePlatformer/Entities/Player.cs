@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -10,7 +9,6 @@ using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Music;
 using UpgradePlatformer.Upgrade_Stuff;
 using UpgradePlatformer.Menus.Shop_Stuff;
-using UpgradePlatformer.Menus.Levels;
 
 namespace UpgradePlatformer.Entities
 {
