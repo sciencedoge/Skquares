@@ -7,6 +7,7 @@ using UpgradePlatformer.Input;
 using UpgradePlatformer.Levels;
 using UpgradePlatformer.Upgrade_Stuff;
 using UpgradePlatformer.Music;
+using Microsoft.Xna.Framework.Input;
 
 namespace UpgradePlatformer.Entities
 {
@@ -24,6 +25,7 @@ namespace UpgradePlatformer.Entities
             lazy =
             new Lazy<EntityManager>
             (() => new EntityManager());
+
         public static EntityManager Instance { get { return lazy.Value; } }
 
         //Fields
@@ -324,27 +326,38 @@ namespace UpgradePlatformer.Entities
                             //moves player up
                             if (t.Position.Top - intersection.Top == 0)
                             {
-                                temp.Y -= intersection.Height;
-                                if (obj is Player player)
-                                {
-                                    if (!player.Landed && !Player().Ducking)
-                                    {
-                                        player.Landed = true;
+                                Keys[] keys = InputManager.Instance.kbState.GetPressedKeys();
 
-                                        SoundManager.Instance.PlaySFX("land");
+                                if (keys.Length == 1 && keys[0] == Keys.S)
+                                {
+                                    temp.Y += 3;
+                                }
+                                else
+                                {
+                                    temp.Y -= intersection.Height;
+                                    if (obj is Player player)
+                                    {
+                                        if (!player.Landed && !Player().Ducking)
+                                        {
+                                            player.Landed = true;
+
+                                            SoundManager.Instance.PlaySFX("land");
+                                        }
+                                        obj.Velocity = new Vector2(obj.Velocity.X, 0);
                                     }
-                                    obj.Velocity = new Vector2(obj.Velocity.X, 0);
-                                }                                
-                                else if (obj is Boss boss) {
-                                    if (!bossAI.Landed) {
-                                        bossAI.Landed = true;
-                                        boss.OnFloorCollide();
+                                    else if (obj is Boss boss)
+                                    {
+                                        if (!bossAI.Landed)
+                                        {
+                                            bossAI.Landed = true;
+                                            boss.OnFloorCollide();
+                                        }
                                     }
                                 }
-                                else 
-                                    obj.OnFloorCollide();
+                               
                             }
 
+                            obj.OnFloorCollide();
                             obj.Y = temp.Y;
                         }                       
                         break;
