@@ -8,7 +8,7 @@ using UpgradePlatformer.Levels;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.Music;
 using UpgradePlatformer.Upgrade_Stuff;
-using UpgradePlatformer.Menus.Shop_Stuff;
+using UpgradePlatformer.Menus.HatShop;
 
 namespace UpgradePlatformer.Entities
 {

@@ -1,27 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using UpgradePlatformer.Graphics;
 using UpgradePlatformer.UI;
-using UpgradePlatformer.Upgrade_Stuff;
 
-namespace UpgradePlatformer.Menus.Shop_Stuff
+namespace UpgradePlatformer.Menus.HatShop
 {
   //HEADER=======================================
   //Name: Sami Chamberlain, Preston Precourt
   //Date: 5/26/2021
   //Purpose: Manages upgrades
   //============================================
-
-  public class HatNode
-  {
-    public HatNode parent;
-
-    public bool owned;
-    public Hat hat;
-  }
 
   public class ShopManager
   {

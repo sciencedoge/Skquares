@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using UpgradePlatformer.Graphics;
 using UpgradePlatformer.UI;
-using UpgradePlatformer.Upgrade_Stuff;
 using UpgradePlatformer.Levels;
-using UpgradePlatformer.Menus.Shop_Stuff;
+using UpgradePlatformer.Menus.HatShop;
 
 namespace UpgradePlatformer.Menus.Levels
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using UpgradePlatformer.Menus.Shop_Stuff;
+using UpgradePlatformer.Menus.HatShop;
 using UpgradePlatformer.UI;
 
 namespace UpgradePlatformer.Upgrade_Stuff

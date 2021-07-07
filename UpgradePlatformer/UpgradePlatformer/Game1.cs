@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework.Content;
 using UpgradePlatformer.Music;
 using UpgradePlatformer.Saves;
 using System;
-using UpgradePlatformer.Menus.Shop_Stuff;
+using UpgradePlatformer.Menus.HatShop;
 
 namespace UpgradePlatformer
 {
