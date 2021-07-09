@@ -324,25 +324,26 @@ namespace UpgradePlatformer.Entities
             }
             else
             {
+              Keys[] keys = InputManager.Instance.kbState.GetPressedKeys();
+
+              if (keys.Length == 1 && keys[0] == Keys.S)
+              {
+                return;
+              }
+
               //short wide rectangle
               //moves player up
-              if (t.Position.Top - intersection.Top == 0)
+              if (obj.Velocity.Y > 0)
               {
-                Keys[] keys = InputManager.Instance.kbState.GetPressedKeys();
-
-                if (keys.Length == 1 && keys[0] == Keys.S)
-                {
-                  temp.Y += 3;
-                }
-                else
-                {
+                if (t.Position.Top - intersection.Top == 0)
+                {                  
                   temp.Y -= intersection.Height;
                   if (obj is Player player)
                   {
                     if (!player.Landed && !Player().Ducking)
                     {
                       player.Landed = true;
-
+                 
                       SoundManager.Instance.PlaySFX("land");
                     }
                     obj.Velocity = new Vector2(obj.Velocity.X, 0);
@@ -356,12 +357,11 @@ namespace UpgradePlatformer.Entities
                     }
                   }
                 }
-
-              }
-
-              obj.OnFloorCollide();
-              obj.Y = temp.Y;
+              }              
             }
+
+            obj.OnFloorCollide();
+            obj.Y = temp.Y;
             break;
           case 105:
             if (obj is Enemy)
