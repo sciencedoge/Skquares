@@ -163,7 +163,8 @@ namespace UpgradePlatformer.Entities
       pathfind.UpdateCosts();
       pathfind.MoveToPlayer(gameTime);
       // IMPORTANT: Subframes are calculated here
-      for (int i = 0; i < 5; i++)
+      bool stop = false;
+      for (int i = 0; i < 5 && !stop; i++)
       {
         foreach (EntityObject obj in objects)
         {
@@ -173,7 +174,7 @@ namespace UpgradePlatformer.Entities
           obj.Update(gameTime);
           if (obj is LivingObject @object)
             @object.animation.Update(gameTime);
-
+          if (LevelManager.Instance.UpdateCheck()) return;
           Intersects(obj);
 
           int gainedMoney = obj.Intersects(objects);
@@ -183,6 +184,7 @@ namespace UpgradePlatformer.Entities
             SoundManager.Instance.PlaySFX("coin");
             playerMoney += gainedMoney;
           }
+
           else if (gainedMoney < 0)
           {
             playerMoney += gainedMoney;
