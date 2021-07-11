@@ -20,6 +20,7 @@ namespace UpgradePlatformer.Upgrade_Stuff
       UpgradeManager.Instance.Add(1, UpgradeType.WEAPON, 0);
       UpgradeManager.Instance.Add(1, UpgradeType.EXTRA_JUMP, 0);
       UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 10);
+      UpgradeManager.Instance.Add(1, UpgradeType.HEALTH, 10);
 
       ShopManager.Instance.Add(new Hat(0, UpgradeType.HEALTH, 100, "OH LAWD HE COMIN"), -1);
       ShopManager.Instance.Add(new Hat(1, UpgradeType.HEALTH, 100, "OH LAWD HE COMIN"), -1);
