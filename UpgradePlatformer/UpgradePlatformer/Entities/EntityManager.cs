@@ -328,7 +328,7 @@ namespace UpgradePlatformer.Entities
             {
               Keys[] keys = InputManager.Instance.kbState.GetPressedKeys();
 
-              if (keys.Length == 1 && keys[0] == Keys.S)
+              if (keys.Length == 1 && keys[0] == Keys.S && obj is Player)
               {
                 return;
               }
