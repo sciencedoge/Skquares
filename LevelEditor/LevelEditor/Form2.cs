@@ -938,6 +938,11 @@ namespace LevelEditor
             texture5.SizeMode = PictureBoxSizeMode.Zoom;
             texture6.Load("../../../Default size/105.png");
             texture6.SizeMode = PictureBoxSizeMode.Zoom;
+            texture7.Load("../../../Default size/107.png");
+            texture7.SizeMode = PictureBoxSizeMode.Zoom;
+            texture8.Load("../../../Default size/108.png");
+            texture8.SizeMode = PictureBoxSizeMode.Zoom;
+
 
             path = "../../../Default size/100.png";
             texturePic.Load("../../../Default size/100.png");
@@ -947,11 +952,9 @@ namespace LevelEditor
             texture4.Enabled = true;
             texture5.Enabled = true;
             texture6.Enabled = true;
+            texture7.Enabled = true;
+            texture8.Enabled = true;
 
-            texture7.Image = null;
-            texture7.Enabled = false;
-            texture8.Image = null;
-            texture8.Enabled = false;
 
             //changes color of buttons to indicate that the user
             //is selecting the background later
