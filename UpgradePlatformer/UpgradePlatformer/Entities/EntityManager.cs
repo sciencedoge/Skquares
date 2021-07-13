@@ -321,40 +321,40 @@ namespace UpgradePlatformer.Entities
             break;
           case 104:
 
-              Keys[] keys = InputManager.Instance.kbState.GetPressedKeys();
+            Keys[] keys = InputManager.Instance.kbState.GetPressedKeys();
 
-              if (keys.Length == 1 && keys[0] == Keys.S && obj is Player)
-              {
-                return;
-              }
+            if (keys.Length == 1 && keys[0] == Keys.S && obj is Player)
+            {
+              return;
+            }
 
-              //short wide rectangle
-              //moves player up
-              if (obj.Velocity.Y > 0)
+            //short wide rectangle
+            //moves player up
+            if (obj.Velocity.Y > 0)
+            {
+              if (t.Position.Top - intersection.Top == 0)
               {
-                if (t.Position.Top - intersection.Top == 0)
-                {                  
-                  temp.Y -= intersection.Height;
-                  if (obj is Player player)
+                temp.Y -= intersection.Height;
+                if (obj is Player player)
+                {
+                  if (!player.Landed && !Player().Ducking)
                   {
-                    if (!player.Landed && !Player().Ducking)
-                    {
-                      player.Landed = true;
-                 
-                      SoundManager.Instance.PlaySFX("land");
-                    }
-                    obj.Velocity = new Vector2(obj.Velocity.X, 0);
+                    player.Landed = true;
+
+                    SoundManager.Instance.PlaySFX("land");
                   }
-                  else if (obj is Boss boss)
+                  obj.Velocity = new Vector2(obj.Velocity.X, 0);
+                }
+                else if (obj is Boss boss)
+                {
+                  if (!bossAI.Landed)
                   {
-                    if (!bossAI.Landed)
-                    {
-                      bossAI.Landed = true;
-                      boss.OnFloorCollide();
-                    }
+                    bossAI.Landed = true;
+                    boss.OnFloorCollide();
                   }
                 }
-              }              
+              }
+            }
 
             obj.OnFloorCollide();
             obj.Y = temp.Y;
