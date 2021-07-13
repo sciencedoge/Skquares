@@ -320,12 +320,7 @@ namespace UpgradePlatformer.Entities
               EventManager.Instance.Push(new Event("WORLD_SHOW", (uint)LevelManager.Instance.ActiveWorldNum() + 1, new Point(0)));
             break;
           case 104:
-            if (obj is Enemy)
-            {
-              RegularCollision(intersection, temp, obj, t);
-            }
-            else
-            {
+
               Keys[] keys = InputManager.Instance.kbState.GetPressedKeys();
 
               if (keys.Length == 1 && keys[0] == Keys.S && obj is Player)
@@ -360,7 +355,6 @@ namespace UpgradePlatformer.Entities
                   }
                 }
               }              
-            }
 
             obj.OnFloorCollide();
             obj.Y = temp.Y;
