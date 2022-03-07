@@ -66,7 +66,7 @@ namespace UpgradePlatformer.Entities
 
       if (boss.MaxHP != boss.CurrentHP) { initiated = true; }
 
-      if (distance.X > 150 && initiated == false) return;
+      if (distance.X > 300 && initiated == false) return;
       else { initiated = true; }
 
 

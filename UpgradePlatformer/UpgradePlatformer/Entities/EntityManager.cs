@@ -329,7 +329,7 @@ namespace UpgradePlatformer.Entities
             }
 
             //short wide rectangle
-            //moves player up
+            //moves player upd
             if (obj.Velocity.Y > 0)
             {
               if (t.Position.Top - intersection.Top == 0)
@@ -351,6 +351,7 @@ namespace UpgradePlatformer.Entities
                   {
                     bossAI.Landed = true;
                     boss.OnFloorCollide();
+                    return;
                   }
                 }
               }
@@ -446,6 +447,7 @@ namespace UpgradePlatformer.Entities
             {
               bossAI.Landed = true;
               boss.OnFloorCollide();
+              return;
             }
           }
           else
